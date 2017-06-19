@@ -12,7 +12,7 @@
     let dist_path = '/dist';
     let root_path = '/../../../..';
     let client_path = root_path + '/client';
-    let server_port = process.env.PORT || 8080;
+    let server_port = process.env.PORT || 8000;
     /**
      * Inicia a aplicação
      *

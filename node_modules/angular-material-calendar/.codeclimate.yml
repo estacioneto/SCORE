@@ -1,0 +1,20 @@
+exclude_paths:
+- "node_modules/*"
+- "bower_components/*"
+- ".git/*"
+- "test/*"
+- "gulpfile.js"
+- "protractor.conf.js"
+- "karma.conf.js"
+- "*.min.js"
+- "*.min.css"
+- "dist/*"
+- "website/*"
+
+engines:
+  eslint:
+    enabled: true
+
+ratings:
+  paths:
+  - src/**
