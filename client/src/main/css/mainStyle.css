@@ -1,0 +1,228 @@
+::-webkit-scrollbar {
+    width: 0.8em;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #BDBDBD;
+    outline: 1px solid #95A8B9;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #858585;
+}
+
+.md-fab-fixed {
+    position: fixed !important;
+    margin-bottom: 40px !important;
+}
+
+md-toolbar {
+    min-height: 50px;
+    height: 50px;
+}
+
+#search-container {
+    padding-top: 21px;
+}
+
+.icon-grey {
+    color: #858585;
+}
+
+
+.done-todo {
+    text-decoration: line-through;
+}
+
+.smooth-hover {
+    -o-transition:color .5s ease-out, background 1s ease-in;
+    -ms-transition:color .5s ease-out, background 1s ease-in;
+    -moz-transition:color .5s ease-out, background 1s ease-in;
+    -webkit-transition:color .5s ease-out, background 1s ease-in;
+    /* ...and now override with proper CSS property */
+    transition:color .5s ease-out, background 1s ease-in;
+}
+
+#remove-scheduling {
+    color: #828282;
+    max-width: 4vh;
+    padding-right: 1vh;
+}
+
+#remove-todo {
+    color: #828282;
+}
+
+#remove-todo:hover {
+    color: #F44336;
+}
+
+#main-page {
+    min-height: calc(100% - 50px);
+    height: calc(100vh - 50px);
+    margin-bottom: -50px;
+}
+
+body, html {
+    overflow: hidden;
+}
+
+#note-modal {
+    min-width: 35%;
+}
+
+@media (max-width: 450px) {
+    #note-modal {
+        max-width: 200%;
+        width: 95%;
+        max-height: 95%;
+        height: 95%;
+    }
+}
+
+#note-date-picker {
+    /*margin-right: 2vh;*/
+}
+
+#note-card {
+    max-width: 250px;
+}
+
+.break-word {
+    word-break: break-all;
+}
+
+.bold {
+    font-weight: 500;
+}
+
+#scheduling-clock {
+    margin-right: 3px;
+}
+
+#toolbar-app-logo {
+    height: 30px;
+    max-width: 30px;
+}
+
+.todo-list-element {
+    height: 5%;
+}
+
+md-dialog {
+    overflow: visible;
+}
+
+.note-modal-header {
+    overflow: visible;
+}
+
+/*Scrollbar controller - hide and show*/
+.scroll-box {}
+
+.scroll-box::-webkit-scrollbar {
+  width: .4em; 
+}
+.scroll-box::-webkit-scrollbar,
+.scroll-box::-webkit-scrollbar-thumb {
+  overflow:visible;
+  border-radius: 4px;
+}
+.scroll-box::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.2); 
+}
+.cover-scroll-bar {
+  position: absolute;
+  height: 100%;  
+  top: 0;
+  right: 0;
+  width: .4em;
+  -webkit-transition: all .5s;
+  opacity: 1;
+}
+/* MAGIC HAPPENS HERE */
+md-dialog:hover .cover-scroll-bar {
+   opacity: 0;
+  -webkit-transition: all .5s;
+}
+
+/*end Scrollbar controller - hide and show*/
+
+#dev-link {
+    margin-right: 4px;
+}
+
+.disable-chips .md-chip-input-container div input { 
+    display: none; 
+}
+
+.disable-chips .md-chip-remove {
+    display: none;
+}
+
+#sorting-dial {
+    top: 42px;
+}
+
+#sorting-container {
+    width:35px;
+}
+
+#sorting-button {
+    background-color: white;
+}
+
+.dev-link {
+    color: darkslateblue;
+}
+
+.dev-link:hover {
+    color: darkorchid;
+}
+
+md-input-container:not(.md-input-invalid) .md-input {
+    border-style: none;
+}
+
+.todo-input {
+    margin-top: 6px !important;
+    max-height: 50px;
+}
+
+md-input-container .md-input {
+    font-size: 15px;
+    line-height: 19px;
+    min-height: 29px;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+}
+
+.calendario {
+    height: 90%;
+}
+
+calendar-md .md-toolbar-tools h2 {
+    overflow-y: hidden;
+}
+
+.listra-par {
+    background-color: #cecaca;
+}
+
+.listra-impar {
+    background-color: #bab8b8;
+}
+
+.listra-impar:hover, .listra-par:hover {
+    background-color: #a5a4a4;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.divisor {
+    border-left: 1px black solid;
+}
+
+.entrada-descricao {
+    border-bottom: 1px solid lightgrey;
+}

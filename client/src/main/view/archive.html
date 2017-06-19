@@ -1,0 +1,94 @@
+<md-content>
+    <!-- SideBar -->
+    <sidebar-piton controller="archiveCtrl"></sidebar-piton>
+    <!-- end SideBar -->
+    <md-content id="main-page" layout-padding flex>
+        <div layout-padding>
+            <!-- Content -->
+            <div layout-padding class="content" layout="row">
+                <!-- SideBar -->
+                <sidebar-piton controller="archiveCtrl"></sidebar-piton>
+                <!-- end SideBar -->
+
+                <!-- MainContent -->
+                <div layout="column" layout-padding flex>
+                    <!-- Search bar -->
+                    <md-toolbar class="md-whiteframe-5dp" id="searchbar"
+                                md-colors="{background: 'grey-A100'}">
+                        <!--https://material.angularjs.org/1.1.0/demo/colors-->
+                        <div class="md-toolbar-tools" layout-align="center center" layout-padding>
+                            <md-button hide-xs aria-label="search-button" id="search-button"
+                                       class="md-icon-button"
+                                       data-ng-click="archiveCtrl.focusSearchInput()">
+                                <i class="fa fa-search"></i></md-button>
+                            <md-input-container id="search-container" md-no-float flex>
+                                <input placeholder="Search"
+                                       data-ng-model="archiveCtrl.search" data-ng-keyup="archiveCtrl.filter()"
+                                       id="searchbarInput">
+                            </md-input-container>
+
+                            <!--Sort Notes button-->
+                            <md-input-container id="sorting-container" ng-cloak layout-align="end end">
+                                <md-fab-speed-dial md-open="isOpen"
+                                                   md-direction="down"
+                                                   data-ng-mouseenter="isOpen = true"
+                                                   data-ng-mouseleave="isOpen = false"
+                                                   id="sorting-dial"
+                                                   class="md-fling">
+                                    <!-- Trigger -->
+                                    <md-fab-trigger>
+                                        <md-button aria-label="sorting-button" id="sorting-button"
+                                                   class="md-icon-button fa fa-ellipsis-h" layout-align="center center">
+                                        </md-button>
+                                        <md-tooltip md-direction="top">
+                                            Sorting
+                                        </md-tooltip>
+                                    </md-fab-trigger>
+                                    <!-- end Trigger -->
+
+                                    <!-- Options -->
+                                    <md-fab-actions>
+                                        <md-button aria-label="sorting-scheduling" class="md-icon-button"
+                                                   layout-align="center center"
+                                                   data-ng-click="orderParam = (orderParam === 'scheduling') ? '-scheduling' : 'scheduling'">
+                                            <i class="fa fa-clock-o fa-lg"></i>
+                                            <md-tooltip md-direction="top">
+                                                Scheduling
+                                            </md-tooltip>
+                                        </md-button>
+
+                                        <md-button aria-label="sorting-date" class="md-icon-button"
+                                                   data-ng-click="orderParam = (orderParam === 'createDate') ? '-createDate' : 'createDate'">
+                                            <i class="fa fa-plus-circle"></i>
+                                            <md-tooltip md-direction="top">
+                                                Creation Date
+                                            </md-tooltip>
+                                        </md-button>
+                                    </md-fab-actions>
+                                    <!-- end Options -->
+                                </md-fab-speed-dial>
+                            </md-input-container>
+                            <!--end Sort Notes button-->
+                        </div>
+                    </md-toolbar>
+                    <!-- end search bar-->
+
+                    <!-- Notes listing -->
+                    <md-content id="main-field">
+                        <div layout-wrap layout="row" flex>
+                            <note-listing
+                                    data-ng-repeat="note in archiveCtrl.notes | orderBy:orderParam track by $index"
+                                    id="note-card"
+                                    data-note="note"
+                                    data-controller="archiveCtrl">
+                            </note-listing>
+                        </div>
+                    </md-content>
+                    <!-- end Notes listing -->
+                </div>
+                <!-- end MainContent -->
+            </div>
+            <!-- end Content -->
+        </div>
+    </md-content>
+</md-content>

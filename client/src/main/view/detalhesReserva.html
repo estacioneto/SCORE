@@ -1,0 +1,103 @@
+<md-dialog aria-label="reserva-detalhes" flex="60">
+    <md-dialog-content>
+        <div class="md-dialog-content"
+            data-layout="row"
+            data-layout-align="start start"
+            data-layout-padding
+            data-layout-wrap
+            md-colors="{background: 'grey-200'}">
+            <!--Conteudo modal-->
+            <form data-ng-submit="reservaCtrl.salvarReserva()"
+                data-flex="100">
+                <div layout="column" 
+                    flex="100"
+                    layout-wrap>
+                    <!--Barra com hora e fechar-->
+                    <div layout="row" layout-align="space-between start">
+                        <!--Hora da reserva-->
+                        <div layout="column">
+                            <span class="md-subhead">Hora</span>
+                            <span class="md-display-2">{{ ::reservaCtrl.reserva.hora }}</span>
+                        </div>
+                        <!--end Hora da reserva-->
+                        <!--Fechar modal-->
+                        <md-button class="md-fab md-mini" ng-click="reservaCtrl.fecharModal()">
+                            <i class="material-icons">close</i>
+                        </md-button>
+                        <!--end Fechar modal-->
+                    </div>
+                    <!--end Barra com hora e fechar-->
+                    <md-divider></md-divider>
+                    <br>
+                    <!--Descrição reserva-->
+                    <span class="md-subhead">Descrição</span>
+                    <div data-ng-if="!reservaCtrl.isEdicao">
+                        <span class="md-subhead">{{ ::reservaCtrl.reserva.descricao || '-' }}</span>
+                        <md-divider></md-divider>
+                    </div>
+                    <md-input-container data-ng-if="reservaCtrl.isEdicao"
+                            class="entrada-descricao">
+                        <textarea type="text" 
+                                required 
+                                ng-model="reservaCtrl.reserva.descricao"
+                                rows="2"
+                                aria-label="entradaDescricao">
+                        </textarea>
+                    </md-input-container>
+                    <!--end Descrição reserva-->
+                    <br>
+                    <br>
+                    <!--Autor-->
+                    <span class="md-subhead">Autor</span>
+                    <span class="md-title">{{ reservaCtrl.reserva.autor || '-' }}</span>
+                    <!--end Autor-->
+                    <md-divider></md-divider>
+                    <br>
+                    <br>
+
+                    <!--Botões-->
+                    <div layout="row"
+                        layout-align="center center">
+                        <!--Botão de editar-->
+                        <md-button class="md-raised"
+                                ng-if="reservaCtrl.podeEditar()"
+                                ng-click="reservaCtrl.toggleEdicao()">
+                                Editar
+                        </md-button>
+                        <!--end Botão de editar-->
+                        <!--Botão de criar-->
+                        <md-button class="md-raised md-primary"
+                                ng-if="reservaCtrl.podeCriarReserva()"
+                                ng-click="reservaCtrl.toggleEdicao()">
+                                Criar
+                        </md-button>
+                        <!--end Botão de criar-->
+                        <!--Botão de salvar-->
+                        <md-button class="md-raised md-primary"
+                                ng-if="reservaCtrl.isEdicao"
+                                type="submit">
+                                Salvar
+                        </md-button>
+                        <!--end Botão de salvar-->
+                        <!--Descartar botão-->
+                        <md-button class="md-raised md-warn"
+                                ng-if="reservaCtrl.isEdicao"
+                                ng-click="reservaCtrl.descartarMudancas()">
+                                Descartar
+                        </md-button>
+                        <!--end Descartar botão-->
+                        <!--Botão de excluir-->
+                        <md-button class="md-raised md-warn"
+                                ng-if="reservaCtrl.podeExcluir()"
+                                ng-click="reservaCtrl.excluirReserva()">
+                                Excluir
+                        </md-button>
+                        <!--Botão de excluir-->
+                    </div>
+                    <!--end Botões-->
+                </div>
+            </form>
+            <!--end Conteudo modal-->
+        </div>
+    </md-dialog-content>
+</md-dialog>

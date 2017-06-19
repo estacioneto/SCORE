@@ -1,0 +1,61 @@
+<md-toolbar md-scroll-shrink>
+    <!--https://material.angularjs.org/1.1.0/demo/colors-->
+    <div class="md-toolbar-tools" layout-padding>
+        <md-input-container layout-padding="none" layout="row">
+            <md-button class="md-icon-button" aria-label="Settings"
+                       data-ng-if="auth.isAuthenticated()"
+                       data-ng-click="menuFunction()">
+                <i class="fa fa-bars fa-lg"></i>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="App logo"
+                       ng-click="goHome()"
+                       layout-align="center center">
+                <img alt="App logo" id="toolbar-app-logo" ng-src="/img/icons/ms-icon-70x70.png"
+                     class="">
+            </md-button>
+        </md-input-container>
+        <span class="md-title">{{ getCurrentStateName() }}</span>
+        <span data-ng-if="getSearchedTag()" layout="row" layout-padding>
+            <span> : </span>
+            <span> {{getSearchedTag().toUpperCase()}} </span>
+            <md-button aria-label="Remove Tag"
+                       class="md-icon-button smooth-hover"
+                       id="remove-todo"
+                       ng-click="removeTag()">
+                    <md-tooltip md-direction="down">
+                        Remove Search Param
+                    </md-tooltip>
+                    <i class="fa fa-times"></i>
+                </md-button>
+        </span>
+        <span flex></span>
+
+        <md-input-container layout="row">
+            <div data-ng-repeat="state in getAvailableStates()" layout-align="center center">
+                <md-button hide-xs aria-label="State {{state}} Name"
+                           data-ui-sref="{{state.name}}">
+                    {{getStateName(state.name.toUpperCase())}}
+                </md-button>
+                <md-button hide-gt-xs aria-label="State {{state}} Icon"
+                           data-ui-sref="{{state.name}}" class="md-icon-button" layout-align="center center">
+                    <md-icon md-font-icon="{{state.icon}}" class="md-48"></md-icon>
+                </md-button>
+            </div>
+            <div data-ng-if="auth.isAuthenticated()">
+                <md-button hide-xs aria-label="Logout Name" data-ng-click="logout()">
+                    Logout
+                </md-button>
+                <md-button hide-gt-xs aria-label="Logout Icon"
+                           data-ng-click="logout()"
+                           class="md-icon-button" layout-align="center center">
+                    <md-icon md-font-icon="fa fa-sign-out" class="md-48"></md-icon>
+                </md-button>
+            </div>
+            <div data-ng-if="!auth.isAuthenticated()">
+                <md-button aria-label="Login" data-ng-click="signIn()">
+                    Login
+                </md-button>
+            </div>
+        </md-input-container>
+    </div>
+</md-toolbar>

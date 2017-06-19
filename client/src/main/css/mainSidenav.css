@@ -1,0 +1,8 @@
+/* http://stackoverflow.com/questions/27620354/how-to-change-width-of-a-sidenav-in-angular-material-design */
+md-sidenav,
+md-sidenav.md-locked-open,
+md-sidenav.md-closed.md-locked-open-add-active {
+    min-width: 180px !important;
+    width: 85vw !important;
+    max-width: 180px !important;
+}

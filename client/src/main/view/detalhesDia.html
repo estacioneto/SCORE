@@ -1,0 +1,44 @@
+<md-content id="main-page" layout-padding layout-wrap>
+    <!-- Content -->
+    <div class="content" layout="row" layout-align="center start" layout-wrap>
+        <!--Descricao superior-->
+        <div flex="100" layout="column" layout-align="start center">
+            <h2>{{ detalhesCtrl.data | date:'EEEE - MMMM dd, y' }}</h2>
+        </div>
+        <!--end Descricao superior-->
+
+        <!--Lista de horarios-->
+        <div flex="80" 
+            layout="row"
+            layout-wrap
+            layout-align="center end">
+            <!--Horario-->
+            <div layout-padding 
+                ng-repeat="(hora, reserva) in detalhesCtrl.horarios"
+                layout="row"
+                flex="100"
+                layout-align="center center"
+                ng-class-odd="'listra-impar'" ng-class-even="'listra-par'"
+                ng-click="detalhesCtrl.verReserva(reserva)"
+                layout-wrap>
+                <span flex="5"></span>
+                
+                <!--Hora-->
+                <span class="md-title">{{ hora | date }}</span>
+                <!--end Hora-->
+
+                <!--Espaçador e barra vertical-->
+                <span flex="5"></span>
+                <span flex="5" class="divisor"></span>
+                <!--end Espaçador e barra vertical-->
+                
+                <!--Descricao-->
+                <span flex class="md-title">{{ reserva.descricao || '-' }}</span>
+                <!--end Descricao-->
+            </div>
+            <!--end Horario-->
+        </div>
+        <!--end Lista de horarios-->
+    </div>
+    <!-- end Content -->
+</md-content>

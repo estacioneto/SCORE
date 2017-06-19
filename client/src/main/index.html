@@ -1,0 +1,94 @@
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>SCORE</title>
+
+  <!-- fontes do Material Design -->
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="application/font" href=fonts/fontawesome-webfont.ttf>
+  <link rel="application/font" href=fonts/fontawesome-webfont.woff>
+  <link rel="application/font" href=fonts/fontawesome-webfont.woff2>
+  <link rel="icon" href="../../../img/icons/favicon-16x16.png">
+
+  <!-- build:css css/main.css -->
+  <!-- CSS Material design -->
+  <link rel="stylesheet" type="text/css" href="../../vendor/css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../../vendor/css/bootstrap-material-design/bootstrap-material-design.min.css">
+  <link rel="stylesheet" type="text/css" href="../../vendor/css/ripples/ripples.min.css">
+  <link rel="stylesheet" type="text/css" href="../../vendor/css/angular-material/angular-material.min.css">
+  
+  <link rel="stylesheet" href="../../vendor/css/font-awesome/font-awesome.min.css">
+  <link rel="stylesheet" href="../../vendor/css/ADM-dateTimePicker/ADM-dateTimePicker.min.css">
+  <link rel="stylesheet" href="../../vendor/css/angular-material-calendar/angular-material-calendar.min.css">
+  <link rel="stylesheet" href="./css/mainStyle.css">
+  <link rel="stylesheet" href="./css/mainSidenav.css">
+  <!-- endbuild -->
+</head>
+
+<body data-ng-app="pitonApp" data-ng-strict-di>
+
+  <div id="content" data-ui-view></div>
+
+  <!-- build:js js/script.js -->
+
+  <!-- Lodash, Angular, JQuery and Bootstrap -->
+  <script src="../../vendor/js/lodash/lodash.min.js"></script>
+  <!--<script src="../../vendor/js/angular/angular.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.2/angular.js"></script>
+  <script src="../../vendor/js/angular-animate/angular-animate.min.js"></script>
+  <script src="../../vendor/js/angular-aria/angular-aria.min.js"></script>
+  <script src="../../vendor/js/angular-touch/angular-touch.min.js"></script>
+  <script src="../../vendor/js/angular-storage/angular-storage.min.js"></script>
+  <script src="../../vendor/js/angular-ui-router/angular-ui-router.js"></script>
+  <script src="../../vendor/js/angular-material/angular-material.min.js"></script>
+  <script src="../../vendor/js/jquery/jquery.min.js"></script>
+  <script src="../../vendor/js/ui-bootstrap-tpls/ui-bootstrap-tpls.js"></script>
+  <script src="../../vendor/js/bootstrap/bootstrap.min.js"></script>
+  <script src="../../vendor/js/ADM-dateTimePicker/ADM-dateTimePicker.min.js"></script>
+  <script src="../../vendor/js/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="../../vendor/js/angular-material-calendar/angular-material-calendar.min.js"></script>
+
+  <!-- Auth0 stuff -->
+  <script src="../../resources/auth0lock.min.js"></script>
+  <script src="../../vendor/js/auth0-angular/auth0-angular.min.js"></script>
+  <script src="../../vendor/js/angular-lock/angular-lock.min.js"></script>  
+  <script src="../../vendor/js/angular-jwt/angular-jwt.min.js"></script>
+
+  <!-- Config file(s) -->
+  <script src="config/Auth0Variables.js"></script>    
+
+  <!-- Factory -->
+  <script src="js/factory/User.js"></script>
+  <script src="js/factory/Reserva.js"></script>
+
+  <!-- Service -->
+  <script src="js/service/AuthService.js"></script>
+  <script src="js/service/ModalService.js"></script>
+  <script src="js/service/SearchService.js"></script>
+  <script src="js/service/ToastService.js"></script>
+
+  <!-- Controller -->
+  <script src="js/controller/AppController.js"></script>
+  <script src="js/controller/LoginController.js"></script>
+  <script src="js/controller/CalendarioController.js"></script>
+  <script src="js/controller/DetalhesDiaController.js"></script>
+  <script src="js/controller/DetalhesReservaController.js"></script>
+
+  <!-- Directive -->
+  <script src="js/directive/MainToolbarDirective.js"></script>
+  <script src="js/directive/MainFooterDirective.js"></script>
+  <script src="js/directive/SidebarDirective.js"></script>
+
+  <script src="js/directive/AboutDirective.js"></script>
+  <script src="js/directive/EasterEggsDirective.js"></script>
+
+  <!-- Routes -->
+  <script src="js/config.js"></script>
+  <script src="js/authConfig.js"></script>
+  <!-- endbuild -->
+</body>
+
+</html>

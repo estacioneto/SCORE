@@ -1,0 +1,15 @@
+<md-dialog aria-label="Simple Modal"
+           id="simple-modal"
+           layout-padding
+           layout="column"
+           layout-align="center center" flex="30">
+    <md-dialog-content class="simple-modal-header">
+        <h3 class="modal-title" ng-bind="title"></h3>
+    </md-dialog-content>
+    <md-dialog-content class="simple-modal-header">
+        <div class="modal-body" ng-bind="message"></div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="end center">
+        <md-button class="md-primary" ng-click="ok()">OK</md-button>
+    </md-dialog-actions>
+</md-dialog>
