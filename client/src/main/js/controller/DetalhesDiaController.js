@@ -3,7 +3,9 @@
     /**
      * Controller responsável pela view de detalhes do dia.
      */
-    angular.module('calendarioModulo').controller('DetalhesDiaController', ['ModalService', '$scope', 'data', 'Reserva', function (ModalService, $scope, data, Reserva) {
+    angular.module('calendarioModulo').controller('DetalhesDiaController', ['ModalService', '$scope', 'data', 'AgendamentoService', function (ModalService, $scope, data, AgendamentoService) {
+
+        const self = this;
 
         /**
          * Data selecionada para visualização.
@@ -13,10 +15,9 @@
         /**
          * Horários do dia.
          * 
-         * IMPORTANTE: seguir formato { hora: { evento } }
          * carregar do servidor.
          */
-        this.horarios = {};
+        this.reservas = [];
 
         this.verReserva = ModalService.verReserva;
 
@@ -24,23 +25,10 @@
          * Main
          */
         (() => {
-            this.horarios['08:00'] = new Reserva({
-                descricao: 'Evento de teste',
-                autor: 'Eric Breno',
-                hora: '08:00'
-            });
-            this.horarios['10:00'] = new Reserva({
-                descricao: 'Evento de teste evento de teste evento de teste evento de teste evento de teste evento de teste evento de teste evento de teste evento de teste ',
-                autor: 'Eric Breno',
-                hora: '10:00'
-            });
-            this.horarios['14:00'] = new Reserva({
-                descricao: 'Evento de teste',
-                autor: 'Eric Breno',
-                hora: '14:00'
-            });
-            this.horarios['16:00'] = new Reserva({
-                hora: '16:00'
+            AgendamentoService.getReservasDia(self.data).then(reservas => {
+                reservas.forEach(reserva => {
+                    self.reservas.push(reserva);
+                });
             });
         })();
     }]);

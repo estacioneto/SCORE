@@ -14,7 +14,7 @@
             layout-align="center end">
             <!--Horario-->
             <div layout-padding 
-                ng-repeat="(hora, reserva) in detalhesCtrl.horarios"
+                ng-repeat="reserva in detalhesCtrl.reservas | orderBy: 'hora'"
                 layout="row"
                 flex="100"
                 layout-align="center center"
@@ -24,7 +24,7 @@
                 <span flex="5"></span>
                 
                 <!--Hora-->
-                <span class="md-title">{{ hora | date }}</span>
+                <span class="md-title">{{ reserva.hora }}</span>
                 <!--end Hora-->
 
                 <!--Espaçador e barra vertical-->

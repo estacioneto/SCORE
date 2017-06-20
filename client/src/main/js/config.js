@@ -25,7 +25,8 @@
             'footerModule',
             'materialCalendar',
             'ngSanitize',
-            'calendarioModulo'
+            'calendarioModulo',
+            'agendamentoModulo'
         ]);
 
     app.constant('_', window._)

@@ -3,7 +3,7 @@
     /**
      * Controller responsável pela view do calendário.
      */
-    angular.module("calendarioModulo").controller("CalendarioController",['$scope', '$filter', '$state', function ($scope, $filter, $state) {
+    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$filter', '$state', 'AgendamentoService', function ($scope, $filter, $state, AgendamentoService) {
 
         const DETALHES_DIA_STATE = 'app.dia';
 
@@ -16,12 +16,12 @@
 
         // Mostrar tooltips
         this.tooltips = true;
-        
+
         // Deixar como null, pode se iniciar como array para marcar vários dias
         // não usaremos.
         this.dataSelecionada = null;
         // $scope.selectedDate = [];
-        
+
         // Primeiro dia da semana, 0 = domingo, 1 = segunda, ...
         this.primeiroDia = 0; // First day of the week, 0 for Sunday, 1 for Monday, etc.
 
@@ -33,7 +33,11 @@
          */
         this.clickDia = function (date) {
             console.log(date);
-            $state.go(DETALHES_DIA_STATE, { numeroDia: date.getDate(), numeroMes: date.getMonth(), ano: date.getFullYear() });
+            $state.go(DETALHES_DIA_STATE, {
+                numeroDia: date.getDate(),
+                numeroMes: date.getMonth(),
+                ano: date.getFullYear()
+            });
         };
 
         /**
@@ -64,7 +68,19 @@
          * @return Conteudo a aparecer na data.
          */
         this.carregarConteudoDia = function (date) {
-            return "<p></p>";
+            return AgendamentoService.getReservasDia(date).then(reservas => {
+                return getResumoReservas(reservas);
+            });
         };
+
+        function getResumoReservas(reservas) {
+            let out = '';
+            const cores = ["{background: \"blue-200\"}", "{background: \"cyan-300\"}", "{background: \"orange-600\"}", "{background: \"red-400\"}"]
+            reservas.forEach((reserva, indice) => {
+                if (reserva.descricao)
+                    out += "<span class='md-caption' md-colors='" + cores[indice] + "'>" + reserva.descricao + '</span><br>';
+            });
+            return out;
+        }
     }]);
 })();

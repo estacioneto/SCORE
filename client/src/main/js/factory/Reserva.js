@@ -3,7 +3,7 @@
     /**
      * Factory que representa a entidade de reserva.
      */
-    angular.module('calendarioModulo', []).factory('Reserva', ['$http', '$q', function ($http, $q) {
+    angular.module('agendamentoModulo', []).factory('Reserva', ['$http', '$q', function ($http, $q) {
 
         function Reserva(data) {
             this.autor = data.autor;
