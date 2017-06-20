@@ -19,7 +19,7 @@ var minifyHtml = require('gulp-minify-html');
 var rev = require('gulp-rev');
 
 var banner = ['/*!\n',
-    ' * PITON - ES 2016.2\n',
+    ' * SCORE - ES 2016.2\n',
     ' * Copyright 2016 - ' + (new Date()).getFullYear(), '\n',
     ' * Tema usado para base: Bootstrap Material Design\n',
     ' */\n',

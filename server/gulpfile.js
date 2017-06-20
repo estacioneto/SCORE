@@ -18,7 +18,7 @@ var exec  = child_process.exec,
     spawn = child_process.spawn;
 
 var banner = ['/*!\n',
-    ' * PITON - ES 2016.2\n',
+    ' * SCORE - ES 2016.2\n',
     ' * Copyright 2016 - ' + (new Date()).getFullYear(), '\n',
     ' * Tema usado para base: Bootstrap Material Design\n',
     ' */\n',
@@ -163,7 +163,7 @@ gulp.task('force-push', function (cb) {
  * ou seja, execute o comando {@code sudo service mongodb start}.
  */
 gulp.task('test', function () {
-    exec('mongo PITON-TESTDB --eval "db.dropDatabase();"', function (err, stdout, stderr) {
+    exec('mongo SCORE-TESTDB --eval "db.dropDatabase();"', function (err, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         runTests()
@@ -179,7 +179,7 @@ gulp.task('test', function () {
  * ou seja, execute o comando {@code sudo service mongodb start}.
  */
 gulp.task('test-continuar', function () {
-    exec('mongo PITON-TESTDB --eval "db.dropDatabase();"', function (err, stdout, stderr) {
+    exec('mongo SCORE-TESTDB --eval "db.dropDatabase();"', function (err, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
         return runTests();
@@ -200,7 +200,7 @@ gulp.task('test-coverage', function (cb) {
         .pipe(istanbul({ includeAllSources: true }))
         .pipe(istanbul.hookRequire())
         .on('end', function (err) {
-            var dropDB = spawn('mongo', ['PITON-TESTDB', '--eval', '"db.dropDatabase();"']);
+            var dropDB = spawn('mongo', ['SCORE-TESTDB', '--eval', '"db.dropDatabase();"']);
             dropDB.stdout.on('data', function (data) {
                 process.stdout.write(data.toString()); 
             });

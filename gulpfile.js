@@ -17,7 +17,7 @@ var exec  = child_process.exec,
     spawn = child_process.spawn;
 
 var banner = ['/*!\n',
-    ' * PITON - ES 2016.2\n',
+    ' * SCORE - ES 2016.2\n',
     ' * Copyright 2016 - ' + (new Date()).getFullYear(), '\n',
     ' * Tema usado para base: Bootstrap Material Design\n',
     ' */\n',
