@@ -3,8 +3,8 @@
 
     var toolbar = angular.module('toolbarModule', []);
 
-    toolbar.directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'ToastService', 'SearchService', '$mdSidenav', 'User',
-        function ($state, $rootScope, AuthService, ToastService, SearchService, $mdSidenav, User) {
+    toolbar.directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', 'SearchService', '$mdSidenav', 'User',
+        function ($state, $rootScope, AuthService, AuthLockService, ToastService, SearchService, $mdSidenav, User) {
             return {
                 restrict: 'AE',
                 templateUrl: './view/mainToolbar.html',
@@ -81,6 +81,7 @@
                      */
                     scope.signIn = function () {
                         scope.lock.show();
+                        AuthLockService.inicializarVerificacoes();
                     };
 
                     function redirect(user) {

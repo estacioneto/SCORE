@@ -34,24 +34,13 @@ const LOCK_CONFIG = {
         }
     }, {
         name: 'numero_telefone',
-        placeholder: 'DDD + Número (sem espaço)',
+        placeholder: '(DDD) Número (8 ou 9 dígitos)',
         icon: 'img/icons/phone.png',
         validator: function (number) {
             return {
-                valid: new RegExp(/\d{11}/).test(number),
-                hint: "Número deve seguir padrão indicado: DDD + Número (Sem espaço entre eles)" // optional
+                valid: new RegExp(/\(\d{2}\) \d{8,9}/).test(number),
+                hint: "Número deve seguir padrão: (DDD) Número 8 ou 9 dígitos " // optional
             };
         }
-    }, {
-        type: "select",
-        name: "papel",
-        icon: 'img/icons/worker.png',
-        placeholder: "Papel na UFCG",
-        options: [
-            {value: "professor", label: "Professor"},
-            {value: "graduando", label: "Aluno de Graduação"},
-            {value: "pos-graduando", label: "Aluno de Pós-Graduação"},
-            {value: "funcionario", label: "Funcionário"}
-        ]
     }]
 };
