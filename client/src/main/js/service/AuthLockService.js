@@ -57,6 +57,7 @@
             let campoTelefone = _.find(campos, element => element.name === 'numero_telefone');
             if (!campoTelefone) {
                 // Caso o campo não tenha sido inicializado, tenta novamente após algum tempo.
+                console.log('not ok');
                 $timeout(verificarNumeroTelefone, TIMEOUT_VERIFICACAO);
             } else {
                 console.log('ok');
