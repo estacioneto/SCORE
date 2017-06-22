@@ -10,7 +10,6 @@ const LOCK_CONFIG = {
     auth: {
         redirect: false
     },
-    avatar: null,
     theme: {
         logo: 'img/icons/ufcg-360x388.png',
         primaryColor: "#3E4095"
@@ -18,7 +17,8 @@ const LOCK_CONFIG = {
     languageDictionary: {
         title: "SCORE - UASC",
         emailInputPlaceholder: 'seu@email.com',
-        passwordInputPlaceholder: 'Sua senha'
+        passwordInputPlaceholder: 'Sua senha',
+        welcome: 'Bem vindo, %s!'
     },
     language: 'pt-br',
     autoclose: true,
