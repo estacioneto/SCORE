@@ -4,6 +4,7 @@
   "description": "Projeto da disciplina de Laboratório de Engenharia de Software - 2017.1 - Universidade Federal de Campina Grande",
   "main": "app.js",
   "scripts": {
+    "prestart": "yarn install",
     "start": "node app.js",
     "pretest": "yarn install",
     "test": "mocha"

@@ -8,18 +8,20 @@
             return {
                 restrict: 'AE',
                 templateUrl: './view/sidebarPiton.html',
-                scope : {
-                    controller: '='
-                },
+                scope : {},
                 link: function (scope, element, attrs) {
                     scope.auth = AuthService;
-                    scope.user = scope.auth.getLoggedUser();
+                    scope.usuario = scope.auth.getLoggedUser();
+
+                    const {user_metadata} = scope.usuario;
+
+                    scope.nomeUsuario = _.first(user_metadata.nome_completo.split(' '));
 
                     /**
                      * Simply toggles the sidebar.
                      */
                     scope.toggleSidebar = function () {
-                        var sidenav = $mdSidenav('main-sidenav');
+                        const sidenav = $mdSidenav('main-sidenav');
                         if (sidenav.isOpen()) {
                             sidenav.close();
                         } else {

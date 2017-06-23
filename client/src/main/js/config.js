@@ -80,7 +80,7 @@
         /**
          * State config
          */
-        .config(['$stateProvider', function ($stateProvider) {
+        .config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
             var view = './view/';
             $stateProvider
                 .state('app', {
@@ -111,14 +111,14 @@
                             return new Date(ano, mes, dia);
                         }
                     }
-                })
-                
+                });
+            $locationProvider.html5Mode(true);
         }])
         .config(['$mdThemingProvider', function ($mdThemingProvider) {
             $mdThemingProvider.setNonce();
             $mdThemingProvider.theme('default')
-                .primaryPalette('purple', {default: '800'})
-                .accentPalette('purple', {default: 'A200'});
+                .primaryPalette('indigo', {default: 'A200'})
+                .accentPalette('blue', {default: '500'});
         }]);
     app.run(['$rootScope', 'ModalService', function ($rootScope, ModalService) {
         $rootScope._ = window._;

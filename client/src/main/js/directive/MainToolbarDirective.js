@@ -84,15 +84,6 @@
                         AuthLockService.inicializarVerificacoes();
                     };
 
-                    function redirect(user) {
-                        if (user.email_verified) {
-                            scope.showActionToast('Your e-mail is verified! You can use the app!');
-                            $state.go('app.home');
-                        } else {
-                            scope.showActionToast('Verify your e-mail and then reload the page!');
-                        }
-                    }
-
                     /**
                      * Contains the authentication logic related to the controller after the lock.
                      *
@@ -105,7 +96,7 @@
                             }
                             scope.user = new User(user);
                             AuthService.authenticate(authResult.idToken, scope.user);
-                            redirect(user);
+                            $state.go('app.home');
                         });
                     }
 

@@ -12,7 +12,7 @@ const LOCK_CONFIG = {
     },
     theme: {
         logo: 'img/icons/ufcg-360x388.png',
-        primaryColor: "#3E4095"
+        primaryColor: "#3F51B5"
     },
     languageDictionary: {
         title: "SCORE - UASC",
