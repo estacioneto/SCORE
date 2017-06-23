@@ -23,7 +23,7 @@
          * Inicializa as verificações necessárias no lock.
          */
         this.inicializarVerificacoes = function () {
-            let conteudoLock = _.first(document.getElementsByClassName('auth0-lock-content'));
+            let conteudoLock = _.first(document.getElementsByClassName('auth0-lock-widget-container'));
             if (!conteudoLock) {
                 // Caso o conteúdo do lock não tenha sido inicializado, tenta novamente após algum tempo.
                 $timeout(self.inicializarVerificacoes, TIMEOUT_VERIFICACAO);
