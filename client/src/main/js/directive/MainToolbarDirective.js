@@ -55,16 +55,6 @@
                         $rootScope.$broadcast('filter');
                     };
 
-                    /**
-                     * Configures the Auth0 lock modal.
-                     */
-                    if (!scope.auth.isAuthenticated()) {
-                        // https://auth0.com/docs/libraries/custom-signup#using-lock
-                        // user.user_metadata é onde fica os valores dos campos extras
-                        scope.lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, LOCK_CONFIG);
-                        scope.lock.on('authenticated', authenticate);
-                    }
-
                     scope.user = AuthService.getLoggedUser();
 
                     /**
@@ -147,6 +137,14 @@
                     scope.goHome = function () {
                         $state.go(true || scope.auth.isAuthenticated() ? 'app.home' : 'app.login');
                     };
+
+                    /**
+                     * Função principal.
+                     */
+                    (() => {
+                        scope.lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, LOCK_CONFIG);
+                        scope.lock.on('authenticated', authenticate);
+                    })();
                 }
             };
         }]);

@@ -7,7 +7,7 @@
         function ($state, $rootScope, AuthService, $mdSidenav) {
             return {
                 restrict: 'AE',
-                templateUrl: './view/sidebarPiton.html',
+                templateUrl: './view/sidebar.html',
                 scope : {},
                 link: function (scope, element, attrs) {
                     scope.auth = AuthService;
