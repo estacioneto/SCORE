@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var mocksModule = angular.module('Mocks', ['userModule']);
+    var mocksModule = angular.module('Mocks', ['userModule', 'localModulo']);
 
     mocksModule.factory('UserMock', ['User', function (User) {
         this.get = function () {
@@ -31,5 +31,18 @@
         return {
             get: this.get
         };
+    }]);
+
+    mocksModule.factory('LocaisMock', ['Local', function (Local) {
+        const auditorioSPLab = {nome: 'Auditório SPLab', predio: 'SPLab'},
+            auditorioHattori = {nome: 'Auditório Hattori', predio: 'CN'},
+            salaReunioes = {nome: 'Sala de Reuniões', predio: 'SPLab'};
+        const locais = [auditorioSPLab, auditorioHattori, salaReunioes];
+
+        function getLocais() {
+            return locais.map(local => new Local(local));
+        }
+
+        return {getLocais};
     }]);
 })();

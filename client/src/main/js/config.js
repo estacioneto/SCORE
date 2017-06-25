@@ -8,10 +8,13 @@
             'ui.bootstrap',
             'ngAria',
             'ngMaterial',
+            'ngSanitize',
             'auth0',
             'angular-storage',
             'angular-jwt',
             'auth0.lock',
+
+            // Nossos modulos
             'modalModule',
             'login',
             'authModule',
@@ -23,10 +26,10 @@
             'aboutModule',
             'footerModule',
             'materialCalendar',
-            'ngSanitize',
             'calendarioModulo',
             'agendamentoModulo',
-            'autenticacaoModulo'
+            'autenticacaoModulo',
+            'localModulo'
         ]);
 
     app.constant('_', window._)
