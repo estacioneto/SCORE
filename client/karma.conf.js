@@ -44,7 +44,7 @@
                 'src/main/js/service/SearchService.js',
                 'src/main/js/service/AuthService.js',
                 'src/main/js/service/ToastService.js',
-                'src/main/js/factory/User.js',
+                'src/main/js/factory/Usuario.js',
                 'src/main/js/factory/Reserva.js',
                 'src/main/js/controller/AppController.js',
                 'src/main/js/controller/LoginController.js',

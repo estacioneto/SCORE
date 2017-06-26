@@ -1,7 +1,5 @@
 (function () {
     "use strict";
-    var authModule = angular.module('authModule', []);
-
     //https://github.com/auth0/auth0-angular
 
     /**
@@ -10,7 +8,7 @@
      *
      * @author Estácio Pereira
      */
-    authModule.service('AuthService', ['$http', 'store', '$rootScope', '$q', 'auth', 'User', 'ToastService', function ($http, store, $rootScope, $q, auth, User, ToastService) {
+    angular.module('authModule', []).service('AuthService', ['$http', 'store', '$rootScope', '$q', 'auth', 'Usuario', 'ToastService', function ($http, store, $rootScope, $q, auth, Usuario, ToastService) {
         var self = this;
 
         /**
@@ -56,7 +54,7 @@
          */
         this.getLoggedUser = function () {
             return (angular.isString(auth.profile)) ?
-                new User(JSON.parse(auth.profile)) : auth.profile;
+                new Usuario(JSON.parse(auth.profile)) : auth.profile;
         };
 
         /**

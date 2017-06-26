@@ -28,6 +28,7 @@
 
         this.onChangeLocal = function (local) {
             this.local = local;
+            console.log('Local selecionado: ', local);
         };
 
         this.mensagemLocalNaoSelecionado = 'Selecione um auditório válido!';

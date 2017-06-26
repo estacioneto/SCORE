@@ -1,10 +1,8 @@
 (function () {
     'use strict';
 
-    var toolbar = angular.module('toolbarModule', []);
-
-    toolbar.directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', 'SearchService', '$mdSidenav', 'User',
-        function ($state, $rootScope, AuthService, AuthLockService, ToastService, SearchService, $mdSidenav, User) {
+    angular.module('toolbarModulo', []).directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', 'SearchService', '$mdSidenav', 'Usuario',
+        function ($state, $rootScope, AuthService, AuthLockService, ToastService, SearchService, $mdSidenav, Usuario) {
             return {
                 restrict: 'AE',
                 templateUrl: './view/mainToolbar.html',
@@ -18,14 +16,7 @@
                      * @type {{[state]: [{[name]: [string], [icon]: [string]}]}}
                      */
                     scope.availableStates = {
-                        'app.home': [{
-                            name: 'app.archive',
-                            icon: 'fa fa-archive'
-                        }],
-                        'app.archive': [{
-                            name: 'app.home',
-                            icon: 'fa fa-home'
-                        }]
+                        'app.home': []
                     };
 
                     /**
@@ -84,7 +75,7 @@
                             if (err) {
                                 return console.log('Auth error: ' + error);
                             }
-                            scope.user = new User(user);
+                            scope.user = new Usuario(user);
                             AuthService.authenticate(authResult.idToken, scope.user);
                             $state.go('app.home');
                         });

@@ -6,21 +6,9 @@
                  class="img-circle img-responsive custom-centered">
             <h3 class="text-center" data-ng-bind="nomeUsuario"></h3>
         </div>
-        <md-divider></md-divider>
+        <md-divider layout-padding></md-divider>
 
         <div layout="column">
-            <md-input-container>
-                <label>Local</label>
-                <md-select ng-model="localSelecionado">
-                    <div data-ng-repeat="predio in predios">
-                        <md-optgroup label="{{predio}}">
-                            <md-option ng-value="local.nome" ng-repeat="local in locais | filter: {predio: predio}">
-                                {{local.nome}}
-                            </md-option>
-                        </md-optgroup>
-                    </div>
-                </md-select>
-            </md-input-container>
         </div>
     </md-content>
 </md-sidenav>
