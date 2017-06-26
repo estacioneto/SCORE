@@ -180,21 +180,9 @@ md-dialog:hover .cover-scroll-bar {
     color: darkorchid;
 }
 
-md-input-container:not(.md-input-invalid) .md-input {
-    border-style: none;
-}
-
 .todo-input {
     margin-top: 6px !important;
     max-height: 50px;
-}
-
-md-input-container .md-input {
-    font-size: 15px;
-    line-height: 19px;
-    min-height: 29px;
-    font-weight: 400;
-    font-family: 'Roboto', sans-serif;
 }
 
 .calendario {

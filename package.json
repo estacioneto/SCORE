@@ -46,6 +46,7 @@
     "angular-lock": "^2.0.2",
     "angular-material": "^1.1.1",
     "angular-material-calendar": "^0.2.14",
+    "angular-messages": "^1.6.4",
     "angular-mocks": "^1.6.2",
     "angular-storage": "0.0.15",
     "angular-touch": "^1.6.2",

@@ -8,6 +8,7 @@
             'ui.bootstrap',
             'ngAria',
             'ngMaterial',
+            'ngMessages',
             'ngSanitize',
             'auth0',
             'angular-storage',

@@ -8,6 +8,11 @@
             <!-- MainContent -->
             <div class="caixa-calendario" 
                 layout="column" flex>
+                <select-search ng-if="calendarioCtrl.locais"
+                               titulo="Local"
+                               on-change-item="calendarioCtrl.onChangeLocal(item)"
+                               opcoes="calendarioCtrl.locais"
+                               mensagem-item-nao-selecionado="calendarioCtrl.mensagemLocalNaoSelecionado"></select-search>
                 <!-- Calendar -->
                 <md-content id="main-field" layout="row" layout-wrap>
                     <calendar-md class="calendario"
@@ -29,7 +34,7 @@
                     </calendar-md>
                 </md-content>
                 <!-- end Calendar -->
-            </div>
+            </select-search>
             <!-- end MainContent -->
         </div>
         <!-- end Content -->

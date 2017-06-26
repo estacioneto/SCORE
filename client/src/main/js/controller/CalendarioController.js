@@ -3,9 +3,10 @@
     /**
      * Controller responsável pela view do calendário.
      */
-    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$filter', '$state', 'AgendamentoService', function ($scope, $filter, $state, AgendamentoService) {
+    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$filter', '$state', 'AgendamentoService', 'LocaisService', function ($scope, $filter, $state, AgendamentoService, LocaisService) {
 
         const DETALHES_DIA_STATE = 'app.dia';
+        const self = this;
 
         // Formatação para o dia.
         this.formatacaoDia = "d";
@@ -24,6 +25,12 @@
 
         // Primeiro dia da semana, 0 = domingo, 1 = segunda, ...
         this.primeiroDia = 0; // First day of the week, 0 for Sunday, 1 for Monday, etc.
+
+        this.onChangeLocal = function (local) {
+            this.local = local;
+        };
+
+        this.mensagemLocalNaoSelecionado = 'Selecione um auditório válido!';
 
         /**
          * Callback a ser executado quando se clicar em um dia.
@@ -82,5 +89,11 @@
             });
             return out;
         }
+
+        (() => {
+            LocaisService.carregarLocais().then(info => {
+                self.locais = info.data;
+            });
+        })();
     }]);
 })();
