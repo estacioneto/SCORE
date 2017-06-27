@@ -7,8 +7,15 @@
             <h3 class="text-center" data-ng-bind="nomeUsuario"></h3>
         </div>
         <md-divider layout-padding></md-divider>
-
-        <div layout="column">
+        <div>
+            <h4 class="text-center">Telefone:</h4>
+            <h5 class="text-center" data-ng-bind="usuario.numero_telefone"></h5>
         </div>
+        <div>
+            <h4 class="text-center">E-mail:</h4>
+            <h5 class="text-center" data-ng-bind="getNomeEmail()"></h5>
+            <h6 class="text-center" data-ng-bind="getDominioEmail()"></h6>
+        </div>
+
     </md-content>
 </md-sidenav>

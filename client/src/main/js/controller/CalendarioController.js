@@ -28,7 +28,13 @@
 
         this.onChangeLocal = function (local) {
             this.local = local;
+            // TODO: Implementar mudança de calendário quando auditório selecionado. @author Estácio Pereira.
             console.log('Local selecionado: ', local);
+        };
+
+        this.visualizarAuditorio = function () {
+            // TODO: Implementar visualização de auditório. @author Estácio Pereira.
+            console.log('Local selecionado: ', this.local);
         };
 
         this.mensagemLocalNaoSelecionado = 'Selecione um auditório válido!';

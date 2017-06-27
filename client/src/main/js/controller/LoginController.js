@@ -10,10 +10,7 @@
             this.user = AuthService.getLoggedUser();
 
             function redirect(user) {
-                if (user.email_verified) {
-                    self.showActionToast('Your e-mail is verified! You can use the app!');
-                    $state.go('app.home');
-                }
+                $state.go('app.home');
             }
 
             this.showActionToast = function (message) {

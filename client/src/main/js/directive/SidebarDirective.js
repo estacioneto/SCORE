@@ -6,13 +6,22 @@
             return {
                 restrict: 'AE',
                 templateUrl: './view/sidebar.html',
-                scope : {},
+                scope: {},
                 link: function (scope, element, attrs) {
                     scope.auth = AuthService;
-                    scope.usuario = scope.auth.getLoggedUser();
-                    const usuario = new Usuario(scope.usuario);
+                    scope.usuario = new Usuario(scope.auth.getLoggedUser());
 
-                    scope.nomeUsuario = _.first(usuario.nome_completo.split(' '));
+                    scope.nomeUsuario = _.first(scope.usuario.nome_completo.split(' '));
+
+                    scope.getNomeEmail = function () {
+                        const indiceQuebra = scope.usuario.email.indexOf('@');
+                        return scope.usuario.email.substring(PRIMEIRO_INDICE, indiceQuebra);
+                    };
+
+                    scope.getDominioEmail = function () {
+                        const indiceQuebra = scope.usuario.email.indexOf('@');
+                        return scope.usuario.email.substring(indiceQuebra);
+                    };
 
                     /**
                      * Simply toggles the sidebar.
