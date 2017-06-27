@@ -11,7 +11,7 @@
      *
      * @author Estácio Pereira.
      */
-    angular.module('searchModule').component('selectSearch', {
+    angular.module('buscaModulo').component('selectSearch', {
         templateUrl: 'view/component/select-search.html',
         controller: selectSearchController,
         bindings: {

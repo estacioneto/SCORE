@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var searchModule = angular.module('searchModule', []);
+    var searchModule = angular.module('buscaModulo', []);
 
     /**
      * This Service deals with the Search deep logic.

@@ -11,15 +11,6 @@
                     scope.auth = AuthService;
 
                     /**
-                     * The object containing the available states given the current as key.
-                     *
-                     * @type {{[state]: [{[name]: [string], [icon]: [string]}]}}
-                     */
-                    scope.availableStates = {
-                        'app.home': []
-                    };
-
-                    /**
                      * Function to toggle the sidebar menu
                      */
                     scope.menuFunction = function () {
@@ -29,21 +20,6 @@
                         } else {
                             sidenav.toggle();
                         }
-                    };
-
-                    /**
-                     * @returns {string | undefined} The tag search param.
-                     */
-                    scope.getSearchedTag = function () {
-                        return (SearchService.searchParams.tags) ? SearchService.searchParams.tags.value : undefined;
-                    };
-
-                    /**
-                     * Removes the tag param and then filters the notes.
-                     */
-                    scope.removeTag = function () {
-                        SearchService.deleteParam('tags');
-                        $rootScope.$broadcast('filter');
                     };
 
                     scope.user = AuthService.getLoggedUser();
@@ -81,14 +57,6 @@
                         });
                     }
 
-                    scope.showActionToast = function (message) {
-                        return ToastService.showActionToast({
-                            textContent: message,
-                            action: 'OK',
-                            hideDelay: 5000
-                        });
-                    };
-
                     /**
                      * Gets the current state name to show to the user.
                      *
@@ -100,26 +68,6 @@
                             return scope.getStateName($state.current.name.toUpperCase());
                         }
                         return 'SCORE';
-                    };
-
-                    /**
-                     * Given an state name, gets the last name of it.
-                     *
-                     * @param   {string} stateName Full name of the state
-                     * @returns {string} Last name of the state.
-                     */
-                    scope.getStateName = function (stateName) {
-                        return _.last(stateName.split('.'));
-                    };
-
-                    /**
-                     * Returns the available states by accessing the current one.
-                     *
-                     * @returns {Array} List of the available states.
-                     */
-                    scope.getAvailableStates = function () {
-                        var currentState = $state.current.name;
-                        return scope.availableStates[currentState];
                     };
 
                     /**
