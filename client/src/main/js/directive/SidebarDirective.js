@@ -1,21 +1,27 @@
-(function () {
+(() => {
     'use strict';
 
-    var sidebar = angular.module('sidebarModule', []);
-
-    sidebar.directive('sidebarPiton', ['$state', '$rootScope', 'AuthService', '$mdSidenav',
-        function ($state, $rootScope, AuthService, $mdSidenav) {
+    angular.module('sidebarModulo', []).directive('sidebar', ['$state', '$rootScope', '$mdSidenav', 'AuthService', 'Usuario',
+        function ($state, $rootScope, $mdSidenav, AuthService, Usuario) {
             return {
                 restrict: 'AE',
-                templateUrl: './view/sidebarPiton.html',
-                scope : {},
+                templateUrl: './view/sidebar.html',
+                scope: {},
                 link: function (scope, element, attrs) {
                     scope.auth = AuthService;
-                    scope.usuario = scope.auth.getLoggedUser();
+                    scope.usuario = new Usuario(scope.auth.getLoggedUser());
 
-                    const {user_metadata} = scope.usuario;
+                    scope.nomeUsuario = _.first(scope.usuario.nome_completo.split(' '));
 
-                    scope.nomeUsuario = _.first(user_metadata.nome_completo.split(' '));
+                    scope.getNomeEmail = function () {
+                        const indiceQuebra = scope.usuario.email.indexOf('@');
+                        return scope.usuario.email.substring(PRIMEIRO_INDICE, indiceQuebra);
+                    };
+
+                    scope.getDominioEmail = function () {
+                        const indiceQuebra = scope.usuario.email.indexOf('@');
+                        return scope.usuario.email.substring(indiceQuebra);
+                    };
 
                     /**
                      * Simply toggles the sidebar.
@@ -27,7 +33,7 @@
                         } else {
                             sidenav.toggle();
                         }
-                    }
+                    };
                 }
             };
         }]);

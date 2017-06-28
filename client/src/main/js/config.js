@@ -8,40 +8,37 @@
             'ui.bootstrap',
             'ngAria',
             'ngMaterial',
+            'ngMessages',
+            'ngSanitize',
             'auth0',
             'angular-storage',
             'angular-jwt',
             'auth0.lock',
+
+            // Nossos modulos
             'modalModule',
             'login',
             'authModule',
             'userModule',
-            'toolbarModule',
+            'toolbarModulo',
             'toastModule',
-            'sidebarModule',
-            'ADM-dateTimePicker',
-            'searchModule',
+            'sidebarModulo',
+            'buscaModulo',
             'aboutModule',
             'footerModule',
             'materialCalendar',
-            'ngSanitize',
             'calendarioModulo',
             'agendamentoModulo',
-            'autenticacaoModulo'
+            'autenticacaoModulo',
+            'localModulo'
         ]);
 
     app.constant('_', window._)
     /**
      * Auth config
      */
-        .config(['$urlRouterProvider', '$provide', '$httpProvider', 'ADMdtpProvider',
-            function ($urlRouterProvider, $provide, $httpProvider, ADMdtpProvider) {
-
-                ADMdtpProvider.setOptions({
-                    calType: 'gregorian',
-                    format: 'DD-MM-YYYY (hh:mm)',
-                    default: ''
-                });
+        .config(['$urlRouterProvider', '$provide', '$httpProvider',
+            function ($urlRouterProvider, $provide, $httpProvider) {
 
                 /**
                  * Adds watchers for requests open and close. While there's an
@@ -81,7 +78,7 @@
          * State config
          */
         .config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
-            var view = './view/';
+            const view = './view/';
             $stateProvider
                 .state('app', {
                     abstract: true,
@@ -127,20 +124,17 @@
         $rootScope.appPrimaryColor = 'teal';
         $rootScope.appSecondaryColor = 'teal';
 
-        var _modalResp_ = null;
-        $rootScope.$on('loading_show', function () {
-            if (!_modalResp_) {
-                _modalResp_ = ModalService.loadingIndicatorModal();
-                _modalResp_.open();
-            } else {
+        const _modalResp_ = ModalService.loadingIndicatorModal();
+        _modalResp_.attach().then(function () {
+            $rootScope.$on('loading_show', function () {
                 _modalResp_.show();
-            }
-        });
+            });
 
-        $rootScope.$on('loading_hide', function () {
-            if (_modalResp_) {
-                _modalResp_.hide();
-            }
+            $rootScope.$on('loading_hide', function () {
+                if (_modalResp_) {
+                    _modalResp_.hide();
+                }
+            });
         });
     }]);
 }());

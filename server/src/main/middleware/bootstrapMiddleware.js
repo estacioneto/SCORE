@@ -36,7 +36,10 @@
         app.use('/resources', express.static(path.resolve(__dirname + client_path + '/resources')));
         app.use('/img', express.static(path.resolve(__dirname + root_path + '/img')));
 
-        app.get('/app/*', (req, res) => {
+        // console.log(path.resolve(__dirname + root_path + '/node_modules'));
+        app.use('/node_modules', express.static(path.resolve(__dirname + root_path + '/node_modules')));
+
+        app.get('/app*', (req, res) => {
             res.sendFile(path.resolve(filesPath + '/index.html'));
         });
 

@@ -64,7 +64,6 @@ var extsJs = [
     "jquery/dist/jquery.min.js",
     "angular-ui-bootstrap/dist/ui-bootstrap-tpls.js",
     "bootstrap/dist/js/bootstrap.min.js",
-    "adm-dtp/dist/ADM-dateTimePicker.min.js",
     "auth0-angular/build/auth0-angular.min.js",
     "angular-lock/dist/angular-lock.min.js",
     "angular-jwt/dist/angular-jwt.min.js"
@@ -75,7 +74,6 @@ var extsCss = [
     "bootstrap-material-design/dist/css/bootstrap-material-design.min.css",
     "bootstrap-material-design/dist/css/ripples.min.css",
     "angular-material/angular-material.min.css",
-    "adm-dtp/dist/ADM-dateTimePicker.min.css",
     "font-awesome/css/font-awesome.min.css"
 ];
 

@@ -1,32 +1,14 @@
 (function () {
     'use strict';
 
-    var toolbar = angular.module('toolbarModule', []);
-
-    toolbar.directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', 'SearchService', '$mdSidenav', 'User',
-        function ($state, $rootScope, AuthService, AuthLockService, ToastService, SearchService, $mdSidenav, User) {
+    angular.module('toolbarModulo', []).directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', 'SearchService', '$mdSidenav', 'Usuario',
+        function ($state, $rootScope, AuthService, AuthLockService, ToastService, SearchService, $mdSidenav, Usuario) {
             return {
                 restrict: 'AE',
                 templateUrl: './view/mainToolbar.html',
                 scope: {},
                 link: function (scope, element, attrs) {
                     scope.auth = AuthService;
-
-                    /**
-                     * The object containing the available states given the current as key.
-                     *
-                     * @type {{[state]: [{[name]: [string], [icon]: [string]}]}}
-                     */
-                    scope.availableStates = {
-                        'app.home': [{
-                            name: 'app.archive',
-                            icon: 'fa fa-archive'
-                        }],
-                        'app.archive': [{
-                            name: 'app.home',
-                            icon: 'fa fa-home'
-                        }]
-                    };
 
                     /**
                      * Function to toggle the sidebar menu
@@ -39,31 +21,6 @@
                             sidenav.toggle();
                         }
                     };
-
-                    /**
-                     * @returns {string | undefined} The tag search param.
-                     */
-                    scope.getSearchedTag = function () {
-                        return (SearchService.searchParams.tags) ? SearchService.searchParams.tags.value : undefined;
-                    };
-
-                    /**
-                     * Removes the tag param and then filters the notes.
-                     */
-                    scope.removeTag = function () {
-                        SearchService.deleteParam('tags');
-                        $rootScope.$broadcast('filter');
-                    };
-
-                    /**
-                     * Configures the Auth0 lock modal.
-                     */
-                    if (!scope.auth.isAuthenticated()) {
-                        // https://auth0.com/docs/libraries/custom-signup#using-lock
-                        // user.user_metadata é onde fica os valores dos campos extras
-                        scope.lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, LOCK_CONFIG);
-                        scope.lock.on('authenticated', authenticate);
-                    }
 
                     scope.user = AuthService.getLoggedUser();
 
@@ -94,19 +51,11 @@
                             if (err) {
                                 return console.log('Auth error: ' + error);
                             }
-                            scope.user = new User(user);
+                            scope.user = new Usuario(user);
                             AuthService.authenticate(authResult.idToken, scope.user);
                             $state.go('app.home');
                         });
                     }
-
-                    scope.showActionToast = function (message) {
-                        return ToastService.showActionToast({
-                            textContent: message,
-                            action: 'OK',
-                            hideDelay: 5000
-                        });
-                    };
 
                     /**
                      * Gets the current state name to show to the user.
@@ -122,31 +71,19 @@
                     };
 
                     /**
-                     * Given an state name, gets the last name of it.
-                     *
-                     * @param   {string} stateName Full name of the state
-                     * @returns {string} Last name of the state.
-                     */
-                    scope.getStateName = function (stateName) {
-                        return _.last(stateName.split('.'));
-                    };
-
-                    /**
-                     * Returns the available states by accessing the current one.
-                     *
-                     * @returns {Array} List of the available states.
-                     */
-                    scope.getAvailableStates = function () {
-                        var currentState = $state.current.name;
-                        return scope.availableStates[currentState];
-                    };
-
-                    /**
                      * Simply goes home.
                      */
                     scope.goHome = function () {
                         $state.go(true || scope.auth.isAuthenticated() ? 'app.home' : 'app.login');
                     };
+
+                    /**
+                     * Função principal.
+                     */
+                    (() => {
+                        scope.lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, LOCK_CONFIG);
+                        scope.lock.on('authenticated', authenticate);
+                    })();
                 }
             };
         }]);

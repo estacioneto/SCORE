@@ -52,13 +52,11 @@
             $httpProvider.interceptors.push('APIInterceptor');
 
         }]).run(['$rootScope', 'auth', 'store', 'jwtHelper', function ($rootScope, auth, store, jwtHelper) {
-            $rootScope.$on('$stateChangeStart', function () {
-                var token = store.get('idToken');
-                if (token) {
-                    if (!jwtHelper.isTokenExpired(token) && !auth.isAuthenticated) {
-                        auth.authenticate(store.get('user'), token);
-                    }
+            const token = store.get('idToken');
+            if (token) {
+                if (!jwtHelper.isTokenExpired(token) && !auth.isAuthenticated) {
+                    auth.authenticate(store.get('user'), token);
                 }
-            });
+            }
         }]);
 } ());
