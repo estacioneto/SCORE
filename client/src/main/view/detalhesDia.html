@@ -14,7 +14,7 @@
             layout-align="center end">
             <!--Horario-->
             <div layout-padding 
-                ng-repeat="reserva in detalhesCtrl.reservas | orderBy: 'hora'"
+                ng-repeat="reserva in detalhesCtrl.reservas | orderBy: 'getHoraFormatada()'"
                 layout="row"
                 flex="100"
                 layout-align="center center"

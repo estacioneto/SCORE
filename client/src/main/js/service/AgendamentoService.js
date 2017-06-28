@@ -7,6 +7,7 @@
         let promiseEventosFuturos;
 
         /**
+         * TODO: a implementar, depende do servidor.
          * Remove uma reserva do dia.
          * @param dataReserva Data da reserva.
          * @param reserva Reserva a ser excluida.
@@ -20,27 +21,33 @@
         };
 
         // TODO: o salvamento vai ser assim? Com um cara daqui, em vez da factory
+        // TODO: a implementar, depende do servidor.
         this.salvarReserva = (dataReserva, reserva) => {
             return this.getReservasDia(dataReserva).then(reservasDia => {
-                console.log("valiadndo", reservasDia, reserva);
                 validarAdicaoReserva(reservasDia, reserva);
                 return atualizarDia(dataReserva, reserva);
             });
         };
 
-        // TODO: o que poderiamos validar? hum
+        /**
+         * Realiza validações para adição de reserva ao dia.
+         * -Valida se existe choque de horário.
+         * @param {*} reservasDia 
+         * @param {*} reserva 
+         */
         function validarAdicaoReserva(reservasDia, reserva) {
             const inicio = reserva.inicio;
             const fim = reserva.fim;
 
             for (let i = 0; i < reservasDia.length; i++) {
                 const r = reservasDia[i];
-                console.log("na valid", reserva.id, r.id, reserva, r);
                 if (reserva.id === r.id) {
                     continue;
                 }
-                console.log(r.fim > inicio, r.inicio < fim);
-                if (!(r.fim <= inicio || r.inicio >= fim)) {
+                if (r.fim > inicio && r.inicio < inicio
+                    || r.inicio < fim && r.fim > fim
+                    || r.inicio > inicio && r.fim < fim
+                    || r.inicio < inicio && r.fim > fim) {
                         throw { mensagem: "Horário já ocupado."};
                     }
             }
@@ -48,6 +55,7 @@
 
         /**
          * TODO: esse cara que manda pro server o role, por enquanto atualiza a lista daqui.
+         * TODO: a implementar, depende do servidor.
          * @param {*} dataReserva 
          * @param {*} reserva 
          */
@@ -70,15 +78,12 @@
         }
 
         /**
-         * Verifica se existe uma reserva na lista, comparando pela sua hora formatada.
+         * Verifica se existe uma reserva na lista, retornando seu índice.
          * @param {*} lista 
          * @param {*} reserva 
          */
         function getIndiceReserva(lista, reserva) {
-            console.log(reserva.id);
             for (let i = 0; i < lista.length; i++) {
-                // const isIgual = lista[i].getHoraFormatada() === reserva.getHoraFormatada();
-                console.log(lista[i].id);
                 const isIgual = lista[i].id === reserva.id;
                 if (isIgual) {
                     return i;
@@ -98,39 +103,17 @@
             });
         };
 
+        /**
+         * Retorna o identificador de um dado dia, recebendo um Date
+         * e retornando o identificador no formato YYYYMMDD
+         * @param {*} data Objeto Date do dia.
+         * @return {String} Identificador.
+         */
         function getIdentificadorDia(data) {
             const mes = data.getMonth() > 9 ? data.getMonth() : '0' + data.getMonth();
             const dia = data.getDate() > 9 ? data.getDate() : '0' + data.getDate();
             const identificadorDia = `${data.getFullYear()}${mes}${dia}`;
             return identificadorDia;
-        }
-
-        /**
-         * Preenche os horarios vazios com um objeto, temporário, apenas para prototipo.
-         * @param {*} dia 
-         */
-        // TODO: remover
-        function preencheHorarios(dia) {
-            if (dia.length === 4) {
-                return dia;
-            }
-            const horarios = {
-                '08:00': null,
-                '10:00': null,
-                '14:00': null,
-                '16:00': null
-            };
-            dia.forEach(horario => {
-                horarios[horario.hora] = horario;
-            });
-            Object.keys(horarios).forEach(k => {
-                if (!horarios[k]) {
-                    dia.push(new Reserva({
-                        inicio: k
-                    }));
-                }
-            });
-            return dia;
         }
 
         /**

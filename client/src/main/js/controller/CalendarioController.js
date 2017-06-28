@@ -32,7 +32,6 @@
          * @param date Dia clicado.
          */
         this.clickDia = function (date) {
-            console.log(date);
             $state.go(DETALHES_DIA_STATE, {
                 numeroDia: date.getDate(),
                 numeroMes: date.getMonth(),

@@ -38,6 +38,11 @@
          * Date.
          */
         function ajustarInicioFim() {
+            // deveriamos precisar validar só um, actually
+            // condição para criação, onde não existe início e fim ainda
+            if (!self.reserva.inicio || !self.reserva.fim) {
+                return;
+            }
             const inicio = new Date();
             const fim = new Date();
 
@@ -66,20 +71,21 @@
          * @return Promise.
          */
         this.salvarReserva = () => {
+            self.isEdicao = false;
             preSalvar();
-            return AgendamentoService.salvarReserva(data, this.reserva)
+
+            const callbackReabrirReserva = () => {
+                self.reserva.autor = undefined;
+                return ModalService.verReserva(self.reserva, data);
+            };
+
+            return AgendamentoService.salvarReserva(data, self.reserva)
                 .then(data => {
-                    self.isEdicao = false;
                     posSalvar(data);
                     return data;
                 }, err => {
-                    // desfaz o inicio e fim para date, caso falhe.
-                    ajustarInicioFim();
-                    ModalService.error(err.mensagem)
-                        .then(() => {
-                            self.reserva.autor = undefined;
-                            ModalService.verReserva(self.reserva, data);
-                        });
+                    return ModalService.error(err.mensagem)
+                        .then(callbackReabrirReserva);
                 });
         };
 
@@ -124,8 +130,8 @@
          * @return Promise.
          */
         this.excluirReserva = () => {
-            return AgendamentoService.excluir(data, this.reserva).then(data => {
-                this.fecharModal();
+            return AgendamentoService.excluir(data, self.reserva).then(data => {
+                self.fecharModal();
                 return data;
             });
         };
@@ -140,19 +146,17 @@
         };
 
         /**
-         * Indica se o usuário logado pode criar a reserva.
-         * @return True se não houver uma reserva já criada.
+         * Indica se o usuário logado pode excluir a reserva.
          */
-        this.podeCriarReserva = () => {
-            return !reserva.autor && !this.isEdicao;
-        };
-
         this.podeExcluir = () => {
-            return this.ehDonoDaReserva() && !this.isEdicao;
+            return self.ehDonoDaReserva() && !self.isEdicao;
         };
 
+        /**
+         * Indica se o usuário logado pode editar a reserva.
+         */
         this.podeEditar = () => {
-            return this.ehDonoDaReserva() && !this.isEdicao
+            return self.ehDonoDaReserva() && !self.isEdicao
         };
 
         /**
@@ -160,7 +164,7 @@
          */
         this.fecharModal = () => {
             if (temMudancas()) {
-                this.descartarMudancas();
+                self.descartarMudancas();
             }
             $mdDialog.hide('close');
         };
@@ -169,8 +173,8 @@
          * Descarta as mudanças atuais.
          */
         this.descartarMudancas = () => {
-            angular.copy(this.reservaOriginal, this.reserva);
-            this.isEdicao = false;
+            angular.copy(self.reservaOriginal, self.reserva);
+            self.isEdicao = false;
         };
 
         /**
@@ -189,7 +193,8 @@
 
         (() => {
             if (self.isEdicao) {
-                reserva.autor = getNomeUsuarioLogado();
+                preEdicao();
+                self.reserva.autor = getNomeUsuarioLogado();
             }
         })();
     }]);
