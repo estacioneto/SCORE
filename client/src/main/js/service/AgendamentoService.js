@@ -47,7 +47,9 @@
                 if (r.fim > inicio && r.inicio < inicio
                     || r.inicio < fim && r.fim > fim
                     || r.inicio > inicio && r.fim < fim
-                    || r.inicio < inicio && r.fim > fim) {
+                    || r.inicio < inicio && r.fim > fim
+                    || r.inicio === inicio || r.fim === fim
+                    || r.inicio < inicio && r.fim > inicio) {
                         throw { mensagem: "Horário já ocupado."};
                     }
             }

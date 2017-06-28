@@ -95,7 +95,6 @@
             }
             if (isHoje(data)) {
                 return reservas.filter(reserva => {
-                    console.log("fim", reserva.fim, "agora", horaAgora);
                     return reserva.fim >= horaAgora;
                 });
             }
