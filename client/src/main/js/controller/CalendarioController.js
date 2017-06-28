@@ -82,16 +82,55 @@
          */
         this.carregarConteudoDia = function (date) {
             return AgendamentoService.getReservasDia(date).then(reservas => {
-                return getResumoReservas(reservas);
+                return getResumoReservas(filtraReservasAtuaisFuturas(reservas, date));
             });
         };
+
+        function filtraReservasAtuaisFuturas(reservas, data) {
+            // return reservas;
+            const dateAgora = new Date();
+            const horaAgora = dateAgora.getHours() + ':' + dateAgora.getMinutes();
+            if (isDataFutura(data)) {
+                return reservas;
+            }
+            if (isHoje(data)) {
+                return reservas.filter(reserva => {
+                    console.log("fim", reserva.fim, "agora", horaAgora);
+                    return reserva.fim >= horaAgora;
+                });
+            }
+            return [];
+        }
+
+        /**
+         * Verifica se a data é de amanhã ou posterior.
+         * @param {*} data 
+         */
+        function isDataFutura(data) {
+            const agora = new Date();
+            const isAnoFuturo = agora.getFullYear() <= data.getFullYear();
+            const isMesFuturo = agora.getMonth() <= data.getMonth();
+            const isDiaFuturo = agora.getDate() < data.getDate();
+            return isAnoFuturo && isMesFuturo && isDiaFuturo;
+        }
+
+        function isHoje(data) {
+            const agora = new Date();
+            const isEsseAno = agora.getFullYear() === data.getFullYear();
+            const isEsseMes = agora.getMonth() === data.getMonth();
+            const isEsseDia = agora.getDate() === data.getDate();
+            return isEsseAno && isEsseMes && isEsseDia;
+        }
 
         function getResumoReservas(reservas) {
             let out = '';
             const cores = ["{background: \"blue-200\"}", "{background: \"cyan-300\"}", "{background: \"orange-600\"}", "{background: \"red-400\"}"]
-            reservas.forEach((reserva, indice) => {
-                out += "<span class='md-caption' md-colors='" + cores[indice] + "'>" + reserva.titulo + '</span><br>';
+            reservas.sort((a, b) => {
+                return a.inicio > b.inicio ? 1 : -1;
             });
+            for (let i = 0; i < Math.min(3, reservas.length); i++) {
+                out += "<span class='md-caption'>" + reservas[i].titulo + '</span><br>';
+            }
             return out;
         }
 
