@@ -6,7 +6,7 @@
             <h2>{{ detalhesCtrl.data | date:'EEEE - MMMM dd, y' }}</h2>
         </div>
         <!--end Descricao superior-->
-
+        <span flex="10"></span>
         <!--Lista de horarios-->
         <div flex="80" 
             layout="row"
@@ -24,7 +24,7 @@
                 <span flex="5"></span>
                 
                 <!--Hora-->
-                <span class="md-title">{{ reserva.hora }}</span>
+                <span class="md-title">{{ reserva.getHoraFormatada() }}</span>
                 <!--end Hora-->
 
                 <!--Espaçador e barra vertical-->
@@ -33,12 +33,21 @@
                 <!--end Espaçador e barra vertical-->
                 
                 <!--Descricao-->
-                <span flex class="md-title">{{ reserva.descricao || '-' }}</span>
+                <span flex class="md-title">{{ reserva.titulo || '-' }}</span>
                 <!--end Descricao-->
             </div>
             <!--end Horario-->
         </div>
         <!--end Lista de horarios-->
+        <span flex="10"></span>
+        <!--Botão criar reserva-->
+        <div layout="column">
+            <md-button class="md-primary"
+                data-ng-click="detalhesCtrl.criarReserva()">
+                Criar Reserva
+            </md-button>
+        </div>
+        <!--end Botão criar reserva-->
     </div>
     <!-- end Content -->
 </md-content>

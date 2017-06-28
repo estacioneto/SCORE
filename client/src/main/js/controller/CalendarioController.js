@@ -77,8 +77,7 @@
             let out = '';
             const cores = ["{background: \"blue-200\"}", "{background: \"cyan-300\"}", "{background: \"orange-600\"}", "{background: \"red-400\"}"]
             reservas.forEach((reserva, indice) => {
-                if (reserva.descricao)
-                    out += "<span class='md-caption' md-colors='" + cores[indice] + "'>" + reserva.descricao + '</span><br>';
+                out += "<span class='md-caption' md-colors='" + cores[indice] + "'>" + reserva.titulo + '</span><br>';
             });
             return out;
         }

@@ -3,7 +3,7 @@
     /**
      * Controller responsável pela view de detalhes do dia.
      */
-    angular.module('calendarioModulo').controller('DetalhesDiaController', ['ModalService', '$scope', 'data', 'AgendamentoService', function (ModalService, $scope, data, AgendamentoService) {
+    angular.module('calendarioModulo').controller('DetalhesDiaController', ['ModalService', '$scope', 'data', 'AgendamentoService', 'Reserva', function (ModalService, $scope, data, AgendamentoService, Reserva) {
 
         const self = this;
 
@@ -19,16 +19,24 @@
          */
         this.reservas = [];
 
-        this.verReserva = ModalService.verReserva;
+        this.verReserva = reserva => {
+            return ModalService.verReserva(reserva, this.data);
+        };
+
+        /**
+         * Abre o modal para criação de reserva.
+         * @return {Promise} Promise do modal.
+         */
+        this.criarReserva = () => {
+            return ModalService.verReserva(new Reserva(), this.data);
+        };
 
         /**
          * Main
          */
         (() => {
             AgendamentoService.getReservasDia(self.data).then(reservas => {
-                reservas.forEach(reserva => {
-                    self.reservas.push(reserva);
-                });
+                self.reservas = reservas;
             });
         })();
     }]);

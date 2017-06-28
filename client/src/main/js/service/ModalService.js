@@ -55,9 +55,10 @@
              * Abre o modal com a visualização de detalhes e edição
              * de reserva.
              * @param reserva Horário a ser visualizado.
+             * @param data Data relacionada ao dia. Passada durante criação
              * @return Promise do modal.
              */
-            this.verReserva = reserva => {
+            this.verReserva = (reserva, data) => {
                 return $mdDialog.show({
                     controller: 'DetalhesReservaController as reservaCtrl',
                     templateUrl: 'view/detalhesReserva.html',
@@ -65,7 +66,8 @@
                     clickOutsideToClose: false,
                     escapeToClose: false,
                     locals: {
-                        reserva: reserva
+                        reserva: reserva,
+                        data: data
                     }
                 });
             };

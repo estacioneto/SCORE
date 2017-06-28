@@ -1,3 +1,4 @@
+let sequenceReserva = 1;
 (() => {
     'use-strict';
     /**
@@ -6,9 +7,16 @@
     angular.module('agendamentoModulo', []).factory('Reserva', ['$http', '$q', function ($http, $q) {
 
         function Reserva(data) {
+            if (!data) {
+                this.id = sequenceReserva++;
+                return;
+            }
             this.autor = data.autor;
             this.descricao = data.descricao;
-            this.hora = data.hora;
+            this.inicio = data.inicio;
+            this.fim = data.fim;
+            this.id = data.id || sequenceReserva++;
+            this.titulo = data.titulo;
         };
 
         /**
@@ -24,7 +32,7 @@
          * @return Promise da requisição.
          */
         Reserva.prototype.salvar = function () {
-            return $q.when({});
+            return $q.when(this);
         };
 
         /**
@@ -43,6 +51,14 @@
          */
         Reserva.prototype.atualizar = function () {
             return $q.when({});
+        };
+
+        /**
+         * Retorna a hora da reserva formatada, no formato 
+         * HH:MM-HH-MM
+         */
+        Reserva.prototype.getHoraFormatada = function() {
+            return `${this.inicio}-${this.fim}`;
         };
 
         Reserva.prototype.constructor = Reserva;
