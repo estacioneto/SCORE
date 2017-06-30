@@ -8,6 +8,63 @@
         const DETALHES_DIA_STATE = 'app.dia';
         const self = this;
 
+        this.events = [
+            {
+                title: 'Event1',
+                start: '2017-06-29',
+                color: 'red',
+                textColor: 'white'
+            },
+            {
+                title: 'Event2',
+                start: '2017-06-30T08:30:00',
+                color: 'yellow',
+                textColor: 'black'
+            },
+            {
+                title: 'Event3',
+                start: '2017-06-30T09:30:00',
+                color: 'skyblue',
+                textColor: 'black'
+            },
+            {
+                title: 'Event4',
+                start: '2017-06-30T11:45:00',
+                color: 'darkred',
+                textColor: 'white'
+            },
+            {
+                title: 'Event5',
+                start: '2017-06-30T14:40:00',
+                color: 'forestgreen',
+                textColor: 'white'
+            },
+            {
+                title: 'Event6',
+                start: '2017-06-30T15:15:00',
+                color: 'midnightblue',
+                textColor: 'white'
+            }
+        ];
+        this.eventSources = [this.events];
+
+        this.calendarConfig = {
+            calendar:{
+                height: "auto",
+                editable: true,
+                header:{
+                    left: 'month basicWeek basicDay listDay',
+                    center: 'title',
+                    right: 'today prev,next'
+                },
+                views: {
+                    month: {
+                        eventLimit: 4
+                    }
+                }
+            }
+        };
+
         // Formatação para o dia.
         this.formatacaoDia = "d";
         // horizontal = calendario, vertical = agenda (listagem)

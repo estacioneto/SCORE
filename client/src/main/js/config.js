@@ -6,6 +6,7 @@
             'app',
             'ui.router',
             'ui.bootstrap',
+            'ui.calendar',
             'ngAria',
             'ngMaterial',
             'ngMessages',

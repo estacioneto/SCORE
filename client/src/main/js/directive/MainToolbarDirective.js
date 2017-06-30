@@ -64,9 +64,9 @@
                      */
                     scope.getCurrentStateName = function () {
                         var currentState = $state.current;
-                        if (currentState.name !== 'app.home' && currentState.name !== 'app.login') {
-                            return scope.getStateName($state.current.name.toUpperCase());
-                        }
+                        // if (currentState.name !== 'app.home' && currentState.name !== 'app.login') {
+                        //     return scope.getStateName($state.current.name.toUpperCase());
+                        // }
                         return 'SCORE';
                     };
 
