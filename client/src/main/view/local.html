@@ -1,0 +1,33 @@
+<md-content>
+    <sidebar></sidebar>
+    <md-content layout-padding>
+        <!-- Content -->
+        <div class="content" layout="row">
+            <!-- MainContent -->
+            <div class="caixa-calendario"
+                 layout="column" flex>
+                <form name="formularioLocal">
+                    <div class="md-toolbar-tools search-bar" layout layout-align="center">
+                        <select-search-local flex
+                                             formulario="formularioLocal"
+                                             on-select-local="calendarioCtrl.onChangeLocal(local)"></select-search-local>
+                        <md-button class="md-icon-button" type="button"
+                                   ng-disabled="!calendarioCtrl.local"
+                                   ng-click="calendarioCtrl.visualizarAuditorio()">
+                            <md-icon>info_outline</md-icon>
+                            <md-tooltip>Sobre o auditório</md-tooltip>
+                        </md-button>
+                    </div>
+                </form>
+            </div>
+            <!-- end MainContent -->
+        </div>
+        <!-- end Content -->
+    </md-content>
+    <div layout="row" layout-align="end" layout-padding>
+        <a width="150" height="50" href="https://auth0.com/?utm_source=oss&utm_medium=gp&utm_campaign=oss"
+           target="_blank" alt="Single Sign On & Token Based Authentication - Auth0"><img width="150" height="50"
+                                                                                          alt="JWT Auth for open source projects"
+                                                                                          src="//cdn.auth0.com/oss/badges/a0-badge-light.png"/></a>
+    </div>
+</md-content>
