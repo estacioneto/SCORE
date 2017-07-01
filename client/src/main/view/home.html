@@ -21,24 +21,12 @@
                 </form>
                 <!-- Calendar -->
                 <md-content id="main-field" layout="row" layout-padding layout-wrap>
-                    <!--<calendar-md class="calendario"-->
-                        <!--flex layout-->
-                        <!--calendar-direction="calendarioCtrl.direcao"-->
-                        <!--on-prev-month="calendarioCtrl.mesAnt"-->
-                        <!--on-next-month="calendarioCtrl.mesProx"-->
-                        <!--on-day-click="calendarioCtrl.clickDia"-->
-                        <!--title-format="'MMMM y'"-->
-                        <!--ng-model='calendarioCtrl.dataSelecionada'-->
-                        <!--week-starts-on="calendarioCtrl.primeiroDia"-->
-                        <!--tooltips="calendarioCtrl.tooltips"-->
-                        <!--day-format="calendarioCtrl.formatacaoDia"-->
-                        <!--day-label-format="'EEE'"-->
-                        <!--day-label-tooltip-format="'EEEE'"-->
-                        <!--day-tooltip-format="'fullDate'"-->
-                        <!--day-content="calendarioCtrl.carregarConteudoDia"-->
-                        <!--disable-future-selection="false">-->
-                    <!--</calendar-md>-->
-                    <div class="content" ui-calendar="calendarioCtrl.calendarConfig.calendar" ng-model="calendarioCtrl.eventSources"></div>
+                    <div class="content"
+                         ui-calendar="calendarioCtrl.calendarioConfig.calendario"
+                         calendar="calendario"
+                         config="calendarioCtrl.calendarioConfig.calendario"
+                         ng-model="calendarioCtrl.eventosFonte">
+                    </div>
                 </md-content>
                 <!-- end Calendar -->
             </div>

@@ -3,14 +3,9 @@
     /**
      * Controller responsável pela view do calendário.
      */
-    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'Reserva', 'AgendamentoService', 'eventos', 'LocaisService', function ($scope, $compile, $filter, $state, Reserva, AgendamentoService, eventos, LocaisService) {
+    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'Reserva', 'AgendamentoService', 'eventos', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig, Reserva, AgendamentoService, eventos, LocaisService, ModalService) {
 
-        const DETALHES_DIA_STATE = 'app.dia';
-        const self = this,
-              nomeDosDias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-              nomeCurtoDosDias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-              nomeDosMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-              nomeCurtoDosMeses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+        const self = this;
 
         this.eventos = eventos;
         this.eventosFonte = [this.eventos];
@@ -19,14 +14,18 @@
          * Callback executado quando o usuário clica em um determinado evento.
          * Aqui exibimos o Modal com as informações sobre o evento.
          *
-         * @param calEvent Evento clicado.
-         * @param jsEvent Objeto que encapsula informações do clique.
-         * @param view View em que o evento foi clicado. E.g. Mês, semana, agenda do dia, etc.
+         * @param evento Evento clicado.
          */
-        this.clickEvento = function(calEvent, jsEvent, view) {
-
-            console.log('Evento clicado: ', calEvent);
+        this.clickEvento = function(evento) {
+            return ModalService.verReserva(evento, getDataDoEvento(evento));
         };
+
+        /**
+         * Retorna a data do evento especificado.
+         */
+        function getDataDoEvento(evento) {
+            return evento.start._d;
+        }
 
         /**
          * Callback executado quando o usuário clica em um determinado dia.
@@ -42,15 +41,19 @@
          * 2017-07-04T21:00:00.000Z. Por ora, como não encontrei solução para o problema, estou al-
          * terando manualmente a hora da data para 3 horas na frente.
          *
-         * @param date Dia clicado.
-         * @param jsEvent Objeto que encapsula informações do clique.
-         * @param view View em que o evento foi clicado. E.g. Mês, semana, agenda do dia, etc.
+         * @param dia Dia clicado.
          */
-        this.clickDia = function(date, jsEvent, view) {
-            const fatorFusoHorario = 3;
-            date._d.setHours(date._d.getHours() + fatorFusoHorario);
+        this.clickDia = function(dia) {
+            /**
+             * O prório calendário liga com essa configuração do Locale, então ele sabe que está
+             * 3 horas atrasado, por isso a alteração do horário para 3 horas a mais só deve ser
+             * feita caso utilizemos o objeto Dia para alguma ação interna.
+             *
+             * const fatorFusoHorario = 3;
+             * dia._d.setHours(dia._d.getHours() + fatorFusoHorario);
+             */
 
-            console.log('Dia clicado: ', date);
+            uiCalendarConfig.calendars.calendario.fullCalendar('changeView', 'basicDay', dia);
         };
 
         /**
@@ -62,26 +65,18 @@
                 height: "100%",
                 editable: true,
                 timezone: false,
+                lang: 'pt-br',
                 header:{
                     left: 'month basicWeek basicDay agendaWeek agendaDay listDay listWeek',
                     center: 'title',
                     right: 'today prev,next'
                 },
+                displayEventEnd: true,
                 views: {
-                    day: {
-                        displayEventEnd: true
-                    },
-                    week: {
-                        displayEventEnd: true
-                    },
                     month: {
                         eventLimit: 4
                     }
                 },
-                dayNames: nomeDosDias,
-                dayNamesShort: nomeCurtoDosDias,
-                monthNames: nomeDosMeses,
-                monthNamesShort: nomeCurtoDosMeses,
                 eventClick: self.clickEvento,
                 dayClick: self.clickDia,
                 buttonText: {
@@ -109,7 +104,7 @@
          * que o horário atual.
          *
          * OBS: Por hora esse método não está sendo utilizado, mas como Eric já implementou
-         * e eu acho que pode ser útil, vou deixá-lo aqui por ora.
+         * e eu acho que pode ser útil, vou deixá-lo aqui por ora. {Vélmer}
          *
          * @param reservas Reservas a serem filtradas.
          * @param data Data em que as reservas especificadas ocorrem.
@@ -131,8 +126,7 @@
         }
 
         /**
-         * Verifica se a data é de amanhã ou posterior.
-         * @param {*} data 
+         * Retorna se a data especificada é futura em relação a data atual.
          */
         function isDataFutura(data) {
             const agora = new Date(),

@@ -1,5 +1,5 @@
 (() => {
-    'use-strict';
+    'use strict';
     /**
      * Controller responsável pelo modal de detalhes da reserva.
      */
@@ -142,7 +142,7 @@
          */
         this.ehDonoDaReserva = () => {
             // TODO: verificar por ID ou algo assim.
-            return reserva.autor === getNomeUsuarioLogado();
+            return reserva.author === getNomeUsuarioLogado();
         };
 
         /**
@@ -194,7 +194,7 @@
         (() => {
             if (self.isEdicao) {
                 preEdicao();
-                self.reserva.autor = getNomeUsuarioLogado();
+                self.reserva.author = getNomeUsuarioLogado();
             }
         })();
     }]);

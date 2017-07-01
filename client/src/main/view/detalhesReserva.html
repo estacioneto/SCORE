@@ -24,13 +24,13 @@
                                     <label>Início</label>
                                     <input type="time" 
                                         required 
-                                        ng-model="reservaCtrl.reserva.inicio">
+                                        ng-model="reservaCtrl.reserva.start._d">
                                 </md-input-container>
                                 <md-input-container>
                                     <label>Fim</label>
                                     <input type="time" 
                                         required 
-                                        ng-model="reservaCtrl.reserva.fim">
+                                        ng-model="reservaCtrl.reserva.end._d">
                                 </md-input-container>
                             </div>
                             <!--end Edição hora-->
@@ -47,12 +47,12 @@
                     <!--Titulo reserva-->
                     <div data-ng-if="!reservaCtrl.isEdicao" layout="column">
                         <span class="md-subhead">Título</span>
-                        <span class="md-title">{{ ::reservaCtrl.reserva.titulo}}</span>
+                        <span class="md-title">{{ ::reservaCtrl.reserva.title}}</span>
                     </div>
                     <div data-ng-if="reservaCtrl.isEdicao">
                         <md-input-container>
                             <label>Título</label>
-                            <input type="text" required data-ng-model="reservaCtrl.reserva.titulo">
+                            <input type="text" required data-ng-model="reservaCtrl.reserva.title">
                         </md-input-container>
                     </div>
                     <!--end Titulo reserva-->
@@ -60,14 +60,14 @@
                     <!--Descrição reserva-->
                     <div data-ng-if="!reservaCtrl.isEdicao" layout="column">
                         <span class="md-subhead">Descrição</span>
-                        <span class="md-subhead">{{ ::reservaCtrl.reserva.descricao || '-' }}</span>
+                        <span class="md-subhead">{{ ::reservaCtrl.reserva.description || '-' }}</span>
                         <md-divider></md-divider>
                     </div>
                     <md-input-container data-ng-if="reservaCtrl.isEdicao"
                             class="entrada-descricao">
                         <label>Descrição</label>
                         <textarea type="text" 
-                                ng-model="reservaCtrl.reserva.descricao"
+                                ng-model="reservaCtrl.reserva.description"
                                 rows="2"
                                 aria-label="entradaDescricao">
                         </textarea>
@@ -77,7 +77,7 @@
                     <br>
                     <!--Autor-->
                     <span class="md-subhead">Autor</span>
-                    <span class="md-title">{{ reservaCtrl.reserva.autor || '-' }}</span>
+                    <span class="md-title">{{ reservaCtrl.reserva.author || '-' }}</span>
                     <!--end Autor-->
                     <md-divider></md-divider>
                     <br>

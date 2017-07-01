@@ -98,6 +98,7 @@
          * Retorna as reservas de um dado dia.
          */
         this.getReservasDia = data => {
+            // Todo: Alterar o query das reservas de acordo com a nova estrutura do model
             const identificadorDia = getIdentificadorDia(data)
             return promiseEventosFuturos.then(data => {
                 // identificador do dia tem formato: AAAAMMDD
@@ -147,99 +148,62 @@
             return $q.when(mock);
         };
 
-        const mock = {
-            '20170514': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '08:00',
-                fim: '10:00'
-            }), new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '10:00',
-                fim: '11:30'
-            })],
-            '20170518': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '08:00',
-                fim: '10:00'
-            })],
-            '20170520': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '08:00',
-                fim: '10:00'
-            }), new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '10:00',
-                fim: '12:00'
-            })],
-            '20170522': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Vélmer',
-                inicio: '08:00',
-                fim: '10:00'
-            }), new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Estácio Pereira',
-                inicio: '10:00',
-                fim: '12:00'
-            })],
-            '20170524': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '14:00',
-                fim: '16:00'
-            })],
-            '20170525': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '10:00',
-                fim: '12:00'
-            }), new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '14:00',
-                fim: '16:00'
-            }), new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '16:00',
-                fim: '18:00'
-            })],
-            '20170527': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '08:00',
-                fim: '10:00'
-            })],
-            '20170528': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '08:00',
-                fim: '10:00'
-            })],
-            '20170529': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '10:00',
-                fim: '12:00'
-            })],
-            '20170601': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '08:00',
-                fim: '10:00'
-            })],
-            '20170602': [new Reserva({
-                titulo: 'Evento de teste',
-                autor: 'Eric Breno',
-                inicio: '08:00',
-                fim: '10:00'
-            })]
-        };
+        const mock = [
+            new Reserva({
+                title: 'Event1',
+                start: '2017-07-04T16:30:00',
+                end: '2017-07-04T16:50:00',
+                color: 'red',
+                textColor: 'white',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                author: 'Vélmer'
+            }),
+            new Reserva({
+                title: 'Event2',
+                start: '2017-07-05T08:30:00',
+                end: '2017-07-05T08:45:00',
+                color: 'yellow',
+                textColor: 'black',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                author: 'Lucas'
+            }),
+            new Reserva({
+                title: 'Event3',
+                start: '2017-07-05T09:40:00',
+                end: '2017-07-05T10:00:00',
+                color: 'skyblue',
+                textColor: 'black',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                author: 'Eric'
+            }),
+            new Reserva({
+                title: 'Event4',
+                start: '2017-07-05T11:45:00',
+                end: '2017-07-05T12:15:00',
+                color: 'darkred',
+                textColor: 'white',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                author: 'Estácio'
+            }),
+            new Reserva({
+                title: 'Event5',
+                start: '2017-07-05T14:40:00',
+                end: '2017-07-05T15:05:00',
+                color: 'forestgreen',
+                textColor: 'white',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                author: 'Vidal'
+            }),
+            new Reserva({
+                title: 'Event6',
+                start: '2017-07-05T15:15:00',
+                end: '2017-07-05T16:00:00',
+                color: 'midnightblue',
+                textColor: 'white',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                author: 'Gordo'
+            })
+        ];
 
         (() => {
             promiseEventosFuturos = self.loadReservasFuturas();
