@@ -107,7 +107,7 @@
 
             this.loadingIndicatorModal = function () {
                 return $mdPanel.create({
-                    template: '<div layout="row" layout-sm="column" layout-align="space-around"><md-progress-circular md-mode="indeterminate"></md-progress-circular></div>',
+                    template: '<div layout="row" layout-sm="column" layout-align="space-around" md-theme="{{$root.theme}}"><md-progress-circular class="md-primary" md-mode="indeterminate"></md-progress-circular></div>',
                     attachTo: angular.element(document.body),
                     position: $mdPanel.newPanelPosition().center(),
                     hasBackdrop: true,

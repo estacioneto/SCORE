@@ -6,6 +6,7 @@
             'app',
             'ui.router',
             'ui.bootstrap',
+            'ui.mask',
             'ngAria',
             'ngMaterial',
             'ngMessages',
@@ -97,9 +98,19 @@
                     controller: 'CalendarioController as calendarioCtrl'
                 })
                 .state('app.local', {
-                    url: '/local',
+                    url: '/local/:idLocal',
                     templateUrl: view + 'local.html',
-                    controller: 'LocalController as LocalController'
+                    controller: 'LocalController as localCtrl',
+                    params: {idLocal: null},
+                    resolve: {
+                        local: ($stateParams, LocaisService) => {
+                            const id = parseInt($stateParams.idLocal);
+                            if (id) {
+                                return LocaisService.carregarLocal(id).then(info => info.data);
+                            }
+                            return undefined;
+                        }
+                    }
                 })
                 .state('app.dia', {
                     url: '/dia?numeroDia&numeroMes&ano',
@@ -151,9 +162,7 @@
             });
 
             $rootScope.$on('loading_hide', function () {
-                if (_modalResp_) {
-                    _modalResp_.hide();
-                }
+                _modalResp_.hide();
             });
         });
     }]);

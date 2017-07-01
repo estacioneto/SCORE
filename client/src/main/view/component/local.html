@@ -1,0 +1,34 @@
+<md-content>
+    <md-content layout="column" layout-align="center center">
+        <!-- TODO: Editar, @author Estácio Pereira, 01/07/2017 -->
+        <div class="md-display-1">{{$ctrl.local.nome}}</div>
+        <div class="md-headline text-center">{{$ctrl.local.bloco}}</div>
+    </md-content>
+
+    <!-- TODO -->
+    <!--<imagem-local local="$ctrl.local"></imagem-local>-->
+
+    <md-content layout-padding>
+        <div layout="row" layout-wrap>
+            <md-input-container flex="80">
+                <label for="funcionamento-local">Funcionamento</label>
+                <input id="funcionamento-local"
+                       ui-mask="99:99 - 99:99"
+                       required
+                       data-ng-model="$ctrl.local.funcionamento"
+                       data-ng-disabled="!$ctrl.editavel"/>
+            </md-input-container>
+            <md-input-container flex="20">
+                <input id="capacidade-local"
+                       placeholder="Capacidade"
+                       type="number"
+                       required
+                       data-ng-model="$ctrl.local.capacidade"
+                       data-ng-disabled="!$ctrl.editavel"/>
+            </md-input-container>
+        </div>
+    </md-content>
+
+    <equipamentos-local local="$ctrl.local"
+                        editavel="$ctrl.editavel"></equipamentos-local>
+</md-content>

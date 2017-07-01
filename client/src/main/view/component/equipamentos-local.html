@@ -1,0 +1,40 @@
+<md-content layout="column" layout-padding>
+    <md-content layout layout-align="center center">
+        <div class="md-headline"> Equipamentos disponíveis</div>
+    </md-content>
+    <md-content ng-repeat="equipamento in $ctrl.local.equipamentos"
+                layout="row"
+                layout-align="center"
+                layout-wrap>
+        <md-input-container flex="80">
+            <input id="nome-equipamento"
+                   placeholder="Nome"
+                   required
+                   data-ng-model="equipamento.nome"
+                   data-ng-disabled="!$ctrl.editavel"/>
+        </md-input-container>
+        <md-input-container flex="10">
+            <input id="quantidade-equipamento"
+                   type="number"
+                   placeholder="Quantidade"
+                   required
+                   data-ng-model="equipamento.quantidade"
+                   data-ng-disabled="!$ctrl.editavel"/>
+        </md-input-container>
+        <md-input-container layout layout-align="center"
+                            ng-if="$ctrl.editavel" flex="10">
+            <md-button class="md-icon-button md-warn"
+                       ng-click="$ctrl.removerEquipamento(equipamento)">
+                <md-icon>delete</md-icon>
+                <md-tooltip md-direction="top">Remover Equipamento</md-tooltip>
+            </md-button>
+        </md-input-container>
+    </md-content>
+    <md-input-container layout layout-align="center center">
+        <md-button class="md-primary"
+                   ng-disabled="!$ctrl.editavel"
+                   ng-click="$ctrl.adicionarEquipamento()">
+            Adicionar Equipamento
+        </md-button>
+    </md-input-container>
+</md-content>

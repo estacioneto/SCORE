@@ -13,7 +13,7 @@
 
 .md-fab-fixed {
     position: fixed !important;
-    margin-bottom: 40px !important;
+    margin-bottom: 20px !important;
 }
 
 md-toolbar {
@@ -219,3 +219,7 @@ calendar-md .md-toolbar-tools h2 {
     display: block;
     line-height: 2;
 }
+
+.fill {
+    min-height: calc(100% - 50px);
+ }
