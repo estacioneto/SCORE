@@ -1,0 +1,18 @@
+<div>
+    <md-autocomplete flex
+                     md-input-name="campoPesquisa"
+                     md-selected-item="$ctrl.localSelecionado"
+                     md-search-text="$ctrl.pesquisa"
+                     md-items="item in $ctrl.locaisFiltrados()"
+                     md-selected-item-change="$ctrl.onChangeLocalSelecionado(item)"
+                     md-item-text="item.nome"
+                     md-require-match
+                     md-floating-label="Local">
+        <md-item-template>
+            <span md-highlight-text="$ctrl.pesquisa" md-highlight-flags="^i">{{item.nome}}</span>
+        </md-item-template>
+        <div ng-messages="$ctrl.formulario.campoPesquisa.$error" ng-if="$ctrl.formulario.campoPesquisa.$touched">
+            <div ng-message="md-require-match">Selecione um local válido!</div>
+        </div>
+    </md-autocomplete>
+</div>

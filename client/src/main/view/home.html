@@ -4,15 +4,13 @@
         <!-- Content -->
         <div class="content" layout="row">
             <!-- MainContent -->
-            <div class="caixa-calendario" 
-                layout="column" flex>
-                <form name="formularioLocais">
+            <div class="caixa-calendario"
+                 layout="column" flex>
+                <form name="formularioLocal">
                     <div class="md-toolbar-tools search-bar" layout layout-align="center">
-                        <select-search flex ng-if="calendarioCtrl.locais"
-                                       titulo="Local"
-                                       on-change-item="calendarioCtrl.onChangeLocal(item)"
-                                       opcoes="calendarioCtrl.locais"
-                                       mensagem-item-nao-selecionado="calendarioCtrl.mensagemLocalNaoSelecionado"></select-search>
+                        <select-search-local flex
+                                             formulario="formularioLocal"
+                                             on-select-local="calendarioCtrl.onChangeLocal(local)"></select-search-local>
                         <md-button class="md-icon-button" type="button"
                                    ng-disabled="!calendarioCtrl.local"
                                    ng-click="calendarioCtrl.visualizarAuditorio()">
@@ -22,23 +20,23 @@
                     </div>
                 </form>
                 <!-- Calendar -->
-                <md-content id="main-field" layout="row" layout-wrap>
+                <md-content id="main-field" layout-padding layout="row" layout-wrap>
                     <calendar-md class="calendario"
-                        flex layout
-                        calendar-direction="calendarioCtrl.direcao"
-                        on-prev-month="calendarioCtrl.mesAnt"
-                        on-next-month="calendarioCtrl.mesProx"
-                        on-day-click="calendarioCtrl.clickDia"
-                        title-format="'MMMM y'"
-                        ng-model='calendarioCtrl.dataSelecionada'
-                        week-starts-on="calendarioCtrl.primeiroDia"
-                        tooltips="calendarioCtrl.tooltips"
-                        day-format="calendarioCtrl.formatacaoDia"
-                        day-label-format="'EEE'"
-                        day-label-tooltip-format="'EEEE'"
-                        day-tooltip-format="'fullDate'"
-                        day-content="calendarioCtrl.carregarConteudoDia"
-                        disable-future-selection="false">
+                                 flex layout
+                                 calendar-direction="calendarioCtrl.direcao"
+                                 on-prev-month="calendarioCtrl.mesAnt"
+                                 on-next-month="calendarioCtrl.mesProx"
+                                 on-day-click="calendarioCtrl.clickDia"
+                                 title-format="'MMMM y'"
+                                 ng-model='calendarioCtrl.dataSelecionada'
+                                 week-starts-on="calendarioCtrl.primeiroDia"
+                                 tooltips="calendarioCtrl.tooltips"
+                                 day-format="calendarioCtrl.formatacaoDia"
+                                 day-label-format="'EEE'"
+                                 day-label-tooltip-format="'EEEE'"
+                                 day-tooltip-format="'fullDate'"
+                                 day-content="calendarioCtrl.carregarConteudoDia"
+                                 disable-future-selection="false">
                     </calendar-md>
                 </md-content>
                 <!-- end Calendar -->
@@ -48,6 +46,9 @@
         <!-- end Content -->
     </md-content>
     <div layout="row" layout-align="end" layout-padding>
-        <a width="150" height="50" href="https://auth0.com/?utm_source=oss&utm_medium=gp&utm_campaign=oss" target="_blank" alt="Single Sign On & Token Based Authentication - Auth0"><img width="150" height="50" alt="JWT Auth for open source projects" src="//cdn.auth0.com/oss/badges/a0-badge-light.png"/></a>
+        <a width="150" height="50" href="https://auth0.com/?utm_source=oss&utm_medium=gp&utm_campaign=oss"
+           target="_blank" alt="Single Sign On & Token Based Authentication - Auth0"><img width="150" height="50"
+                                                                                          alt="JWT Auth for open source projects"
+                                                                                          src="//cdn.auth0.com/oss/badges/a0-badge-light.png"/></a>
     </div>
 </md-content>
