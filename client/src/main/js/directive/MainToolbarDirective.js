@@ -65,10 +65,12 @@
                     scope.getCurrentStateName = function () {
                         var currentState = $state.current;
                         if (currentState.name !== 'app.home' && currentState.name !== 'app.login') {
-                            return scope.getStateName($state.current.name.toUpperCase());
+                            return scope.getNomeState($state.current.name.toUpperCase());
                         }
                         return 'SCORE';
                     };
+
+                    scope.getNomeState = nomeState => _.last(nomeState.split('.'))
 
                     /**
                      * Simply goes home.

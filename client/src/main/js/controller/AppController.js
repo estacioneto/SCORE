@@ -9,6 +9,6 @@
      *
      * @author Estácio Pereira
      */
-    appModule.controller('AppController', [function () {
+    appModule.controller('AppController', ['$state', function ($state) {
     }]);
 }());
