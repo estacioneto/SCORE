@@ -1,6 +1,6 @@
 let sequenceReserva = 1;
 (() => {
-    'use-strict';
+    'use strict';
     /**
      * Factory que representa a entidade de reserva.
      */
@@ -11,13 +11,13 @@ let sequenceReserva = 1;
                 this.id = sequenceReserva++;
                 return;
             }
-            this.autor = data.autor;
-            this.descricao = data.descricao;
-            this.inicio = data.inicio;
-            this.fim = data.fim;
             this.id = data.id || sequenceReserva++;
-            this.titulo = data.titulo;
-        };
+            this.author = data.author;
+            this.title = data.title;
+            this.description = data.description;
+            this.start = data.start._d;
+            this.end = data.end._d;
+        }
 
         /**
          * Recupera a reserva original do servidor.
@@ -40,8 +40,8 @@ let sequenceReserva = 1;
          * @return Promise da requisição.
          */
         Reserva.prototype.excluir = function () {
-            delete this.autor;
-            delete this.descricao;
+            delete this.author;
+            delete this.description;
             return this.salvar();
         };
 
@@ -54,12 +54,27 @@ let sequenceReserva = 1;
         };
 
         /**
-         * Retorna a hora da reserva formatada, no formato 
+         * Retorna o horário de início e término da reserva formatada, no formato
          * HH:MM-HH-MM
          */
         Reserva.prototype.getHoraFormatada = function() {
-            return `${this.inicio}-${this.fim}`;
+            return `${getHorario(this.start)}-${getHorario(this.end)}`;
         };
+
+        /**
+         * Retorna a hora da data especificada no formato HH:MM.
+         *
+         * @param data Data a ter o horário retornado
+         * @returns {string} Horário formatado.
+         */
+        function getHorario(data) {
+            let horario = '';
+
+            horario += `${(data.getHours() + 3)}:`;
+            horario += `${data.getMinutes()}`;
+
+            return horario;
+        }
 
         Reserva.prototype.constructor = Reserva;
 
