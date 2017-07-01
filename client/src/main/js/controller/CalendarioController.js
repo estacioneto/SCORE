@@ -94,8 +94,6 @@
             console.log('Local selecionado: ', this.local);
         };
 
-        this.mensagemLocalNaoSelecionado = 'Selecione um auditório válido!';
-
         /**
          * Callback a ser executado quando se clicar em um dia.
          * Vai para tela de detalhes do dia clicado.
@@ -189,11 +187,5 @@
             }
             return out;
         }
-
-        (() => {
-            LocaisService.carregarLocais().then(info => {
-                self.locais = info.data;
-            });
-        })();
     }]);
 })();
