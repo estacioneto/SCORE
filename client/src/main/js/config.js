@@ -95,7 +95,12 @@
                 .state('app.home', {
                     url: '/home',
                     templateUrl: view + 'home.html',
-                    controller: 'CalendarioController as calendarioCtrl'
+                    controller: 'CalendarioController as calendarioCtrl',
+                    resolve: {
+                        eventos: function (AgendamentoService) {
+                            return AgendamentoService.loadReservasFuturas();
+                        }
+                    }
                 })
                 .state('app.dia', {
                     url: '/dia?numeroDia&numeroMes&ano',
