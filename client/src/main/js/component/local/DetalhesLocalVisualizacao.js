@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('localModulo').component('detalhesLocalVisualizacao', {
-        templateUrl: 'view/component/detalhes-local-visualizacao.html',
+        templateUrl: 'view/component/local/detalhes-local-visualizacao.html',
         bindings: {
             local: '='
         },

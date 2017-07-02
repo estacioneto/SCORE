@@ -1,8 +1,8 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').component('localEdicao', {
-        templateUrl: 'view/component/local-edicao.html',
+    angular.module('localModulo').component('localVisualizacao', {
+        templateUrl: 'view/component/local/local-visualizacao.html',
         bindings: {
             local: '='
         },

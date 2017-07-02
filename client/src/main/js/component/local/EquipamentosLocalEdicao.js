@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('localModulo').component('equipamentosLocalEdicao', {
-        templateUrl: 'view/component/equipamentos-local-edicao.html',
+        templateUrl: 'view/component/local/equipamentos-local-edicao.html',
         bindings: {
             local: '='
         },
