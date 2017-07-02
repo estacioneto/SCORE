@@ -2,7 +2,7 @@
     <main-toolbar></main-toolbar>
     <md-content id="main-page" flex>
         <md-content>
-            <sidebar></sidebar>
+            <sidebar ng-if="appCtrl.isAutenticado()"></sidebar>
             <div data-ui-view></div>
         </md-content>
     </md-content>

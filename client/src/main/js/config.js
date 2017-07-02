@@ -97,16 +97,21 @@
                     templateUrl: view + 'home.html',
                     controller: 'CalendarioController as calendarioCtrl'
                 })
+                /**
+                 * State de local.
+                 *
+                 * @param {boolean} edicao Boolean indicando se é modo de edição.
+                 */
                 .state('app.local', {
-                    url: '/local/:idLocal',
+                    url: '/local/:idLocal?{edicao:bool}',
                     templateUrl: view + 'local.html',
                     controller: 'LocalController as localCtrl',
                     params: {idLocal: null},
                     resolve: {
-                        local: ($stateParams, LocaisService) => {
+                        local: ($stateParams, LocaisService, Local) => {
                             const id = parseInt($stateParams.idLocal);
                             if (id) {
-                                return LocaisService.carregarLocal(id).then(info => info.data);
+                                return LocaisService.carregarLocal(id).then(info => new Local(info.data));
                             }
                             return undefined;
                         }

@@ -10,19 +10,16 @@
             <input id="nome-equipamento"
                    placeholder="Nome"
                    required
-                   data-ng-model="equipamento.nome"
-                   data-ng-disabled="!$ctrl.editavel"/>
+                   data-ng-model="equipamento.nome"/>
         </md-input-container>
         <md-input-container flex="10">
             <input id="quantidade-equipamento"
                    type="number"
                    placeholder="Quantidade"
                    required
-                   data-ng-model="equipamento.quantidade"
-                   data-ng-disabled="!$ctrl.editavel"/>
+                   data-ng-model="equipamento.quantidade"/>
         </md-input-container>
-        <md-input-container layout layout-align="center"
-                            ng-if="$ctrl.editavel" flex="10">
+        <md-input-container layout layout-align="center" flex="10">
             <md-button class="md-icon-button md-warn"
                        ng-click="$ctrl.removerEquipamento(equipamento)">
                 <md-icon>delete</md-icon>
@@ -32,7 +29,6 @@
     </md-content>
     <md-input-container layout layout-align="center center">
         <md-button class="md-primary"
-                   ng-disabled="!$ctrl.editavel"
                    ng-click="$ctrl.adicionarEquipamento()">
             Adicionar Equipamento
         </md-button>

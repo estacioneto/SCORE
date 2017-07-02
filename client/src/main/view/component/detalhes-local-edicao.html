@@ -1,0 +1,44 @@
+<md-content>
+    <md-content>
+        <md-content layout layout-align="center center" layout-wrap>
+            <md-input-container flex>
+                <md-icon>assignment</md-icon>
+                <input id="nome-local"
+                       required
+                       placeholder="Nome"
+                       data-ng-model="$ctrl.local.nome"/>
+            </md-input-container>
+        </md-content>
+        <md-content layout layout-align="center center" layout-wrap>
+            <md-input-container flex>
+                <md-icon>business</md-icon>
+                <input id="bloco-local"
+                       required
+                       placeholder="Bloco"
+                       data-ng-model="$ctrl.local.bloco"/>
+            </md-input-container>
+        </md-content>
+    </md-content>
+
+    <md-content>
+        <div layout="row" layout-wrap>
+            <md-input-container flex="20">
+                <md-icon>schedule</md-icon>
+                <label for="funcionamento-local">Funcionamento</label>
+                <input id="funcionamento-local"
+                       ui-mask="99:99 - 99:99"
+                       required
+                       data-ng-model="$ctrl.local.funcionamento"/>
+            </md-input-container>
+            <div flex="60"></div>
+            <md-input-container flex="20">
+                <md-icon>people</md-icon>
+                <input id="capacidade-local"
+                       placeholder="Capacidade"
+                       type="number"
+                       required
+                       data-ng-model="$ctrl.local.capacidade"/>
+            </md-input-container>
+        </div>
+    </md-content>
+</md-content>

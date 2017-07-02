@@ -17,7 +17,7 @@
                     quantidade: 2
                 }],
                 capacidade: 40,
-                funcionamento: '08:00-18:00'
+                funcionamento: '08001800'
             },
             auditorioHattori = {
                 _id: 2,
@@ -32,7 +32,7 @@
                     quantidade: 10
                 }],
                 capacidade: 200,
-                funcionamento: '08:00-18:00'
+                funcionamento: '08001800'
             },
             salaReunioes = {
                 _id: 10,
@@ -47,7 +47,7 @@
                     quantidade: 220
                 }],
                 capacidade: 10,
-                funcionamento: '08:00-12:00'
+                funcionamento: '08001200'
             };
         const locais = [auditorioSPLab, auditorioHattori, salaReunioes];
 

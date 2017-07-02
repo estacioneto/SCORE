@@ -1,16 +1,15 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').component('equipamentosLocal', {
-        templateUrl: 'view/component/equipamentos-local.html',
+    angular.module('localModulo').component('equipamentosLocalEdicao', {
+        templateUrl: 'view/component/equipamentos-local-edicao.html',
         bindings: {
-            local: '=',
-            editavel: '<'
+            local: '='
         },
         controller: [function () {
 
             this.adicionarEquipamento = function () {
-                this.local.equipamentos.push({});
+                this.local.addEquipamento({});
             };
 
             this.removerEquipamento = function (equipamentoRemovido) {

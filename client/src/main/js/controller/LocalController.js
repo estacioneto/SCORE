@@ -1,10 +1,11 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').controller('LocalController', ['$state', 'local', function ($state, local) {
+    angular.module('localModulo').controller('LocalController', ['$state', '$stateParams', 'Local', 'local', function ($state, $stateParams, Local, local) {
 
         const self = this;
 
+        this.edicao = $stateParams.edicao;
         this.local = local;
 
         this.onChangeLocal = function (local) {
@@ -19,8 +20,12 @@
 
         this.isAdmin = () => true;
 
+        this.isModoEdicao = () => this.edicao;
+
         this.adicionarLocal = function () {
-            console.log('yet');
+            // TODO: Fazer uma verificação para não permitir que hajam problemas de perder dados, @author Estácio Pereira.
+            this.local = new Local();
+            this.edicao = true;
         };
 
     }]);

@@ -13,9 +13,16 @@
             </div>
         </div>
 
-        <local ng-if="localCtrl.local"
-                local="localCtrl.local"
-                editavel="localCtrl.isAdmin()"></local>
+        <md-content ng-if="localCtrl.local">
+            <!-- TODO -->
+            <!--<imagem-local local="$ctrl.local"></imagem-local>-->
+
+            <local-visualizacao ng-if="!localCtrl.isModoEdicao()"
+                                local="localCtrl.local"></local-visualizacao>
+
+            <local-edicao ng-if="localCtrl.isModoEdicao()"
+                          local="localCtrl.local"></local-edicao>
+        </md-content>
 
         <!-- Botão de adicionar local -->
         <md-button class="md-fab md-fab-bottom-right md-fab-fixed"
