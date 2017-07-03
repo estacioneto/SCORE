@@ -1,0 +1,36 @@
+<md-content>
+    <md-content class="fill" layout-padding>
+        <!-- Content -->
+        <div class="content" flex>
+            <form name="formularioLocal">
+                <div class="md-toolbar-tools search-bar" layout layout-align="center">
+                    <select-search-local flex
+                                         formulario="formularioLocal"
+                                         on-select-local="localCtrl.onChangeLocal(local)"></select-search-local>
+                </div>
+            </form>
+        </div>
+
+        <md-content ng-if="localCtrl.local">
+            <!-- TODO -->
+            <!--<imagem-local local="$ctrl.local"></imagem-local>-->
+            <local-visualizacao ng-if="!localCtrl.isModoEdicao()"
+                                local="localCtrl.local"></local-visualizacao>
+        </md-content>
+
+        <!-- Botão de adicionar local -->
+        <md-button class="md-fab md-fab-bottom-right md-fab-fixed"
+                   aria-label="Adicionar Local"
+                   data-ng-if="localCtrl.isAdmin() && !localCtrl.edicao" data-ng-click="localCtrl.adicionarLocal()">
+            <md-icon>menu</md-icon>
+        </md-button>
+        <!-- end Botão de adicionar local -->
+        <!-- end Content -->
+    </md-content>
+    <div layout="row" layout-align="end" layout-padding>
+        <a width="150" height="50" href="https://auth0.com/?utm_source=oss&utm_medium=gp&utm_campaign=oss"
+           target="_blank" alt="Single Sign On & Token Based Authentication - Auth0"><img width="150" height="50"
+                                                                                          alt="JWT Auth for open source projects"
+                                                                                          src="//cdn.auth0.com/oss/badges/a0-badge-light.png"/></a>
+    </div>
+</md-content>

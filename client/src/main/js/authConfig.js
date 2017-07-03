@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var app = angular.module('pitonApp');
+    var app = angular.module('scoreApp');
 
     app.config(['$urlRouterProvider', '$provide', 'authProvider', '$httpProvider', 'jwtInterceptorProvider', 'jwtOptionsProvider',
         function ($urlRouterProvider, $provide, authProvider, $httpProvider, jwtInterceptorProvider, jwtOptionsProvider) {
@@ -51,7 +51,7 @@
             $httpProvider.interceptors.push('redirect');
             $httpProvider.interceptors.push('APIInterceptor');
 
-        }]).run(['$rootScope', 'auth', 'store', 'jwtHelper', function ($rootScope, auth, store, jwtHelper) {
+        }]).run(['auth', 'store', 'jwtHelper', function (auth, store, jwtHelper) {
             const token = store.get('idToken');
             if (token) {
                 if (!jwtHelper.isTokenExpired(token) && !auth.isAuthenticated) {

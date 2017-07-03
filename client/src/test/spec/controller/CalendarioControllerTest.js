@@ -3,7 +3,7 @@
 
     describe('CalendarioControllerTest', function () {
 
-        beforeEach(module('pitonApp', 'stateMock'));
+        beforeEach(module('scoreApp', 'stateMock'));
 
         var createController, scope, state;
         var self = this;

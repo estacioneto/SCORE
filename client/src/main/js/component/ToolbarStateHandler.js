@@ -12,11 +12,16 @@
         controller: ['$state', function ($state) {
             const self = this;
 
+            const nomesStates = {
+                'app.home': 'HOME',
+                'app.local.info': 'LOCAL'
+            };
+
             const HOME_STATE = {
                 nome: 'app.home',
                 icone: 'fa fa-home'
             }, LOCAL_STATE = {
-                nome: 'app.local',
+                nome: 'app.local.info',
                 icone: 'fa fa-map-marker'
             };
 
@@ -27,7 +32,9 @@
              */
             this.statesDisponiveis = {
                 'app.home': [LOCAL_STATE],
-                'app.local': [HOME_STATE]
+                'app.local.info': [HOME_STATE],
+                'app.local.edicao': [HOME_STATE, LOCAL_STATE],
+                'app.local.id.edicao': [HOME_STATE, LOCAL_STATE]
             };
 
             /**
@@ -46,7 +53,7 @@
              * @param   {string} nomeState Nome completo do state.
              * @returns {string} Último nome do state.
              */
-            this.getNomeState = nomeState => _.last(nomeState.split('.'))
+            this.getNomeState = nomeState => nomesStates[nomeState];
         }]
     });
 })();

@@ -1,10 +1,12 @@
-<div data-ng-repeat="state in $ctrl.getStatesDisponiveis()" layout-align="center center">
-    <md-button hide-xs aria-label="State {{state}} Name"
-               data-ui-sref="{{state.nome}}">
-        {{$ctrl.getNomeState(state.nome.toUpperCase())}}
-    </md-button>
-    <md-button hide-gt-xs aria-label="State {{state}} Icon"
-               data-ui-sref="{{state.nome}}" class="md-icon-button" layout-align="center center">
-        <md-icon md-font-icon="{{state.icone}}" class="md-48"></md-icon>
-    </md-button>
+<div layout="row">
+    <div data-ng-repeat="state in $ctrl.getStatesDisponiveis()" layout-align="center center">
+        <md-button hide-xs aria-label="State {{state}} Name"
+                   data-ui-sref="{{state.nome}}">
+            {{$ctrl.getNomeState(state.nome)}}
+        </md-button>
+        <md-button hide-gt-xs aria-label="State {{state}} Icon"
+                   data-ui-sref="{{state.nome}}" class="md-icon-button" layout-align="center center">
+            <md-icon md-font-icon="{{state.icone}}" class="md-48"></md-icon>
+        </md-button>
+    </div>
 </div>

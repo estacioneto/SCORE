@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    const app = angular.module('pitonApp',
+    const app = angular.module('scoreApp',
         [
             'app',
             'ui.router',
@@ -80,12 +80,20 @@
          */
         .config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
             const view = './view/';
+
             $stateProvider
                 .state('app', {
                     abstract: true,
                     url: '/app',
                     templateUrl: view + 'app.html',
-                    controller: 'AppController as appCtrl'
+                    controller: 'AppController as appCtrl',
+                    resolve: {
+                        authCheck: function (auth, $state) {
+                            if (!auth.isAuthenticated) {
+                                $state.go('app.login');
+                            }
+                        }
+                    }
                 })
                 .state('app.login', {
                     url: '/',
@@ -97,16 +105,54 @@
                     templateUrl: view + 'home.html',
                     controller: 'CalendarioController as calendarioCtrl'
                 })
-                /**
-                 * State de local.
-                 *
-                 * @param {boolean} edicao Boolean indicando se é modo de edição.
-                 */
                 .state('app.local', {
-                    url: '/local/:idLocal?{edicao:bool}',
+                    url: '/local',
+                    abstract: true,
+                    template: '<ui-view/>'
+                })
+                .state('app.local.info', {
+                    url: '',
+                    nome: 'local',
                     templateUrl: view + 'local.html',
                     controller: 'LocalController as localCtrl',
-                    params: {idLocal: null},
+                    resolve: {
+                        local: () => undefined
+                    }
+                })
+                .state('app.local.id', {
+                    url: '/:idLocal',
+                    abstract: true,
+                    template: '<ui-view/>'
+                })
+                .state('app.local.id.info', {
+                    url: '',
+                    nome: 'local',
+                    templateUrl: view + 'local.html',
+                    controller: 'LocalController as localCtrl',
+                    resolve: {
+                        local: ($stateParams, LocaisService, Local) => {
+                            const id = parseInt($stateParams.idLocal);
+                            if (id) {
+                                return LocaisService.carregarLocal(id).then(info => new Local(info.data));
+                            }
+                            return undefined;
+                        }
+                    }
+                })
+                .state('app.local.edicao', {
+                    url: '/edicao',
+                    nome: 'local',
+                    templateUrl: view + 'local-edicao.html',
+                    controller: 'LocalEdicaoController as localCtrl',
+                    resolve: {
+                        local: Local => new Local()
+                    }
+                })
+                .state('app.local.id.edicao', {
+                    url: '/edicao',
+                    nome: 'local',
+                    templateUrl: view + 'local-edicao.html',
+                    controller: 'LocalEdicaoController as localCtrl',
                     resolve: {
                         local: ($stateParams, LocaisService, Local) => {
                             const id = parseInt($stateParams.idLocal);
@@ -131,24 +177,8 @@
                     }
                 });
             $locationProvider.html5Mode(true);
-        }])
-        .config(['$mdThemingProvider', function ($mdThemingProvider) {
-            $mdThemingProvider.setNonce();
-            $mdThemingProvider.alwaysWatchTheme(true);
-
-            $mdThemingProvider.theme('default')
-                .primaryPalette('indigo', {default: 'A200'})
-                .accentPalette('blue', {default: '500'});
-            $mdThemingProvider.theme('apphome')
-                .primaryPalette('indigo', {default: 'A200'})
-                .accentPalette('blue', {default: '500'});
-
-            $mdThemingProvider.theme('applocal')
-                .primaryPalette('green')
-                .accentPalette('light-green')
-                .warnPalette('red');
         }]);
-    app.run(['$rootScope', 'ModalService', '$transitions', function ($rootScope, ModalService, $transitions) {
+    app.run(['$rootScope', 'ModalService', '$transitions', 'auth', '$state', function ($rootScope, ModalService, $transitions, auth, $state) {
         $rootScope._ = window._;
         $rootScope.apiRoot = '/api';
 

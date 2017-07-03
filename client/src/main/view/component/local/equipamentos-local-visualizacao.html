@@ -1,0 +1,26 @@
+<md-content layout="column" layout-padding>
+    <md-content layout layout-align="center center">
+        <div class="md-headline"> Equipamentos disponíveis</div>
+    </md-content>
+
+    <md-content layout="row" layout-wrap>
+        <md-content flex="90">
+            <span class="md-subhead" flex>Descrição</span>
+        </md-content>
+        <md-content flex="10">
+            <span class="md-subhead" flex>Quantidade</span>
+        </md-content>
+    </md-content>
+
+    <md-divider></md-divider>
+    <md-content ng-repeat="equipamento in $ctrl.local.equipamentos"
+                layout="row"
+                layout-align="center"
+                layout-wrap>
+        <md-content flex="90">
+            <span class="md-body-1" flex>{{equipamento.nome}}</span>
+        </md-content>
+        <md-content flex="10" layout layout-align="center center">
+            <span class="md-body-1">{{equipamento.quantidade}}</span>
+        </md-content>
+</md-content>

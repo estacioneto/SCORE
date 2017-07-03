@@ -6,9 +6,9 @@
                 layout="row"
                 layout-align="center"
                 layout-wrap>
-        <md-input-container flex="80">
+        <md-input-container flex="85">
             <input id="nome-equipamento"
-                   placeholder="Nome"
+                   placeholder="Descrição"
                    required
                    data-ng-model="equipamento.nome"/>
         </md-input-container>
@@ -19,7 +19,7 @@
                    required
                    data-ng-model="equipamento.quantidade"/>
         </md-input-container>
-        <md-input-container layout layout-align="center" flex="10">
+        <md-input-container layout layout-align="center" flex="5">
             <md-button class="md-icon-button md-warn"
                        ng-click="$ctrl.removerEquipamento(equipamento)">
                 <md-icon>delete</md-icon>

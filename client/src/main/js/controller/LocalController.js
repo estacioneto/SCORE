@@ -5,12 +5,14 @@
 
         const self = this;
 
-        this.edicao = $stateParams.edicao;
+        this.isAdmin = () => true;
+
+        this.edicao = $stateParams.edicao && this.isAdmin();
         this.local = local;
 
         this.onChangeLocal = function (local) {
             if (podeRedirecionarLocal(local)) {
-                $state.go('app.local', {idLocal: local._id});
+                $state.go('app.local.id.info', {idLocal: local._id});
             }
         };
 
@@ -18,15 +20,15 @@
             return local && (!self.local || (local._id !== self.local._id));
         }
 
-        this.isAdmin = () => true;
-
         this.isModoEdicao = () => this.edicao;
 
         this.adicionarLocal = function () {
-            // TODO: Fazer uma verificação para não permitir que hajam problemas de perder dados, @author Estácio Pereira.
-            this.local = new Local();
-            this.edicao = true;
+            $state.go('app.local.edicao');
         };
+
+        this.editarLocal = function () {
+            $state.go('app.local.id.edicao', {idLocal: self.local._id});
+        }
 
     }]);
 })();

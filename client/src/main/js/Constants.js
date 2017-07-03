@@ -1,4 +1,4 @@
 (function () {
     'use strict';
-    var app = angular.module('pitonApp');
+    var app = angular.module('scoreApp');
 })();
