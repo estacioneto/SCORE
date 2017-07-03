@@ -16,7 +16,7 @@
             }
         };
 
-        function podeRedirecionarLocal (local) {
+        function podeRedirecionarLocal(local) {
             return local && (!self.local || (local._id !== self.local._id));
         }
 
@@ -28,7 +28,12 @@
 
         this.editarLocal = function () {
             $state.go('app.local.id.edicao', {idLocal: self.local._id});
-        }
+        };
+
+        this.deletarLocal = function () {
+            // TODO
+            console.log('TODO');
+        };
 
     }]);
 })();
