@@ -2,7 +2,19 @@
     <md-content class="fill" layout-padding>
         <!-- TODO -->
         <!--<imagem-local local="$ctrl.local"></imagem-local>-->
-        <local-edicao local="localCtrl.local"></local-edicao>
+        <form name="formularioLocal">
+            <local-edicao local="localCtrl.local"></local-edicao>
+        </form>
+        <md-content>
+            <md-input-container layout layout-align="center center">
+                <md-button class="md-primary" ng-click="localCtrl.salvarLocal()">
+                    Salvar Local
+                </md-button>
+                <md-button ng-click="localCtrl.limparCampos()">
+                    Limpar campos
+                </md-button>
+            </md-input-container>
+        </md-content>
     </md-content>
     <div layout="row" layout-align="end" layout-padding>
         <a width="150" height="50" href="https://auth0.com/?utm_source=oss&utm_medium=gp&utm_campaign=oss"

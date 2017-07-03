@@ -6,5 +6,15 @@
         const self = this;
         this.local = local || new Local();
 
+        this.salvarLocal = function () {
+            // TODO
+            console.log('TODO');
+        };
+
+        this.limparCampos = function () {
+            // TODO
+            console.log('TODO');
+        };
+
     }]);
 })();
