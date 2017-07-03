@@ -33,7 +33,7 @@
         };
 
         this.visualizarAuditorio = function () {
-            $state.go('app.local', {idLocal: self.local._id});
+            $state.go('app.local.id.info', {idLocal: self.local._id});
         };
 
         /**
