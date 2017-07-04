@@ -63,7 +63,7 @@
 
             if (calendario.fullCalendar('getView').type === 'agendaDay' ||
                 calendario.fullCalendar('getView').type === 'basicDay') {
-                self.criarReserva();
+                self.criarReserva(dia);
             } else {
                 calendario.fullCalendar('changeView', 'agendaDay', dia);
             }
@@ -102,12 +102,23 @@
         };
 
         /**
-         * Abre o modal para criação de reserva.
+         * Abre o modal para criação de reserva no dia especificado.
          * @return {Promise} Promise do modal.
          */
-        this.criarReserva = () => {
-            return ModalService.verReserva(new Reserva({dia: '07-07-2017'}));
+        this.criarReserva = (dia) => {
+            return ModalService.verReserva(new Reserva({dia: parseDia(dia)}));
         };
+
+        function parseDia(dia) {
+            dia = dia._d;
+            let diaFormatado = '';
+
+            diaFormatado += `${dia.getDate()}-`;
+            diaFormatado += `${dia.getMonth()+1}-`;
+            diaFormatado += `${dia.getFullYear()}`;
+
+            return diaFormatado;
+        }
 
         this.onChangeLocal = function (local) {
             this.local = local;

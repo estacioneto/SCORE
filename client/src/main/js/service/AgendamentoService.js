@@ -139,7 +139,6 @@
 
         const mock = [
             new Reserva({
-                id: 1,
                 titulo: 'Reserva 1',
                 inicio: '16:30',
                 fim: '16:50',
@@ -150,7 +149,6 @@
                 autor: 'Vélmer Oliveira Odon'
             }),
             new Reserva({
-                id: 2,
                 titulo: 'Reserva 2',
                 inicio: '08:30',
                 fim: '08:45',
@@ -161,7 +159,6 @@
                 autor: 'Lucas Diniz'
             }),
             new Reserva({
-                id: 3,
                 titulo: 'Reserva 3',
                 inicio: '09:40',
                 fim: '10:00',
@@ -172,7 +169,6 @@
                 autor: 'Eric Breno'
             }),
             new Reserva({
-                id: 4,
                 titulo: 'Reserva 4',
                 inicio: '11:45',
                 fim: '12:15',
@@ -183,7 +179,6 @@
                 autor: 'Estácio Neto'
             }),
             new Reserva({
-                id: 5,
                 titulo: 'Reserva 5',
                 inicio: '14:40',
                 fim: '15:05',
@@ -194,7 +189,6 @@
                 autor: 'Alekssandro Assis'
             }),
             new Reserva({
-                id: 5,
                 titulo: 'Reserva 6',
                 inicio: '15:15',
                 fim: '16:00',
