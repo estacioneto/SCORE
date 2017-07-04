@@ -12,15 +12,16 @@
         </div>
 
         <md-content ng-if="localCtrl.local">
-            <!-- TODO -->
-            <!--<imagem-local local="$ctrl.local"></imagem-local>-->
+            <imagens-local local="localCtrl.local"
+                           editavel="false"></imagens-local>
             <local-visualizacao local="localCtrl.local"></local-visualizacao>
         </md-content>
 
-        <!-- Botão de adicionar local -->
+        <!-- Opções local -->
         <div ng-cloak>
             <md-fab-speed-dial class="md-fab-bottom-right md-fab-fixed md-scale"
                                md-open="localCtrl.menuAberto"
+                               ng-if="localCtrl.edicao"
                                md-direction="up">
                 <md-fab-trigger>
                     <md-button aria-label="menu" class="md-fab md-accent">
@@ -29,7 +30,8 @@
                 </md-fab-trigger>
 
                 <md-fab-actions>
-                    <md-button aria-label="Adicionar" class="md-fab md-raised md-mini" ng-click="localCtrl.adicionarLocal()">
+                    <md-button aria-label="Adicionar" class="md-fab md-raised md-mini"
+                               ng-click="localCtrl.adicionarLocal()">
                         <i class="fa fa-plus"></i>
                         <md-tooltip md-direction="left">Adicionar Local</md-tooltip>
                     </md-button>
@@ -48,12 +50,7 @@
                 </md-fab-actions>
             </md-fab-speed-dial>
         </div>
-        <!--<md-button class="md-fab "-->
-        <!--aria-label="Adicionar Local"-->
-        <!--data-ng-if="localCtrl.isAdmin()" data-ng-click="localCtrl.adicionarLocal()">-->
-        <!--<md-icon>menu</md-icon>-->
-        <!--</md-button>-->
-        <!-- end Botão de adicionar local -->
+        <!-- end Opções local -->
         <!-- end Content -->
     </md-content>
     <div layout="row" layout-align="end" layout-padding>

@@ -7,7 +7,7 @@
 
         this.isAdmin = () => true;
 
-        this.edicao = $stateParams.edicao && this.isAdmin();
+        this.edicao = this.isAdmin();
         this.local = local;
 
         this.onChangeLocal = function (local) {

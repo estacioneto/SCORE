@@ -8,12 +8,12 @@
 
         this.salvarLocal = function () {
             // TODO
-            console.log('TODO');
+            alert('Funcionalidade não implementada!')
         };
 
         this.limparCampos = function () {
             // TODO
-            console.log('TODO');
+            alert('Funcionalidade não implementada!')
         };
 
     }]);
