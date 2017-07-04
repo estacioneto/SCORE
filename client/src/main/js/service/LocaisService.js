@@ -5,6 +5,7 @@
 
         // TODO: Implementar lógica inteira, @author Estácio Pereira.
         const auditorioSPLab = {
+                _id: 1,
                 nome: 'Auditorio SPLab',
                 bloco: 'CQ/SPLab',
                 imagens: [],
@@ -16,9 +17,10 @@
                     quantidade: 2
                 }],
                 capacidade: 40,
-                funcionamento: '08:00-18:00'
+                funcionamento: '08001800'
             },
             auditorioHattori = {
+                _id: 2,
                 nome: 'Auditorio Hattori',
                 bloco: 'CN',
                 imagens: [],
@@ -30,9 +32,10 @@
                     quantidade: 10
                 }],
                 capacidade: 200,
-                funcionamento: '08:00-18:00'
+                funcionamento: '08001800'
             },
             salaReunioes = {
+                _id: 10,
                 nome: 'Sala de Reuniões',
                 bloco: 'CQ/SPLab',
                 imagens: [],
@@ -44,12 +47,16 @@
                     quantidade: 220
                 }],
                 capacidade: 10,
-                funcionamento: '08:00-12:00'
+                funcionamento: '08001200'
             };
         const locais = [auditorioSPLab, auditorioHattori, salaReunioes];
 
         this.carregarLocais = function () {
             return $q.when({data: locais.map(local => new Local(local))});
-        }
+        };
+
+        this.carregarLocal = function (id) {
+            return $q.when({data: _.find(locais, local => local._id === id)});
+        };
     }]);
 })();

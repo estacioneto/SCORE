@@ -3,7 +3,7 @@
 
     describe('LoginControllerTest', function () {
 
-        beforeEach(module('pitonApp', 'stateMock', 'Mocks'));
+        beforeEach(module('scoreApp', 'stateMock', 'Mocks'));
 
         var createController, scope, AuthService, UserMock, ToastService;
         var self = this;

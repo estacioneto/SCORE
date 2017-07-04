@@ -13,7 +13,7 @@
 
 .md-fab-fixed {
     position: fixed !important;
-    margin-bottom: 40px !important;
+    margin-bottom: 20px !important;
 }
 
 md-toolbar {
@@ -29,18 +29,17 @@ md-toolbar {
     color: #858585;
 }
 
-
 .done-todo {
     text-decoration: line-through;
 }
 
 .smooth-hover {
-    -o-transition:color .5s ease-out, background 1s ease-in;
-    -ms-transition:color .5s ease-out, background 1s ease-in;
-    -moz-transition:color .5s ease-out, background 1s ease-in;
-    -webkit-transition:color .5s ease-out, background 1s ease-in;
+    -o-transition: color .5s ease-out, background 1s ease-in;
+    -ms-transition: color .5s ease-out, background 1s ease-in;
+    -moz-transition: color .5s ease-out, background 1s ease-in;
+    -webkit-transition: color .5s ease-out, background 1s ease-in;
     /* ...and now override with proper CSS property */
-    transition:color .5s ease-out, background 1s ease-in;
+    transition: color .5s ease-out, background 1s ease-in;
 }
 
 #remove-scheduling {
@@ -112,32 +111,37 @@ md-dialog {
 }
 
 /*Scrollbar controller - hide and show*/
-.scroll-box {}
+.scroll-box {
+}
 
 .scroll-box::-webkit-scrollbar {
-  width: .4em;
+    width: .4em;
 }
+
 .scroll-box::-webkit-scrollbar,
 .scroll-box::-webkit-scrollbar-thumb {
-  overflow:visible;
-  border-radius: 4px;
+    overflow: visible;
+    border-radius: 4px;
 }
+
 .scroll-box::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,.2);
+    background: rgba(0, 0, 0, .2);
 }
+
 .cover-scroll-bar {
-  position: absolute;
-  height: 100%;
-  top: 0;
-  right: 0;
-  width: .4em;
-  -webkit-transition: all .5s;
-  opacity: 1;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 0;
+    width: .4em;
+    -webkit-transition: all .5s;
+    opacity: 1;
 }
+
 /* MAGIC HAPPENS HERE */
 md-dialog:hover .cover-scroll-bar {
-   opacity: 0;
-  -webkit-transition: all .5s;
+    opacity: 0;
+    -webkit-transition: all .5s;
 }
 
 /*end Scrollbar controller - hide and show*/
@@ -159,7 +163,7 @@ md-dialog:hover .cover-scroll-bar {
 }
 
 #sorting-container {
-    width:35px;
+    width: 35px;
 }
 
 #sorting-button {
@@ -211,11 +215,21 @@ calendar-md .md-toolbar-tools h2 {
     padding-bottom: 8px;
     white-space: normal;
 }
+
 .autocomplete-custom-template li:last-child {
     border-bottom-width: 0;
 }
+
 .autocomplete-custom-template .item-title,
 .autocomplete-custom-template .item-metadata {
     display: block;
     line-height: 2;
+}
+
+.fill {
+    min-height: calc(100% - 50px);
+}
+
+md-input-container.md-input-invalid > md-icon {
+    color: red;
 }

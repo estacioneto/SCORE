@@ -28,7 +28,7 @@
   <!-- endbuild -->
 </head>
 
-<body data-ng-app="pitonApp" data-ng-strict-di>
+<body data-ng-app="scoreApp" data-ng-strict-di>
 
   <div id="content" data-ui-view></div>
 
@@ -48,6 +48,7 @@
   <script src="../../vendor/js/ui-bootstrap-tpls/ui-bootstrap-tpls.js"></script>
   <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="/node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="/node_modules/angular-ui-mask/dist/mask.min.js"></script>
   <script src="/node_modules/angular-material-calendar/angular-material-calendar.min.js"></script>
 
   <!-- Auth0 stuff -->
@@ -81,6 +82,7 @@
   <script src="js/controller/DetalhesDiaController.js"></script>
   <script src="js/controller/DetalhesReservaController.js"></script>
   <script src="js/controller/LocalController.js"></script>
+  <script src="js/controller/LocalEdicaoController.js"></script>
 
   <!-- Directive -->
   <script src="js/directive/MainToolbarDirective.js"></script>
@@ -90,12 +92,20 @@
   <script src="js/directive/EasterEggsDirective.js"></script>
 
   <!-- Componentss -->
-  <script src="js/component/SelectSearchLocal.js"></script>
+  <script src="js/component/local/SelectSearchLocal.js"></script>
   <script src="js/component/ToolbarStateHandler.js"></script>
+  <script src="js/component/local/LocalEdicao.js"></script>
+  <script src="js/component/local/DetalhesLocalEdicao.js"></script>
+  <script src="js/component/local/EquipamentosLocalEdicao.js"></script>
+
+  <script src="js/component/local/LocalVisualizacao.js"></script>
+  <script src="js/component/local/DetalhesLocalVisualizacao.js"></script>
+  <script src="js/component/local/EquipamentosLocalVisualizacao.js"></script>
 
   <!-- Routes -->
   <script src="js/config.js"></script>
   <script src="js/authConfig.js"></script>
+  <script src="js/ThemeConfig.js"></script>
   <!-- endbuild -->
 </body>
 

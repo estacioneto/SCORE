@@ -9,6 +9,7 @@
      *
      * @author Estácio Pereira
      */
-    appModule.controller('AppController', ['$state', function ($state) {
+    appModule.controller('AppController', ['AuthService', function (AuthService) {
+        this.isAutenticado = () => AuthService.isAuthenticated();
     }]);
 }());

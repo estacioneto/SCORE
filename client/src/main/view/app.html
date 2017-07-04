@@ -1,6 +1,9 @@
 <div layout="column" md-theme="{{$root.theme}}" md-theme-watch>
     <main-toolbar></main-toolbar>
     <md-content id="main-page" flex>
-        <div data-ui-view></div>
+        <md-content>
+            <sidebar ng-if="appCtrl.isAutenticado()"></sidebar>
+            <div data-ui-view></div>
+        </md-content>
     </md-content>
 </div>

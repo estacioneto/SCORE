@@ -65,12 +65,13 @@
                     scope.getCurrentStateName = function () {
                         var currentState = $state.current;
                         if (currentState.name !== 'app.home' && currentState.name !== 'app.login') {
-                            return scope.getNomeState($state.current.name.toUpperCase());
+                            const nomeState = $state.current.nome || $state.current.name;
+                            return scope.getNomeState(nomeState.toUpperCase());
                         }
                         return 'SCORE';
                     };
 
-                    scope.getNomeState = nomeState => _.last(nomeState.split('.'))
+                    scope.getNomeState = nomeState => _.last(nomeState.split('.')).replace(/[^a-zA-Z]/g, '\ ');
 
                     /**
                      * Simply goes home.

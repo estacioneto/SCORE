@@ -1,27 +1,59 @@
 <md-content>
-    <sidebar></sidebar>
-    <md-content layout-padding>
+    <md-content class="fill" layout-padding>
         <!-- Content -->
-        <div class="content" layout="row">
-            <!-- MainContent -->
-            <div class="caixa-calendario"
-                 layout="column" flex>
-                <form name="formularioLocal">
-                    <div class="md-toolbar-tools search-bar" layout layout-align="center">
-                        <select-search-local flex
-                                             formulario="formularioLocal"
-                                             on-select-local="calendarioCtrl.onChangeLocal(local)"></select-search-local>
-                        <md-button class="md-icon-button" type="button"
-                                   ng-disabled="!calendarioCtrl.local"
-                                   ng-click="calendarioCtrl.visualizarAuditorio()">
-                            <md-icon>info_outline</md-icon>
-                            <md-tooltip>Sobre o auditório</md-tooltip>
-                        </md-button>
-                    </div>
-                </form>
-            </div>
-            <!-- end MainContent -->
+        <div class="content" flex>
+            <form name="formularioLocal">
+                <div class="md-toolbar-tools search-bar" layout layout-align="center">
+                    <select-search-local flex
+                                         formulario="formularioLocal"
+                                         on-select-local="localCtrl.onChangeLocal(local)"></select-search-local>
+                </div>
+            </form>
         </div>
+
+        <md-content ng-if="localCtrl.local">
+            <!-- TODO -->
+            <!--<imagem-local local="$ctrl.local"></imagem-local>-->
+            <local-visualizacao local="localCtrl.local"></local-visualizacao>
+        </md-content>
+
+        <!-- Botão de adicionar local -->
+        <div ng-cloak>
+            <md-fab-speed-dial class="md-fab-bottom-right md-fab-fixed md-scale"
+                               md-open="localCtrl.menuAberto"
+                               md-direction="up">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-accent">
+                        <md-icon>menu</md-icon>
+                    </md-button>
+                </md-fab-trigger>
+
+                <md-fab-actions>
+                    <md-button aria-label="Adicionar" class="md-fab md-raised md-mini" ng-click="localCtrl.adicionarLocal()">
+                        <i class="fa fa-plus"></i>
+                        <md-tooltip md-direction="left">Adicionar Local</md-tooltip>
+                    </md-button>
+                    <md-button aria-label="Editar" class="md-fab md-raised md-mini"
+                               ng-if="localCtrl.local"
+                               ng-click="localCtrl.editarLocal()">
+                        <md-icon aria-label="Editar">mode_edit</md-icon>
+                        <md-tooltip md-direction="left">Editar Local</md-tooltip>
+                    </md-button>
+                    <md-button aria-label="Excluir" class="md-fab md-raised md-mini md-warn"
+                               ng-if="localCtrl.local"
+                               ng-click="localCtrl.deletarLocal()">
+                        <md-icon aria-label="Excluir">delete</md-icon>
+                        <md-tooltip md-direction="left">Excluir Local</md-tooltip>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+        </div>
+        <!--<md-button class="md-fab "-->
+        <!--aria-label="Adicionar Local"-->
+        <!--data-ng-if="localCtrl.isAdmin()" data-ng-click="localCtrl.adicionarLocal()">-->
+        <!--<md-icon>menu</md-icon>-->
+        <!--</md-button>-->
+        <!-- end Botão de adicionar local -->
         <!-- end Content -->
     </md-content>
     <div layout="row" layout-align="end" layout-padding>
