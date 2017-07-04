@@ -3,29 +3,35 @@
     /**
      * Controller responsável pela view do calendário.
      */
-    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'Reserva', 'AgendamentoService', 'eventos', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig, Reserva, AgendamentoService, eventos, LocaisService, ModalService) {
+    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'Reserva', 'AgendamentoService', 'reservas', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig, Reserva, AgendamentoService, reservas, LocaisService, ModalService) {
 
         const self = this;
 
-        this.eventos = eventos;
-        this.eventosFonte = [this.eventos];
+        this.reservas = reservas;
+        this.reservasFonte = [this.reservas];
 
         /**
-         * Callback executado quando o usuário clica em um determinado evento.
-         * Aqui exibimos o Modal com as informações sobre o evento.
+         * Callback executado quando o usuário clica em uma determinado reserva.
+         * Aqui exibimos o Modal com as informações sobre a reserva.
          *
-         * @param evento Evento clicado.
+         * @param reserva Reserva clicado.
          */
-        this.clickEvento = function(evento) {
-            return ModalService.verReserva(evento, getDataDoEvento(evento));
-        };
+        this.clickReserva = function(reserva) {
+            return ModalService.verReserva(reserva).then(function () {
+                // Todo: Pensar como resolver esse problema da reserva retornar do calendário
+                // Todo: como object, não como Reserva. Obs: o updateEvent necessita receber
+                // Todo: um objeto com as propriedades de um evento
 
-        /**
-         * Retorna a data do evento especificado.
-         */
-        function getDataDoEvento(evento) {
-            return evento.start._d;
-        }
+                let reservaObj = new Reserva(reserva);
+
+                reserva.title = reservaObj.title;
+                reserva.description = reservaObj.description;
+                reserva.start = reservaObj.start;
+                reserva.end = reservaObj.end;
+
+                uiCalendarConfig.calendars.calendario.fullCalendar('updateEvent', reserva);
+            });
+        };
 
         /**
          * Callback executado quando o usuário clica em um determinado dia.
@@ -53,7 +59,14 @@
              * dia._d.setHours(dia._d.getHours() + fatorFusoHorario);
              */
 
-            uiCalendarConfig.calendars.calendario.fullCalendar('changeView', 'basicDay', dia);
+            let calendario = uiCalendarConfig.calendars.calendario;
+
+            if (calendario.fullCalendar('getView').type === 'agendaDay' ||
+                calendario.fullCalendar('getView').type === 'basicDay') {
+                self.criarReserva();
+            } else {
+                calendario.fullCalendar('changeView', 'agendaDay', dia);
+            }
         };
 
         /**
@@ -77,7 +90,7 @@
                         eventLimit: 4
                     }
                 },
-                eventClick: self.clickEvento,
+                eventClick: self.clickReserva,
                 dayClick: self.clickDia,
                 buttonText: {
                     agendaWeek: 'Agenda da semana',
@@ -86,6 +99,14 @@
                     listWeek: 'Eventos da semana'
                 }
             }
+        };
+
+        /**
+         * Abre o modal para criação de reserva.
+         * @return {Promise} Promise do modal.
+         */
+        this.criarReserva = () => {
+            return ModalService.verReserva(new Reserva({dia: '07-07-2017'}));
         };
 
         this.onChangeLocal = function (local) {

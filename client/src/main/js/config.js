@@ -97,7 +97,7 @@
                     templateUrl: view + 'home.html',
                     controller: 'CalendarioController as calendarioCtrl',
                     resolve: {
-                        eventos: function (AgendamentoService) {
+                        reservas: function (AgendamentoService) {
                             return AgendamentoService.loadReservasFuturas();
                         }
                     }

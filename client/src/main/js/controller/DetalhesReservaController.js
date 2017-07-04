@@ -3,7 +3,7 @@
     /**
      * Controller responsável pelo modal de detalhes da reserva.
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', 'data', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', function (reserva, data, $mdDialog, ModalService, AuthService, AgendamentoService) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService) {
 
         const self = this;
 
@@ -76,10 +76,10 @@
 
             const callbackReabrirReserva = () => {
                 self.reserva.autor = undefined;
-                return ModalService.verReserva(self.reserva, data);
+                return ModalService.verReserva(self.reserva);
             };
 
-            return AgendamentoService.salvarReserva(data, self.reserva)
+            return AgendamentoService.salvarReserva(self.reserva)
                 .then(data => {
                     posSalvar(data);
                     return data;
@@ -130,7 +130,7 @@
          * @return Promise.
          */
         this.excluirReserva = () => {
-            return AgendamentoService.excluir(data, self.reserva).then(data => {
+            return AgendamentoService.excluir(self.reserva).then(data => {
                 self.fecharModal();
                 return data;
             });
@@ -142,7 +142,7 @@
          */
         this.ehDonoDaReserva = () => {
             // TODO: verificar por ID ou algo assim.
-            return reserva.author === getNomeUsuarioLogado();
+            return reserva.autor === getNomeUsuarioLogado();
         };
 
         /**
@@ -194,7 +194,7 @@
         (() => {
             if (self.isEdicao) {
                 preEdicao();
-                self.reserva.author = getNomeUsuarioLogado();
+                self.reserva.autor = getNomeUsuarioLogado();
             }
         })();
     }]);

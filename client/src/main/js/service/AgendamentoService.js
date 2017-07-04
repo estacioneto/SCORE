@@ -9,23 +9,20 @@
         /**
          * TODO: a implementar, depende do servidor.
          * Remove uma reserva do dia.
-         * @param dataReserva Data da reserva.
          * @param reserva Reserva a ser excluida.
          */
-        this.excluir = (dataReserva, reserva) => {
-            return this.getReservasDia(dataReserva).then(reservasDia => {
-                const indice = getIndiceReserva(reservasDia, reserva);
-                reservasDia.splice(indice, 1);
-                return reserva;
-            });
+        this.excluir = (reserva) => {
+            const indice = getIndiceReserva(mock, reserva);
+            mock.splice(indice, 1);
+            return $q.when(reserva);
         };
 
         // TODO: o salvamento vai ser assim? Com um cara daqui, em vez da factory
         // TODO: a implementar, depende do servidor.
-        this.salvarReserva = (dataReserva, reserva) => {
-            return this.getReservasDia(dataReserva).then(reservasDia => {
+        this.salvarReserva = (reserva) => {
+            return this.getReservasDia(reserva.dia).then(reservasDia => {
                 validarAdicaoReserva(reservasDia, reserva);
-                return atualizarDia(dataReserva, reserva);
+                return atualizarReservas(reserva);
             });
         };
 
@@ -44,38 +41,30 @@
                 if (reserva.id === r.id) {
                     continue;
                 }
-                if (r.fim > inicio && r.inicio < inicio
-                    || r.inicio < fim && r.fim > fim
-                    || r.inicio > inicio && r.fim < fim
-                    || r.inicio < inicio && r.fim > fim
-                    || r.inicio === inicio || r.fim === fim
-                    || r.inicio < inicio && r.fim > inicio) {
-                        throw { mensagem: "Horário já ocupado."};
-                    }
+                if ((inicio < r.inicio && fim > r.fim)
+                    || (inicio > r.inicio && inicio < r.fim)
+                    || (fim > r.inicio && fim < r.fim)) {
+                    throw { mensagem: "Horário já ocupado."};
+                }
             }
         }
 
         /**
          * TODO: esse cara que manda pro server o role, por enquanto atualiza a lista daqui.
          * TODO: a implementar, depende do servidor.
-         * @param {*} dataReserva 
-         * @param {*} reserva 
+         * @param {*} reserva
          */
-        function atualizarDia(dataReserva, reserva) {
-            const identificadorDia = getIdentificadorDia(dataReserva);
-            if (!mock[identificadorDia]) {
-                mock[identificadorDia] = [];
-            }
-            let reservasDia = mock[identificadorDia];
-            let indiceReserva = getIndiceReserva(reservasDia, reserva);
+        function atualizarReservas(reserva) {
+            let indiceReserva = getIndiceReserva(mock, reserva);
+
             if (indiceReserva !== -1) {
                 // atualizar
-                reservasDia.splice(indiceReserva, 1);
-                reservasDia.push(reserva);
+                mock.splice(indiceReserva, 1, new Reserva(reserva));
             } else {
                 // criar
-                reservasDia.push(reserva);
+                mock.push(reserva);
             }
+
             return reserva;
         }
 
@@ -98,26 +87,26 @@
          * Retorna as reservas de um dado dia.
          */
         this.getReservasDia = data => {
-            // Todo: Alterar o query das reservas de acordo com a nova estrutura do model
-            const identificadorDia = getIdentificadorDia(data)
-            return promiseEventosFuturos.then(data => {
-                // identificador do dia tem formato: AAAAMMDD
-                return data[identificadorDia] || [];
+            return promiseEventosFuturos.then(reservas => {
+                let reservasDia = [];
+
+                reservas.forEach(function (reserva) {
+                    if(reserva.dia === data) {
+                        reservasDia.push(reserva);
+                    }
+                });
+
+                return reservasDia;
             });
         };
 
         /**
-         * Retorna o identificador de um dado dia, recebendo um Date
-         * e retornando o identificador no formato YYYYMMDD
-         * @param {*} data Objeto Date do dia.
-         * @return {String} Identificador.
+         * Retorna a promise com a reserva do id especificado.
          */
-        function getIdentificadorDia(data) {
-            const mes = data.getMonth() > 9 ? data.getMonth() : '0' + data.getMonth();
-            const dia = data.getDate() > 9 ? data.getDate() : '0' + data.getDate();
-            const identificadorDia = `${data.getFullYear()}${mes}${dia}`;
-            return identificadorDia;
-        }
+        this.getReserva = id => {
+            let indiceReserva = getIndiceReserva(mock, {id});
+            return $q.when(mock[indiceReserva]);
+        };
 
         /**
          * Carrega as reservas futuras e deixa em memória. Melhorar isso,
@@ -150,58 +139,70 @@
 
         const mock = [
             new Reserva({
-                title: 'Event1',
-                start: '2017-07-04T16:30:00',
-                end: '2017-07-04T16:50:00',
-                color: 'red',
-                textColor: 'white',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                author: 'Vélmer'
+                id: 1,
+                titulo: 'Reserva 1',
+                inicio: '16:30',
+                fim: '16:50',
+                dia: '07-07-2017',
+                cor: 'red',
+                corTexto: 'white',
+                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                autor: 'Vélmer Oliveira Odon'
             }),
             new Reserva({
-                title: 'Event2',
-                start: '2017-07-05T08:30:00',
-                end: '2017-07-05T08:45:00',
-                color: 'yellow',
-                textColor: 'black',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                author: 'Lucas'
+                id: 2,
+                titulo: 'Reserva 2',
+                inicio: '08:30',
+                fim: '08:45',
+                dia: '06-07-2017',
+                cor: 'yellow',
+                corTexto: 'black',
+                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                autor: 'Lucas Diniz'
             }),
             new Reserva({
-                title: 'Event3',
-                start: '2017-07-05T09:40:00',
-                end: '2017-07-05T10:00:00',
-                color: 'skyblue',
-                textColor: 'black',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                author: 'Eric'
+                id: 3,
+                titulo: 'Reserva 3',
+                inicio: '09:40',
+                fim: '10:00',
+                dia: '06-07-2017',
+                cor: 'skyblue',
+                corTexto: 'black',
+                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                autor: 'Eric Breno'
             }),
             new Reserva({
-                title: 'Event4',
-                start: '2017-07-05T11:45:00',
-                end: '2017-07-05T12:15:00',
-                color: 'darkred',
-                textColor: 'white',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                author: 'Estácio'
+                id: 4,
+                titulo: 'Reserva 4',
+                inicio: '11:45',
+                fim: '12:15',
+                dia: '06-07-2017',
+                cor: 'darkred',
+                corTexto: 'white',
+                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                autor: 'Estácio Neto'
             }),
             new Reserva({
-                title: 'Event5',
-                start: '2017-07-05T14:40:00',
-                end: '2017-07-05T15:05:00',
-                color: 'forestgreen',
-                textColor: 'white',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                author: 'Vidal'
+                id: 5,
+                titulo: 'Reserva 5',
+                inicio: '14:40',
+                fim: '15:05',
+                dia: '06-07-2017',
+                cor: 'forestgreen',
+                corTexto: 'white',
+                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                autor: 'Alekssandro Assis'
             }),
             new Reserva({
-                title: 'Event6',
-                start: '2017-07-05T15:15:00',
-                end: '2017-07-05T16:00:00',
-                color: 'midnightblue',
-                textColor: 'white',
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                author: 'Gordo'
+                id: 5,
+                titulo: 'Reserva 6',
+                inicio: '15:15',
+                fim: '16:00',
+                dia: '06-07-2017',
+                cor: 'midnightblue',
+                corTexto: 'white',
+                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                autor: 'Eric Breno'
             })
         ];
 
