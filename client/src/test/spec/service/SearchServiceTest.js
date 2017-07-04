@@ -8,7 +8,7 @@
      */
     describe('SearchServiceTest', function () {
 
-        beforeEach(module('pitonApp', 'stateMock', 'Mocks'));
+        beforeEach(module('scoreApp', 'stateMock', 'Mocks'));
 
         var SearchService, NoteMock;
         var self = this;

@@ -1,0 +1,24 @@
+<md-content>
+    <md-content layout="column" layout-align="center center">
+        <div class="md-display-1">{{$ctrl.local.nome}}</div>
+        <div class="md-headline text-center">{{$ctrl.local.bloco}}</div>
+    </md-content>
+
+    <md-content layout-padding>
+        <div layout="row" layout-wrap>
+            <md-content layout flex>
+                <md-content layout>
+                    <md-icon>schedule</md-icon>
+                    <span class="md-subhead" flex
+                          layout-padding>Funcionamento: {{$ctrl.getFuncionamentoFormatado()}}</span>
+                </md-content>
+            </md-content>
+            <md-content layout flex layout-align="end end">
+                <md-content layout>
+                    <md-icon>people</md-icon>
+                    <span class="md-subhead" flex layout-padding>Capacidade: {{$ctrl.local.capacidade}} pessoas</span>
+                </md-content>
+            </md-content>
+        </div>
+    </md-content>
+</md-content>

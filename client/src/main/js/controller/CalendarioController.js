@@ -116,8 +116,7 @@
         };
 
         this.visualizarAuditorio = function () {
-            // TODO: Implementar visualização de auditório. @author Estácio Pereira.
-            console.log('Local selecionado: ', this.local);
+            $state.go('app.local.id.info', {idLocal: self.local._id});
         };
 
         /**
