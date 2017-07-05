@@ -58,8 +58,6 @@
              * @return Promise do modal.
              */
             this.verReserva = (reserva) => {
-                console.log(reserva);
-
                 return $mdDialog.show({
                     controller: 'DetalhesReservaController as reservaCtrl',
                     templateUrl: 'view/detalhesReserva.html',

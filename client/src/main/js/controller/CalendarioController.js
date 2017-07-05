@@ -3,7 +3,7 @@
     /**
      * Controller responsável pela view do calendário.
      */
-    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'Reserva', 'AgendamentoService', 'reservas', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig, Reserva, AgendamentoService, reservas, LocaisService, ModalService) {
+    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'Reserva', 'reservas', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig, Reserva, reservas, LocaisService, ModalService) {
 
         const self = this;
 
@@ -17,21 +17,28 @@
          * @param reserva Reserva clicado.
          */
         this.clickReserva = function(reserva) {
+            let reservaAntes = angular.copy(reserva);
             return ModalService.verReserva(reserva).then(function () {
-                // Todo: Pensar como resolver esse problema da reserva retornar do calendário
-                // Todo: como object, não como Reserva. Obs: o updateEvent necessita receber
-                // Todo: um objeto com as propriedades de um evento
+                if(reservaFoiAlterada(reserva, reservaAntes)) {
+                    reserva.title = reserva.titulo;
+                    reserva.description = reserva.descricao;
+                    reserva.start = reserva.inicio;
+                    reserva.end = reserva.fim;
 
-                let reservaObj = new Reserva(reserva);
-
-                reserva.title = reservaObj.title;
-                reserva.description = reservaObj.description;
-                reserva.start = reservaObj.start;
-                reserva.end = reservaObj.end;
-
-                uiCalendarConfig.calendars.calendario.fullCalendar('updateEvent', reserva);
+                    uiCalendarConfig.calendars.calendario.fullCalendar('updateEvent', reserva);
+                }
             });
         };
+
+        /**
+         * Retorna se uma reserva foi alterada.
+         *
+         * @param reserva Reserva que pode ter sido alterada.
+         * @param reservaAntes Reserva antes da possível alteração
+         */
+        function reservaFoiAlterada(reserva, reservaAntes) {
+            return JSON.stringify(new Reserva(reserva)) !== JSON.stringify(new Reserva(reservaAntes));
+        }
 
         /**
          * Callback executado quando o usuário clica em um determinado dia.
@@ -47,9 +54,9 @@
          * 2017-07-04T21:00:00.000Z. Por ora, como não encontrei solução para o problema, estou al-
          * terando manualmente a hora da data para 3 horas na frente.
          *
-         * @param dia Dia clicado.
+         * @param data Data clicado.
          */
-        this.clickDia = function(dia) {
+        this.clickDia = function(data) {
             /**
              * O prório calendário liga com essa configuração do Locale, então ele sabe que está
              * 3 horas atrasado, por isso a alteração do horário para 3 horas a mais só deve ser
@@ -63,9 +70,9 @@
 
             if (calendario.fullCalendar('getView').type === 'agendaDay' ||
                 calendario.fullCalendar('getView').type === 'basicDay') {
-                self.criarReserva(dia);
+                self.criarReserva(data);
             } else {
-                calendario.fullCalendar('changeView', 'agendaDay', dia);
+                calendario.fullCalendar('changeView', 'agendaDay', data);
             }
         };
 
@@ -105,19 +112,24 @@
          * Abre o modal para criação de reserva no dia especificado.
          * @return {Promise} Promise do modal.
          */
-        this.criarReserva = (dia) => {
-            return ModalService.verReserva(new Reserva({dia: parseDia(dia)}));
+        this.criarReserva = (data) => {
+            return ModalService.verReserva(new Reserva({dia: parseData(data)}));
         };
 
-        function parseDia(dia) {
-            dia = dia._d;
-            let diaFormatado = '';
+        function parseData(data) {
+            data = data._d;
+            let dataFormatada = '',
+                diaFormatado = '',
+                mesFormatado = '',
+                anoFormatado = '';
 
-            diaFormatado += `${dia.getDate()}-`;
-            diaFormatado += `${dia.getMonth()+1}-`;
-            diaFormatado += `${dia.getFullYear()}`;
+            diaFormatado += (data.getDate() < 10) ? `0${data.getDate()}` : `${data.getDate()}`;
+            mesFormatado += (data.getMonth() < 9) ? `0${data.getMonth()+1}` : `${data.getMonth()+1}`;
+            anoFormatado += `${data.getFullYear()}`;
 
-            return diaFormatado;
+            dataFormatada = `${diaFormatado}-${mesFormatado}-${anoFormatado}`;
+
+            return dataFormatada;
         }
 
         this.onChangeLocal = function (local) {
