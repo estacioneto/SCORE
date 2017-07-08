@@ -120,7 +120,7 @@
             const valor = campo.val();
             const numeroNaoFormatado = _.filter(valor, numero => new RegExp(/\d/).test(numero)).join('');
             const numeroFormatado = getTelefoneFormatado(numeroNaoFormatado);
-
+            
             if (numeroFormatado !== valor) {
                 campo.val(numeroFormatado);
             }
@@ -141,13 +141,36 @@
                 return `(${numeroNaoFormatado}) `;
             }
 
-            if (numeroNaoFormatado.length >= TAMANHO_NUMERO_METADE) {
+            if (numeroNaoFormatado.length >= TAMANHO_DDD) {
                 const ddd = numeroNaoFormatado.substring(PRIMEIRO_INDICE, TAMANHO_DDD);
 
                 const digitos = numeroNaoFormatado.substring(TAMANHO_DDD);
+                const digitosComHifen = inserirHifenNumero(digitos);
 
-                return `(${ddd}) ${digitos}`;
+                return `(${ddd}) ${digitosComHifen}`;
             }
+            return numeroNaoFormatado;
         }
+
+        /**
+         * Insere o hífen no número de telefone, para a máscara.
+         * * Se o número tem mais de 9 dígitos, o hífen separa os 5 primeiros dos 4 últimos números
+         * * Se o número tem mais de 4 dígitos e menos que 9, o hífen separa os 4 primeiros do resto.
+         * @param {String} numero Número a ser formatado.
+         * @return Número formatado.
+         */
+        function inserirHifenNumero(numero) {
+            // IMPORTANTE: mudar valor de TAMANHO_MAXIMO_FORMATADO para 15 ao descomentar.
+            // if (numero.length > 8) {
+            //     const primeiraParte = numero.substring(PRIMEIRO_INDICE, 5);
+            //     const segundaParte = numero.substring(5);
+            //     return `${primeiraParte}-${segundaParte}`;
+            // } else if (numero.length > 4) {
+            //     const primeiraParte = numero.substring(PRIMEIRO_INDICE, 4);
+            //     const segundaParte = numero.substring(4);
+            //     return `${primeiraParte}-${segundaParte}`
+            // }
+            return numero;
+        };
     }]);
 })();
