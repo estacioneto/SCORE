@@ -14,7 +14,10 @@
         const PRIMEIRO_INDICE = 0,
             TAMANHO_DDD = 2,
             TAMANHO_NUMERO_METADE = 6,
-            TAMANHO_MAXIMO_FORMATADO = 14;
+            TAMANHO_MAXIMO_FORMATADO = 15,
+            LIMITE_ADICIONAR_HIFEN = 4,
+            TAMANHO_NUMERO_ANTIGO = 8,
+            MEIO_NUMERO_NOVO = 5;
 
         const TIMEOUT_VERIFICACAO = 500,
             BACKSPACE_KEY = 'Backspace';
@@ -87,7 +90,7 @@
          * @returns {boolean} {@code true} se deve formatar o número de telefone.
          */
         function deveFormatarTelefone(evento) {
-            return evento.key !== BACKSPACE_KEY && !evento.ctrlKey;
+            return !evento.ctrlKey;
         }
 
         /**
@@ -120,7 +123,7 @@
             const valor = campo.val();
             const numeroNaoFormatado = _.filter(valor, numero => new RegExp(/\d/).test(numero)).join('');
             const numeroFormatado = getTelefoneFormatado(numeroNaoFormatado);
-
+            
             if (numeroFormatado !== valor) {
                 campo.val(numeroFormatado);
             }
@@ -128,26 +131,48 @@
 
         /**
          * Retorna o número de telefone formatado.
+         * 1. Para vazio, retorna vazio
+         * 2. Para menos de 3 dígitos (apenas ddd ou um dígito), retorna '(' + numero
+         * 3. Para mais de 2 dígitos (ddd + algo) retorna (DDD) + ' ' + número
+         *  3.1 Formatação para número segue padrão de #inserirHifenNumero() 
          *
          * @param  {string} numeroNaoFormatado Número de telefone não formatado.
          * @return {string} Número de telefone formatado.
          */
         function getTelefoneFormatado(numeroNaoFormatado) {
-            if (_.isEmpty(numeroNaoFormatado)) {
-                return `(${numeroNaoFormatado}`;
-            }
-
-            if (numeroNaoFormatado.length === TAMANHO_DDD) {
-                return `(${numeroNaoFormatado}) `;
-            }
-
-            if (numeroNaoFormatado.length >= TAMANHO_NUMERO_METADE) {
+            if (numeroNaoFormatado.length > TAMANHO_DDD) {
                 const ddd = numeroNaoFormatado.substring(PRIMEIRO_INDICE, TAMANHO_DDD);
 
                 const digitos = numeroNaoFormatado.substring(TAMANHO_DDD);
+                const digitosComHifen = inserirHifenNumero(digitos);
 
-                return `(${ddd}) ${digitos}`;
+                return `(${ddd}) ${digitosComHifen}`;
             }
+
+            if (!_.isEmpty(numeroNaoFormatado)) {
+                return `(${numeroNaoFormatado}`;
+            }
+            return numeroNaoFormatado;
         }
+
+        /**
+         * Insere o hífen no número de telefone, para a máscara.
+         * * Se o número tem mais de 9 dígitos, o hífen separa os 5 primeiros dos 4 últimos números
+         * * Se o número tem mais de 4 dígitos e menos que 9, o hífen separa os 4 primeiros do resto.
+         * @param {String} numero Número a ser formatado.
+         * @return Número formatado.
+         */
+        function inserirHifenNumero(numero) {
+            if (numero.length > TAMANHO_NUMERO_ANTIGO) {
+                const primeiraParte = numero.substring(PRIMEIRO_INDICE, MEIO_NUMERO_NOVO);
+                const segundaParte = numero.substring(5);
+                return `${primeiraParte}-${segundaParte}`;
+            } else if (numero.length > LIMITE_ADICIONAR_HIFEN) {
+                const primeiraParte = numero.substring(PRIMEIRO_INDICE, LIMITE_ADICIONAR_HIFEN);
+                const segundaParte = numero.substring(LIMITE_ADICIONAR_HIFEN);
+                return `${primeiraParte}-${segundaParte}`
+            }
+            return numero;
+        };
     }]);
 })();
