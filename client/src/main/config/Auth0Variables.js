@@ -38,7 +38,7 @@ const LOCK_CONFIG = {
         icon: 'img/icons/phone.png',
         validator: function (number) {
             return {
-                valid: new RegExp(/\(\d{2}\) \d{8,9}/).test(number),
+                valid: new RegExp(/\(\d{2}\) \d{4,5}[-]\d{4}/).test(number),
                 hint: "Número deve seguir padrão: (DDD) Número 8 ou 9 dígitos " // optional
             };
         }

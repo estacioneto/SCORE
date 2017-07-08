@@ -14,7 +14,10 @@
         const PRIMEIRO_INDICE = 0,
             TAMANHO_DDD = 2,
             TAMANHO_NUMERO_METADE = 6,
-            TAMANHO_MAXIMO_FORMATADO = 14;
+            TAMANHO_MAXIMO_FORMATADO = 15,
+            LIMITE_ADICIONAR_HIFEN = 4,
+            TAMANHO_NUMERO_ANTIGO = 8,
+            MEIO_NUMERO_NOVO = 5;
 
         const TIMEOUT_VERIFICACAO = 500,
             BACKSPACE_KEY = 'Backspace';
@@ -87,7 +90,7 @@
          * @returns {boolean} {@code true} se deve formatar o número de telefone.
          */
         function deveFormatarTelefone(evento) {
-            return evento.key !== BACKSPACE_KEY && !evento.ctrlKey;
+            return !evento.ctrlKey;
         }
 
         /**
@@ -128,26 +131,26 @@
 
         /**
          * Retorna o número de telefone formatado.
+         * 1. Para vazio, retorna vazio
+         * 2. Para menos de 3 dígitos (apenas ddd ou um dígito), retorna '(' + numero
+         * 3. Para mais de 2 dígitos (ddd + algo) retorna (DDD) + ' ' + número
+         *  3.1 Formatação para número segue padrão de #inserirHifenNumero() 
          *
          * @param  {string} numeroNaoFormatado Número de telefone não formatado.
          * @return {string} Número de telefone formatado.
          */
         function getTelefoneFormatado(numeroNaoFormatado) {
-            if (_.isEmpty(numeroNaoFormatado)) {
-                return `(${numeroNaoFormatado}`;
-            }
-
-            if (numeroNaoFormatado.length === TAMANHO_DDD) {
-                return `(${numeroNaoFormatado}) `;
-            }
-
-            if (numeroNaoFormatado.length >= TAMANHO_DDD) {
+            if (numeroNaoFormatado.length > TAMANHO_DDD) {
                 const ddd = numeroNaoFormatado.substring(PRIMEIRO_INDICE, TAMANHO_DDD);
 
                 const digitos = numeroNaoFormatado.substring(TAMANHO_DDD);
                 const digitosComHifen = inserirHifenNumero(digitos);
 
                 return `(${ddd}) ${digitosComHifen}`;
+            }
+
+            if (!_.isEmpty(numeroNaoFormatado)) {
+                return `(${numeroNaoFormatado}`;
             }
             return numeroNaoFormatado;
         }
@@ -160,16 +163,15 @@
          * @return Número formatado.
          */
         function inserirHifenNumero(numero) {
-            // IMPORTANTE: mudar valor de TAMANHO_MAXIMO_FORMATADO para 15 ao descomentar.
-            // if (numero.length > 8) {
-            //     const primeiraParte = numero.substring(PRIMEIRO_INDICE, 5);
-            //     const segundaParte = numero.substring(5);
-            //     return `${primeiraParte}-${segundaParte}`;
-            // } else if (numero.length > 4) {
-            //     const primeiraParte = numero.substring(PRIMEIRO_INDICE, 4);
-            //     const segundaParte = numero.substring(4);
-            //     return `${primeiraParte}-${segundaParte}`
-            // }
+            if (numero.length > TAMANHO_NUMERO_ANTIGO) {
+                const primeiraParte = numero.substring(PRIMEIRO_INDICE, MEIO_NUMERO_NOVO);
+                const segundaParte = numero.substring(5);
+                return `${primeiraParte}-${segundaParte}`;
+            } else if (numero.length > LIMITE_ADICIONAR_HIFEN) {
+                const primeiraParte = numero.substring(PRIMEIRO_INDICE, LIMITE_ADICIONAR_HIFEN);
+                const segundaParte = numero.substring(LIMITE_ADICIONAR_HIFEN);
+                return `${primeiraParte}-${segundaParte}`
+            }
             return numero;
         };
     }]);
