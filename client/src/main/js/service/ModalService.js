@@ -65,7 +65,7 @@
                     clickOutsideToClose: false,
                     escapeToClose: false,
                     locals: {
-                        reserva: reserva,
+                        reserva: reserva
                     }
                 });
             };

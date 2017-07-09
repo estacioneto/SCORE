@@ -104,6 +104,7 @@
          */
         function posSalvar(data) {
             angular.copy(data, self.reservaOriginal);
+            self.fecharModal();
         }
 
         /**
@@ -173,8 +174,12 @@
          * Descarta as mudanças atuais.
          */
         this.descartarMudancas = () => {
-            angular.copy(self.reservaOriginal, self.reserva);
-            self.isEdicao = false;
+            if(self.reservaOriginal.autor) {
+                angular.copy(self.reservaOriginal, self.reserva);
+                self.isEdicao = false;
+            } else {
+                $mdDialog.hide('close');
+            }
         };
 
         /**

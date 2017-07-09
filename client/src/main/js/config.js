@@ -32,7 +32,8 @@
             'calendarioModulo',
             'agendamentoModulo',
             'autenticacaoModulo',
-            'localModulo'
+            'localModulo',
+            'dataModulo'
         ]);
 
     app.constant('_', window._)

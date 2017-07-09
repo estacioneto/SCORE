@@ -10,10 +10,11 @@
          * TODO: a implementar, depende do servidor.
          * Remove uma reserva do dia.
          * @param reserva Reserva a ser excluida.
+         * @return {Promise} Promessa que contém a reserva excluída.
          */
         this.excluir = (reserva) => {
             const indice = getIndiceReserva(mock, reserva);
-            mock.splice(indice, 1);
+            mock.remove(indice);
             return $q.when(reserva);
         };
 
@@ -36,21 +37,15 @@
             const inicio = reserva.inicio;
             const fim = reserva.fim;
 
-            console.log(inicio);
-            console.log(fim);
-            console.log('Reservas: ', reservasDia);
-
-            for (let i = 0; i < reservasDia.length; i++) {
-                const r = reservasDia[i];
-                if (reserva.id === r.id) {
-                    continue;
+            _.each(reservasDia, reservaDia => {
+                if (reserva.id !== reservaDia.id) {
+                    if ((inicio < reservaDia.inicio && fim > reservaDia.fim)
+                        || (inicio > reservaDia.inicio && inicio < reservaDia.fim)
+                        || (fim > reservaDia.inicio && fim < reservaDia.fim)) {
+                        throw { mensagem: "Horário já ocupado."};
+                    }
                 }
-                if ((inicio < r.inicio && fim > r.fim)
-                    || (inicio > r.inicio && inicio < r.fim)
-                    || (fim > r.inicio && fim < r.fim)) {
-                    throw { mensagem: "Horário já ocupado."};
-                }
-            }
+            });
         }
 
         /**
@@ -94,9 +89,6 @@
             return promiseEventosFuturos.then(reservas => {
                 let reservasDia = [];
 
-                console.log(data);
-                console.log(reservas);
-
                 reservas.forEach(function (reserva) {
                     if(reserva.dia === data) {
                         reservasDia.push(reserva);
@@ -109,37 +101,15 @@
 
         /**
          * Retorna a promise com a reserva do id especificado.
+         *
+         * @param {String} id Id da reserva a ser retornada.
+         * @return {Promise} Promessa contendo a reserva.
          */
         this.getReserva = id => {
             let indiceReserva = getIndiceReserva(mock, {id});
             return $q.when(mock[indiceReserva]);
         };
 
-        /**
-         * Carrega as reservas futuras e deixa em memória. Melhorar isso,
-         * verificar como deixar eficiente com o calendário.
-         * 
-         * Ideia: fazer o servidor retornar um JSON que segue o padrão:
-         * {
-         *     'YYYYMMDD' : [ Reservas ]
-         * }
-         * 
-         * a query pro bd pode ser feita de forma simples utilizando o range,
-         * já que o identificador desta forma faz com que as datas fiquem
-         * odernadas corretamente por espaço de tempo. 
-         * Eg: entre dias 12/06/17 e 12/07/17
-         *      Selecionar todas datas que tem dia maior que 20171206 e menor que 20170712.
-         * 
-         * Temos duas opções:
-         *  1. Fazer a reserva ter a referencia pra o dia
-         *  2. Fazer o dia ter uma lista de reservas
-         * 
-         * 1- Teriamos que ver como fica para organizar a consultar e retornar isso,
-         * vantagem de facilidade para manipulações e atualização.
-         * 
-         * 2- Teriamos que ver o BD, se for no-sql não será problema, facilita a busca,
-         * mas na atualização precisamos deixar apenas atualizar um dos elementos do dia por vez.
-         */
         this.loadReservasFuturas = () => {
             return $q.when(mock);
         };

@@ -15,21 +15,28 @@ let sequenceReserva = 1;
          * uma reserva, uma para quando nós iremos montar e outra para quando receber o evento
          * da diretiva do calendário. Da maneira implementada, serve apenas para quando
          * estamos montando nós mesmos.
+         *
+         * Todo: Remover id, o qual será gerado pelo mongodb
          */
-        function Reserva(data) {
-            if (!data) {
-                this.id = sequenceReserva++;
-                return;
-            }
-            this.id = data.id || sequenceReserva++;
-            this.autor = data.autor;
-            this.titulo = data.titulo;
-            this.descricao = data.descricao;
-            this.inicio = data.inicio;
-            this.fim = data.fim;
-            this.dia = data.dia;
-            this.cor = data.cor || COR_DEFAULT;
-            this.corTexto = data.corTexto || COR_TEXTO_DEFAULT;
+        function Reserva({id = sequenceReserva++,
+                          autor,
+                          titulo,
+                          descricao,
+                          inicio,
+                          fim,
+                          dia,
+                          cor = COR_DEFAULT,
+                          corTexto = COR_TEXTO_DEFAULT}) {
+
+            Object.assign(this, {id,
+                                 autor,
+                                 titulo,
+                                 descricao,
+                                 inicio,
+                                 fim,
+                                 dia,
+                                 cor,
+                                 corTexto});
         }
 
         /**
@@ -67,8 +74,10 @@ let sequenceReserva = 1;
         };
 
         /**
-         * Retorna o horário de início e término da reserva formatada, no formato
-         * hh:mm-hh:mm
+         * Retorna o horário de início e término da reserva formatada.
+         *
+         * @return {String} Retorna o par de horários de início e término, respectivamente,
+         * no formato hh:mm-hh:mm.
          */
         Reserva.prototype.getHoraFormatada = function() {
             return `${this.inicio}-${this.fim}`;
@@ -84,6 +93,15 @@ let sequenceReserva = 1;
 
         Reserva.prototype.__defineGetter__('description', function () {
             return this.descricao;
+        });
+
+        /**
+         * Atributo necessário para o evento ser fixado no calendário, para caso haja
+         * alguma alteração - inclui-se inserção de um novo - o evento não suma após
+         * o calendário rendenrizar uma nova view.
+         */
+        Reserva.prototype.__defineGetter__('stick', function () {
+            return true;
         });
 
         Reserva.prototype.__defineGetter__('color', function () {
@@ -111,17 +129,24 @@ let sequenceReserva = 1;
         });
 
         /**
-         * Retorna o dia da data especificada, a qual deve seguir o padrão dd-MM-yyyy.
+         * Retorna o dia da data especificada.
+         *
+         * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
+         * dia retornado.
+         * @return {String} Dia da data especificada, no formato dd.
          */
         function getDia(data) {
             return data.split('-')[DIA_INDICE];
         }
 
         /**
-         * Retorna o mês da data especificada, a qual deve seguir o padrão dd-MM-yyyy.
-         * Sabendo que o construtor de Date utiliza 0 para representar Janeiro, 1 para
-         * Fevereiro, e assim por diante, temos que decrementar uma unidade do valor
-         * do mês.
+         * Retorna o mês da data especificada. Sabendo que o construtor de Date utiliza 0
+         * para representar Janeiro, 1 para Fevereiro, e assim por diante, temos que
+         * decrementar uma unidade do valor do mês.
+         *
+         * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
+         * mês retornado.
+         * @return {String} Mês da data especificada, no formato MM.
          */
         function getMes(data) {
             let mesString = data.split('-')[MES_INDICE];
@@ -131,21 +156,33 @@ let sequenceReserva = 1;
         }
 
         /**
-         * Retorna o ano da data especificada, a qual deve seguir o padrão dd-MM-yyyy.
+         * Retorna o ano da data especificada.
+         *
+         * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
+         * ano retornado.
+         * @return {String} Ano da data especificada, no formato yyyy.
          */
         function getAno(data) {
             return data.split('-')[ANO_INDICE];
         }
 
         /**
-         * Retorna a hora do horário especificado, o qual deve seguir o padrão hh:mm.
+         * Retorna a hora do horário especificado.
+         *
+         * @param {String} horario Horário, o qual deve seguir o padrão hh:mm, a ter sua
+         * hora retornada.
+         * @return {String} Hora do horário especificado, no formato hh.
          */
         function getHora(horario) {
             return horario.split(':')[HORA_INDICE];
         }
 
         /**
-         * Retorna o minuto do horário especificado, o qual deve seguir o padrão hh:mm.
+         * Retorna o minuto do horário especificado.
+         *
+         * @param {String} horario Horário, o qual deve seguir o padrão hh:mm, a ter seu
+         * minuto retornado.
+         * @return {String} Minuto do horário especificado, no formato mm.
          */
         function getMinuto(horario) {
             return horario.split(':')[MINUTO_INDICE];
