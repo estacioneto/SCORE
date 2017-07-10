@@ -1,9 +1,9 @@
 (() => {
-    'use-strict';
+    'use strict';
     /**
      * Controller responsável pelo modal de detalhes da reserva.
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', 'data', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', function (reserva, data, $mdDialog, ModalService, AuthService, AgendamentoService) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService) {
 
         const self = this;
 
@@ -76,10 +76,10 @@
 
             const callbackReabrirReserva = () => {
                 self.reserva.autor = undefined;
-                return ModalService.verReserva(self.reserva, data);
+                return ModalService.verReserva(self.reserva);
             };
 
-            return AgendamentoService.salvarReserva(data, self.reserva)
+            return AgendamentoService.salvarReserva(self.reserva)
                 .then(data => {
                     posSalvar(data);
                     return data;
@@ -104,6 +104,7 @@
          */
         function posSalvar(data) {
             angular.copy(data, self.reservaOriginal);
+            self.fecharModal();
         }
 
         /**
@@ -130,7 +131,7 @@
          * @return Promise.
          */
         this.excluirReserva = () => {
-            return AgendamentoService.excluir(data, self.reserva).then(data => {
+            return AgendamentoService.excluir(self.reserva).then(data => {
                 self.fecharModal();
                 return data;
             });
@@ -173,8 +174,12 @@
          * Descarta as mudanças atuais.
          */
         this.descartarMudancas = () => {
-            angular.copy(self.reservaOriginal, self.reserva);
-            self.isEdicao = false;
+            if(self.reservaOriginal.autor) {
+                angular.copy(self.reservaOriginal, self.reserva);
+                self.isEdicao = false;
+            } else {
+                $mdDialog.hide('close');
+            }
         };
 
         /**

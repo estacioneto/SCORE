@@ -2,6 +2,9 @@
     'use strict';
     /**
      * Controller responsável pela view de detalhes do dia.
+     *
+     * Minha sugestão é não utilizar mais esse controller e deixar tôdo o gerenciamento
+     * do calendário, independente do tipo de view, em um só controller. {Vélmer}
      */
     angular.module('calendarioModulo').controller('DetalhesDiaController', ['ModalService', '$scope', 'data', 'AgendamentoService', 'Reserva', function (ModalService, $scope, data, AgendamentoService, Reserva) {
 

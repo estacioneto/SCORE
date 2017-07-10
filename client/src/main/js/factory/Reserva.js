@@ -1,23 +1,43 @@
 let sequenceReserva = 1;
 (() => {
-    'use-strict';
+    'use strict';
     /**
      * Factory que representa a entidade de reserva.
      */
     angular.module('agendamentoModulo', []).factory('Reserva', ['$http', '$q', function ($http, $q) {
 
-        function Reserva(data) {
-            if (!data) {
-                this.id = sequenceReserva++;
-                return;
-            }
-            this.autor = data.autor;
-            this.descricao = data.descricao;
-            this.inicio = data.inicio;
-            this.fim = data.fim;
-            this.id = data.id || sequenceReserva++;
-            this.titulo = data.titulo;
-        };
+        const COR_DEFAULT = '', COR_TEXTO_DEFAULT = '',
+              DIA_INDICE = 0, MES_INDICE = 1, ANO_INDICE = 2,
+              HORA_INDICE = 0, MINUTO_INDICE = 1;
+
+        /*
+         * Obs: Provavelmente terá que ser adicionado duas funções privadas para criação de
+         * uma reserva, uma para quando nós iremos montar e outra para quando receber o evento
+         * da diretiva do calendário. Da maneira implementada, serve apenas para quando
+         * estamos montando nós mesmos.
+         *
+         * Todo: Remover id, o qual será gerado pelo mongodb
+         */
+        function Reserva({id = sequenceReserva++,
+                          autor,
+                          titulo,
+                          descricao,
+                          inicio,
+                          fim,
+                          dia,
+                          cor = COR_DEFAULT,
+                          corTexto = COR_TEXTO_DEFAULT}) {
+
+            Object.assign(this, {id,
+                                 autor,
+                                 titulo,
+                                 descricao,
+                                 inicio,
+                                 fim,
+                                 dia,
+                                 cor,
+                                 corTexto});
+        }
 
         /**
          * Recupera a reserva original do servidor.
@@ -54,12 +74,119 @@ let sequenceReserva = 1;
         };
 
         /**
-         * Retorna a hora da reserva formatada, no formato 
-         * HH:MM-HH-MM
+         * Retorna o horário de início e término da reserva formatada.
+         *
+         * @return {String} Retorna o par de horários de início e término, respectivamente,
+         * no formato hh:mm-hh:mm.
          */
         Reserva.prototype.getHoraFormatada = function() {
             return `${this.inicio}-${this.fim}`;
         };
+
+        Reserva.prototype.__defineGetter__('author', function () {
+            return this.autor;
+        });
+
+        Reserva.prototype.__defineGetter__('title', function () {
+            return this.titulo;
+        });
+
+        Reserva.prototype.__defineGetter__('description', function () {
+            return this.descricao;
+        });
+
+        /**
+         * Atributo necessário para o evento ser fixado no calendário, para caso haja
+         * alguma alteração - inclui-se inserção de um novo - o evento não suma após
+         * o calendário rendenrizar uma nova view.
+         */
+        Reserva.prototype.__defineGetter__('stick', function () {
+            return true;
+        });
+
+        Reserva.prototype.__defineGetter__('color', function () {
+            return this.cor;
+        });
+
+        Reserva.prototype.__defineGetter__('textColor', function () {
+            return this.corTexto;
+        });
+
+        /**
+         * Retorna o início da reserva, contento dia e horário, em Date.
+         */
+        Reserva.prototype.__defineGetter__('start', function () {
+            return new Date(getAno(this.dia), getMes(this.dia), getDia(this.dia),
+                getHora(this.inicio), getMinuto(this.inicio));
+        });
+
+        /**
+         * Retorna o término da reserva, contento dia e horário, em Date.
+         */
+        Reserva.prototype.__defineGetter__('end', function () {
+            return new Date(getAno(this.dia), getMes(this.dia), getDia(this.dia),
+                getHora(this.fim), getMinuto(this.fim));
+        });
+
+        /**
+         * Retorna o dia da data especificada.
+         *
+         * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
+         * dia retornado.
+         * @return {String} Dia da data especificada, no formato dd.
+         */
+        function getDia(data) {
+            return data.split('-')[DIA_INDICE];
+        }
+
+        /**
+         * Retorna o mês da data especificada. Sabendo que o construtor de Date utiliza 0
+         * para representar Janeiro, 1 para Fevereiro, e assim por diante, temos que
+         * decrementar uma unidade do valor do mês.
+         *
+         * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
+         * mês retornado.
+         * @return {String} Mês da data especificada, no formato MM.
+         */
+        function getMes(data) {
+            let mesString = data.split('-')[MES_INDICE];
+            let mesInt = parseInt(mesString);
+            mesInt = mesInt - 1;
+            return mesInt.toString();
+        }
+
+        /**
+         * Retorna o ano da data especificada.
+         *
+         * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
+         * ano retornado.
+         * @return {String} Ano da data especificada, no formato yyyy.
+         */
+        function getAno(data) {
+            return data.split('-')[ANO_INDICE];
+        }
+
+        /**
+         * Retorna a hora do horário especificado.
+         *
+         * @param {String} horario Horário, o qual deve seguir o padrão hh:mm, a ter sua
+         * hora retornada.
+         * @return {String} Hora do horário especificado, no formato hh.
+         */
+        function getHora(horario) {
+            return horario.split(':')[HORA_INDICE];
+        }
+
+        /**
+         * Retorna o minuto do horário especificado.
+         *
+         * @param {String} horario Horário, o qual deve seguir o padrão hh:mm, a ter seu
+         * minuto retornado.
+         * @return {String} Minuto do horário especificado, no formato mm.
+         */
+        function getMinuto(horario) {
+            return horario.split(':')[MINUTO_INDICE];
+        }
 
         Reserva.prototype.constructor = Reserva;
 

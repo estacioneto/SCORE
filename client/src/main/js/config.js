@@ -6,6 +6,7 @@
             'app',
             'ui.router',
             'ui.bootstrap',
+            'ui.calendar',
             'ui.mask',
             'ngAria',
             'ngMaterial',
@@ -31,7 +32,8 @@
             'calendarioModulo',
             'agendamentoModulo',
             'autenticacaoModulo',
-            'localModulo'
+            'localModulo',
+            'dataModulo'
         ]);
 
     app.constant('_', window._)
@@ -103,7 +105,12 @@
                 .state('app.home', {
                     url: '/home',
                     templateUrl: view + 'home.html',
-                    controller: 'CalendarioController as calendarioCtrl'
+                    controller: 'CalendarioController as calendarioCtrl',
+                    resolve: {
+                        reservas: function (AgendamentoService) {
+                            return AgendamentoService.loadReservasFuturas();
+                        }
+                    }
                 })
                 .state('app.local', {
                     url: '/local',
