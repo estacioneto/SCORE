@@ -2,7 +2,7 @@
     'use strict';
 
     /**
-     * Tests the AuthService. Checks if it's behaviour is correct.
+     * Teste de AuthService. Checa se seu comportamento eh correto.
      *
      * @author Estácio Pereira, Lucas Diniz
      */
@@ -23,8 +23,8 @@
             UserMock = _UserMock_;
         }));
 
-        describe('logout should', function () {
-            it('clear the user of the service and the local storage', function () {
+        describe('deve ser logout', function () {
+            it('limpar o usuario do servico e do repositorio local', function () {
 
                 var user = UserMock.get();
                 var token = 'token';
@@ -49,8 +49,8 @@
             });
         });
 
-        describe('authenticate should', function () {
-            it('store the user, the token and authenticate the user', function (done) {
+        describe('deve ser authenticate', function () {
+            it('salvar o usuario, o token e autenticar o usuario', function (done) {
                 var user = UserMock.get();
                 var token = 'token';
                 var storeSetStub = sinon.stub(store, 'set');
@@ -64,7 +64,7 @@
                 self.$rootScope.$digest();
             });
 
-            it('request the user, if only the token is given', function (done) {
+            it('solicitar usuario, se for dado somente o token', function (done) {
                 var user = UserMock.get();
                 var token = 'token';
                 var storeSetStub = sinon.stub(store, 'set');
@@ -80,7 +80,7 @@
                 self.$httpBackend.flush();
             });
 
-            it('request the user, and show the toast if the token is invalid', function (done) {
+            it('solicitar usuario, e mostrar o toast se o token eh invalido', function (done) {
                 var user = UserMock.get();
                 var token = 'token';
                 var storeSetStub = sinon.stub(store, 'set');
@@ -100,14 +100,14 @@
         });
 
 
-        describe('isAuthenticated should', function () {
+        describe('deve ser isAuthenticated', function () {
             beforeEach(function () {
                 if (AuthService.isAuthenticated()) {
                     AuthService.logout();
                 }
             });
 
-            it('return TRUE if the user is already authenticated', function () {
+            it('retornar TRUE se o usuario ja esta autenticado', function () {
                 var user = UserMock.get();
                 var token = 'token';
                 var getProfileStub = sinon.stub(auth, 'getProfile');
@@ -116,7 +116,7 @@
                 AuthService.isAuthenticated().should.equal(true);
             });
 
-            it('return FALSE if the user is NOT authenticated', function () {
+            it('retornar FALSE se o usuario nao esta autenticado', function () {
                 var user = UserMock.get();
                 var token = 'token';
 
@@ -126,14 +126,14 @@
         });
 
 
-        describe('getLoggedUser should', function () {
+        describe('deve getLoggedUser', function () {
             beforeEach(function () {
                 if (AuthService.isAuthenticated()) {
                     AuthService.logout();
                 }
             });
 
-            it('return a User object if the user is logged in', function () {
+            it('retornar um objeto Usuario se o usuario esta logado', function () {
                 var user = UserMock.get();
                 var token = 'token';
                 var getProfileStub = sinon.stub(auth, 'getProfile');
@@ -142,7 +142,7 @@
                 assert.equal(AuthService.getLoggedUser(), user);
             });
 
-            it('return NULL if the user is no user logged in', function () {
+            it('retornar NULL se o usuario nao eh um usuario logado', function () {
                 var user = UserMock.get();
                 var token = 'token';
 
@@ -152,14 +152,14 @@
         });
 
 
-        describe('getIdToken should', function () {
+        describe('deve getIdToken', function () {
             beforeEach(function () {
                 if (AuthService.isAuthenticated()) {
                     AuthService.logout();
                 }
             });
 
-            it('return the token of the logged user, if there is one', function () {
+            it('retornar o token do usuario logado, se existir um', function () {
                 var user = UserMock.get();
                 var token = 'token';
                 var getProfileStub = sinon.stub(auth, 'getProfile');
@@ -169,7 +169,7 @@
                 assert.equal(AuthService.getIdToken(), 'token');
             });
 
-            it('return NULL if the user is not logged in', function () {
+            it('retornar NULL se o usuario nao esta logado', function () {
                 var user = UserMock.get();
                 var token = 'token';
 

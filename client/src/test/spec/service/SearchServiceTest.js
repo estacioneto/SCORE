@@ -2,7 +2,7 @@
     'use strict';
 
     /**
-     * Tests the SearchService. Checks if it's behaviour is correct.
+     * Teste de SearchService. Checa se seu comportamento eh correto.
      *
      * @author Estácio Pereira
      */
@@ -19,8 +19,8 @@
             SearchService = _SearchService_;
         }));
 
-        describe('addParam should', function () {
-            it('correctly add a search parameter to the service', function () {
+        describe('deve addParam', function () {
+            it('adicionar corretamente um parametro de pesquisa para o servico', function () {
                 var attr = 'active',
                     value = true,
                     isConstraint = true;
@@ -30,7 +30,7 @@
                 expect(SearchService.searchParams[attr].isConstraint).to.be.equal(isConstraint);
             });
 
-            it('add a constraint as false if no constraint is given', function () {
+            it('adicionar uma restricao como false se nao foi dado alguma restricao', function () {
                 var attr = 'active',
                     value = true;
                 SearchService.addParam(attr, value);
@@ -40,8 +40,8 @@
             });
         });
 
-        describe('deleteParam should', function () {
-            it('correctly delete a search parameter of the service', function () {
+        describe('deve deleteParam', function () {
+            it('deletar corretamente um parametro de pesquisa do servico', function () {
                 var attr = 'active',
                     value = true,
                     isConstraint = true;
@@ -51,7 +51,7 @@
                 expect(SearchService.searchParams[attr]).to.be.undefined;
             });
 
-            it('do nothing if there is no search parameters', function(){
+            it('nao realizar acao alguma se nao tem parametros de pesquisa', function(){
                 var attr = 'tags';
                 expect(SearchService.searchParams[attr]).to.be.undefined;
                 SearchService.deleteParam(attr);

@@ -9,14 +9,14 @@
             if (this.expectedTransitions.length > 0) {
                 var expectedState = this.expectedTransitions.shift();
                 if (expectedState !== stateName) {
-                    this.error = ("Expected transition to state: " + expectedState + " but transitioned to " + stateName);
+                    this.error = ("Transicao esperada para o estado: " + expectedState + " mas aconteceu para " + stateName);
                     return;
                 }
             } else {
-                this.error = ("No more transitions were expected! Tried to transition to " + stateName);
+                this.error = ("Nao eram esperadas mais transicoes! Tentativa de transicao para " + stateName);
                 return;
             }
-            console.log("Mock transition to: " + stateName);
+            console.log("Transicao mock para: " + stateName);
             var deferred = $q.defer();
             var promise = deferred.promise;
             deferred.resolve();
@@ -31,7 +31,7 @@
         };
         this.ensureAllTransitionsHappened = function () {
             if (this.expectedTransitions.length > 0) {
-                throw Error("Not all transitions happened! Unfulfilled expected transitions : " + this.expectedTransitions);
+                throw Error("Nem todas as transicoes aconteceram! Transicoes esperadas nao cumpridas : " + this.expectedTransitions);
             }
         }
     });

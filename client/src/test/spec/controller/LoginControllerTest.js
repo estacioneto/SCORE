@@ -25,7 +25,7 @@
             };
         }));
 
-        describe('showActionToast deve', function () {
+        describe('deve showActionToast', function () {
             it('invocar o actionToast com a mensagem passada', function () {
                 var toastStub = sinon.stub(ToastService, 'showActionToast', function(mensagem){});
                 var controller = createController();
