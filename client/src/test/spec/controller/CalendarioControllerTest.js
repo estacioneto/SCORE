@@ -23,8 +23,8 @@
             };
         }));
 
-        describe('clickDia deve', function () {
-            it('abrir a página das reservas referentes aquele dia', function () {
+        describe('deve clickDia', function () {
+            it('abrir pagina das reservas referentes a aquele dia', function () {
                 var controller = createController();
                 var date = new Date();
                 date.setFullYear(1980);
