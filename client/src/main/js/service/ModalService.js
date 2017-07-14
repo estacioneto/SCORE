@@ -3,7 +3,7 @@
     var modalModule = angular.module('modalModule', []);
 
     /**
-     * Modal Service. It encapsulates the operations with the panel and dialog services.
+     * Modal Service encapsula as operações com o painel e com serviços de dialog
      *
      * @author Eric Breno.
      */
@@ -13,6 +13,7 @@
 
             /**
              * Abre um modal de confirmação.
+             * 
              * @param mensagem Mensagem a ser mostrada no modal.
              */
             this.confirmar = mensagem => {
@@ -27,10 +28,11 @@
             };
 
             /**
-             * Opens an Error modal.
-             * @param message Error message.
-             * @param title Modal title.
-             * @return Promise, which evaluates to fulfilled when closed.
+             * Abre um modal Error.
+             * 
+             * @param message A mensagem de erro.
+             * @param title O título do modal.
+             * @return Promise que avalia como cumprido quando fechado.
              */
             this.error = function (message, title) {
                 title = title || "Erro";
@@ -52,8 +54,8 @@
             };
 
             /**
-             * Abre o modal com a visualização de detalhes e edição
-             * de reserva.
+             * Abre o modal com a visualização de detalhes e edição de reserva.
+             * 
              * @param reserva Horário a ser visualizado.
              * @return Promise do modal.
              */
@@ -71,11 +73,11 @@
             };
 
             /**
-             * Opens Note view modal.
-             *
-             * @param {Note}   note          Note to be viewed/edited.
-             * @param {Note}   tempNote      To be on view.
-             * @param {Array}  availableTags A list with all the available tags to be used on auto complete
+             * Abre Note view modal.
+             * 
+             * @param {Note}   note          A anotação a ser editada ou visualizada.
+             * @param {Note}   tempNote      Para estar em view.
+             * @param {Array}  availableTags A lista de tags disponíveis para completar campos.
              * @param {$event} $event        Angular $event.
              */
             this.viewNote = function (note, tempNote, $event, availableTags) {
@@ -113,7 +115,7 @@
             };
 
             /**
-             * Creates a modal with infos about the application.
+             * Cria um modal com infos sobre a aplicação.
              */
             this.aboutModal = function () {
                 return $mdPanel.create({
@@ -128,7 +130,7 @@
         }])
 
         /**
-         * Default modal controller.
+         * Controller modal padrão.
          */
         .controller('ModalCtrl', ["$scope", "message", "title", '$mdDialog', function ($scope, message, title, $mdDialog) {
 

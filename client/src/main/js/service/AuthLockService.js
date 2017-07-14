@@ -44,6 +44,7 @@
 
         /**
          * Adiciona a verificação do número de telefone (colocando máscara).
+         * 
          */
         function verificarNumeroTelefone() {
             const campos = angular.element(document).find('input');

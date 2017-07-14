@@ -24,7 +24,7 @@
                     };
 
                     /**
-                     * Simply toggles the sidebar.
+                     * Alterna a barra lateral.
                      */
                     scope.toggleSidebar = function () {
                         const sidenav = $mdSidenav('main-sidenav');

@@ -9,10 +9,10 @@
         var THREE_SECONDS = 3000;
 
         /**
-         * Shows an action toast and return the toast promise.
+         * Mostra um toast de ação e retorna o promise toast.
          *
-         * @param   {Object}  options Object containing all the custom options.
-         * @returns {promise} Toast's promise
+         * @param   {Object}  options Objeto contento todos as opções custom.
+         * @returns {promise} promise toast.
          */
         this.showActionToast = function (options) {
             if (!_.isObject(options)) {
@@ -33,10 +33,10 @@
         };
 
         /**
-         * Shows an 'UNDO' toast.
+         * Mostra um 'UNDO' toast.
          *
-         * @param   {Object}  options Object containing all the custom options.
-         * @returns {promise} Toast's promise
+         * @param   {Object}  options Objeto contento todos as opções custom.
+         * @returns {promise} promise toast.
          */
         this.showUndoToast = function (options) {
             options.action = options.action || 'UNDO';

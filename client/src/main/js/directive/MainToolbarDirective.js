@@ -11,7 +11,8 @@
                     scope.auth = AuthService;
 
                     /**
-                     * Function to toggle the sidebar menu
+                     * Funcao para alternar a barra de menu lateral
+                     * 
                      */
                     scope.menuFunction = function () {
                         var sidenav = $mdSidenav('main-sidenav');
@@ -25,8 +26,9 @@
                     scope.user = AuthService.getLoggedUser();
 
                     /**
-                     * Responsible for the logout logic related to the controller
-                     * (states and service calls).
+                     * Responsavel pela logica de logout relacionada ao controller
+                     * (chamadas de estados e servicos).
+                     * 
                      */
                     scope.logout = function () {
                         scope.auth.logout();
@@ -34,7 +36,8 @@
                     };
 
                     /**
-                     * This function is responsible for, basically, show the Auth0 lock modal.
+                     * Responsavel, basicamente, por mostrar o Auth0 lock modal
+                     * 
                      */
                     scope.signIn = function () {
                         scope.lock.show();
@@ -42,9 +45,9 @@
                     };
 
                     /**
-                     * Contains the authentication logic related to the controller after the lock.
+                     * Contem a logica de autenticacao relacionada ao controller apos o lock.
                      *
-                     * @param authResult The result returned from the lock.
+                     * @param authResult O resultado retornado pelo lock.
                      */
                     function authenticate(authResult) {
                         return scope.lock.getProfile(authResult.idToken, function (err, user) {
@@ -58,9 +61,9 @@
                     }
 
                     /**
-                     * Gets the current state name to show to the user.
+                     * Resgata o nome do estado atual e mostra ao usuario.
                      *
-                     * @returns {string} Name shown to the user.
+                     * @returns {string} O nome mostrado ao usuario.
                      */
                     scope.getCurrentStateName = function () {
                         var currentState = $state.current;
@@ -74,7 +77,7 @@
                     scope.getNomeState = nomeState => _.last(nomeState.split('.')).replace(/[^a-zA-Z]/g, '\ ');
 
                     /**
-                     * Simply goes home.
+                     * Vai para home.
                      */
                     scope.goHome = function () {
                         $state.go(true || scope.auth.isAuthenticated() ? 'app.home' : 'app.login');

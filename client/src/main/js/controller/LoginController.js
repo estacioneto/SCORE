@@ -18,7 +18,7 @@
                     redirect(self.user);
                 }
 
-                // Facebook login
+                // Login de facebook
                 var token = $location.search().token;
                 if (!_.isUndefined(token)) {
                     AuthService.authenticate(token).then(function (user) {
