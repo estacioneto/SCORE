@@ -2,6 +2,7 @@
     'use strict';
     /**
      * Controller responsável pela view do calendário.
+     * 
      */
     angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig',
         'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig,
@@ -121,6 +122,7 @@
 
         /**
          * Abre o modal para criação de reserva no dia especificado.
+         * 
          * @return {Promise} Promise do modal.
          */
         this.criarReserva = (data) => {

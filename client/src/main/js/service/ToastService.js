@@ -12,7 +12,7 @@
          * Mostra um toast de ação e retorna o promise toast.
          *
          * @param   {Object}  options Objeto contento todos as opções custom.
-         * @returns {promise} promise toast
+         * @returns {promise} promise toast.
          */
         this.showActionToast = function (options) {
             if (!_.isObject(options)) {
@@ -36,7 +36,7 @@
          * Mostra um 'UNDO' toast.
          *
          * @param   {Object}  options Objeto contento todos as opções custom.
-         * @returns {promise} promise toast
+         * @returns {promise} promise toast.
          */
         this.showUndoToast = function (options) {
             options.action = options.action || 'UNDO';

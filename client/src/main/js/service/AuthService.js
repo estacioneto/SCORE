@@ -13,6 +13,7 @@
 
         /**
          * Autentica o usuário e guarda seu token e user.
+         * 
          * @param   {String}  token   O token de identificação do usuário.
          * @param   {Object}  user    O user Auth0.
          * @returns {Promise} Promise retornar user.

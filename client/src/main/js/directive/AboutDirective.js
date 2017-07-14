@@ -4,6 +4,7 @@
 
     /**
      * Diretiva que controla o About modal view
+     * 
      */
     aboutModule.directive('about', ['ToastService', function (ToastService) {
         return {
@@ -129,6 +130,7 @@
 
                 /**
                  * Aciona o nome relacionado ao easter egg.
+                 * 
                  * @param name O nome clicado.
                  */
                 scope.eeTrigger = function (name) {
@@ -148,6 +150,7 @@
 
                 /**
                  * Funcao principal que embaralha listas devs.
+                 * 
                  */
                 (function () {
                     var r = devsMock;

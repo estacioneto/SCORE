@@ -54,6 +54,7 @@
 
         /**
          * Adiciona a verificação do número de telefone (colocando máscara).
+         * 
          */
         function verificarNumeroTelefone() {
             const campos = angular.element(document).find('input');
@@ -159,6 +160,7 @@
          * Insere o hífen no número de telefone, para a máscara.
          * * Se o número tem mais de 9 dígitos, o hífen separa os 5 primeiros dos 4 últimos números
          * * Se o número tem mais de 4 dígitos e menos que 9, o hífen separa os 4 primeiros do resto.
+         * 
          * @param {String} numero Número a ser formatado.
          * @return Número formatado.
          */

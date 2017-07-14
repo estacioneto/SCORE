@@ -12,6 +12,7 @@
 
                     /**
                      * Funcao para alternar a barra de menu lateral
+                     * 
                      */
                     scope.menuFunction = function () {
                         var sidenav = $mdSidenav('main-sidenav');
@@ -27,6 +28,7 @@
                     /**
                      * Responsavel pela logica de logout relacionada ao controller
                      * (chamadas de estados e servicos).
+                     * 
                      */
                     scope.logout = function () {
                         scope.auth.logout();
@@ -35,6 +37,7 @@
 
                     /**
                      * Responsavel, basicamente, por mostrar o Auth0 lock modal
+                     * 
                      */
                     scope.signIn = function () {
                         scope.lock.show();

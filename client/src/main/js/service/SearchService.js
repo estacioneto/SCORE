@@ -17,7 +17,7 @@
          *
          * @param {String}  attr         O atributo a ser inserido em validação.
          * @param {*}       value        O valor para validar o atributo.
-         * @param {boolean} isConstraint true, se o atributo adicionado é uma constraint, false, caso contrário.
+         * @param {boolean} isConstraint true se o atributo adicionado é uma constraint, false caso contrário.
          */
         this.addParam = function (attr, value, isConstraint) {
             self.searchParams[attr] = {

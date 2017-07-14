@@ -13,6 +13,7 @@
 
             /**
              * Abre um modal de confirmação.
+             * 
              * @param mensagem Mensagem a ser mostrada no modal.
              */
             this.confirmar = mensagem => {
@@ -28,6 +29,7 @@
 
             /**
              * Abre um modal Error.
+             * 
              * @param message A mensagem de erro.
              * @param title O título do modal.
              * @return Promise que avalia como cumprido quando fechado.
@@ -53,6 +55,7 @@
 
             /**
              * Abre o modal com a visualização de detalhes e edição de reserva.
+             * 
              * @param reserva Horário a ser visualizado.
              * @return Promise do modal.
              */
@@ -71,6 +74,7 @@
 
             /**
              * Abre Note view modal.
+             * 
              * @param {Note}   note          A anotação a ser editada ou visualizada.
              * @param {Note}   tempNote      Para estar em view.
              * @param {Array}  availableTags A lista de tags disponíveis para completar campos.

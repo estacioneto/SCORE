@@ -9,6 +9,7 @@
         /**
          * TODO: a implementar, depende do servidor.
          * Remove uma reserva do dia.
+         * 
          * @param reserva Reserva a ser excluida.
          * @return {Promise} Promessa que contém a reserva excluída.
          */
@@ -30,6 +31,7 @@
         /**
          * Realiza validações para adição de reserva ao dia.
          * -Valida se existe choque de horário.
+         * 
          * @param {*} reservasDia 
          * @param {*} reserva 
          */
@@ -69,6 +71,7 @@
 
         /**
          * Verifica se existe uma reserva na lista, retornando seu índice.
+         * 
          * @param {*} lista 
          * @param {*} reserva 
          */
@@ -84,6 +87,7 @@
 
         /**
          * Retorna as reservas de um dado dia.
+         * 
          */
         this.getReservasDia = data => {
             return promiseEventosFuturos.then(reservas => {
