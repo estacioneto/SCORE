@@ -32,8 +32,8 @@
             }]);
 
             /**
-             * Auth interceptor. Sends the user id to the server.
-             * @param store Local storage
+             * Auth interceptor. Envia o user id para o servidor.
+             * @param store o armazenamento local
              */
             $provide.factory('APIInterceptor', ['store', function (store) {
                 return {

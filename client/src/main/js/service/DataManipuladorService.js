@@ -4,9 +4,9 @@
     angular.module('dataModulo', []).service('DataManipuladorService', [function () {
 
         /**
-         * Transforma uma data para o formato dd-MM-yyyy, onde o mês terá
-         * uma unidade incrementada, devido a objetos do tipo Date utilizarem um intervalor
-         * de índices de 0 a 11.
+         * Transforma uma data para o formato dd-MM-yyyy, onde o mês terá uma unidade 
+         * incrementada, devido a objetos do tipo Date utilizarem um intervalor de 
+         * índices de 0 a 11.
          *
          * @param {Date} data Data a ser transformada para {String}.
          * @return {String} Data formatada.

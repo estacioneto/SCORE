@@ -4,8 +4,7 @@
     var appModule = angular.module('app', []);
 
     /**
-     * The app controller. Ideally, it will be empty because we don't need logic on an
-     * abstract controller.
+     * O controller de app. Idealmente, sera vazio pois nao eh necessario logica em um abstract controller.
      *
      * @author Estácio Pereira
      */

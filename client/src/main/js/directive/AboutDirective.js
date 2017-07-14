@@ -3,7 +3,7 @@
     var aboutModule = angular.module('aboutModule', []);
 
     /**
-     * Directive which controls the About modal view.
+     * Diretiva que controla o About modal view
      */
     aboutModule.directive('about', ['ToastService', function (ToastService) {
         return {
@@ -16,7 +16,7 @@
                 var pitonImg = "/img/icons/ms-icon-150x150.png";
 
                 /**
-                 * Mock, while we haven't the data from server.
+                 * Mock, enquanto nao temos dados do servidor.
                  */
                 var devsMock = [
                     {
@@ -128,8 +128,8 @@
                 var lastFirstLetter = "";
 
                 /**
-                 * Triggers the name related easter egg.
-                 * @param name Name clicked.
+                 * Aciona o nome relacionado ao easter egg.
+                 * @param name O nome clicado.
                  */
                 scope.eeTrigger = function (name) {
                     var firstLetter = name.substring(0, 1);
@@ -147,7 +147,7 @@
                 };
 
                 /**
-                 * Main function. Shuffles devs list.
+                 * Funcao principal que embaralha listas devs.
                  */
                 (function () {
                     var r = devsMock;

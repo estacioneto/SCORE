@@ -1,25 +1,25 @@
 const PRIMEIRO_INDICE = 0;
 
 /**
- * Removes an element in the given index.
+ * Remove um elemento no índice dado.
  *
- * @param {Number} index Index of the element
+ * @param {Number} index Índice do elemento.
  */
 Array.prototype.remove = function (index) {
     this.splice(index, 1);
 };
 
 /**
- * Clears the whole Array.
+ * Limpa o array por completo.
  */
 Array.prototype.clear = function () {
     this.splice(0, this.length);
 };
 
 /**
- * Pushes multiple elements to the array.
+ * Enfileira múltiplos elementos no array.
  *
- * @param {Array} elements Elements to be pushed.
+ * @param {Array} elements Elementos a serem enfileirados.
  */
 Array.prototype.pushAll = function (elements) {
     this.push.apply(this, elements);
