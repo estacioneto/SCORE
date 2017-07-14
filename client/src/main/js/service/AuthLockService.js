@@ -11,16 +11,7 @@
 
         const self = this;
 
-        const PRIMEIRO_INDICE = 0,
-            TAMANHO_DDD = 2,
-            TAMANHO_NUMERO_METADE = 6,
-            TAMANHO_MAXIMO_FORMATADO = 15,
-            LIMITE_ADICIONAR_HIFEN = 4,
-            TAMANHO_NUMERO_ANTIGO = 8,
-            MEIO_NUMERO_NOVO = 5;
-
-        const TIMEOUT_VERIFICACAO = 500,
-            BACKSPACE_KEY = 'Backspace';
+        const TIMEOUT_VERIFICACAO = 500;
 
         /**
          * Inicializa as verificações necessárias no lock.
@@ -31,7 +22,6 @@
                 // Caso o conteúdo do lock não tenha sido inicializado, tenta novamente após algum tempo.
                 $timeout(self.inicializarVerificacoes, TIMEOUT_VERIFICACAO);
             } else {
-                console.log('ok');
                 conteudoLock = angular.element(conteudoLock);
                 conteudoLock.on('click', evento => {
                     if (clicouEmInscrever(evento)) {
@@ -61,120 +51,16 @@
             let campoTelefone = _.find(campos, element => element.name === 'numero_telefone');
             if (!campoTelefone) {
                 // Caso o campo não tenha sido inicializado, tenta novamente após algum tempo.
-                console.log('not ok');
                 $timeout(verificarNumeroTelefone, TIMEOUT_VERIFICACAO);
             } else {
-                console.log('ok');
-                defineFormatacaoTelefone(campoTelefone);
+                const options =  {onKeyPress: function(numero, e, field, options){
+                const masks = ['(00) 0000-0000#', '(00) 00000-0000'];
+                const mask = (numero.length > 14) ? masks[1] : masks[0];
+                    $('[name="numero_telefone"').mask(mask, options);
+                }};
+
+                $('[name="numero_telefone"').mask('(00) 00000-0000', options);
             }
         }
-
-        /**
-         * Verifica se deve evitar o caractere no telefone.
-         *
-         * @param   {event}   evento   Evento de keydown.
-         * @param   {string}  telefone Número de telefone atual.
-         * @returns {boolean} {@code true} caso o usuário pressionou uma tecla que não deve ir para telefone.
-         */
-        function evitarCaractereTelefone(evento, telefone) {
-            const naoEhNumero = (new RegExp(/(^[^0-9]$)/).test(evento.key));
-            const ehNumero = (new RegExp(/(^\d$)/).test(evento.key));
-
-            return (naoEhNumero || (ehNumero && telefone.length === TAMANHO_MAXIMO_FORMATADO)) &&
-                !evento.ctrlKey;
-        }
-
-        /**
-         * Verifica se deve formatar o número.
-         *
-         * @param   {event}   evento Evento de keydown ou keyup
-         * @returns {boolean} {@code true} se deve formatar o número de telefone.
-         */
-        function deveFormatarTelefone(evento) {
-            return !evento.ctrlKey;
-        }
-
-        /**
-         * Define a formatação de telefone dado o campo.
-         *
-         * @param {DOMElement} campoTelefone Elemento do campo.
-         */
-        function defineFormatacaoTelefone(campoTelefone) {
-            campoTelefone = angular.element(campoTelefone);
-            campoTelefone.on('keydown', evento => {
-                if (evitarCaractereTelefone(evento, campoTelefone.val())) {
-                    evento.preventDefault();
-                }
-            });
-
-            campoTelefone.on('keyup', evento => {
-                if (deveFormatarTelefone(evento)) {
-                    const campo = angular.element(evento.target);
-                    formatarNumeroTelefone(campo);
-                }
-            });
-        }
-
-        /**
-         * Formata o número de telefone.
-         *
-         * @param {Object} campo Campo do telefone.
-         */
-        function formatarNumeroTelefone(campo) {
-            const valor = campo.val();
-            const numeroNaoFormatado = _.filter(valor, numero => new RegExp(/\d/).test(numero)).join('');
-            const numeroFormatado = getTelefoneFormatado(numeroNaoFormatado);
-            
-            if (numeroFormatado !== valor) {
-                campo.val(numeroFormatado);
-            }
-        }
-
-        /**
-         * Retorna o número de telefone formatado.
-         * 1. Para vazio, retorna vazio
-         * 2. Para menos de 3 dígitos (apenas ddd ou um dígito), retorna '(' + numero
-         * 3. Para mais de 2 dígitos (ddd + algo) retorna (DDD) + ' ' + número
-         *  3.1 Formatação para número segue padrão de #inserirHifenNumero() 
-         *
-         * @param  {string} numeroNaoFormatado Número de telefone não formatado.
-         * @return {string} Número de telefone formatado.
-         */
-        function getTelefoneFormatado(numeroNaoFormatado) {
-            if (numeroNaoFormatado.length > TAMANHO_DDD) {
-                const ddd = numeroNaoFormatado.substring(PRIMEIRO_INDICE, TAMANHO_DDD);
-
-                const digitos = numeroNaoFormatado.substring(TAMANHO_DDD);
-                const digitosComHifen = inserirHifenNumero(digitos);
-
-                return `(${ddd}) ${digitosComHifen}`;
-            }
-
-            if (!_.isEmpty(numeroNaoFormatado)) {
-                return `(${numeroNaoFormatado}`;
-            }
-            return numeroNaoFormatado;
-        }
-
-        /**
-         * Insere o hífen no número de telefone, para a máscara.
-         * * Se o número tem mais de 9 dígitos, o hífen separa os 5 primeiros dos 4 últimos números
-         * * Se o número tem mais de 4 dígitos e menos que 9, o hífen separa os 4 primeiros do resto.
-         * 
-         * @param {String} numero Número a ser formatado.
-         * @return Número formatado.
-         */
-        function inserirHifenNumero(numero) {
-            if (numero.length > TAMANHO_NUMERO_ANTIGO) {
-                const primeiraParte = numero.substring(PRIMEIRO_INDICE, MEIO_NUMERO_NOVO);
-                const segundaParte = numero.substring(5);
-                return `${primeiraParte}-${segundaParte}`;
-            } else if (numero.length > LIMITE_ADICIONAR_HIFEN) {
-                const primeiraParte = numero.substring(PRIMEIRO_INDICE, LIMITE_ADICIONAR_HIFEN);
-                const segundaParte = numero.substring(LIMITE_ADICIONAR_HIFEN);
-                return `${primeiraParte}-${segundaParte}`
-            }
-            return numero;
-        };
     }]);
 })();
