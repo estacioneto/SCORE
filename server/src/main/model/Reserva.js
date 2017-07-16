@@ -3,12 +3,20 @@
     const mongoose = require('mongoose');
     const _ = require('../util/util');
 
-    let Schema = mongoose.Schema;
+    const Schema = mongoose.Schema;
 
-    let reservaSchema = new Schema({
+    const reservaSchema = new Schema({
         autor : {
             type: String,
             required: [true, "A reserva deve ter um responsável."]
+        },
+        emailAutor: {
+            type: String,
+            required: [true, 'A reserva deve conter o email do seu autor.']
+            //TODO: validar para aceitar apenas emails @ccc, @computacao, @dsc etc.
+        },
+        userId: {
+            type: String
         },
         titulo : {
             type: String,
@@ -21,21 +29,24 @@
             type: String,
             required: [true, "A reserva deve possuir horário de início."],
             validate: {
-                validator: function (hora) {
-                    return /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(hora);
+                validator: function (horaInicio) {
+                    return /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(horaInicio);
+
                 },
                 message: "Hora de inicio da reserva deve estar no formato HH:mm."
             }
+
         },
         fim : {
             type: String,
             required: [true, "A reserva de possuir horário de fim."],
             validate: {
-                validator: function (hora) {
-                    return /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(hora);
+                validator: function (horaFim) {
+                    return /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(horaFim);
                 },
                 message: "Hora de fim da reserva deve estar no formato HH:mm."
             }
+
         },
         dia : {
             type: String,
@@ -56,11 +67,20 @@
         }
     });
 
+    reservaSchema.static('findById', function (email, id, callback) {
+        return this.find({emailAutor: email, _id: id}, (err, result) => {
+            if (err) return callback(err, null);
+            console.log(id);
+            if (_.isEmpty(result)) return callback('O usuario não é autor de nenhuma reserva com esse id.', null);
+            return callback(err, _.first(result));
+        });
+    });
+
 
     reservaSchema.pre('save', function (next) {
         // http://stackoverflow.com/questions/7327296/how-do-i-extract-the-created-date-out-of-a-mongo-objectid
-        this.createDate = this._id.getTimestamp().getTime();
-        this.editDate = Date.now();
+        this.dataCriacao = this._id.getTimestamp().getTime();
+        this.dataEdicao = Date.now();
         next();
     });
 
@@ -70,8 +90,6 @@
         }
         return next(err);
     });
-
-
 
     module.exports = mongoose.model('Reserva', reservaSchema);
 })();
