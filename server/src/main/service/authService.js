@@ -18,7 +18,8 @@
      */
     authService.getUser = (idToken, callback) => {
         let options = {
-            url: _.auth0 + _.tokeninfo,
+            //https://auth0.com/docs/api/authentication#get-token-info
+            url: _.scoreAuth0 + _.tokeninfo,
             form: {
                 id_token: idToken
             }

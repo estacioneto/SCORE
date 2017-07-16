@@ -7,12 +7,9 @@
         http = require("http");
 
     const usersRouter = require('../router/usersRouter');
+    const reservasRouter = require('../router/reservasRouter');
     const routesMiddleware = {};
 
-    /*
-     * TODO: They should be environment variables... Just saying...
-     * @author: Estácio Pereira
-     */
     const authCheck = jwt({
         secret: process.env.SECRET,
         audience: 'FXhjEG4sAdI2CzocJV5oGXw10wvkeGkD'
@@ -32,6 +29,7 @@
         app.authMiddleware = authCheck;
 
         app.use('/api/users', app.authMiddleware, usersRouter);
+        app.use('/api/reservas', app.authMiddleware, reservasRouter);
     };
 
     module.exports = routesMiddleware;
