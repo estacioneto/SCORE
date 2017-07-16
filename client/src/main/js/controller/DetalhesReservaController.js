@@ -2,6 +2,7 @@
     'use strict';
     /**
      * Controller responsável pelo modal de detalhes da reserva.
+     * 
      */
     angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService) {
 
@@ -68,6 +69,7 @@
 
         /**
          * Cria a reserva.
+         * 
          * @return Promise.
          */
         this.salvarReserva = () => {
@@ -128,6 +130,7 @@
 
         /**
          * Exclui a reserva.
+         * 
          * @return Promise.
          */
         this.excluirReserva = () => {
@@ -184,6 +187,7 @@
 
         /**
          * Indica se existem mudanças na reserva.
+         * 
          * @return True se houverem mudanças.
          */
         function temMudancas() {

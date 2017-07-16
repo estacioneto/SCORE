@@ -1,18 +1,18 @@
 <md-content>
-    <!-- SideBar -->
+    <!-- Barra lateral -->
     <sidebar-piton controller="archiveCtrl"></sidebar-piton>
-    <!-- end SideBar -->
+    <!-- end Barra lateral -->
     <md-content id="main-page" layout-padding flex>
         <div layout-padding>
             <!-- Content -->
             <div layout-padding class="content" layout="row">
-                <!-- SideBar -->
+                <!-- Barra lateral -->
                 <sidebar-piton controller="archiveCtrl"></sidebar-piton>
-                <!-- end SideBar -->
+                <!-- end Barra lateral -->
 
                 <!-- MainContent -->
                 <div layout="column" layout-padding flex>
-                    <!-- Search bar -->
+                    <!-- Barra de pesquisa -->
                     <md-toolbar class="md-whiteframe-5dp" id="searchbar"
                                 md-colors="{background: 'grey-A100'}">
                         <!--https://material.angularjs.org/1.1.0/demo/colors-->
@@ -27,7 +27,7 @@
                                        id="searchbarInput">
                             </md-input-container>
 
-                            <!--Sort Notes button-->
+                            <!-- Botao Ordenar anotacoes -->
                             <md-input-container id="sorting-container" ng-cloak layout-align="end end">
                                 <md-fab-speed-dial md-open="isOpen"
                                                    md-direction="down"
@@ -68,12 +68,12 @@
                                     <!-- end Options -->
                                 </md-fab-speed-dial>
                             </md-input-container>
-                            <!--end Sort Notes button-->
+                            <!-- end Botao Ordenar anotacoes -->
                         </div>
                     </md-toolbar>
-                    <!-- end search bar-->
+                    <!-- end Barra de pesquisa-->
 
-                    <!-- Notes listing -->
+                    <!-- Listar anotacoes -->
                     <md-content id="main-field">
                         <div layout-wrap layout="row" flex>
                             <note-listing
@@ -84,7 +84,7 @@
                             </note-listing>
                         </div>
                     </md-content>
-                    <!-- end Notes listing -->
+                    <!-- end Listar anotacoes -->
                 </div>
                 <!-- end MainContent -->
             </div>

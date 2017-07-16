@@ -4,7 +4,7 @@
     var footer = angular.module('footerModule', []);
 
     /**
-     * Main footer's directive.
+     * Diretiva principal para footer's.
      *
      * @author Estácio Pereira
      */

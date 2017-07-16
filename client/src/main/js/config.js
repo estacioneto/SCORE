@@ -44,8 +44,8 @@
             function ($urlRouterProvider, $provide, $httpProvider) {
 
                 /**
-                 * Adds watchers for requests open and close. While there's an
-                 * open request the loading indicator keeps shown.
+                 * Adiciona watchers para open e close requests. Enquanto tiver um 
+                 * open request o indicador de carregamento continua visível.
                  */
                 function loadingInterceptor($rootScope, $q) {
                     var _openRequests_ = 0;

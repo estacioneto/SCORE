@@ -3,8 +3,8 @@
     //https://github.com/auth0/auth0-angular
 
     /**
-     * AuthService deals with the authorization/storage logic and auth0 'non-view' related questions.
-     * Deals with user (Auth0 profile) logic, because it's API is fantastic!
+     * AuthService lida com a lógica de autorização/armazenamento e com questões relacionadas ao auth0 "non view"
+     * Também lida com a lógica de usuário(Auth0 profile) porque sua API é fanstástica!
      *
      * @author Estácio Pereira
      */
@@ -12,10 +12,11 @@
         var self = this;
 
         /**
-         * Authenticates the user and stores the it's token and user.
-         * @param   {String}  token   The user's identification token.
-         * @param   {Object}  user    The Auth0 user.
-         * @returns {Promise} Promise returning the user.
+         * Autentica o usuário e guarda seu token e user.
+         * 
+         * @param   {String}  token   O token de identificação do usuário.
+         * @param   {Object}  user    O user Auth0.
+         * @returns {Promise} Promise retornar user.
          */
         this.authenticate = function (token, user) {
             store.set('idToken', token);
@@ -39,18 +40,18 @@
         };
 
         /**
-         * Verifies if the user is authenticated.
+         * Verifica se o usuário está autenticado.
          *
-         * @returns {Boolean} true if it's authenticated, false otherwise.
+         * @returns {Boolean} true se o usuário está autenticado, false caso contrário.
          */
         this.isAuthenticated = function () {
             return auth.isAuthenticated;
         };
 
         /**
-         * Gets the logged user from the Auth0 service.
+         * Resgata o usuário logado do serviço Auth0
          *
-         * @returns {User} The logged user.
+         * @returns {User} O usuário logado.
          */
         this.getLoggedUser = function () {
             return (angular.isString(auth.profile)) ?
@@ -58,7 +59,7 @@
         };
 
         /**
-         * Returns the idToken of the logged user.
+         * Retorna o idToken do usuário logado.
          *
          * @returns {String} token
          */
@@ -67,7 +68,7 @@
         };
 
         /**
-         * Signs out and remove the user's properties from the storage.
+         * Remove as propriedades armazenadas do usuário e encerra a sessão.
          */
         this.logout = function () {
             store.remove('idToken');

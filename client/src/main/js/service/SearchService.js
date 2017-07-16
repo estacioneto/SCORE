@@ -4,7 +4,7 @@
     var searchModule = angular.module('buscaModulo', []);
 
     /**
-     * This Service deals with the Search deep logic.
+     * SearchService lida com a lógica de pesquisa aprofundada.
      *
      * @author Estácio Pereira, Eric Breno
      */
@@ -13,35 +13,35 @@
         this.searchParams = {};
 
         /**
-         * Adds a parameter to the search.
+         * Adiciona um parâmetro a pesquisa.
          *
-         * @param {String}  attr         Attribute to be added on validation.
-         * @param {*}       value        The value to validate the attribute.
-         * @param {boolean} isConstraint Indicates if the added attribute is a constraint or not.
+         * @param {String}  attr         O atributo a ser inserido em validação.
+         * @param {*}       value        O valor para validar o atributo.
+         * @param {boolean} isConstraint true se o atributo adicionado é uma constraint, false caso contrário.
          */
         this.addParam = function (attr, value, isConstraint) {
             self.searchParams[attr] = {
                 value: value,
-                isConstraint: !!isConstraint // In case of undefined.
+                isConstraint: !!isConstraint // Em caso de indefinido.
             };
         };
 
         /**
-         * Deletes a parameter.
+         * Deleta um parâmetro pelo nome.
          *
-         * @param {String} attr Parameter's name.
+         * @param {String} attr O nome do parâmetro.
          */
         this.deleteParam = function (attr) {
             delete self.searchParams[attr];
         };
 
         /**
-         * Filters a given list of notes according to the current search parameters and
-         * the given input (important to filter the title, content...).
+         * Filtra uma lista de anotações de acordo com o parâmetro atual de pesquisa e 
+         * com a dada entrada(importante para filtrar o título, conteúdo...).
          *
-         * @param   {Array}  notes Notes to be filtered.
-         * @param   {String} input Value of the input box.
-         * @returns {Array} The filtered notes.
+         * @param   {Array}  notes As anotações a serem filtradas.
+         * @param   {String} input O valor da caixa de entrada.
+         * @returns {Array} As anotações filtradas.
          */
         this.filter = function (notes, input) {
             var param = angular.copy(self.searchParams);
@@ -69,12 +69,12 @@
         };
 
         /**
-         * Validates a note according the constraint parameters. The note is valid
-         * if it has all the constraints valid.
+         * Valida uma anotação de acordo com a constraint de parametros. A anotação é válida
+         * se tem todas as constraints válidas.
          *
-         * @param   {Note}    note   The note to be validated.
-         * @param   {Array}   params Constraint parameters.
-         * @returns {boolean} true if the note is valid, false otherwise.
+         * @param   {Note}    note   A anotação a ser validada.
+         * @param   {Array}   params Os parâmetros de constraint.
+         * @returns {boolean} true se a anotação é valida, false caso contrário.
          */
         function validateConstraintParams(note, params) {
             var isValid = true;
@@ -85,12 +85,12 @@
         }
 
         /**
-         * Validates a note according the 'non-constraint' parameters. The note is valid
-         * if it has at least one of the parameter validated.
+         * Valida uma anotação de acordo com parâmetros 'non-constraint'. A anotação é válida
+         * se tem pelo menos um dos parâmetros validados.
          *
-         * @param   {Note}    note   The note to be validated.
-         * @param   {Array}   params Constraint parameters.
-         * @returns {boolean} true if the note is valid, false otherwise.
+         * @param   {Note}    note   A anotação a ser validada.
+         * @param   {Array}   params Os parâmetros de constraint.
+         * @returns {boolean} true se a anotação é válida, false caso contrário.
          */
         function validateAtLeastOneParam(note, params) {
             var isValid = false;
@@ -101,8 +101,8 @@
         }
 
         /**
-         * Set the input parameters. They are not constraints. If the given string
-         * is a substring of one of the added parameters, the note is valid.
+         * Preenche os parâmetros de entrada. Eles não são constraints. Se a string dada 
+         * é uma substring de um dos parâmetros adicionados, a anotação é válida.
          *
          * @param {Object} param The object encapsulating the parameters to be analyzed.
          * @param {String} input The user's input.
@@ -120,12 +120,12 @@
         }
 
         /**
-         * Filters a note to determinate if it's valid according to the params.
+         * Filtra uma anotação para determinar se é válida de acordo com os parâmetros.
          *
-         * @param   {Note}             note  The note to be analyzed.
-         * @param   {String | Array}   attrs  Attribute of the note to be validated.
-         * @param   {String | boolean} value Value to the attribute be valid.
-         * @returns {boolean} true if the note is valid according the value.
+         * @param   {Note}             note  A anotação a ser analizada.
+         * @param   {String | Array}   attrs  Atributos da anotação a ser validada.
+         * @param   {String | boolean} value Valor para o atributo ser válido.
+         * @returns {boolean} true se a anotação é válida de acordo com o valor.
          */
         function isFilterValid(note, attrs, value) {
             var noteAttr = note;
@@ -145,7 +145,7 @@
 
 
         /**
-         * Verifies if two string are equals or the first contains the second.
+         * Verifica se duas strings são iguais ou se a primeira contém a segunda.
          */
         function checkContainsString(mainStr, otherStr) {
             if (_.isString(mainStr)) {

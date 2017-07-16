@@ -28,6 +28,7 @@
 
         /**
          * Abre o modal para criação de reserva.
+         * 
          * @return {Promise} Promise do modal.
          */
         this.criarReserva = () => {
