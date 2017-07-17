@@ -6,6 +6,12 @@
 
     let reservasService = {};
 
+    /**
+     * Obtém todas as reservas.
+     *
+     * @param {String}   token    Token de identificação do usuário logado.
+     * @param {Function} callback Função chamada após erro ou sucesso na operação.
+     */
     reservasService.getReservas = (token, callback) => {
         usersService.getUser(token, (err,user) => {
             console.log(user);
@@ -17,6 +23,13 @@
         });
     };
 
+    /**
+     * Cria uma nova reserva em nosso banco de dados.
+     *
+     * @param {String}   token    Token de identificação do usuário logado.
+     * @param {Object}   reserva  Nova reserva a ser persistida.
+     * @param {Function} callback Função chamada após erro ou sucesso na operação.
+     */
     reservasService.salvaReserva = (token, reserva, callback) => {
         usersService.getUser(token, (err, user) => {
             if(err) return callback(err, null);
@@ -27,6 +40,15 @@
         });
     };
 
+    /**
+     * Atualiza as propriedades de uma reserva já
+     * existente em nosso banco de dados.
+     *
+     * @param {String}   token       Token de identificação do usuário logado.
+     * @param {String}   idReserva   Id da reserva original.
+     * @param {Object}   novaReserva Reserva atualizada a ser persistida.
+     * @param {Function} callback    Função chamada após erro ou sucesso na operação.
+     */
     reservasService.atualizaReserva = (token, idReserva, novaReserva, callback) => {
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) return callback(err,null);
@@ -37,6 +59,13 @@
         });
     };
 
+    /**
+     * Obtém uma reserva dado o seu Id.
+     *
+     * @param {String}   token      Token de identificação do usuário logado.
+     * @param {String}   idReserva  Id da reserva desejada.
+     * @param {Function} callback   Função chamada após erro ou sucesso na operação.
+     */
     reservasService.getReservaById = (token, idReserva, callback) => {
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) callback(err, null);
@@ -44,6 +73,13 @@
         });
     };
 
+    /**
+     * Deleta uma reserva dado o seu Id.
+     *
+     * @param {String}   token     Token de identificação do usuário logado.
+     * @param {String}   idReserva Id da reserva a ser deletada.
+     * @param {Function} callback  Função chamada após erro ou sucesso na operação.
+     */
     reservasService.deletaReserva = (token, idReserva, callback) => {
         //TODO: Validar deleção
         getReservaById(token, idReserva, (err,reserva) => {
@@ -55,6 +91,12 @@
         });
     };
 
+    /**
+     * Persiste uma reserva no banco de dados.
+     *
+     * @param {Object}   reserva  Reserva a ser persistida.
+     * @param {Function} callback Função chamada após erro ou sucesso na operação.
+     */
     function persisteReserva(reserva, callback) {
         return reserva.save((err, resultado) => {
             if (err) return callback(err, resultado);
@@ -62,6 +104,13 @@
         });
     }
 
+    /**
+     * Obtém uma reserva do banco de dados dado o seu Id.
+     *
+     * @param {String}   token     Token de identificação do usuário logado.
+     * @param {String}   idReserva Id da reserva desejada.
+     * @param {Function} callback  Função chamada após erro ou sucesso na operação.
+     */
     function getReservaById(token, idReserva, callback){
         return usersService.getUser(token, (err,user) => {
             if(err) return callback(err, null);
@@ -70,7 +119,8 @@
     }
 
     module.exports = (db_profile) => {
-        db_profile = db_profile || 'SCORE';
+        const dbName = 'SCORE';
+        db_profile = db_profile || dbName;
         let db = require('../config/db_config')(db_profile);
         return reservasService;
     }

@@ -31,7 +31,6 @@
      */
     reservasRouter.post('/', (req, res) => {
         reservasService.salvaReserva(_.getToken(req), req.body, (err, result) => {
-            console.log(req.body);
             if (err) {
                 return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
             }
