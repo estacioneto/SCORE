@@ -15,6 +15,7 @@
     _.INVALID_INDEX = -1;
 
     _.auth0 = 'https://estacioneto.auth0.com';
+    _.scoreAuth0 = "https://score-uasc.auth0.com";
     _.loginEndpoint = '/oauth/ro';
     _.tokeninfo = '/tokeninfo';
 
