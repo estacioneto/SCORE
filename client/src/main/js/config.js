@@ -188,12 +188,13 @@
     app.run(['$rootScope', 'ModalService', '$transitions', 'auth', '$state', function ($rootScope, ModalService, $transitions, auth, $state) {
         $rootScope._ = window._;
         $rootScope.apiRoot = '/api';
+        const THEME_INDEX = 1;
 
         // Tema da aplicação
         // Transitions? https://github.com/angular-ui/ui-router/issues/2720
         $transitions.onSuccess({}, function ($transition) {
             const state = $transition.to();
-            $rootScope.theme = state.name.replace(/\./g, '');
+            $rootScope.theme = state.name.toUpperCase().split(/\./)[THEME_INDEX];
         });
 
         // Indicador de carregamento

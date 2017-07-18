@@ -6,7 +6,7 @@
      */
     angular.module('userModule', []).factory('Usuario', [function () {
 
-        const METADADOS = ['nome_completo', 'numero_telefone'];
+        const METADADOS = ['nome_completo', 'numero_telefone', 'numero_telefone_formatado'];
 
         /**
          * Construtor da factory. Dado um usuário, monta o objeto.
