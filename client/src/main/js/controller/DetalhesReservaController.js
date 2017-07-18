@@ -80,14 +80,16 @@
                 self.reserva.autor = undefined;
                 return ModalService.verReserva(self.reserva);
             };
-            return self.reserva.salvar().then(data => AgendamentoService.salvarReserva(self.reserva)
+            return AgendamentoService.salvarReserva(self.reserva)
                 .then(data => {
-                    posSalvar();
-                    return data;
+                    return self.reserva.salvar().then(data => {
+                        posSalvar();
+                        return data;
+                    });
                 }, err => {
                     return ModalService.error(err.mensagem)
                         .then(callbackReabrirReserva);
-                }));
+                });
         };
 
         /**
