@@ -194,11 +194,16 @@
         // Transitions? https://github.com/angular-ui/ui-router/issues/2720
         $transitions.onSuccess({}, function ($transition) {
             const state = $transition.to();
+
+            /*
+             * Só precisamos distinguir os temas a partir do segundo nome do state, ou seja,
+             * app.<nome>, pois os filhos, até o momento, devem ter o mesmo tema.
+             */
             $rootScope.theme = state.name.toUpperCase().split(/\./)[THEME_INDEX];
         });
 
         // Indicador de carregamento
-        const _modalResp_ = ModalService.loadingIndicatorModal();
+        const _modalResp_ = ModalService.exibirIndicadorCarregamento();
         _modalResp_.attach().then(function () {
             $rootScope.$on('loading_show', function () {
                 _modalResp_.show();

@@ -72,7 +72,12 @@
             });
         };
 
-        this.loadingIndicatorModal = function () {
+        /**
+         * Exibe indicador de carregamento.
+         *
+         * @returns {!MdPanelRef} Instância do Panel do indicador.
+         */
+        this.exibirIndicadorCarregamento = function () {
             return $mdPanel.create({
                 template: '<div layout="row" layout-sm="column" layout-align="space-around" md-theme="{{$root.theme}}"><md-progress-circular class="md-primary" md-mode="indeterminate"></md-progress-circular></div>',
                 attachTo: angular.element(document.body),
@@ -118,8 +123,8 @@
         /**
          * Notifica o usuário sobre erro e retorna uma promise rejeitada.
          *
-         * @param   {string} mensagem Mensagem de erro mostrada
-         * @param   {*}      err      Erro da promise. (Opcional)
+         * @param   {String}  mensagem Mensagem de erro mostrada
+         * @param   {*}       err      Erro da promise. (Opcional)
          * @returns {Promise} Promise rejeitada para permitir encadeamento de promises.
          */
         this.notificarErro = function (mensagem, err) {

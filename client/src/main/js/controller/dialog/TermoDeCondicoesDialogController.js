@@ -2,7 +2,10 @@
     'use strict';
 
     /**
-     * Controller do Modal/Dialog do Termo de Condições do Local.
+     * Controller do Modal/Dialog do Termo de Condições do Local. Os parâmetros informados devem ser injetados.
+     *
+     * @param {Local}   local    Local a ter Termo exibido.
+     * @param {Boolean} editavel Booleano indicando se o Termo pode ser editado.
      *
      * @author Estácio Pereira
      */
@@ -10,6 +13,9 @@
         this.local = local;
         this.editavel = editavel;
 
+        /**
+         * Fecha o dialog.
+         */
         this.concluir = function () {
             $mdDialog.hide('concluir');
         };
