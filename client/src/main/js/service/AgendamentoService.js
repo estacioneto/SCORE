@@ -4,6 +4,8 @@
 
         const self = this;
 
+        let reservas = [];
+
         let promiseEventosFuturos;
 
         /**
@@ -14,8 +16,8 @@
          * @return {Promise} Promessa que contém a reserva excluída.
          */
         this.excluir = (reserva) => {
-            const indice = getIndiceReserva(mock, reserva);
-            mock.remove(indice);
+            const indice = getIndiceReserva(reservas, reserva._id);
+            reservas.remove(indice);
             return $q.when(reserva);
         };
 
@@ -40,7 +42,7 @@
             const fim = reserva.fim;
 
             _.each(reservasDia, reservaDia => {
-                if (reserva.id !== reservaDia.id) {
+                if (reserva._id !== reservaDia._id) {
                     if ((inicio < reservaDia.inicio && fim > reservaDia.fim)
                         || (inicio > reservaDia.inicio && inicio < reservaDia.fim)
                         || (fim > reservaDia.inicio && fim < reservaDia.fim)) {
@@ -56,14 +58,14 @@
          * @param {*} reserva
          */
         function atualizarReservas(reserva) {
-            let indiceReserva = getIndiceReserva(mock, reserva);
+            let indiceReserva = getIndiceReserva(reservas, reserva._id);
 
             if (indiceReserva !== -1) {
                 // atualizar
-                mock.splice(indiceReserva, 1, new Reserva(reserva));
+                reservas.splice(indiceReserva, 1, new Reserva(reserva));
             } else {
                 // criar
-                mock.push(reserva);
+                reservas.push(reserva);
             }
 
             return reserva;
@@ -73,11 +75,11 @@
          * Verifica se existe uma reserva na lista, retornando seu índice.
          * 
          * @param {*} lista 
-         * @param {*} reserva 
+         * @param {*} id 
          */
-        function getIndiceReserva(lista, reserva) {
+        function getIndiceReserva(lista, id) {
             for (let i = 0; i < lista.length; i++) {
-                const isIgual = lista[i].id === reserva.id;
+                const isIgual = lista[i]._id === id;
                 if (isIgual) {
                     return i;
                 }
@@ -110,12 +112,16 @@
          * @return {Promise} Promessa contendo a reserva.
          */
         this.getReserva = id => {
-            let indiceReserva = getIndiceReserva(mock, {id});
-            return $q.when(mock[indiceReserva]);
+            let indiceReserva = getIndiceReserva(reservas, id);
+            return $q.when(reservas[indiceReserva]);
         };
 
         this.loadReservasFuturas = () => {
-            return $q.when(mock);
+            return $http.get("/api/reservas").then(data => {
+                const res = data.data.map(r => new Reserva(r));
+                return res;
+            });
+            // return $q.when(mock);
         };
 
         const mock = [

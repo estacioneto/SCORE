@@ -4,11 +4,13 @@ let sequenceReserva = 1;
     /**
      * Factory que representa a entidade de reserva.
      */
-    angular.module('agendamentoModulo', []).factory('Reserva', ['$http', '$q', function ($http, $q) {
+    angular.module('agendamentoModulo', []).factory('Reserva', ['$http', function ($http) {
 
         const COR_DEFAULT = '', COR_TEXTO_DEFAULT = '',
               DIA_INDICE = 0, MES_INDICE = 1, ANO_INDICE = 2,
               HORA_INDICE = 0, MINUTO_INDICE = 1;
+
+        const API = "/api/reservas";
 
         /*
          * Obs: Provavelmente terá que ser adicionado duas funções privadas para criação de
@@ -18,7 +20,7 @@ let sequenceReserva = 1;
          *
          * Todo: Remover id, o qual será gerado pelo mongodb
          */
-        function Reserva({id = sequenceReserva++,
+        function Reserva({_id,
                           autor,
                           titulo,
                           descricao,
@@ -28,7 +30,7 @@ let sequenceReserva = 1;
                           cor = COR_DEFAULT,
                           corTexto = COR_TEXTO_DEFAULT}) {
 
-            Object.assign(this, {id,
+            obterPropriedades(this, {_id,
                                  autor,
                                  titulo,
                                  descricao,
@@ -39,12 +41,19 @@ let sequenceReserva = 1;
                                  corTexto});
         }
 
+        function obterPropriedades(instancia, props) {
+            Object.assign(instancia, props);
+        }
+
         /**
          * Recupera a reserva original do servidor.
          * @return Promise da requisição.
          */
         Reserva.prototype.carregar = function () {
-            return $q.when({});
+            return $http.get(`${API}/${this._id}`).then(data => {
+                obterPropriedades(this, data.data);
+                return data;
+            });
         };
 
         /**
@@ -52,7 +61,13 @@ let sequenceReserva = 1;
          * @return Promise da requisição.
          */
         Reserva.prototype.salvar = function () {
-            return $q.when(this);
+            if (this._id) {
+                return this.atualizar();
+            }
+            return  $http.post(API, this).then(data => {
+                obterPropriedades(this, data.data);
+                return data;
+            });
         };
 
         /**
@@ -60,9 +75,12 @@ let sequenceReserva = 1;
          * @return Promise da requisição.
          */
         Reserva.prototype.excluir = function () {
-            delete this.autor;
-            delete this.descricao;
-            return this.salvar();
+            return $http.delete(`${API}/${this._id}`).then(data => {
+                delete this.autor;
+                delete this.descricao;
+                delete this.titulo;
+                return data;
+            });
         };
 
         /**
@@ -70,7 +88,10 @@ let sequenceReserva = 1;
          * @return Promise da requisição.
          */
         Reserva.prototype.atualizar = function () {
-            return $q.when({});
+            return $http.patch(`${API}/${this._id}`, this).then(data => {
+                obterPropriedades(this, data.data);
+                return data;
+            });
         };
 
         /**

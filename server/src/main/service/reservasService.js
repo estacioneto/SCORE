@@ -14,7 +14,6 @@
      */
     reservasService.getReservas = (token, callback) => {
         usersService.getUser(token, (err,user) => {
-            console.log(user);
             if(err) return callback(err, null);
             Reserva.find({}, function(err, result) {
                 if (err) return callback(err, null);
@@ -35,6 +34,7 @@
             if(err) return callback(err, null);
             reserva.emailAutor = user.email;
             reserva.userId = user.user_id;
+            reserva.autor = user.user_metadata.nome_completo;
             //TODO: Validar salvamento p/choque de horarios
             return persisteReserva(new Reserva(reserva), callback);
         });
@@ -69,7 +69,7 @@
     reservasService.getReservaById = (token, idReserva, callback) => {
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) callback(err, null);
-            return callback(null, reserva.toObject());
+            return callback(null, (reserva || {}).toObject());
         });
     };
 
