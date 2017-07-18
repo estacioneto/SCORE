@@ -21,13 +21,9 @@
         }
 
         setDefaultTheme('default');
-        setDefaultTheme('app.home');
-        setDefaultTheme('app.login');
+        setDefaultTheme('HOME');
+        setDefaultTheme('LOGIN');
 
-        setLocalTheme('app.local.info');
-        setLocalTheme('app.local.id');
-        setLocalTheme('app.local.id.info');
-        setLocalTheme('app.local.edicao');
-        setLocalTheme('app.local.id.edicao');
+        setLocalTheme('LOCAL');
     }])
 })();

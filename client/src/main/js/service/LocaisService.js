@@ -17,7 +17,8 @@
                     quantidade: 2
                 }],
                 capacidade: 40,
-                funcionamento: '08001800'
+                funcionamento: '08001800',
+                observacoes: 'O SPLab não é achado fácil por entregadores'
             },
             auditorioHattori = {
                 _id: 2,
@@ -49,7 +50,7 @@
                 capacidade: 10,
                 funcionamento: '08001200'
             };
-        const locais = [auditorioSPLab, auditorioHattori, salaReunioes];
+        const locais = [auditorioSPLab, auditorioHattori, salaReunioes, auditorioSPLab, auditorioHattori, salaReunioes, auditorioSPLab, auditorioHattori, salaReunioes, auditorioSPLab, auditorioHattori, salaReunioes];
 
         this.carregarLocais = function () {
             return $q.when({data: locais.map(local => new Local(local))});

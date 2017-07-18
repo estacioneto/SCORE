@@ -42,6 +42,12 @@
         funcionamento: {
             type: String,
             required: [true, 'O local deve ter um horário de funcionamento.']
+        },
+        observacoes: {
+            type: String
+        },
+        termoDeCondicoes: {
+            type: String
         }
     });
 
