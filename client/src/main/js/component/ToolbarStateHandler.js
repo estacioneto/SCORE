@@ -12,6 +12,8 @@
         controller: ['$state', function ($state) {
             const self = this;
 
+            // TODO: Criar constantes na aplicação para states. APP_STATES. @author Estácio Pereira, 17/07/2017
+
             const nomesStates = {
                 'app.home': 'HOME',
                 'app.local.info': 'LOCAL'

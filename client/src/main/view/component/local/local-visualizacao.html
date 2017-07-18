@@ -1,4 +1,15 @@
 <md-content>
     <detalhes-local-visualizacao local="$ctrl.local"></detalhes-local-visualizacao>
     <equipamentos-local-visualizacao local="$ctrl.local"></equipamentos-local-visualizacao>
+    <md-content ng-if="$ctrl.local.observacoes">
+        <md-content layout layout-padding layout-align="center center">
+            <span class="md-title">Observações</span>
+        </md-content>
+        <md-content layout layout-align="center center">
+            <span class="md-subhead">{{$ctrl.local.observacoes}}</span>
+        </md-content>
+    </md-content>
+
+    <termo-de-condicoes-local local="$ctrl.local"
+                           editavel="false"></termo-de-condicoes-local>
 </md-content>

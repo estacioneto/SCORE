@@ -1,4 +1,14 @@
 <md-content>
     <detalhes-local-edicao local="$ctrl.local"></detalhes-local-edicao>
     <equipamentos-local-edicao local="$ctrl.local"></equipamentos-local-edicao>
+    <md-content layout layout-align="center center">
+        <md-input-container flex>
+            <textarea placeholder="Observações"
+                      rows="3"
+                      data-ng-model="$ctrl.local.observacoes"></textarea>
+        </md-input-container>
+    </md-content>
+
+    <termo-de-condicoes-local local="$ctrl.local"
+                              editavel="true"></termo-de-condicoes-local>
 </md-content>

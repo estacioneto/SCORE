@@ -1,0 +1,12 @@
+<md-content>
+    <div layout="row" layout-align="center">
+        <div data-ng-repeat="listaLocais in $ctrl.listagemLocais">
+            <div layout="column">
+                <div data-ng-repeat="local in listaLocais" layout="column">
+                    <local-card local="local"
+                                ng-click="$ctrl.selecionarLocal(local)"></local-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</md-content>

@@ -11,6 +11,10 @@
             </form>
         </div>
 
+        <md-content ng-if="!localCtrl.local">
+            <listagem-locais on-click-local="localCtrl.onChangeLocal(local)"></listagem-locais>
+        </md-content>
+
         <md-content ng-if="localCtrl.local">
             <imagens-local local="localCtrl.local"
                            editavel="false"></imagens-local>

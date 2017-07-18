@@ -1,0 +1,22 @@
+<md-dialog flex>
+    <md-dialog-content layout-padding>
+        <div layout layout-padding layout-align="center center">
+            <span class="md-title">Termo de Condições do Local</span>
+        </div>
+        <div layout layout-align="center center">
+            <md-input-container ng-if="dialogCtrl.editavel" flex>
+                <textarea placeholder="Termo de Condições"
+                          rows="10"
+                          ng-model="dialogCtrl.local.termoDeCondicoes"></textarea>
+            </md-input-container>
+            <span data-ng-if="!dialogCtrl.editavel" class="md-subhead">
+                {{(dialogCtrl.local.termoDeCondicoes || 'Não possui Termo de Condições')}}
+            </span>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="end center">
+        <md-button ng-click="dialogCtrl.concluir()">
+            Concluir
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>
