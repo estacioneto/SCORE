@@ -76,6 +76,12 @@
         });
     });
 
+    reservaSchema.static('findByDay', function (dia, callback) {
+        return this.find({dia: dia}, (err, results) => {
+            if (err) return callback(err, null);
+            return callback(err, results);
+        });
+    });
 
     reservaSchema.pre('save', function (next) {
         // http://stackoverflow.com/questions/7327296/how-do-i-extract-the-created-date-out-of-a-mongo-objectid

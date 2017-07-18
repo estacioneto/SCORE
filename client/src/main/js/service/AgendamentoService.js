@@ -11,8 +11,7 @@
         let promiseEventosFuturos;
 
         /**
-         * TODO: a implementar, depende do servidor.
-         * Remove uma reserva do dia.
+         * Remove uma reserva da lista do client.
          * 
          * @param reserva Reserva a ser excluida.
          * @return {Promise} Promessa que contém a reserva excluída.
@@ -20,48 +19,23 @@
         this.excluir = (reserva) => {
             const indice = getIndiceReserva(reservas, reserva._id);
             reservas.remove(indice);
-            return $q.when(reserva);
         };
 
-        // TODO: o salvamento vai ser assim? Com um cara daqui, em vez da factory
-        // TODO: a implementar, depende do servidor.
+        /**
+         * Atualiza a lista apenas no client com a reserva criada.
+         * @param {Reserva} reserva
+         */
         this.salvarReserva = (reserva) => {
-            return this.getReservasDia(reserva.dia).then(reservasDia => {
-                self.validarAdicaoReserva(reservasDia, reserva);
-                return atualizarReservas(reserva);
-            });
+            if (reserva._id)
+                atualizarReservasClient(reserva);
         };
 
         /**
-         * Realiza validações para adição de reserva ao dia.
-         * -Valida se existe choque de horário.
-         * 
-         * @param {*} reservasDia 
-         * @param {*} reserva 
+         * Atualiza a lista de reservas no client.
+         * @param {Reserva} reserva 
          */
-        this.validarAdicaoReserva = (reservasDia, reserva) => {
-            const inicio = reserva.inicio;
-            const fim = reserva.fim;
-
-            _.each(reservasDia, reservaDia => {
-                if (reserva._id !== reservaDia._id) {
-                    if ((inicio < reservaDia.inicio && fim > reservaDia.fim)
-                        || (inicio > reservaDia.inicio && inicio < reservaDia.fim)
-                        || (fim > reservaDia.inicio && fim < reservaDia.fim)) {
-                        throw { mensagem: "Horário já ocupado."};
-                    }
-                }
-            });
-        }
-
-        /**
-         * TODO: esse cara que manda pro server o role, por enquanto atualiza a lista daqui.
-         * TODO: a implementar, depende do servidor.
-         * @param {*} reserva
-         */
-        function atualizarReservas(reserva) {
+        function atualizarReservasClient(reserva) {
             let indiceReserva = getIndiceReserva(reservas, reserva._id);
-
             if (indiceReserva !== -1) {
                 // atualizar
                 reservas.splice(indiceReserva, 1, new Reserva(reserva));
@@ -69,7 +43,6 @@
                 // criar
                 reservas.push(reserva);
             }
-
             return reserva;
         }
 
@@ -120,7 +93,6 @@
                 const listaReservas = data.data.map(r => new Reserva(r));
                 return listaReservas;
             });
-            // return $q.when(mock);
         };
 
         (() => {

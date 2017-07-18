@@ -35,13 +35,33 @@
             reserva.emailAutor = user.email;
             reserva.userId = user.user_id;
             reserva.autor = user.user_metadata.nome_completo;
-            //TODO: Validar salvamento p/choque de horarios
-            return persisteReserva(new Reserva(reserva), callback);
+            validarHorario(reserva, temChoque => {
+                if (temChoque)
+                    return callback("Horário ocupado.", null)
+                return persisteReserva(new Reserva(reserva), callback);
+            });
         });
     };
 
-    function hasChoqueHorario(reserva) {
-        
+    function validarHorario(reserva, cb) {
+        Reserva.findByDay(reserva.dia, (err, reservas) => {
+            if(err) return cb(true);
+            const inicio = reserva.inicio;
+            const fim = reserva.fim;
+            for (let i in reservas) {
+                const r = reservas[i];
+                if (r.fim > inicio && r.inicio < inicio
+                    || r.inicio < fim && r.fim > fim
+                    || r.inicio > inicio && r.fim < fim
+                    || r.inicio < inicio && r.fim > fim
+                    || r.inicio === inicio || r.fim === fim
+                    || r.inicio < inicio && r.fim > inicio) {
+                    console.log("tem choque de horario");
+                    return cb(true);
+                }
+            };
+            return cb(false);
+        });
     }
 
     /**
@@ -57,9 +77,13 @@
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) return callback(err,null);
             let reservaAntiga = reserva;//.toObject();
-            _.updateModel(reservaAntiga, novaReserva);
-            //TODO: Validar update
-            persisteReserva(reservaAntiga, callback);
+            validarHorario(novaReserva, temChoque => {
+                if (temChoque)
+                    return callback("Horário ocupado.", null)
+
+                _.updateModel(reservaAntiga, novaReserva);
+                persisteReserva(reservaAntiga, callback);
+            });
         });
     };
 

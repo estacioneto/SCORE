@@ -80,15 +80,12 @@
                 self.reserva.autor = undefined;
                 return ModalService.verReserva(self.reserva);
             };
-            return AgendamentoService.salvarReserva(self.reserva)
-                .then(data => {
-                    return self.reserva.salvar().then(data => {
-                        posSalvar();
-                        return data;
-                    });
+            return self.reserva.salvar().then(data => {
+                    AgendamentoService.salvarReserva(self.reserva);
+                    posSalvar();
+                    return data;
                 }, err => {
-                    return ModalService.error(err.mensagem)
-                        .then(callbackReabrirReserva);
+                    return ModalService.error(err.data).then(callbackReabrirReserva);
                 });
         };
 
@@ -133,12 +130,11 @@
          * @return Promise.
          */
         this.excluirReserva = () => {
-            return self.reserva.excluir().then(() => 
-                AgendamentoService.excluir(self.reserva).then(data => {
-                    self.fecharModal();
-                    return data;
-                }
-            ));
+            return self.reserva.excluir().then(data => {
+                AgendamentoService.excluir(self.reserva);
+                self.fecharModal();
+                return data;
+            });
         };
 
         /**
