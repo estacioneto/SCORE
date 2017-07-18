@@ -40,6 +40,10 @@
         });
     };
 
+    function hasChoqueHorario(reserva) {
+        
+    }
+
     /**
      * Atualiza as propriedades de uma reserva já
      * existente em nosso banco de dados.

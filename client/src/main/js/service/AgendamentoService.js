@@ -4,6 +4,8 @@
 
         const self = this;
 
+        const API_RESERVAS = "/api/reservas";
+
         let reservas = [];
 
         let promiseEventosFuturos;
@@ -114,75 +116,12 @@
             if (promiseEventosFuturos) {
                 return promiseEventosFuturos;
             }
-            return $http.get("/api/reservas").then(data => {
+            return $http.get(API_RESERVAS).then(data => {
                 const listaReservas = data.data.map(r => new Reserva(r));
                 return listaReservas;
             });
             // return $q.when(mock);
         };
-
-        const mock = [
-            new Reserva({
-                titulo: 'Reserva 1',
-                inicio: '16:30',
-                fim: '17:45',
-                dia: '05-07-2017',
-                cor: '#a94442',
-                corTexto: 'white',
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                autor: 'Vélmer Oliveira Odon'
-            }),
-            new Reserva({
-                titulo: 'Reserva 2',
-                inicio: '08:00',
-                fim: '08:45',
-                dia: '06-07-2017',
-                cor: '#f5e79e',
-                corTexto: 'black',
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                autor: 'Lucas Diniz'
-            }),
-            new Reserva({
-                titulo: 'Reserva 3',
-                inicio: '09:00',
-                fim: '10:30',
-                dia: '06-07-2017',
-                cor: 'skyblue',
-                corTexto: 'black',
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                autor: 'Eric Breno'
-            }),
-            new Reserva({
-                titulo: 'Reserva 4',
-                inicio: '11:30',
-                fim: '12:15',
-                dia: '06-07-2017',
-                cor: 'darkred',
-                corTexto: 'white',
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                autor: 'Estácio Neto'
-            }),
-            new Reserva({
-                titulo: 'Reserva 5',
-                inicio: '14:00',
-                fim: '15:45',
-                dia: '06-07-2017',
-                cor: 'forestgreen',
-                corTexto: 'white',
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                autor: 'Alekssandro Assis'
-            }),
-            new Reserva({
-                titulo: 'Reserva 6',
-                inicio: '16:00',
-                fim: '17:30',
-                dia: '06-07-2017',
-                cor: 'midnightblue',
-                corTexto: 'white',
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                autor: 'Eric Breno'
-            })
-        ];
 
         (() => {
             promiseEventosFuturos = self.loadReservasFuturas();
