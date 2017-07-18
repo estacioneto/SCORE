@@ -104,7 +104,6 @@
          */
         function posSalvar() {
             Object.assign(self.reservaOriginal, self.reserva);
-            self.fecharModal();
         }
 
         /**
@@ -132,10 +131,12 @@
          * @return Promise.
          */
         this.excluirReserva = () => {
-            return AgendamentoService.excluir(self.reserva).then(data => {
-                self.fecharModal();
-                return data;
-            });
+            return self.reserva.excluir().then(() => 
+                AgendamentoService.excluir(self.reserva).then(data => {
+                    self.fecharModal();
+                    return data;
+                }
+            ));
         };
 
         /**

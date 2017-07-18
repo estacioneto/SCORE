@@ -25,7 +25,7 @@
         // TODO: a implementar, depende do servidor.
         this.salvarReserva = (reserva) => {
             return this.getReservasDia(reserva.dia).then(reservasDia => {
-                validarAdicaoReserva(reservasDia, reserva);
+                self.validarAdicaoReserva(reservasDia, reserva);
                 return atualizarReservas(reserva);
             });
         };
@@ -37,7 +37,7 @@
          * @param {*} reservasDia 
          * @param {*} reserva 
          */
-        function validarAdicaoReserva(reservasDia, reserva) {
+        this.validarAdicaoReserva = (reservasDia, reserva) => {
             const inicio = reserva.inicio;
             const fim = reserva.fim;
 
@@ -92,15 +92,8 @@
          * 
          */
         this.getReservasDia = data => {
-            return promiseEventosFuturos.then(reservas => {
-                let reservasDia = [];
-
-                reservas.forEach(function (reserva) {
-                    if(reserva.dia === data) {
-                        reservasDia.push(reserva);
-                    }
-                });
-
+            return promiseEventosFuturos.then(reservasRes => {
+                let reservasDia = reservasRes.filter(r => r.dia === data);
                 return reservasDia;
             });
         };
@@ -117,9 +110,13 @@
         };
 
         this.loadReservasFuturas = () => {
+            // Assim não perdemos a referência
+            if (promiseEventosFuturos) {
+                return promiseEventosFuturos;
+            }
             return $http.get("/api/reservas").then(data => {
-                const res = data.data.map(r => new Reserva(r));
-                return res;
+                const listaReservas = data.data.map(r => new Reserva(r));
+                return listaReservas;
             });
             // return $q.when(mock);
         };
@@ -189,6 +186,9 @@
 
         (() => {
             promiseEventosFuturos = self.loadReservasFuturas();
+            promiseEventosFuturos.then(reservasConsulta => {
+                reservas = reservasConsulta;
+            });
         })();
     }]);
 })();
