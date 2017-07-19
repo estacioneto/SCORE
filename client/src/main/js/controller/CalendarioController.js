@@ -22,23 +22,8 @@
          */
         this.clickReserva = function(reserva) {
             const reservaObj = new Reserva(reserva);
-            return ModalService.verReserva(reservaObj).then(function () {
-                // FIXME: nao ta funcionando pra atualizar o calendário
-                // corretamente após integração com api. @author Eric Breno
-                //atualizaReserva(reserva, reservaObj);
-            });
+            return ModalService.verReserva(reservaObj);
         };
-
-        /**
-         * Atualiza o horário de início e fim da reserva especificada, utilizando o model
-         * Reserva, para buscar os valores em Date.
-         *
-         * @param reserva Reserva a ter início e fim atualizados.
-         */
-        function atualizaReserva(reserva, obj) {
-            reserva.start = obj.start;
-            reserva.end = obj.end;
-        }
 
         /**
          * Callback executado quando o usuário clica em um determinado dia.

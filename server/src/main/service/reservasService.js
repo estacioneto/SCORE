@@ -43,6 +43,15 @@
         });
     };
 
+    /**
+     * Valida se existe choque de horário para a reserva.
+     * Verifica se o horário da reserva intercepta algum outro
+     * para o mesmo dia.
+     * A validação ignora checagem com a própria reserva.
+     * @param {Reserva} reserva Reserva a ser validada.
+     * @param {Function} cb Callback a ser invocado com resultado. True passado
+     *               como parâmetro caso hajam conflitos.
+     */
     function validarHorario(reserva, cb) {
         Reserva.findByDay(reserva.dia, (err, reservas) => {
             if(err) return cb(true);
