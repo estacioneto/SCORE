@@ -50,13 +50,15 @@
             const fim = reserva.fim;
             for (let i in reservas) {
                 const r = reservas[i];
+                if (r._id.toString() === reserva._id) {
+                    continue;
+                }
                 if (r.fim > inicio && r.inicio < inicio
                     || r.inicio < fim && r.fim > fim
                     || r.inicio > inicio && r.fim < fim
                     || r.inicio < inicio && r.fim > fim
                     || r.inicio === inicio || r.fim === fim
                     || r.inicio < inicio && r.fim > inicio) {
-                    console.log("tem choque de horario");
                     return cb(true);
                 }
             };
