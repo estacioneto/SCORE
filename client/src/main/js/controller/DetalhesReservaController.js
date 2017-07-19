@@ -4,7 +4,7 @@
      * Controller responsável pelo modal de detalhes da reserva.
      * 
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService) {
 
         const self = this;
 
@@ -29,7 +29,7 @@
          */
         function preEdicao() {
             self.reservaOriginal = self.reserva;
-            self.reserva = angular.copy(self.reserva);
+            self.reserva = new Reserva(angular.copy(self.reserva));
             ajustarInicioFim();
         }
 
@@ -80,14 +80,13 @@
                 self.reserva.autor = undefined;
                 return ModalService.verReserva(self.reserva);
             };
-
-            return AgendamentoService.salvarReserva(self.reserva)
-                .then(data => {
-                    posSalvar(data);
+            return self.reserva.salvar().then(data => {
+                    AgendamentoService.salvarReserva(self.reserva);
+                    ToastService.showActionToast("Reserva atualizada.");
+                    posSalvar();
                     return data;
                 }, err => {
-                    return ModalService.error(err.mensagem)
-                        .then(callbackReabrirReserva);
+                    return ModalService.error(err.data).then(callbackReabrirReserva);
                 });
         };
 
@@ -102,11 +101,9 @@
         /**
          * Operações que devem ser executadas após o salvamento de agentamento.
          * -Copiar os dados do agendamento para o antigo (necessário apenas para não precisar recarregar o dia)
-         * @param {*} data Dados retornados após salvamento.
          */
-        function posSalvar(data) {
-            angular.copy(data, self.reservaOriginal);
-            self.fecharModal();
+        function posSalvar() {
+            Object.assign(self.reservaOriginal, self.reserva);
         }
 
         /**
@@ -134,8 +131,10 @@
          * @return Promise.
          */
         this.excluirReserva = () => {
-            return AgendamentoService.excluir(self.reserva).then(data => {
+            return self.reserva.excluir().then(data => {
+                AgendamentoService.excluir(self.reserva);
                 self.fecharModal();
+                ToastService.showActionToast("Reserva excluída.");
                 return data;
             });
         };

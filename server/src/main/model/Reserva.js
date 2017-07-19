@@ -16,7 +16,8 @@
             //TODO: validar para aceitar apenas emails @ccc, @computacao, @dsc etc.
         },
         userId: {
-            type: String
+            type: String,
+            required: [true, "A reserva deve possuir o usuário relacionado."]
         },
         titulo : {
             type: String,
@@ -70,12 +71,17 @@
     reservaSchema.static('findById', function (email, id, callback) {
         return this.find({emailAutor: email, _id: id}, (err, result) => {
             if (err) return callback(err, null);
-            console.log(id);
             if (_.isEmpty(result)) return callback('O usuario não é autor de nenhuma reserva com esse id.', null);
             return callback(err, _.first(result));
         });
     });
 
+    reservaSchema.static('findByDay', function (dia, callback) {
+        return this.find({dia: dia}, (err, results) => {
+            if (err) return callback(err, null);
+            return callback(err, results);
+        });
+    });
 
     reservaSchema.pre('save', function (next) {
         // http://stackoverflow.com/questions/7327296/how-do-i-extract-the-created-date-out-of-a-mongo-objectid

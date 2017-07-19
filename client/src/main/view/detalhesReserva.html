@@ -49,8 +49,8 @@
                         <span class="md-subhead">Título</span>
                         <span class="md-title">{{ ::reservaCtrl.reserva.titulo}}</span>
                     </div>
-                    <div data-ng-if="reservaCtrl.isEdicao">
-                        <md-input-container>
+                    <div data-ng-if="reservaCtrl.isEdicao" layout>
+                        <md-input-container flex>
                             <label>Título</label>
                             <input type="text" required data-ng-model="reservaCtrl.reserva.titulo">
                         </md-input-container>
@@ -76,7 +76,7 @@
                     <br>
                     <br>
                     <!--Autor-->
-                    <span class="md-subhead">Autor</span>
+                    <span class="md-subhead">Responsável</span>
                     <span class="md-title">{{ reservaCtrl.reserva.autor || '-' }}</span>
                     <!--end Autor-->
                     <md-divider></md-divider>

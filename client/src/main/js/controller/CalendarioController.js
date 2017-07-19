@@ -21,37 +21,9 @@
          * @return {Promise} Promise do modal de visualização da reserva
          */
         this.clickReserva = function(reserva) {
-            let reservaOriginal = angular.copy(reserva);
-
-            return ModalService.verReserva(reserva).then(function () {
-                if(reservaFoiAlterada(reserva, reservaOriginal)) {
-                    atualizaReserva(reserva);
-                }
-            });
+            const reservaObj = new Reserva(reserva);
+            return ModalService.verReserva(reservaObj);
         };
-
-        /**
-         * Atualiza o horário de início e fim da reserva especificada, utilizando o model
-         * Reserva, para buscar os valores em Date.
-         *
-         * @param reserva Reserva a ter início e fim atualizados.
-         */
-        function atualizaReserva(reserva) {
-            const reservaModelo = new Reserva(reserva);
-
-            reserva.start = reservaModelo.start;
-            reserva.end = reservaModelo.end;
-        }
-
-        /**
-         * Retorna se uma reserva foi alterada.
-         *
-         * @param reserva Reserva que pode ter sido alterada.
-         * @param reservaOriginal Reserva antes da possível alteração
-         */
-        function reservaFoiAlterada(reserva, reservaOriginal) {
-            return JSON.stringify(new Reserva(reserva)) !== JSON.stringify(new Reserva(reservaOriginal));
-        }
 
         /**
          * Callback executado quando o usuário clica em um determinado dia.

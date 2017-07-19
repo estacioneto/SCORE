@@ -14,7 +14,6 @@
      */
     reservasService.getReservas = (token, callback) => {
         usersService.getUser(token, (err,user) => {
-            console.log(user);
             if(err) return callback(err, null);
             Reserva.find({}, function(err, result) {
                 if (err) return callback(err, null);
@@ -35,10 +34,83 @@
             if(err) return callback(err, null);
             reserva.emailAutor = user.email;
             reserva.userId = user.user_id;
-            //TODO: Validar salvamento p/choque de horarios
-            return persisteReserva(new Reserva(reserva), callback);
+            reserva.autor = user.user_metadata.nome_completo;
+            validarHorario(reserva, temChoque => {
+                if (temChoque)
+                    return callback("Horário ocupado.", null)
+                return persisteReserva(new Reserva(reserva), callback);
+            });
         });
     };
+
+    /**
+     * Valida se existe choque de horário para a reserva.
+     * Verifica se o horário da reserva intercepta algum outro
+     * para o mesmo dia.
+     * A validação ignora checagem com a própria reserva.
+     * 
+     * @param {Reserva} reserva Reserva a ser validada.
+     * @param {Function} cb Callback a ser invocado com resultado. True passado
+     *               como parâmetro caso hajam conflitos.
+     */
+    function validarHorario(reserva, cb) {
+        Reserva.findByDay(reserva.dia, (err, reservas) => {
+            if(err) return cb(true);
+            for (let i in reservas) {
+                const r = reservas[i];
+                if (r._id.toString() === reserva._id) {
+                    continue;
+                }
+                if (hasChoqueHorario(r, reserva)) {
+                    return cb(true);
+                }
+            };
+            return cb(false);
+        });
+    }
+
+    /**
+     * Verifica se as duas reservas têm choque de horários.
+     * 
+     * * Validações da reserva atualizada AT com a reserva já salva BD:
+     * 1- Intervalo de AT tem início de BD.
+     *         BD            AT
+     *  * 01:00-02:00 <> 00:30-01:30
+     *  * 01:00-02:00 <> 00:30-02:30
+     * 
+     * 2- Intervalo de AT tem fim de BD.
+     *         BD            AT
+     *  * 01:00-02:00 <> 01:30-02:30
+     *  * 01:00-02:00 <> 00:30-02:30
+     * 
+     * 3- AT está contida ou tem mesmo intervalo de BD.
+     *         BD            AT
+     *  * 00:00-01:00 <> 00:30-00:50
+     *  * 00:00-01:00 <> 00:00-00:50
+     *  * 00:00-01:00 <> 00:30-01:00
+     * 
+     * 4- BD está contida ou tem mesmo intervalo de AT.
+     *         BD            AT
+     *  * 01:00-02:00 <> 00:30-02:30
+     *  * 01:00-02:00 <> 01:00-02:30
+     *  * 01:00-02:00 <> 00:30-02:00
+     * 
+     * @param {Reserva} reserva1
+     * @param {Reserva} reserva2 
+     * @return {Boolean} True caso haja choque de horário entre as reservas.
+     */
+    function hasChoqueHorario(reserva1, reserva2) {
+        const inicio1 = reserva1.inicio;
+        const fim1 = reserva1.fim;
+        const inicio2 = reserva2.inicio;
+        const fim2 = reserva2.fim;
+
+        const caso1 = inicio1 <  inicio2 && fim1 >  inicio2;
+        const caso2 = inicio1 <  fim2    && fim1 >  fim2;
+        const caso3 = inicio1 >= inicio2 && fim1 <= fim2;
+        const caso4 = inicio1 <= inicio2 && fim1 >= fim2;
+        return caso1 || caso2 || caso3 || caso4;
+    }
 
     /**
      * Atualiza as propriedades de uma reserva já
@@ -53,9 +125,13 @@
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) return callback(err,null);
             let reservaAntiga = reserva;//.toObject();
-            _.updateModel(reservaAntiga, novaReserva);
-            //TODO: Validar update
-            persisteReserva(reservaAntiga, callback);
+            validarHorario(novaReserva, temChoque => {
+                if (temChoque)
+                    return callback("Horário ocupado.", null)
+
+                _.updateModel(reservaAntiga, novaReserva);
+                persisteReserva(reservaAntiga, callback);
+            });
         });
     };
 
@@ -69,7 +145,7 @@
     reservasService.getReservaById = (token, idReserva, callback) => {
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) callback(err, null);
-            return callback(null, reserva.toObject());
+            return callback(null, (reserva || {}).toObject());
         });
     };
 
