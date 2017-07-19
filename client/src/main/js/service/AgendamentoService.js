@@ -73,17 +73,6 @@
             });
         };
 
-        /**
-         * Retorna a promise com a reserva do id especificado.
-         *
-         * @param {String} id Id da reserva a ser retornada.
-         * @return {Promise} Promessa contendo a reserva.
-         */
-        this.getReserva = id => {
-            const indiceReserva = getIndiceReserva(reservas, id);
-            return $q.when(reservas[indiceReserva]);
-        };
-
         this.loadReservasFuturas = () => {
             // Assim não perdemos a referência
             if (promiseEventosFuturos) {
