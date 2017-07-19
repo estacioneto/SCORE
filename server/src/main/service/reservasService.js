@@ -48,6 +48,30 @@
      * Verifica se o horário da reserva intercepta algum outro
      * para o mesmo dia.
      * A validação ignora checagem com a própria reserva.
+     * 
+     * Validações da reserva atualizada AT com a reserva já salva BD:
+     * 1- Intervalo de AT tem início de BD.
+     *         BD            AT
+     *  * 01:00-02:00 <> 00:30-01:30
+     *  * 01:00-02:00 <> 00:30-02:30
+     * 
+     * 2- Intervalo de AT tem fim de BD.
+     *         BD            AT
+     *  * 01:00-02:00 <> 01:30-02:30
+     *  * 01:00-02:00 <> 00:30-02:30
+     * 
+     * 3- AT está contida ou tem mesmo intervalo de BD.
+     *         BD            AT
+     *  * 00:00-01:00 <> 00:30-00:50
+     *  * 00:00-01:00 <> 00:00-00:50
+     *  * 00:00-01:00 <> 00:30-01:00
+     * 
+     * 4- BD está contida ou tem mesmo intervalo de AT.
+     *         BD            AT
+     *  * 01:00-02:00 <> 00:30-02:30
+     *  * 01:00-02:00 <> 01:00-02:30
+     *  * 01:00-02:00 <> 00:30-02:00
+     * 
      * @param {Reserva} reserva Reserva a ser validada.
      * @param {Function} cb Callback a ser invocado com resultado. True passado
      *               como parâmetro caso hajam conflitos.
@@ -62,12 +86,11 @@
                 if (r._id.toString() === reserva._id) {
                     continue;
                 }
-                if (r.fim > inicio && r.inicio < inicio
-                    || r.inicio < fim && r.fim > fim
-                    || r.inicio > inicio && r.fim < fim
-                    || r.inicio < inicio && r.fim > fim
-                    || r.inicio === inicio || r.fim === fim
-                    || r.inicio < inicio && r.fim > inicio) {
+                const caso1 = inicio < r.inicio && fim > r.inicio;
+                const caso2 = inicio < r.fim && fim > r.fim;
+                const caso3 = inicio >= r.inicio && fim <= r.fim;
+                const caso4 = inicio <= r.inicio && fim >= r.fim;
+                if (caso1 || caso2 || caso3 || caso4) {
                     return cb(true);
                 }
             };

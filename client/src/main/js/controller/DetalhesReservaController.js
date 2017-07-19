@@ -4,7 +4,7 @@
      * Controller responsável pelo modal de detalhes da reserva.
      * 
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService) {
 
         const self = this;
 
@@ -82,6 +82,7 @@
             };
             return self.reserva.salvar().then(data => {
                     AgendamentoService.salvarReserva(self.reserva);
+                    ToastService.showActionToast("Reserva atualizada.");
                     posSalvar();
                     return data;
                 }, err => {
@@ -133,6 +134,7 @@
             return self.reserva.excluir().then(data => {
                 AgendamentoService.excluir(self.reserva);
                 self.fecharModal();
+                ToastService.showActionToast("Reserva excluída.");
                 return data;
             });
         };

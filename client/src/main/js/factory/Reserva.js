@@ -41,6 +41,13 @@ let sequenceReserva = 1;
                                  corTexto});
         }
 
+        /**
+         * Define todas as propriedades da origem para
+         * o destino. Shallow copy.
+         * 
+         * @param {*} instancia Objeto de destino.
+         * @param {*} props Objeto de origem das propriedades.
+         */
         function obterPropriedades(instancia, props) {
             Object.assign(instancia, props);
         }

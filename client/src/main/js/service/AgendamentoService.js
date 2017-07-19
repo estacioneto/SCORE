@@ -32,15 +32,21 @@
 
         /**
          * Atualiza a lista de reservas no client.
+         * - Para atualização, a reserva antiga é removida e a atualizada
+         * inserida na lista
+         * - Para cadastro, a nova reserva é inserida na lista
+         * 
+         * É necessário fazer isso por ao se clicar em uma reserva, o calendário enviar uma
+         * cópia da recuperada da lista para o modal, onde será editada, logo, as 
+         * atualizações não refletem na reserva antiga que fica aqui.
+         * 
          * @param {Reserva} reserva 
          */
         function atualizarReservasClient(reserva) {
-            let indiceReserva = getIndiceReserva(reservas, reserva._id);
+            const indiceReserva = getIndiceReserva(reservas, reserva._id);
             if (indiceReserva !== -1) {
-                // atualizar
                 reservas.splice(indiceReserva, 1, new Reserva(reserva));
             } else {
-                // criar
                 reservas.push(reserva);
             }
             return reserva;
@@ -53,13 +59,7 @@
          * @param {*} id 
          */
         function getIndiceReserva(lista, id) {
-            for (let i = 0; i < lista.length; i++) {
-                const isIgual = lista[i]._id === id;
-                if (isIgual) {
-                    return i;
-                }
-            }
-            return -1;
+            return _.findIndex(lista, e => e._id === id);
         }
 
         /**
@@ -68,7 +68,7 @@
          */
         this.getReservasDia = data => {
             return promiseEventosFuturos.then(reservasRes => {
-                let reservasDia = reservasRes.filter(r => r.dia === data);
+                const reservasDia = reservasRes.filter(r => r.dia === data);
                 return reservasDia;
             });
         };
@@ -80,7 +80,7 @@
          * @return {Promise} Promessa contendo a reserva.
          */
         this.getReserva = id => {
-            let indiceReserva = getIndiceReserva(reservas, id);
+            const indiceReserva = getIndiceReserva(reservas, id);
             return $q.when(reservas[indiceReserva]);
         };
 
