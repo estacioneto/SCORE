@@ -13,8 +13,9 @@ var jshint = require('gulp-jshint'),
     prompt = require('gulp-prompt'),
     istanbul = require('gulp-istanbul'),
     mocha = require('gulp-mocha'),
+    babel = require('babel-register'),
     child_process = require('child_process');
-var exec  = child_process.exec,
+var exec = child_process.exec,
     spawn = child_process.spawn;
 
 var banner = ['/*!\n',
@@ -34,7 +35,7 @@ var DIST = 'dist/';
 gulp.task('usemin', function () {
     return gulp.src(INDEX)
         .pipe(usemin({
-            js: [uglify({ mangle: false }), 'concat'],
+            js: [uglify({mangle: false}), 'concat'],
             css: [cleanCSS(), 'concat']
         }))
         .on('error', errorHandler)
@@ -115,7 +116,7 @@ gulp.task('dev', ['copy', 'browserSync'], function () {
 gulp.task('jshint', function () {
     return gulp.src('./src/main/js/**/*.js')
         .pipe(jshint())
-        .pipe(jshint.reporter('default', { verbose: true }))
+        .pipe(jshint.reporter('default', {verbose: true}))
         .pipe(jshint.reporter('fail'));
 });
 
@@ -188,8 +189,13 @@ gulp.task('test-continuar', function () {
 
 
 function runTests() {
-    return gulp.src('./src/test/**/*.js', { read: false })
-        .pipe(mocha({ reporter: 'nyan', timeout: 15000, bail: true }));
+    return gulp.src('./src/test/**/*.test.js', {read: false})
+        .pipe(mocha({
+            compilers: 'js:babel-core/register',
+            reporter: 'nyan',
+            timeout: 15000,
+            bail: true
+        }));
 }
 
 /**
@@ -197,14 +203,14 @@ function runTests() {
  */
 gulp.task('test-coverage', function (cb) {
     return gulp.src('./src/main/**/*.js')
-        .pipe(istanbul({ includeAllSources: true }))
+        .pipe(istanbul({includeAllSources: true}))
         .pipe(istanbul.hookRequire())
         .on('end', function (err) {
             var dropDB = spawn('mongo', ['SCORE-TESTDB', '--eval', '"db.dropDatabase();"']);
             dropDB.stdout.on('data', function (data) {
-                process.stdout.write(data.toString()); 
+                process.stdout.write(data.toString());
             });
-            
+
             dropDB.stderr.on('data', function (data) {
                 process.stdout.write('stderr: ' + data.toString());
                 return sair(2)();
@@ -213,11 +219,11 @@ gulp.task('test-coverage', function (cb) {
             dropDB.on('exit', function (code) {
                 process.stdout.write('child process exited with code ' + code.toString());
                 return gulp.src('./src/test/**/*.test.js')
-                    .pipe(mocha({ reporter: 'nyan', timeout: 15000, bail: true }))
+                    .pipe(mocha({reporter: 'nyan', timeout: 15000, bail: true}))
                     .pipe(istanbul.writeReports({
                         dir: './coverage',
                         reporters: ['lcov'],
-                        reportOpts: { dir: './coverage' }
+                        reportOpts: {dir: './coverage'}
                     }))
                     .on('end', function (err) {
                         if (err) cb(err);

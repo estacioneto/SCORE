@@ -16,7 +16,7 @@
      *
      * @author Estácio Pereira.
      */
-    describe('usersServiceTest', () => {
+    describe.skip('usersServiceTest', () => {
         let UserService, UserMock;
 
         before(done => {
