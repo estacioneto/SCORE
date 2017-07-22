@@ -13,6 +13,13 @@
         this.reservas = reservas;
         this.reservasFonte = [this.reservas];
 
+        this.cores = {
+            "Tipo 1": { 'background-color': 'red'},
+            "Tipo 2": { 'background-color': 'orange'},
+            "Tipo 3": { 'background-color': 'green'},
+            "Tipo 4": { 'background-color': 'blue'}
+        };
+
         /**
          * Callback executado quando o usuário clica em uma determinada reserva.
          * Aqui exibimos o Modal com as informações sobre a reserva.
