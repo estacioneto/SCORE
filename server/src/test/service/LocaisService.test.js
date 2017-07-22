@@ -12,22 +12,16 @@ import mongoose from 'mongoose';
  * @author Estácio Pereira.
  */
 describe('LocaisServiceTest', () => {
-    let locaisService; // Instância do service
 
-    before(done => {
-        locaisService = new LocaisService(TEST_DB);
-        done();
-    });
-
-    describe('salvarLocal deve', () => {
-        it('não salvar um local nulo', () =>
-            locaisService.salvarLocal(null)
+    describe('cadastrarLocal deve', () => {
+        it('não salvar um local nulo', () => {
+            return LocaisService.cadastrarLocal(null)
                 .then(
                     info => assert.fail('Deveria ter rejeitado a promise.'),
                     err => {
                         expect(err).to.be.ok;
-                    })
-        );
+                    });
+        });
 
         it('salvar um local corretamente', () => {
             const mockLocal = LocaisMock.getLocal();
@@ -39,7 +33,7 @@ describe('LocaisServiceTest', () => {
             expect(mockLocal.observacoes).to.be.undefined;
             expect(mockLocal.termoDeCondicoes).to.be.undefined;
 
-            return locaisService.salvarLocal(mockLocal)
+            return LocaisService.cadastrarLocal(mockLocal)
                 .catch(err => assert.fail('Deveria ter salvado corretamente.', err))
                 .then(local => {
                     expect(local._id).to.be.ok;
@@ -51,14 +45,32 @@ describe('LocaisServiceTest', () => {
         });
     });
 
-    describe('consultarLocalPorId deve', () => {
-        it('consultar um local que foi persistido corretamente', () => {
+    describe('consultarLocais deve', () => {
+        it('retornar uma lista contendo todos os locais inseridos', () => {
             const mockLocal = LocaisMock.getLocal();
-            return locaisService.salvarLocal(mockLocal)
+            return LocaisService.cadastrarLocal(mockLocal)
                 .catch(err => assert.fail('Deveria ter salvado corretamente.', err))
                 .then(localPersistido => {
                     expect(localPersistido._id).to.be.ok;
-                    return locaisService.consultarLocalPorId(localPersistido._id)
+                    return LocaisService.consultarLocais()
+                        .catch(err => assert.fail('Deveria ter consultado os locais corretamente.', err))
+                        .then(locaisConsultados => {
+                            expect(locaisConsultados).to.not.be.empty;
+                            expect(_.isArray(locaisConsultados)).to.be.true;
+                            expect(_.some(locaisConsultados, localPersistido)).to.be.true;
+                        });
+                });
+        });
+    });
+
+    describe('consultarLocalPorId deve', () => {
+        it('consultar um local que foi persistido corretamente', () => {
+            const mockLocal = LocaisMock.getLocal();
+            return LocaisService.cadastrarLocal(mockLocal)
+                .catch(err => assert.fail('Deveria ter salvado corretamente.', err))
+                .then(localPersistido => {
+                    expect(localPersistido._id).to.be.ok;
+                    return LocaisService.consultarLocalPorId(localPersistido._id)
                         .catch(err => assert.fail('Deveria ter consultado o local corretamente.', err))
                         .then(localConsultado => {
                             expect(localConsultado._id).to.be.ok;
@@ -69,7 +81,7 @@ describe('LocaisServiceTest', () => {
         });
 
         it('rejeitar promise ao consultar um local com id inexistente', () => {
-            return locaisService.consultarLocalPorId(mongoose.Types.ObjectId())
+            return LocaisService.consultarLocalPorId(mongoose.Types.ObjectId())
                 .then(
                     info => assert.fail('Deveria ter rejeitado a promise de consulta.', info),
                     err => {
@@ -84,7 +96,7 @@ describe('LocaisServiceTest', () => {
 
         beforeEach(() => {
             const mockLocal = LocaisMock.getLocal();
-            return locaisService.salvarLocal(mockLocal).then(local => {
+            return LocaisService.cadastrarLocal(mockLocal).then(local => {
                 localPersistido = local;
             });
         });
@@ -94,7 +106,7 @@ describe('LocaisServiceTest', () => {
 
             // Utilizando o delete, ignoramos o campo.
             novoLocal.nome = undefined;
-            return locaisService.atualizarLocal(localPersistido._id, novoLocal)
+            return LocaisService.atualizarLocal(localPersistido._id, novoLocal)
                 .then(
                     info => assert.fail('Deveria ter rejeitado a atualização', info),
                     err => {
@@ -107,7 +119,7 @@ describe('LocaisServiceTest', () => {
             const novoLocal = _.clone(localPersistido);
 
             novoLocal.observacoes = 'O auditório é muito legal.';
-            return locaisService.atualizarLocal(localPersistido._id, novoLocal)
+            return LocaisService.atualizarLocal(localPersistido._id, novoLocal)
                 .then(localAtualizado => {
                     expect(_.isMongooseIdEqual(localAtualizado._id, localPersistido._id)).to.be.true;
                     expect(localAtualizado).to.be.eql(novoLocal);
@@ -120,13 +132,13 @@ describe('LocaisServiceTest', () => {
 
         beforeEach(() => {
             const mockLocal = LocaisMock.getLocal();
-            return locaisService.salvarLocal(mockLocal).then(local => {
+            return LocaisService.cadastrarLocal(mockLocal).then(local => {
                 localPersistido = local;
             });
         });
 
         it('retornar promise rejeitada em caso de inexistência do local', () => {
-            return locaisService.deletarLocal(mongoose.Types.ObjectId())
+            return LocaisService.deletarLocal(mongoose.Types.ObjectId())
                 .then(
                     info => assert.fail('Deveria ter rejeitado a remoção', info),
                     err => {
@@ -136,11 +148,12 @@ describe('LocaisServiceTest', () => {
         });
 
         it('deletar corretamente um local', () => {
-            return locaisService.deletarLocal(localPersistido._id)
+            return LocaisService.deletarLocal(localPersistido._id)
+                .catch(err => assert.fail('Deveria ter deletado corretamente.', err))
                 .then(localRemovido => {
                     expect(localRemovido).to.be.eql(localPersistido);
 
-                    return locaisService.consultarLocalPorId(localRemovido._id)
+                    return LocaisService.consultarLocalPorId(localRemovido._id)
                         .catch(err => {
                             expect(err.status).to.be.eql(_.NOT_FOUND);
                             expect(err.mensagem).to.be.eql(_.CONSTANTES_LOCAL.ERRO_LOCAL_NAO_ENCONTRADO);

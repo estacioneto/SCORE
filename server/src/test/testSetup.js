@@ -1,5 +1,3 @@
-'use strict';
-
 /******************************************************
  *
  * Variáveis globais para testes.
@@ -13,11 +11,13 @@ const assert = require('assert'),
     sinon = require('sinon'),
     should = require('should'),
     clone = require('clone'),
+    request = require('supertest'),
     mockery = require('mockery');
 const expect = chai.expect;
 const _ = require('../main/util/util');
 
-const TEST_DB = 'SCORE-TESTDB';
+const TEST_DB = 'SCORE-TESTDB',
+    TEST_TOKEN = process.env.SCORE_TEST_TOKEN;
 
 Object.assign(global, {
     assert,
@@ -25,8 +25,10 @@ Object.assign(global, {
     sinon,
     should,
     clone,
+    request,
     mockery,
     expect,
     _,
-    TEST_DB
+    TEST_DB,
+    TEST_TOKEN
 });
