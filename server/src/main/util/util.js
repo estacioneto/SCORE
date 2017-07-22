@@ -22,6 +22,17 @@
 
     _.RANDOM_STRING_LENGTH = 1000;
 
+    _.CONSTANTES_LOCAL = {
+        ERRO_VALIDACAO_NOME: 'O local deve ter um nome',
+        ERRO_VALIDACAO_BLOCO: 'O local deve pertencer a um bloco',
+        ERRO_VALIDACAO_DESCRICAO_EQUIPAMENTO: 'O equipamento deve ter uma descrição',
+        ERRO_VALIDACAO_QUANTIDADE_EQUIPAMENTO: 'O equipamento deve ter uma quantidade',
+        ERRO_VALIDACAO_CAPACIDADE: 'O local deve ter uma capacidade',
+        ERRO_VALIDACAO_FUNCIONAMENTO: 'O local deve ter um horário de funcionamento',
+
+        ERRO_LOCAL_NAO_ENCONTRADO: 'Não existe local com o id especificado.'
+    };
+
     /**
      * Given two objects (the target should be a mongoose object), soft copies the properties from one
      * object to another.
@@ -30,15 +41,9 @@
      * @param {Object} fromObject Object to have properties copied
      */
     _.updateModel = (toObject, fromObject) => {
-        _.each(fromObject, (value, key) => {
-            // _id, __v...
-            if (_.contains(key, '_')) return;
-
-            // http://stackoverflow.com/questions/15092912/dynamically-updating-a-javascript-object-from-a-string-path
-            let keys = key.split('.');
-            _.set(toObject, keys, value);
-            // https://github.com/Automattic/mongoose/issues/1204
-            toObject.markModified(_.first(keys));
+        Object.assign(toObject, fromObject);
+        _.each(Object.keys(fromObject), key => {
+            if (_.isArray(fromObject[key])) toObject.markModified(key)
         });
     };
 
@@ -118,6 +123,18 @@
         });
         message += '.';
         return next(new Error(message));
+    };
+
+    /**
+     * Retorna um Objeto para retorno da API dado um Mongoose model.
+     *
+     * @param   {mongoose.model} mongooseObject
+     * @returns {Object} Objeto de retorno.
+     */
+    _.mongooseToObject = mongooseObject => {
+        const objeto = mongooseObject.toObject();
+        delete objeto.__v;
+        return objeto;
     };
 
     /**

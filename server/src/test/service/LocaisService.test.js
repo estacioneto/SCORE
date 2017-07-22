@@ -25,7 +25,6 @@ describe('LocaisServiceTest', () => {
                 .then(
                     info => assert.fail('Deveria ter rejeitado a promise.'),
                     err => {
-                        console.log(err);
                         expect(err).to.be.ok;
                     })
         );
@@ -75,26 +74,78 @@ describe('LocaisServiceTest', () => {
                     info => assert.fail('Deveria ter rejeitado a promise de consulta.', info),
                     err => {
                         expect(err.status).to.be.eql(_.NOT_FOUND);
-                        expect(err.mensagem).to.be.eql('Não existe local com o id especificado.');
+                        expect(err.mensagem).to.be.eql(_.CONSTANTES_LOCAL.ERRO_LOCAL_NAO_ENCONTRADO);
                     });
         });
     });
 
-    describe.skip('atualizarLocal deve', () => {
-        it('não atualizar o local caso alguma propriedade obrigatória tenha sido removida', () => {
+    describe('atualizarLocal deve', () => {
+        let localPersistido;
+
+        beforeEach(() => {
             const mockLocal = LocaisMock.getLocal();
-            return locaisService.salvarLocal(mockLocal)
-                .catch(err => assert.fail('Deveria ter salvado corretamente.', err))
-                .then(localPersistido => {
-                    const novoLocal = _.clone(localPersistido);
-                    delete novoLocal.nome;
-                    return locaisService.atualizarLocal(localPersistido._id, novoLocal)
-                        .then(info => assert.fail('Deveria ter rejeitado a atualização', info))
-                        .catch(err => {
-                            expect(err).to.not.be.ok;
-                        });
+            return locaisService.salvarLocal(mockLocal).then(local => {
+                localPersistido = local;
+            });
+        });
+
+        it('não atualizar o local caso alguma propriedade obrigatória tenha sido removida', () => {
+            const novoLocal = _.clone(localPersistido);
+
+            // Utilizando o delete, ignoramos o campo.
+            novoLocal.nome = undefined;
+            return locaisService.atualizarLocal(localPersistido._id, novoLocal)
+                .then(
+                    info => assert.fail('Deveria ter rejeitado a atualização', info),
+                    err => {
+                        expect(err).to.be.ok;
+                        expect(err).to.be.eql(`Erro de validação: ${_.CONSTANTES_LOCAL.ERRO_VALIDACAO_NOME}.`);
+                    });
+        });
+
+        it('atualizar o local corretamente caso nenhuma propriedade obrigatória tenha sido violada', () => {
+            const novoLocal = _.clone(localPersistido);
+
+            novoLocal.observacoes = 'O auditório é muito legal.';
+            return locaisService.atualizarLocal(localPersistido._id, novoLocal)
+                .then(localAtualizado => {
+                    expect(_.isMongooseIdEqual(localAtualizado._id, localPersistido._id)).to.be.true;
+                    expect(localAtualizado).to.be.eql(novoLocal);
                 });
         });
     });
 
+    describe('deletarLocal deve', () => {
+        let localPersistido;
+
+        beforeEach(() => {
+            const mockLocal = LocaisMock.getLocal();
+            return locaisService.salvarLocal(mockLocal).then(local => {
+                localPersistido = local;
+            });
+        });
+
+        it('retornar promise rejeitada em caso de inexistência do local', () => {
+            return locaisService.deletarLocal(mongoose.Types.ObjectId())
+                .then(
+                    info => assert.fail('Deveria ter rejeitado a remoção', info),
+                    err => {
+                        expect(err.status).to.be.eql(_.NOT_FOUND);
+                        expect(err.mensagem).to.be.eql(_.CONSTANTES_LOCAL.ERRO_LOCAL_NAO_ENCONTRADO);
+                    });
+        });
+
+        it('deletar corretamente um local', () => {
+            return locaisService.deletarLocal(localPersistido._id)
+                .then(localRemovido => {
+                    expect(localRemovido).to.be.eql(localPersistido);
+
+                    return locaisService.consultarLocalPorId(localRemovido._id)
+                        .catch(err => {
+                            expect(err.status).to.be.eql(_.NOT_FOUND);
+                            expect(err.mensagem).to.be.eql(_.CONSTANTES_LOCAL.ERRO_LOCAL_NAO_ENCONTRADO);
+                        });
+                });
+        });
+    });
 });

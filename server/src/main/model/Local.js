@@ -13,11 +13,11 @@
     let localSchema = new Schema({
         nome: {
             type: String,
-            required: [true, 'O local deve ter um nome']
+            required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_NOME]
         },
         bloco: {
             type: String,
-            required: [true, 'O local deve pertencer a um bloco']
+            required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_BLOCO]
         },
         imagens: [{
             conteudo: {type: Buffer},
@@ -27,21 +27,21 @@
             {
                 nome: {
                     type: String,
-                    required: [true, 'O equipamento deve ter uma descrição']
+                    required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_DESCRICAO_EQUIPAMENTO]
                 },
                 quantidade: {
                     type: Number,
-                    required: [true, 'O equipamento deve ter uma quantidade']
+                    required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_QUANTIDADE_EQUIPAMENTO]
                 }
             }
         ],
         capacidade: {
             type: Number,
-            required: [true, 'O local deve ter uma capacidade']
+            required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_CAPACIDADE]
         },
         funcionamento: {
             type: String,
-            required: [true, 'O local deve ter um horário de funcionamento']
+            required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_FUNCIONAMENTO]
         },
         observacoes: {
             type: String
