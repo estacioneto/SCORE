@@ -9,7 +9,7 @@
  ******************************************************/
 
 const assert = require('assert'),
-    chai = require('chai'),
+    chai = require('chai').use(require('chai-as-promised')),
     sinon = require('sinon'),
     should = require('should'),
     clone = require('clone'),
@@ -30,5 +30,3 @@ Object.assign(global, {
     _,
     TEST_DB
 });
-
-console.log('q');

@@ -13,11 +13,11 @@
     let localSchema = new Schema({
         nome: {
             type: String,
-            required: [true, 'O local deve ter um nome.']
+            required: [true, 'O local deve ter um nome']
         },
         bloco: {
             type: String,
-            required: [true, 'O local deve pertencer a um bloco.']
+            required: [true, 'O local deve pertencer a um bloco']
         },
         imagens: [{
             conteudo: {type: Buffer},
@@ -27,21 +27,21 @@
             {
                 nome: {
                     type: String,
-                    required: [true, 'O equipamento deve ter uma descrição.']
+                    required: [true, 'O equipamento deve ter uma descrição']
                 },
                 quantidade: {
                     type: Number,
-                    required: [true, 'O equipamento deve ter uma quantidade.']
+                    required: [true, 'O equipamento deve ter uma quantidade']
                 }
             }
         ],
         capacidade: {
             type: Number,
-            required: [true, 'O local deve ter uma capacidade.']
+            required: [true, 'O local deve ter uma capacidade']
         },
         funcionamento: {
             type: String,
-            required: [true, 'O local deve ter um horário de funcionamento.']
+            required: [true, 'O local deve ter um horário de funcionamento']
         },
         observacoes: {
             type: String

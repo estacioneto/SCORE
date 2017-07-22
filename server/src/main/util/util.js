@@ -5,8 +5,9 @@
      * Oh yes... We add some interesting things to lodash and use it as an util module.
      */
     let _ = require('lodash');
-    
+
     _.BAD_REQUEST = 400;
+    _.NOT_FOUND = 404;
     _.UNAUTHORIZED = 401;
     _.OK = 200;
     _.CREATED = 201;
@@ -52,6 +53,15 @@
         !_.isEmpty(_.filter(arr, obj => JSON.stringify(obj._id) === JSON.stringify(mongooseObject._id)));
 
     /**
+     * Verifica se dois Ids do Mongoose são iguais (utiliza o {@code JSON.stringify}).
+     *
+     * @param  {Mongoose._id} firstId  Primeiro Id a ser comparado.
+     * @param  {Mongoose._id} secondId Segundo Id a ser comparado.
+     * @return {Boolean} Booleano indicando se os Ids são iguais.
+     */
+    _.isMongooseIdEqual = (firstId, secondId) => (JSON.stringify(firstId) === JSON.stringify(secondId));
+
+    /**
      * Once I tried to use the underscore contains function. Didn't work.
      * This one should do the same thing. Well... Should...
      *
@@ -78,6 +88,7 @@
         let authHeader = req.header('Authorization');
         return authHeader.substring(authHeader.indexOf(' ')).trim();
     };
+
     /**
      * Generates a new String (pretty small probability of same String), given it's size.
      *
@@ -99,14 +110,23 @@
      * @param   {Function} next Callback function to redirect to the next function.
      */
     _.handleValidationError = (err, next) => {
-        let message = err.message + ': ';
+        let message = 'Erro de validação: ';
         _.each(err.errors, (value, field) => {
             if (message.indexOf(': ') !== message.length - ': '.length)
-                message += ' and ';
+                message += ', ';
             message += value.message;
         });
-        return next(new Error(message))
+        message += '.';
+        return next(new Error(message));
     };
+
+    /**
+     * Retorna um objeto com a response em caso do erro {@code Not found (404)}.
+     *
+     * @param  {String} mensagem Mensagem de erro.
+     * @return {{[status] : Number, [mensagem] : String}} Objeto de response com status e mensagem.
+     */
+    _.notFoundResponse = mensagem => ({status: _.NOT_FOUND, mensagem});
 
     _.ONE_HOUR = 3600000;
     _.TEN_MINUTES = _.ONE_HOUR / 60;
