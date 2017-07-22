@@ -48,6 +48,8 @@
      * para o mesmo dia.
      * Valida se o intervalo de horas é positivo.
      * 
+     * TODO: Se esse método crescer, criar um validador. @author Eric Breno
+     * 
      * @param {Reserva} reserva Reserva a ser validada.
      * @param {Function} cb Callback a ser invocado com resultado. Se algum
      *                      dado estiver incorreto, o callback é invocado com
