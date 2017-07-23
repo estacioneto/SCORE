@@ -40,10 +40,13 @@
         last_login: "2017-01-02T17:54:52.857Z",
         logins_count: 99,
         blocked_for: [],
-        guardian_enrollments: []
+        guardian_enrollments: [],
+        app_metadata: {
+            permissoes: []
+        }
     };
 
-    let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2VzdGFjaW9uZXRvLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDExNTc4MDE4MTUyOTEyNzgyMjc1NCIsImF1ZCI6IjV2czRwbkRsaDRBUmFDeVNCdTRtNkVCbm1BOVlKaVpWIiwiaWF0IjoxNDgzNTY2NzY2fQ.kqsfP85hw-EvC0HR9nBtByTtxialsccFOCTaNR-Eu48';
+    let token = process.env.SCORE_TEST_TOKEN;
 
     let email = 'test-email@test.email';
 
@@ -63,6 +66,28 @@
         let user = clone(auth0User);
         user.email = UserMock.getNewEmail();
         return user;
+    };
+
+    /**
+     * Retorna um usuário comum do Auth0.
+     *
+     * @returns {Object} Usuário com permissões comuns.
+     */
+    UserMock.getAuth0UserComum = () => {
+        const usuario = UserMock.getAuth0User();
+        usuario.app_metadata.permissoes = [];
+        return usuario;
+    };
+
+    /**
+     * Retorna um usuário admin do Auth0.
+     *
+     * @returns {Object} Usuário com permissões de admin.
+     */
+    UserMock.getAuth0UserAdmin = () => {
+        const usuario = UserMock.getAuth0User();
+        usuario.app_metadata.permissoes = [_.ADMIN];
+        return usuario;
     };
 
     /**

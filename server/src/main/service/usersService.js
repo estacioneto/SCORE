@@ -21,7 +21,7 @@
      *
      * @param   {string} cache Name of the cache.
      * @param   {string} key   Key of the desired element.
-     * @returns {Object} Value in cache.
+     * @returns {String} Value in cache.
      */
     function getFromCache(cache, key) {
         usersService[cache][key].touched = Date.now();
@@ -60,7 +60,7 @@
      * @param   {Object}  user Requested user.
      * @returns {boolean} true if the user is cached, false otherwise.
      */
-    usersService.isCached = user => !_.isUndefined(_.invert(usersService.cache)[JSON.stringify(user)]);
+    usersService.isCached = user => _.some(usersService.cache, {value: JSON.stringify(user)});
 
     /**
      * Adds a user to cache.
@@ -70,10 +70,11 @@
      */
     usersService.cacheUser = (token, user) => {
         if (!_.isEmpty(token) && !_.isEmpty(user)) {
-            let reverseCache = _.invert(usersService.cache);
             user = JSON.stringify(user);
-            if (!_.isUndefined(reverseCache[user])) {
-                delete usersService.cache[reverseCache[user]];
+
+            const tokenAntigo = _.findKey(usersService.cache, {value: user});
+            if (tokenAntigo) {
+                delete usersService.cache[tokenAntigo];
             }
             putOnCache('cache', token, user);
             putOnCache('idCache', user.user_id, JSON.parse(user));
