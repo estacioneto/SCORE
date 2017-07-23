@@ -1,7 +1,9 @@
 import express from 'express';
 
-import _ from '../util/util';
+import {AdminMiddleware} from '../middleware/AdminMiddleware';
 import {LocaisService} from "../service/LocaisService";
+
+import _ from '../util/util';
 
 /**
  * Configura o GET em /api/locais/:id. Retorna o local dado o id.
@@ -35,7 +37,7 @@ function getLocais(router) {
  * @param {Router} router Express Router.
  */
 function cadastrarLocal(router) {
-    router.post(['', '/'], (req, res) =>
+    router.post(['', '/'], AdminMiddleware, (req, res) =>
         LocaisService.cadastrarLocal(req.body)
             .then(localCadastrado => res.status(_.CREATED).json(localCadastrado))
             .catch(_.retornarResponseErro(res))
@@ -48,7 +50,7 @@ function cadastrarLocal(router) {
  * @param {Router} router Express Router.
  */
 function atualizarLocal(router) {
-    router.patch('/:id', (req, res) =>
+    router.patch('/:id', AdminMiddleware, (req, res) =>
         LocaisService.atualizarLocal(req.params.id, req.body)
             .then(localAtualizado => res.status(_.OK).json(localAtualizado))
             .catch(_.retornarResponseErro(res))
@@ -61,7 +63,7 @@ function atualizarLocal(router) {
  * @param {Router} router Express Router.
  */
 function deletarLocal(router) {
-    router.delete('/:id', (req, res) =>
+    router.delete('/:id', AdminMiddleware, (req, res) =>
         LocaisService.deletarLocal(req.params.id)
             .then(localRemovido => res.status(_.OK).json(localRemovido))
             .catch(_.retornarResponseErro(res))

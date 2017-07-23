@@ -1,6 +1,5 @@
 import LocaisRouter from '../router/LocaisRouter';
 
-
 const bodyParser = require('body-parser'),
     jwt = require('express-jwt'),
     cors = require('cors'),

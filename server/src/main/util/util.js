@@ -8,6 +8,7 @@
 
     _.BAD_REQUEST = 400;
     _.NOT_FOUND = 404;
+    _.FORBIDDEN = 403;
     _.UNAUTHORIZED = 401;
     _.OK = 200;
     _.CREATED = 201;
@@ -35,6 +36,9 @@
 
         ERRO_LOCAL_NAO_ENCONTRADO: 'Não existe local com o id especificado.'
     };
+
+    _.ADMIN = 'admin';
+    _.ERRO_USUARIO_SEM_PERMISSAO = 'Usuário não tem permissão ao recurso.';
 
     /**
      * Given two objects (the target should be a mongoose object), soft copies the properties from one
