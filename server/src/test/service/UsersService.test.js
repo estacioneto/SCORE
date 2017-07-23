@@ -16,7 +16,7 @@
      *
      * @author Estácio Pereira.
      */
-    describe.skip('usersServiceTest', () => {
+    describe('usersServiceTest', () => {
         let UserService, UserMock;
 
         before(done => {
@@ -28,13 +28,13 @@
         describe('isCached should', () => {
             it('return true if the user is in the cache', () => {
                 let user = UserMock.getValidUser();
-                UserService.cache = {token: JSON.stringify(user)};
+                UserService.cacheUser('token', user);
                 expect(UserService.isCached(user)).to.be.true;
             });
 
             it('return false if the user is not in the cache', () => {
                 let user = UserMock.getValidUser();
-                UserService.cache = {token: JSON.stringify(user)};
+                UserService.cacheUser('token', user);
                 expect(UserService.isCached(user)).to.be.true;
                 user.username = 'piton';
                 expect(UserService.isCached(user)).to.be.false;
@@ -48,7 +48,7 @@
                 UserService.cache = {};
                 UserService.cacheUser(token, user);
                 expect(UserService.cache[token]).to.be.ok;
-                expect(UserService.cache[token]).to.be.equal(JSON.stringify(user));
+                expect(UserService.cache[token].value).to.be.equal(JSON.stringify(user));
             });
 
             it('not add something to the cache with the key falsy', () => {
@@ -66,10 +66,10 @@
                 UserService.cache = {};
                 UserService.cacheUser(token, user);
                 expect(UserService.cache[token]).to.be.ok;
-                expect(UserService.cache[token]).to.be.equal(JSON.stringify(user));
+                expect(UserService.cache[token].value).to.be.equal(JSON.stringify(user));
                 UserService.cacheUser(token + token, user);
                 expect(UserService.cache[token]).to.not.be.ok;
-                expect(UserService.cache[token + token]).to.be.equal(JSON.stringify(user));
+                expect(UserService.cache[token + token].value).to.be.equal(JSON.stringify(user));
             });
         });
 
@@ -125,7 +125,7 @@
                     sinon.assert.notCalled(requestStub);
                     sinon.assert.calledOnce(postStub);
                     expect(UserService.cache).to.not.be.empty;
-                    expect(UserService.cache[token]).to.be.deep.equal(JSON.stringify(postUser));
+                    expect(UserService.isCached(postUser)).to.be.true;
                     done();
                 });
             });

@@ -55,10 +55,11 @@
             toObject.markModified(_.first(keys));
         });
 
+        // Remove propriedades que não são mandadas.
         _.each(toObject.toObject(), (value, key) => {
             if (!fromObject[key] && !_.includes(key, '_'))
                 toObject[key] = undefined;
-        })
+        });
     };
 
     /**
@@ -70,15 +71,6 @@
      */
     _.containsMongoose = (arr, mongooseObject) =>
         !_.isEmpty(_.filter(arr, obj => JSON.stringify(obj._id) === JSON.stringify(mongooseObject._id)));
-
-    /**
-     * Verifica se dois Ids do Mongoose são iguais (utiliza o {@code JSON.stringify}).
-     *
-     * @param  {Mongoose._id} firstId  Primeiro Id a ser comparado.
-     * @param  {Mongoose._id} secondId Segundo Id a ser comparado.
-     * @return {Boolean} Booleano indicando se os Ids são iguais.
-     */
-    _.isMongooseIdEqual = (firstId, secondId) => (JSON.stringify(firstId) === JSON.stringify(secondId));
 
     /**
      * Once I tried to use the underscore contains function. Didn't work.

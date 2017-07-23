@@ -74,7 +74,7 @@ describe('LocaisServiceTest', () => {
                         .catch(err => assert.fail('Deveria ter consultado o local corretamente.', err))
                         .then(localConsultado => {
                             expect(localConsultado._id).to.be.ok;
-                            expect(_.isMongooseIdEqual(localConsultado._id, localPersistido._id)).to.be.true;
+                            expect(localConsultado._id).to.be.eql(localPersistido._id);
                             expect(JSON.stringify(localConsultado)).to.be.eql(JSON.stringify(localPersistido));
                         });
                 });
@@ -121,7 +121,7 @@ describe('LocaisServiceTest', () => {
             novoLocal.observacoes = 'O auditório é muito legal.';
             return LocaisService.atualizarLocal(localPersistido._id, novoLocal)
                 .then(localAtualizado => {
-                    expect(_.isMongooseIdEqual(localAtualizado._id, localPersistido._id)).to.be.true;
+                    expect(localAtualizado._id).to.be.eql(localPersistido._id);
                     expect(localAtualizado).to.be.eql(novoLocal);
                 });
         });

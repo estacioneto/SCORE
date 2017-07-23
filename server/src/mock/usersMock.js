@@ -43,7 +43,7 @@
         guardian_enrollments: []
     };
 
-    let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2VzdGFjaW9uZXRvLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDExNTc4MDE4MTUyOTEyNzgyMjc1NCIsImF1ZCI6IjV2czRwbkRsaDRBUmFDeVNCdTRtNkVCbm1BOVlKaVpWIiwiaWF0IjoxNDgzNTY2NzY2fQ.kqsfP85hw-EvC0HR9nBtByTtxialsccFOCTaNR-Eu48';
+    let token = process.env.SCORE_TEST_TOKEN;
 
     let email = 'test-email@test.email';
 
