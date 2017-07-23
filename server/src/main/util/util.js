@@ -16,10 +16,13 @@
     _.FIRST_INDEX = 0;
     _.INVALID_INDEX = -1;
 
-    _.auth0 = 'https://estacioneto.auth0.com';
-    _.scoreAuth0 = "https://score-uasc.auth0.com";
-    _.loginEndpoint = '/oauth/ro';
-    _.tokeninfo = '/tokeninfo';
+    _.AUTH0 = {
+        DOMAIN: "score-uasc.auth0.com",
+        SCORE_CLIENT_ID: 'FXhjEG4sAdI2CzocJV5oGXw10wvkeGkD',
+        SCORE_CLIENT_SECRET: process.env.SECRET,
+        MANAGER_CLIENT_ID: 'EhoRWVDKjVfbEcnX88TVRLJmWP5Tc52n',
+        MANAGER_CLIENT_SECRET: process.env.SCORE_MANAGER_SECRET
+    };
 
     _.RANDOM_STRING_LENGTH = 1000;
 
