@@ -74,7 +74,7 @@
         });
 
         describe('getUser should', () => {
-            let requestStub, postStub, postUser;
+            let authStub, getUserStub, usuarioRetornado;
 
             before(() => {
                 mockery.enable({
@@ -83,16 +83,14 @@
                     useCleanCache: true
                 });
 
-                requestStub = sinon.stub();
-                mockery.registerMock('request', requestStub);
-                requestStub.post = () => {
+                authStub = sinon.stub();
+                mockery.registerMock('./authService', {AuthService: authStub});
+                authStub.getUser = () => {
                 };
 
-                postUser = UserMock.getValidUser();
-                postUser.username = 'POST-STUB';
-                postStub = sinon.stub(requestStub, 'post', (options, callback) => {
-                    return callback(null, {statusCode: _.OK}, JSON.stringify(postUser));
-                });
+                usuarioRetornado = UserMock.getValidUser();
+                usuarioRetornado.username = 'POST-STUB';
+                getUserStub = sinon.stub(authStub, 'getUser', (options, callback) => callback(null, usuarioRetornado));
                 UserService = require('../../main/service/usersService');
             });
 
@@ -109,8 +107,8 @@
                 UserService.getUser(token, (err, result) => {
                     expect(err).to.not.be.ok;
                     expect(result).to.be.deep.equal(user);
-                    sinon.assert.notCalled(requestStub);
-                    sinon.assert.notCalled(postStub);
+                    sinon.assert.notCalled(authStub);
+                    sinon.assert.notCalled(getUserStub);
                     done();
                 });
             });
@@ -121,11 +119,11 @@
 
                 UserService.getUser(token, (err, result) => {
                     expect(err).to.not.be.ok;
-                    expect(result).to.be.deep.equal(postUser);
-                    sinon.assert.notCalled(requestStub);
-                    sinon.assert.calledOnce(postStub);
+                    expect(result).to.be.deep.equal(usuarioRetornado);
+                    sinon.assert.notCalled(authStub);
+                    sinon.assert.calledOnce(getUserStub);
                     expect(UserService.cache).to.not.be.empty;
-                    expect(UserService.isCached(postUser)).to.be.true;
+                    expect(UserService.isCached(usuarioRetornado)).to.be.true;
                     done();
                 });
             });

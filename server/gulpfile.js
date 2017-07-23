@@ -4,7 +4,8 @@ var gulp = require('gulp'),
     cleanCSS = require('gulp-clean-css'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
-    usemin = require('gulp-usemin');
+    usemin = require('gulp-usemin'),
+    isparta = require('isparta');
 
 var jshint = require('gulp-jshint'),
     git = require('gulp-git'),
@@ -203,7 +204,7 @@ function runTests() {
  */
 gulp.task('test-coverage', function (cb) {
     return gulp.src('./src/main/**/*.js')
-        .pipe(istanbul({includeAllSources: true}))
+        .pipe(istanbul({includeAllSources: true, instrumenter: isparta.Instrumenter}))
         .pipe(istanbul.hookRequire())
         .on('end', function (err) {
             var dropDB = spawn('mongo', ['SCORE-TESTDB', '--eval', '"db.dropDatabase();"']);

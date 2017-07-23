@@ -58,6 +58,7 @@
     "angular-ui-calendar": "^1.0.2",
     "angular-ui-mask": "^1.8.7",
     "angular-ui-router": "^1.0.3",
+    "auth0": "^2.7.0",
     "auth0-angular": "^4.2.7",
     "auth0-js": "^7.6.1",
     "auth0-lock": "^10.7.3",
@@ -79,6 +80,7 @@
     "gulp-prompt": "^0.2.0",
     "gulp-rev": "^7.1.2",
     "gulp-run": "^1.7.1",
+    "isparta": "^4.0.0",
     "jquery": "^3.1.1",
     "jquery-mask-plugin": "^1.14.11",
     "jshint": "^2.9.4",
@@ -88,6 +90,7 @@
     "ngstorage": "^0.3.11",
     "node-schedule": "^1.2.0",
     "path": "^0.12.7",
+    "request": "^2.81.0",
     "run-sequence": "^1.2.2",
     "yarn": "^0.18.1"
   }

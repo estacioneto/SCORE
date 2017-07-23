@@ -11,9 +11,8 @@
     let UserMock = {};
 
     let validUser = {
-        username: 'test-email@test.email',
+        username: 'test@test.email.com',
         password: 'aisimmeupatrao',
-        client_id: "v5c1OpoDApUeE6vVUOvFHo3eEhufVZFP",
         connection: 'Username-Password-Authentication',
         grant_type: 'password',
         scope: 'openid'

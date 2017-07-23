@@ -12,13 +12,6 @@ require('../config/db_config')();
 export class LocaisService {
 
     /**
-     * Construtor padrão.
-     * @constructor
-     */
-    constructor() {
-    }
-
-    /**
      * Salva um local no banco de dados.
      *
      * @param   {Object}  local Objeto com os dados de local.

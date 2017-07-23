@@ -1,4 +1,5 @@
 import LocaisRouter from '../router/LocaisRouter';
+import _ from '../util/util';
 
 const bodyParser = require('body-parser'),
     jwt = require('express-jwt'),
@@ -10,8 +11,8 @@ const reservasRouter = require('../router/reservasRouter');
 const routesMiddleware = {};
 
 const authCheck = jwt({
-    secret: process.env.SECRET,
-    audience: 'FXhjEG4sAdI2CzocJV5oGXw10wvkeGkD'
+    secret: _.AUTH0.SCORE_CLIENT_SECRET,
+    audience: _.AUTH0.SCORE_CLIENT_ID
 });
 
 /**
