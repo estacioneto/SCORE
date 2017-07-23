@@ -13,12 +13,7 @@
         this.reservas = reservas;
         this.reservasFonte = [this.reservas];
 
-        this.cores = {
-            "Tipo 1": { 'background-color': 'red'},
-            "Tipo 2": { 'background-color': 'orange'},
-            "Tipo 3": { 'background-color': 'green'},
-            "Tipo 4": { 'background-color': 'blue'}
-        };
+        this.cores = Reserva.getCores();
 
         /**
          * Callback executado quando o usuário clica em uma determinada reserva.

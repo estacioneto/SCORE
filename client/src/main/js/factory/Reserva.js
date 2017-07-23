@@ -134,6 +134,8 @@ let sequenceReserva = 1;
 
         Reserva.prototype.__defineGetter__('color', function () {
             return this.cor;
+            // TODO: descomentar ao adicionar o tipo para reserva.
+            // return Reserva.getCores()[this.tipo];
         });
 
         Reserva.prototype.__defineGetter__('textColor', function () {
@@ -217,6 +219,15 @@ let sequenceReserva = 1;
         }
 
         Reserva.prototype.constructor = Reserva;
+
+        Reserva.getCores = function () {
+            return {
+                "Tipo 1": { 'background-color': 'red'},
+                "Tipo 2": { 'background-color': 'orange'},
+                "Tipo 3": { 'background-color': 'green'},
+                "Tipo 4": { 'background-color': 'blue'}
+            };
+        };
 
         return Reserva;
     }]);
