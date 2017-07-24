@@ -46,8 +46,8 @@ export class AuthService {
      * @param {String}   accessToken Token de acesso do usuário.
      * @param {Function} callback    Função de callback chamada após a requisição do perfil do usuário.
      */
-    static getUser(accessToken, callback) {
-        return auth0Authentication.getProfile({accessToken: accessToken}, callback);
+    static getProfile(accessToken, callback) {
+        return auth0Authentication.getProfile(accessToken, callback);
     }
 
     /**

@@ -33,7 +33,8 @@
             'agendamentoModulo',
             'autenticacaoModulo',
             'localModulo',
-            'dataModulo'
+            'dataModulo',
+            'constantesModulo'
         ]);
 
     app.constant('_', window._)
@@ -80,11 +81,12 @@
         /**
          * State config
          */
-        .config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
+        .config(['$stateProvider', '$locationProvider', 'APP_STATES', function ($stateProvider, $locationProvider, APP_STATES) {
             const view = './view/';
+            console.log(APP_STATES);
 
             $stateProvider
-                .state('app', {
+                .state(APP_STATES.APP.nome, {
                     abstract: true,
                     url: '/app',
                     templateUrl: view + 'app.html',
@@ -92,17 +94,17 @@
                     resolve: {
                         authCheck: function (auth, $state) {
                             if (!auth.isAuthenticated) {
-                                $state.go('app.login');
+                                $state.go(APP_STATES.LOGIN.info);
                             }
                         }
                     }
                 })
-                .state('app.login', {
+                .state(APP_STATES.LOGIN.nome, {
                     url: '/',
                     templateUrl: view + 'login.html',
                     controller: 'LoginController as loginCtrl'
                 })
-                .state('app.home', {
+                .state(APP_STATES.HOME.nome, {
                     url: '/home',
                     templateUrl: view + 'home.html',
                     controller: 'CalendarioController as calendarioCtrl',
@@ -112,12 +114,12 @@
                         }
                     }
                 })
-                .state('app.local', {
+                .state(APP_STATES.LOCAL.nome, {
                     url: '/local',
                     abstract: true,
                     template: '<ui-view/>'
                 })
-                .state('app.local.info', {
+                .state(APP_STATES.LOCAL_INFO.nome, {
                     url: '',
                     nome: 'local',
                     templateUrl: view + 'local.html',
@@ -126,12 +128,12 @@
                         local: () => undefined
                     }
                 })
-                .state('app.local.id', {
+                .state(APP_STATES.LOCAL_ID.nome, {
                     url: '/:idLocal',
                     abstract: true,
                     template: '<ui-view/>'
                 })
-                .state('app.local.id.info', {
+                .state(APP_STATES.LOCAL_ID_INFO.nome, {
                     url: '',
                     nome: 'local',
                     templateUrl: view + 'local.html',
@@ -146,7 +148,7 @@
                         }
                     }
                 })
-                .state('app.local.edicao', {
+                .state(APP_STATES.LOCAL_EDICAO.nome, {
                     url: '/edicao',
                     nome: 'local',
                     templateUrl: view + 'local-edicao.html',
@@ -155,7 +157,7 @@
                         local: Local => new Local()
                     }
                 })
-                .state('app.local.id.edicao', {
+                .state(APP_STATES.LOCAL_ID_EDICAO.nome, {
                     url: '/edicao',
                     nome: 'local',
                     templateUrl: view + 'local-edicao.html',
@@ -170,7 +172,7 @@
                         }
                     }
                 })
-                .state('app.dia', {
+                .state(APP_STATES.DIA.nome, {
                     url: '/dia?numeroDia&numeroMes&ano',
                     templateUrl: view + 'detalhesDia.html',
                     controller: 'DetalhesDiaController as detalhesCtrl',
