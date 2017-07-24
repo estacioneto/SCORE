@@ -83,7 +83,6 @@
          */
         .config(['$stateProvider', '$locationProvider', 'APP_STATES', function ($stateProvider, $locationProvider, APP_STATES) {
             const view = './view/';
-            console.log(APP_STATES);
 
             $stateProvider
                 .state(APP_STATES.APP.nome, {
