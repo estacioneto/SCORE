@@ -1,6 +1,12 @@
 (() => {
     'use strict';
 
+    /**
+     * Retorna um objeto com os dados do state utilizados pela aplicação.
+     *
+     * @param   {string} nome Nome completo do state.
+     * @returns {{nome: string, mdIcon: string}} Objeto do state.
+     */
     function getLocalState(nome) {
         return {
             nome,
