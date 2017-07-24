@@ -24,6 +24,7 @@
                             $injector.get('auth').signout();
                             store.remove('user');
                             store.remove('idToken');
+                            store.remove('accessToken');
                             $injector.get('$state').go('login');
                         }
                         return $q.reject(rejection);
@@ -38,9 +39,9 @@
             $provide.factory('APIInterceptor', ['store', function (store) {
                 return {
                     request: function (config) {
-                        var idToken = store.get('idToken');
-                        if (idToken) {
-                            config.headers.id_token = idToken;
+                        const accessToken = store.get('accessToken');
+                        if (accessToken) {
+                            config.headers.access_token = accessToken;
                         }
                         return config;
                     }

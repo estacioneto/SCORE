@@ -4,8 +4,8 @@
      * Controller responsável pela view do calendário.
      * 
      */
-    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig',
-        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig,
+    angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
+        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES,
                                                                                                     Reserva, reservas, DataManipuladorService, LocaisService, ModalService) {
 
         const self = this;
@@ -108,7 +108,7 @@
         };
 
         this.visualizarAuditorio = function () {
-            $state.go('app.local.id.info', {idLocal: self.local._id});
+            $state.go(APP_STATES.LOCAL_ID_INFO.nome, {idLocal: self.local._id});
         };
 
         /**

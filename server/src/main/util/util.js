@@ -94,7 +94,7 @@
      * @param   {Object} req The request.
      * @returns {string} The token on headers.
      */
-    _.getToken = req => req.header('id_token') || _.getAuthorizationToken(req);
+    _.getToken = req => req.header('access_token') || _.getAuthorizationToken(req);
 
     /**
      * Returns the token present at the authorization header property.

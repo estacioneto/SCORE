@@ -9,23 +9,9 @@
     angular.module('toolbarModulo').component('toolbarStateHandler', {
         templateUrl: 'view/component/toolbar-state-handler.html',
         bindings: {},
-        controller: ['$state', function ($state) {
+        controller: ['$state', 'APP_STATES', function ($state, APP_STATES) {
             const self = this;
-
-            // TODO: Criar constantes na aplicação para states. APP_STATES. @author Estácio Pereira, 17/07/2017
-
-            const nomesStates = {
-                'app.home': 'HOME',
-                'app.local.info': 'LOCAL'
-            };
-
-            const HOME_STATE = {
-                nome: 'app.home',
-                icone: 'fa fa-home'
-            }, LOCAL_STATE = {
-                nome: 'app.local.info',
-                icone: 'fa fa-map-marker'
-            };
+            const INDICE_NOME_STATE = 1;
 
             /**
              * Objeto contendo os states disponíveis a partir do state atual.
@@ -33,10 +19,8 @@
              * @type {{[state]: [{[nome]: [string], [icone]: [string]}]}}
              */
             this.statesDisponiveis = {
-                'app.home': [LOCAL_STATE],
-                'app.local.info': [HOME_STATE],
-                'app.local.edicao': [HOME_STATE, LOCAL_STATE],
-                'app.local.id.edicao': [HOME_STATE, LOCAL_STATE]
+                HOME: [APP_STATES.LOCAL_INFO],
+                LOCAL: [APP_STATES.HOME, APP_STATES.LOCAL_INFO]
             };
 
             /**
@@ -45,7 +29,7 @@
              * @returns {Array} Lista dos states disponíveis.
              */
             this.getStatesDisponiveis = function () {
-                const stateAtual = $state.current.name;
+                const stateAtual = this.getNomeState($state.current.name);
                 return self.statesDisponiveis[stateAtual];
             };
 
@@ -55,7 +39,7 @@
              * @param   {string} nomeState Nome completo do state.
              * @returns {string} Último nome do state.
              */
-            this.getNomeState = nomeState => nomesStates[nomeState];
+            this.getNomeState = nomeState => _.toUpper(nomeState.split('.')[INDICE_NOME_STATE]);
         }]
     });
 })();

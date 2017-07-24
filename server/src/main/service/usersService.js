@@ -94,16 +94,16 @@ usersService.getUserById = (userId, callback) => {
  * Gets the user with the given token, if it exists (error, otherwise).
  * If the user is cached, we don't need to request Auth0.
  *
- * @param {String}   idToken  User's identification token.
- * @param {Function} callback Callback function called after the query.
+ * @param {String}   accessToken Token de acesso.
+ * @param {Function} callback    Callback function called after the query.
  */
-usersService.getUser = (idToken, callback) => {
-    if (usersService.cache[idToken]) {
-        return callback(null, JSON.parse(getFromCache('cache', idToken)));
+usersService.getUser = (accessToken, callback) => {
+    if (usersService.cache[accessToken]) {
+        return callback(null, JSON.parse(getFromCache('cache', accessToken)));
     }
-    return AuthService.getUser(idToken, (err, result) => {
+    return AuthService.getProfile(accessToken, (err, result) => {
         if (!err) {
-            usersService.cacheUser(idToken, result);
+            usersService.cacheUser(accessToken, result);
         }
         return callback(err, result);
     });

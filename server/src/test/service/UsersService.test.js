@@ -74,7 +74,7 @@
         });
 
         describe('getUser should', () => {
-            let authStub, getUserStub, usuarioRetornado;
+            let authStub, getProfileStub, usuarioRetornado;
 
             before(() => {
                 mockery.enable({
@@ -85,12 +85,12 @@
 
                 authStub = sinon.stub();
                 mockery.registerMock('./authService', {AuthService: authStub});
-                authStub.getUser = () => {
+                authStub.getProfile = () => {
                 };
 
                 usuarioRetornado = UserMock.getValidUser();
                 usuarioRetornado.username = 'POST-STUB';
-                getUserStub = sinon.stub(authStub, 'getUser', (options, callback) => callback(null, usuarioRetornado));
+                getProfileStub = sinon.stub(authStub, 'getProfile', (options, callback) => callback(null, usuarioRetornado));
                 UserService = require('../../main/service/usersService');
             });
 
@@ -108,7 +108,7 @@
                     expect(err).to.not.be.ok;
                     expect(result).to.be.deep.equal(user);
                     sinon.assert.notCalled(authStub);
-                    sinon.assert.notCalled(getUserStub);
+                    sinon.assert.notCalled(getProfileStub);
                     done();
                 });
             });
@@ -121,7 +121,7 @@
                     expect(err).to.not.be.ok;
                     expect(result).to.be.deep.equal(usuarioRetornado);
                     sinon.assert.notCalled(authStub);
-                    sinon.assert.calledOnce(getUserStub);
+                    sinon.assert.calledOnce(getProfileStub);
                     expect(UserService.cache).to.not.be.empty;
                     expect(UserService.isCached(usuarioRetornado)).to.be.true;
                     done();

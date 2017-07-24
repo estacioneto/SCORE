@@ -1,7 +1,7 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').controller('LocalController', ['$state', '$stateParams', 'Local', 'local', function ($state, $stateParams, Local, local) {
+    angular.module('localModulo').controller('LocalController', ['$state', '$stateParams', 'APP_STATES', 'Local', 'local', function ($state, $stateParams, APP_STATES, Local, local) {
 
         const self = this;
 
@@ -12,7 +12,7 @@
 
         this.onChangeLocal = function (local) {
             if (podeRedirecionarLocal(local)) {
-                $state.go('app.local.id.info', {idLocal: local._id});
+                $state.go(APP_STATES.LOCAL_ID_INFO.nome, {idLocal: local._id});
             }
         };
 
@@ -23,11 +23,11 @@
         this.isModoEdicao = () => this.edicao;
 
         this.adicionarLocal = function () {
-            $state.go('app.local.edicao');
+            $state.go(APP_STATES.LOCAL_EDICAO.nome);
         };
 
         this.editarLocal = function () {
-            $state.go('app.local.id.edicao', {idLocal: self.local._id});
+            $state.go(APP_STATES.LOCAL_ID_EDICAO.nome, {idLocal: self.local._id});
         };
 
         this.deletarLocal = function () {
