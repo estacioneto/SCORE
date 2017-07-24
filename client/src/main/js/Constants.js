@@ -4,7 +4,7 @@
     function getLocalState(nome) {
         return {
             nome,
-            'md-icon': 'location_on'
+            mdIcon: 'location_on'
         };
     }
 
@@ -14,7 +14,7 @@
         LOGIN: {nome: 'app.login'},
         HOME: {
             nome: 'app.home',
-            'md-icon': 'home'
+            mdIcon: 'home'
         },
         LOCAL: getLocalState('app.local'),
         LOCAL_INFO: getLocalState('app.local.info'),

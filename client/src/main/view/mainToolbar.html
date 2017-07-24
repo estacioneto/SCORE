@@ -14,7 +14,8 @@
                      class="">
             </md-button>
         </md-input-container>
-        <span class="md-title">SCORE - Sistema de COntrole de REservas</span>
+        <span class="md-title">SCORE</span>
+        <span class="md-title" hide-xs hide-sm> - Sistema de COntrole de REservas</span>
         <span flex></span>
 
         <md-input-container layout="row">
@@ -27,7 +28,7 @@
                 <md-button hide-gt-xs aria-label="Logout Icon"
                            data-ng-click="logout()"
                            class="md-icon-button" layout-align="center center">
-                    <md-icon md-font-icon="fa fa-sign-out" class="md-48"></md-icon>
+                    <md-icon class="md-48">exit_to_app</md-icon>
                 </md-button>
             </div>
             <div data-ng-if="!auth.isAuthenticated()">
