@@ -10,7 +10,11 @@ engines:
       - javascript:
   fixme:
     enabled: true
+ratings:
+  paths:
+  - client/**
+  - server/**
 exclude_paths:
-    - "**/node_modules/"
-    - "**/img/"
-    - "**/vendor/*"
+    - "node_modules/**/*"
+    - "img/**/*"
+    - "**/vendor/**/*"
