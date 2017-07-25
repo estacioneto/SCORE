@@ -7,7 +7,7 @@
     "prestart": "yarn install",
     "start": "babel-node app.js",
     "pretest": "yarn install",
-    "test": "mocha"
+    "test": "gulp --gulpfile ./server/gulpfile.js test --color"
   },
   "author": "",
   "license": "ISC",
