@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/estacioneto/SCORE.svg?branch=master)](https://travis-ci.org/estacioneto/SCORE) 
 [![Github Issues](http://githubbadges.herokuapp.com/estacioneto/SCORE/issues.svg?style=flat)](https://github.com/estacioneto/SCORE/issues)
 [![Pending Pull-Requests](http://githubbadges.herokuapp.com/estacioneto/SCORE/pulls.svg?style=flat)](https://github.com/estacioneto/SCORE/pulls)
+[![Coverage Status](https://coveralls.io/repos/github/estacioneto/SCORE/badge.svg)](https://coveralls.io/github/estacioneto/SCORE)
   
 Repositório inicial do projeto de LES em 2017.1
 
