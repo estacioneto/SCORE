@@ -15,5 +15,5 @@ Para utilizar o projeto localmente, é necessário ter as variáveis de ambiente
 * Front-end: [AngularJS](https://angularjs.org/) v1.6.2
 * Back-end: [NodeJS](https://nodejs.org/) v7.10.1
 * Banco de Dados: [MongoDB](https://www.mongodb.com/) v2.4.9
-* Microserviço de autenticação: [Auth0]((https://auth0.com/))
+* Microserviço de autenticação: [Auth0](https://auth0.com/)
 * Task-runner: [Gulp](http://gulpjs.com/)
