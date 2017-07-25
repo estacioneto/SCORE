@@ -192,7 +192,7 @@ gulp.task('test-continuar', function () {
 function runTests() {
     return gulp.src('./src/test/**/*.test.js', {read: false})
         .pipe(mocha({
-            compilers: 'js:babel-core/register.js',
+            compilers: 'js:babel-core/register',
             reporter: 'nyan',
             timeout: 15000,
             bail: true
@@ -220,7 +220,7 @@ gulp.task('test-coverage', function (cb) {
             dropDB.on('exit', function (code) {
                 process.stdout.write('child process exited with code ' + code.toString());
                 return gulp.src('./src/test/**/*.test.js')
-                    .pipe(mocha({reporter: 'nyan', timeout: 15000, bail: true}))
+                    .pipe(mocha({compilers: 'js:babel-core/register', reporter: 'nyan', timeout: 15000, bail: true}))
                     .pipe(istanbul.writeReports({
                         dir: './coverage',
                         reporters: ['lcov'],
