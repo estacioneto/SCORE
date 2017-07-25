@@ -1,11 +1,13 @@
 # SCORE - Sistema de COntrole de REservas
 
 [![Build Status](https://travis-ci.org/estacioneto/SCORE.svg?branch=master)](https://travis-ci.org/estacioneto/SCORE) 
-[![Github Issues](http://githubbadges.herokuapp.com/estacioneto/SCORE/issues.svg?style=flat)](https://github.com/estacioneto/SCORE/issues)
-[![Pending Pull-Requests](http://githubbadges.herokuapp.com/estacioneto/SCORE/pulls.svg?style=flat)](https://github.com/estacioneto/SCORE/pulls)
 [![Coverage Status](https://coveralls.io/repos/github/estacioneto/SCORE/badge.svg)](https://coveralls.io/github/estacioneto/SCORE)
+[![Code Climate](https://codeclimate.com/github/estacioneto/SCORE/badges/gpa.svg)](https://codeclimate.com/github/estacioneto/SCORE)
 [![dependencies Status](https://david-dm.org/estacioneto/SCORE/status.svg)](https://david-dm.org/estacioneto/SCORE)
 [![devDependencies Status](https://david-dm.org/estacioneto/SCORE/dev-status.svg)](https://david-dm.org/estacioneto/SCORE?type=dev)
+
+[![Github Issues](http://githubbadges.herokuapp.com/estacioneto/SCORE/issues.svg?style=flat)](https://github.com/estacioneto/SCORE/issues)
+[![Pending Pull-Requests](http://githubbadges.herokuapp.com/estacioneto/SCORE/pulls.svg?style=flat)](https://github.com/estacioneto/SCORE/pulls)
   
 Sistema web de alocação de horário para os auditórios da UFCG.
 
