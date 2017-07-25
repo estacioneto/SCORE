@@ -177,7 +177,7 @@ describe('LocaisRouterTest', () => {
                     expect(err).to.not.be.ok;
 
                     const localConsultado = res.body;
-                    expect(JSON.stringify(localConsultado)).to.be.eql(JSON.stringify(localCadastrado));
+                    expect(localConsultado).to.be.eql(localCadastrado);
                     done();
                 });
             });
@@ -225,7 +225,7 @@ describe('LocaisRouterTest', () => {
                     expect(err).to.not.be.ok;
 
                     const localRemovido = res.body;
-                    expect(JSON.stringify(localRemovido)).to.be.eql(JSON.stringify(localCadastrado));
+                    expect(localRemovido).to.be.eql(localCadastrado);
 
                     // Consulta novamente o local.
                     request(app).get(`${_.CONSTANTES_LOCAL.URI}/${localCadastrado._id}`)
@@ -291,7 +291,7 @@ describe('LocaisRouterTest', () => {
 
                 expect(err).to.not.be.ok;
                 const localAtualizado = res.body;
-                expect(JSON.stringify(localAtualizado)).to.be.eql(JSON.stringify(novoLocal));
+                expect(localAtualizado).to.be.eql(novoLocal);
                 done();
             });
         });

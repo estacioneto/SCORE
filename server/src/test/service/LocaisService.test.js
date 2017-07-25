@@ -75,7 +75,7 @@ describe('LocaisServiceTest', () => {
                         .then(localConsultado => {
                             expect(localConsultado._id).to.be.ok;
                             expect(localConsultado._id).to.be.eql(localPersistido._id);
-                            expect(JSON.stringify(localConsultado)).to.be.eql(JSON.stringify(localPersistido));
+                            expect(localConsultado).to.be.eql(localPersistido);
                         });
                 });
         });

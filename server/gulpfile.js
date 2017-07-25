@@ -192,7 +192,7 @@ gulp.task('test-continuar', function () {
 function runTests() {
     return gulp.src('./src/test/**/*.test.js', {read: false})
         .pipe(mocha({
-            compilers: 'js:babel-core/register',
+            compilers: 'js:babel-core/register.js',
             reporter: 'nyan',
             timeout: 15000,
             bail: true
