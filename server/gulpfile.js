@@ -228,10 +228,7 @@ gulp.task('test-coverage', function (cb) {
                     }))
                     .on('end', function (err) {
                         if (err) cb(err);
-                        exec("google-chrome coverage/lcov-report/index.html", function (err) {
-                            if (err) cb(err);
-                            else sair()();
-                        });
+						else sair()();
                     });
             });
         });
