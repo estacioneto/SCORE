@@ -1,6 +1,4 @@
 engines:
-  brakeman:
-    enabled: true
   eslint:
     enabled: true
   csslint:
