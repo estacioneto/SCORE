@@ -1,0 +1,11 @@
+{
+  "files": {
+    "included": [
+      "client/src/**/*.js",
+      "server/src/**/*.js"
+    ],
+    "excluded": [
+      "**/vendor/**/*"
+    ]
+  }
+}
