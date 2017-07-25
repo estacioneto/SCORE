@@ -1,7 +1,7 @@
 {
   "name": "SCORE",
-  "version": "0.0.1",
-  "description": "Projeto da disciplina de Laboratório de Engenharia de Software - 2017.1 - Universidade Federal de Campina Grande",
+  "version": "0.0.2",
+  "description": "Sistema web de alocação de horário para os auditórios da UFCG.",
   "main": "app.js",
   "scripts": {
     "prestart": "yarn install",
