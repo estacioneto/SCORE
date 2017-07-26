@@ -36,6 +36,20 @@
                             <!--end Edição hora-->
                         </div>
                         <!--end Hora da reserva-->
+                        <!--Tipo Reserva-->
+                        <div layout="column" flex="30" layout-margin style="padding-top: 7px">
+                            <div layout="row">
+                                <md-input-container>
+                                    <label>Evento</label>
+                                    <md-select data-ng-model="reservaCtrl.tipoSelecionado" required>
+                                        <md-option data-ng-repeat="tipo in reservaCtrl.tiposReserva" data-ng-value="tipo">
+                                            {{tipo}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!--end Tipo de Reserva-->
                         <!--Fechar modal-->
                         <md-button class="md-warn" ng-click="reservaCtrl.fecharModal()">
                             <i class="material-icons">close</i>

@@ -14,6 +14,9 @@
 
         this.isEdicao = !reserva.autor;
 
+        //FIXME: Isso deve ficar aqui mesmo?
+        this.tiposReserva = ['Defesa', 'Video-conferencia', 'Reuniao', 'Assembleia'];
+
         /**
          * Ativa o modo de edição de reserva.
          */
