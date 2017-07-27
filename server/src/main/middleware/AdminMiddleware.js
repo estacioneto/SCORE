@@ -11,7 +11,7 @@ import UsersService from '../service/usersService';
  * @constructor
  */
 export function AdminMiddleware(req, res, next) {
-    const token = _.last(req.header('Authorization').split(' '));
+    const token = req.header('access_token');
 
     UsersService.getUser(token, (err, usuario) => {
         if (err)
