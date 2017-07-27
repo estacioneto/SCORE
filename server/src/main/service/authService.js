@@ -34,6 +34,20 @@ function iniciarAuth0Management() {
 }
 
 /**
+ * Cuida das requisições de usuário feitas ao Auth0, pois o usuário pode ser retornado
+ * como String.
+ * 
+ * @param {Function}        callback Callback a ser executado.
+ * @param {*}               err      Erro da requisição.
+ * @param {String | Object} result   Resultado da requisição ao Auth0.
+ */
+function handleCallbackUsuario(callback, err, result) {
+    if (err) return callback(err);
+    result = (!_.isObject(result)) ? JSON.parse(result) : result;
+    return callback(err, result);
+}
+
+/**
  * Classe responsável por cuidar de detalhes relacionados à autenticação.
  *
  * @class
@@ -47,11 +61,7 @@ export class AuthService {
      * @param {Function} callback    Função de callback chamada após a requisição do perfil do usuário.
      */
     static getProfile(accessToken, callback) {
-        return auth0Authentication.getProfile(accessToken, (err, result) => {
-            if (err) return callback(err);
-            result = (!_.isObject(result)) ? JSON.parse(result) : result;
-            return callback(err, result);
-        });
+        return auth0Authentication.getProfile(accessToken, (err, result) => handleCallbackUsuario(callback, err, result));
     }
 
     /**
@@ -61,11 +71,7 @@ export class AuthService {
      * @param {Function} callback Função de callback executada após a consulta do usuário.
      */
     static getUserById(idUsuario, callback) {
-        return auth0Management.getUser({id: idUsuario}, (err, result) => {
-            if (err) return callback(err);
-            result = (!_.isObject(result)) ? JSON.parse(result) : result;
-            return callback(err, result);
-        });
+        return auth0Management.getUser({id: idUsuario}, (err, result) => handleCallbackUsuario(callback, err, result));
     }
 }
 
