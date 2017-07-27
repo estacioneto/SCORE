@@ -1,3 +1,5 @@
+import {AdminMiddleware} from '../middleware/AdminMiddleware';
+
 (function(){
     'use strict';
 
@@ -29,7 +31,7 @@
     /**
      * Salva uma nova reserva
      */
-    reservasRouter.post('/', (req, res) => {
+    reservasRouter.post('/', AdminMiddleware, (req, res) => {
         reservasService.salvaReserva(_.getToken(req), req.body, (err, result) => {
             if (err) {
                 return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
@@ -41,7 +43,7 @@
     /**
      * Atualiza a reserva com o id passado
      */
-    reservasRouter.patch('/:id', (req,res) => {
+    reservasRouter.patch('/:id', AdminMiddleware, (req,res) => {
         reservasService.atualizaReserva(_.getToken(req), req.params.id, req.body, (err,result) => {
             if (err) return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
             return res.status(_.OK).json(result);
@@ -61,7 +63,7 @@
     /**
      * Deleta a reserva com o id passado
      */
-    reservasRouter.delete('/:id', (req, res) =>
+    reservasRouter.delete('/:id', AdminMiddleware, (req, res) =>
         reservasService.deletaReserva(_.getToken(req), req.params.id, (err, result) => {
             if (err) return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
             return res.status(_.OK).json(result);

@@ -243,7 +243,7 @@ describe('LocaisRouterTest', () => {
         });
     });
 
-    describe('PATCH /api/locais/:id', () => {
+    describe('PUT /api/locais/:id', () => {
         let localCadastrado;
 
         beforeEach(done => {
@@ -260,7 +260,7 @@ describe('LocaisRouterTest', () => {
         });
 
         it('retornar 403 (Forbidden) se o usuário não possuir role admin', done => {
-            const metodoHttp = 'PATCH',
+            const metodoHttp = 'PUT',
                 uri = `${_.CONSTANTES_LOCAL.URI}/${mongoose.Types.ObjectId()}`,
                 reqBody = LocaisMock.getLocal();
             testeEndPointForbidden({metodoHttp, uri, reqBody, done});
@@ -269,7 +269,7 @@ describe('LocaisRouterTest', () => {
         it('retornar corretamente o erro caso haja', done => {
             const novoLocal = _.clone(localCadastrado);
             delete novoLocal.bloco;
-            request(app).patch(`${_.CONSTANTES_LOCAL.URI}/${localCadastrado._id}`)
+            request(app).put(`${_.CONSTANTES_LOCAL.URI}/${localCadastrado._id}`)
                 .set('Authorization', `Bearer ${token}`)
                 .send(novoLocal)
                 .expect(_.BAD_REQUEST).end((err, res) => {
@@ -284,7 +284,7 @@ describe('LocaisRouterTest', () => {
         it('atualizar o local e retornar o local atualizado', done => {
             const novoLocal = _.clone(localCadastrado);
             novoLocal.bloco = 'LCC3';
-            request(app).patch(`${_.CONSTANTES_LOCAL.URI}/${localCadastrado._id}`)
+            request(app).put(`${_.CONSTANTES_LOCAL.URI}/${localCadastrado._id}`)
                 .set('Authorization', `Bearer ${token}`)
                 .send(novoLocal)
                 .expect(_.OK).end((err, res) => {
