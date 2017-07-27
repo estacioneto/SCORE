@@ -34,7 +34,8 @@
             'autenticacaoModulo',
             'localModulo',
             'dataModulo',
-            'constantesModulo'
+            'constantesModulo',
+            'reservaModulo'
         ]);
 
     app.constant('_', window._)

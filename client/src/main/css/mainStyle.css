@@ -247,3 +247,7 @@ md-input-container.md-input-invalid > md-icon {
     max-width: 100px;
     max-height: 100px;
 }
+
+.tipo-reserva {
+    margin-left: 50px;
+}

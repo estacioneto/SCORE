@@ -4,7 +4,7 @@
      * Controller responsável pelo modal de detalhes da reserva.
      * 
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA) {
 
         const self = this;
 
@@ -13,6 +13,8 @@
         this.reservaOriginal;
 
         this.isEdicao = !reserva.autor;
+
+        this.tiposReserva = TIPOS_RESERVA;
 
         /**
          * Ativa o modo de edição de reserva.
