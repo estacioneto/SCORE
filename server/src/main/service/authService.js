@@ -47,7 +47,11 @@ export class AuthService {
      * @param {Function} callback    Função de callback chamada após a requisição do perfil do usuário.
      */
     static getProfile(accessToken, callback) {
-        return auth0Authentication.getProfile(accessToken, callback);
+        return auth0Authentication.getProfile(accessToken, (err, result) => {
+            if (err) return callback(err);
+            result = (!_.isObject(result)) ? JSON.parse(result) : result;
+            return callback(err, result);
+        });
     }
 
     /**
@@ -57,7 +61,11 @@ export class AuthService {
      * @param {Function} callback Função de callback executada após a consulta do usuário.
      */
     static getUserById(idUsuario, callback) {
-        return auth0Management.getUser({id: idUsuario}, callback);
+        return auth0Management.getUser({id: idUsuario}, (err, result) => {
+            if (err) return callback(err);
+            result = (!_.isObject(result)) ? JSON.parse(result) : result;
+            return callback(err, result);
+        });
     }
 }
 
