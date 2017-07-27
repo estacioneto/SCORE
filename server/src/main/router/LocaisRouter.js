@@ -45,12 +45,12 @@ function cadastrarLocal(router) {
 }
 
 /**
- * Configura o PATCH em /api/locais/:id. Atualiza um local e retorna o local atualizado.
+ * Configura o PUT em /api/locais/:id. Atualiza um local e retorna o local atualizado.
  *
  * @param {Router} router Express Router.
  */
 function atualizarLocal(router) {
-    router.patch('/:id', AdminMiddleware, (req, res) =>
+    router.put('/:id', AdminMiddleware, (req, res) =>
         LocaisService.atualizarLocal(req.params.id, req.body)
             .then(localAtualizado => res.status(_.OK).json(localAtualizado))
             .catch(_.retornarResponseErro(res))
