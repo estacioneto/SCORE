@@ -85,6 +85,7 @@
                 },
                 eventClick: self.clickReserva,
                 dayClick: self.clickDia,
+                eventAfterAllRender: transformaBotoesCalendario,
                 buttonText: {
                     agendaWeek: 'Semana',
                     agendaDay: 'Dia'
@@ -139,25 +140,12 @@
         /**
          * Modifica os botões do calendário para terem os estilos seguindo padrão
          * material, adicionando a classe md-button.
-         * Tem o timeout para a função ser executada assim que a página terminar de ser renderizada.
-         * 
-         * Caso a função seja invocada antes da renderização do calendário, a lista de botões
-         * vai ser vazia, e a função entra em delay novamente para ser re-executada.
          */
         function transformaBotoesCalendario() {
-            setTimeout(() => {
-                const listaBotoes = $('button[class*="fc-button"]');
-                listaBotoes.each(function (i) {
-                    $(this).addClass("md-button");
-                });
-
-                if (_.isEmpty(listaBotoes))
-                    transformaBotoesCalendario();
+            const listaBotoes = $('button[class*="fc-button"]');
+            listaBotoes.each(function (i) {
+                $(this).addClass("md-button");
             });
         }
-
-        (() => {
-            transformaBotoesCalendario();
-        })();
     }]);
 })();
