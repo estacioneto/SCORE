@@ -4,7 +4,7 @@
      * Controller responsável pelo modal de detalhes da reserva.
      * 
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', '$q', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, $q) {
 
         const self = this;
 
@@ -73,6 +73,9 @@
          * @return Promise.
          */
         this.salvarReserva = () => {
+            if (!self.reserva.termoAceito) {
+                return $q.reject("Você deve aceitar os termos de criação da reserva.");
+            }
             self.isEdicao = false;
             preSalvar();
 
@@ -154,6 +157,11 @@
         this.podeExcluir = () => {
             return self.ehDonoDaReserva() && !self.isEdicao;
         };
+
+        /**
+         * Indica se a reserva ainda não foi persistida.
+         */
+        this.isCriacao = () => !self.reserva._id;
 
         /**
          * Indica se o usuário logado pode editar a reserva.

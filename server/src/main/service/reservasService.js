@@ -32,6 +32,10 @@
     reservasService.salvaReserva = (token, reserva, callback) => {
         usersService.getUser(token, (err, user) => {
             if(err) return callback(err, null);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>");
+            console.log(user.user_metadata);
+            console.log(user);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>");
             reserva.emailAutor = user.email;
             reserva.userId = user.user_id;
             reserva.autor = user.user_metadata.nome_completo;
