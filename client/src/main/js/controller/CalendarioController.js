@@ -143,8 +143,10 @@
          */
         function transformaBotoesCalendario() {
             const listaBotoes = $('button[class*="fc-button"]');
+            const mdButton = "md-button";
             listaBotoes.each(function (i) {
-                $(this).addClass("md-button");
+                if (!$(this).hasClass(mdButton)) 
+                    $(this).addClass(mdButton);
             });
         }
     }]);
