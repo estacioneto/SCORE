@@ -14,7 +14,7 @@
 
         this.isEdicao = !reserva.autor;
 
-        //FIXME: Isso deve ficar aqui mesmo?
+        //TODO: Colocar isso em um service
         this.tiposReserva = ['Defesa', 'Video-conferencia', 'Reuniao', 'Assembleia'];
 
         /**
