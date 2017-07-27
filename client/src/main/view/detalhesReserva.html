@@ -12,7 +12,7 @@
                 <div layout="column" 
                     flex="100"
                     layout-wrap>
-                    <!--Barra com hora e fechar-->
+                    <!--Barra com hora, fechar e tipo-->
                     <div layout="row" layout-align="space-between start">
                         <!--Hora da reserva-->
                         <div layout="column">
@@ -22,14 +22,14 @@
                             <div layout="row" data-ng-if="reservaCtrl.isEdicao">
                                 <md-input-container>
                                     <label>Início</label>
-                                    <input type="time" 
-                                        required 
+                                    <input type="time"
+                                        required
                                         ng-model="reservaCtrl.reserva.inicio">
                                 </md-input-container>
                                 <md-input-container>
                                     <label>Fim</label>
-                                    <input type="time" 
-                                        required 
+                                    <input type="time"
+                                        required
                                         ng-model="reservaCtrl.reserva.fim">
                                 </md-input-container>
                             </div>
@@ -37,10 +37,10 @@
                         </div>
                         <!--end Hora da reserva-->
                         <!--Tipo Reserva-->
-                        <div layout="column" flex="30" layout-margin style="padding-top: 7px">
+                        <div layout="column" flex="25">
+                            <span class="md-subhead">Tipo do evento</span>
                             <div layout="row">
-                                <md-input-container>
-                                    <label>Evento</label>
+                                <md-input-container flex>
                                     <md-select data-ng-model="reservaCtrl.tipoSelecionado" required>
                                         <md-option data-ng-repeat="tipo in reservaCtrl.tiposReserva" data-ng-value="tipo">
                                             {{tipo}}
@@ -56,7 +56,7 @@
                         </md-button>
                         <!--end Fechar modal-->
                     </div>
-                    <!--end Barra com hora e fechar-->
+                    <!--end Barra com hora, fechar e tipo-->
                     <br>
                     <!--Titulo reserva-->
                     <div data-ng-if="!reservaCtrl.isEdicao" layout="column">
