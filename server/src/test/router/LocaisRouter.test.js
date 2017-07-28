@@ -81,7 +81,7 @@ describe('LocaisRouterTest', () => {
      * @param {Object}   reqBody    Objeto a ser enviado.
      * @param {Function} done       Função chamada quando o teste acabar.
      */
-    function testeEndPointNotFound({metodoHttp, idLocal, reqBody = {}, done}) {
+    function testeEndPointNotFound({metodoHttp, idLocal = mongoose.Types.ObjectId(), reqBody = {}, done}) {
         requisicaoLocais(metodoHttp, idLocal)
             .send(reqBody)
             .expect(_.NOT_FOUND).end((err, res) => {
@@ -171,9 +171,8 @@ describe('LocaisRouterTest', () => {
 
     describe('GET /api/locais/:id deve', () => {
         it('retornar o erro corretamente caso o local com o id informado não exista', done => {
-            const metodoHttp = 'GET',
-                idLocal = mongoose.Types.ObjectId();
-            testeEndPointNotFound({metodoHttp, idLocal, done});
+            const metodoHttp = 'GET';
+            testeEndPointNotFound({metodoHttp, done});
         });
 
         it('retornar o local dado o id do mesmo', done => {
@@ -206,9 +205,8 @@ describe('LocaisRouterTest', () => {
         });
 
         it('retornar o erro corretamente caso o local com o id informado não exista', done => {
-            const metodoHttp = 'DELETE',
-                idLocal = mongoose.Types.ObjectId();
-            testeEndPointNotFound({metodoHttp, idLocal, done});
+            const metodoHttp = 'DELETE';
+            testeEndPointNotFound({metodoHttp, done});
         });
 
         it('retornar o local removido e remover o mesmo corretamente', done => {
@@ -230,14 +228,7 @@ describe('LocaisRouterTest', () => {
                     expect(localRemovido).to.be.eql(localCadastrado);
 
                     // Consulta novamente o local.
-                    requisicaoLocais('GET', localCadastrado._id).expect(_.NOT_FOUND).end((err, res) => {
-
-                        expect(err).to.not.be.ok;
-
-                        const resposta = res.body;
-                        expect(resposta.mensagem).to.be.eql(_.CONSTANTES_LOCAL.ERRO_LOCAL_NAO_ENCONTRADO);
-                        done();
-                    });
+                    testeEndPointNotFound({metodoHttp: 'GET', done});
                 });
             });
         });
