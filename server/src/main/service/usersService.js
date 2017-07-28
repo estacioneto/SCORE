@@ -2,9 +2,9 @@ import _ from '../util/util';
 import {AuthService} from './authService';
 
 /**
- * The usersService deals with the more complex user detail/logic. It's
- * responsible for anything related to caching the users too.
- * It is extremely useful to us to identify the logged user.
+ * O usersService lida com os detalhes mais complexos detalhes/lógica de usuário. É 
+ * responsável por tudo relacionado a caching de usuários e é extremamente útil para identificar
+ * o usuário logado.
  *
  * @author Estácio Pereira.
  */
@@ -14,12 +14,11 @@ let usersService = {
 };
 
 /**
- * Gets an element from the cache. Required to control the more accessed
- * elements
+ * Recupera um elemento do cache. Requerido para controlar o elemento mais acessado.
  *
- * @param   {string} cache Name of the cache.
- * @param   {string} key   Key of the desired element.
- * @returns {String} Value in cache.
+ * @param   {string} cache Nome do cache.
+ * @param   {string} key   Chave para o elemento requerido.
+ * @returns {String} Valor em cache.
  */
 function getFromCache(cache, key) {
     usersService[cache][key].touched = Date.now();
@@ -27,11 +26,11 @@ function getFromCache(cache, key) {
 }
 
 /**
- * Puts an element on the cache.
+ * Insere um elemento no cache.
  *
- * @param   {string} cache Name of the cache.
- * @param   {string} key   Key of the desired element.
- * @param   {Object} value Value to be put on cache.
+ * @param   {string} cache Nome do cache.
+ * @param   {string} key   Chave do elemento requerido.
+ * @param   {Object} value Valor para inserir no cache.
  */
 function putOnCache(cache, key, value) {
     usersService[cache][key] = {
@@ -41,10 +40,9 @@ function putOnCache(cache, key, value) {
 }
 
 /**
- * The elements that have not been accessed recently (one hour... yeah...)
- * will be deleted.
+ * Limpa do cache os elementos que não foram acessados recentemente (60 minutos atrás).
  *
- * @param {string} cache Name of the cache.
+ * @param {string} cache Nome do cache.
  */
 function clearCache(cache) {
     _.each(usersService[cache], function (element, key) {
@@ -53,18 +51,18 @@ function clearCache(cache) {
 }
 
 /**
- * Verifies if a given user is cached.
+ * Verifica se o usuário está em cache.
  *
- * @param   {Object}  user Requested user.
- * @returns {boolean} true if the user is cached, false otherwise.
+ * @param   {Object}  user O usuário para verificar.
+ * @returns {boolean} true se o usuário está em cache, false caso contrário.
  */
 usersService.isCached = user => _.some(usersService.cache, {value: JSON.stringify(user)});
 
 /**
- * Adds a user to cache.
+ * Adiciona um usuário no cache.
  *
- * @param {String} token Token of the user.
- * @param {Object} user  User to be cached.
+ * @param {String} token O token do usuário.
+ * @param {Object} user  O usuário para adicionar em cache.
  */
 usersService.cacheUser = (token, user) => {
     if (!_.isEmpty(token) && !_.isEmpty(user)) {
@@ -91,11 +89,11 @@ usersService.getUserById = (userId, callback) => {
 };
 
 /**
- * Gets the user with the given token, if it exists (error, otherwise).
- * If the user is cached, we don't need to request Auth0.
+ * Recupera o usuário com o token dado, se este existir (erro, caso contrário).
+ * Se o usuário está em cache, não precisa requisitar Auth0.
  *
  * @param {String}   accessToken Token de acesso.
- * @param {Function} callback    Callback function called after the query.
+ * @param {Function} callback    Funcao callback chamada após a query.
  */
 usersService.getUser = (accessToken, callback) => {
     if (usersService.cache[accessToken]) {
@@ -119,7 +117,7 @@ usersService.getLoggedUserTokenByEmail = email => {
 };
 
 /**
- * Activates the cache cleaner.
+ * Ativa o limpador do cache.
  */
 (() => {
     setInterval(() => {
