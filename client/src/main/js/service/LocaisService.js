@@ -3,61 +3,80 @@
 
     angular.module('localModulo').service('LocaisService', ['$http', '$q', 'Local', function ($http, $q, Local) {
 
-        // TODO: Implementar lógica inteira, @author Estácio Pereira.
-        const auditorioSPLab = {
-                _id: 1,
-                nome: 'Auditorio SPLab',
-                bloco: 'CQ/SPLab',
-                imagens: [],
-                equipamentos: [{
-                    nome: 'equipamento1',
-                    quantidade: 1
-                }, {
-                    nome: 'equipamento2',
-                    quantidade: 2
-                }],
-                capacidade: 40,
-                funcionamento: '08001800',
-                observacoes: 'O SPLab não é achado fácil por entregadores'
-            },
-            auditorioHattori = {
-                _id: 2,
-                nome: 'Auditorio Hattori',
-                bloco: 'CN',
-                imagens: [],
-                equipamentos: [{
-                    nome: 'equipamentoHattori1',
-                    quantidade: 1
-                }, {
-                    nome: 'equipamentoHattori2',
-                    quantidade: 10
-                }],
-                capacidade: 200,
-                funcionamento: '08001800'
-            },
-            salaReunioes = {
-                _id: 10,
-                nome: 'Sala de Reuniões',
-                bloco: 'CQ/SPLab',
-                imagens: [],
-                equipamentos: [{
-                    nome: 'equipamentoSPLAB1',
-                    quantidade: 1
-                }, {
-                    nome: 'equipamentoSPLAB2',
-                    quantidade: 220
-                }],
-                capacidade: 10,
-                funcionamento: '08001200'
-            };
-        const locais = [auditorioSPLab, auditorioHattori, salaReunioes, auditorioSPLab, auditorioHattori, salaReunioes, auditorioSPLab, auditorioHattori, salaReunioes, auditorioSPLab, auditorioHattori, salaReunioes];
+        const API = '/api/locais';
 
+        /**
+         * Retorna todos os locais.
+         *
+         * @return {Promise} Promise contendo a lista de locais.
+         */
         this.carregarLocais = function () {
-            return $q.when({data: locais.map(local => new Local(local))});
+            return $http.get(API).then(data => {
+                const locais = data.data;
+                return { data: locais.map(local => new Local(local)) };
+            });
         };
 
+        /**
+         * Retorna um local de acordo com o id especificado.
+         *
+         * @param id Id do local a ser retornado.
+         * @return {Promise} Promise contendo o local.
+         */
         this.carregarLocal = function (id) {
-            return $q.when({data: _.find(locais, local => local._id === id)});
+            return $http.get(`${API}/${id}`).then(data => {
+                const local = data.data;
+                return {data: new Local(local)};
+            });
+        };
+
+        /**
+         * Salva o local especificado, ou editando-o se o mesmo já pertence ao BD ou
+         * criando-o caso contrário.
+         *
+         * @return {Promise} Promise contendo o local salvo.
+         */
+        this.salvarLocal = function (local) {
+            return (local._id) ? editarLocal(local) : criarLocal(local);
+        };
+
+        /**
+         * Persiste um novo local.
+         *
+         * @param local Local a ser persistido.
+         * @return {Promise} Promise contendo o local criado.
+         */
+        function criarLocal(local) {
+            return $http.post(API, local).then(data => {
+                const local = data.data;
+                return {data: new Local(local)};
+            });
+        }
+
+        /**
+         * Edita um local já existente.
+         *
+         * @param local Local a ser editado.
+         * @return {Promise} Promise contendo o local editado.
+         */
+        function editarLocal(local) {
+            return $http.put(`${API}/${local._id}`, local).then(data => {
+                const local = data.data;
+                return {data: new Local(local)};
+            });
+        }
+
+        /**
+         * Deleta um local.
+         *
+         * @param id Id do local a ser deletado.
+         * @return {Promise} Promise contento o local deletado.
+         */
+        this.excluirLocal = function (id) {
+            return $http.delete(`${API}/${id}`).then(data => {
+                const local = data.data;
+                return {data: new Local(local)};
+            });
         };
     }]);
 })();
