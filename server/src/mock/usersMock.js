@@ -98,9 +98,9 @@
     _.generateNewString(Math.floor(Math.random() * _.RANDOM_STRING_LENGTH)) + '.com';
 
     /**
-     * Retorna um JWT real sem expiração.
+     * Retorna um 'real JWT' sem expiração.
      *
-     * @returns {String} O JWT real sem expiração.
+     * @returns {String} O 'real JWT' sem expiração.
      */
     UserMock.getToken = () => token;
 

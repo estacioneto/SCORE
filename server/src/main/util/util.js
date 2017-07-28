@@ -96,10 +96,10 @@
     _.getToken = req => req.header('access_token') || _.getAuthorizationToken(req);
 
     /**
-     * Returns the token present at the authorization header property.
+     * Retorna o token presente na propriedade de autorização do header.
      *
-     * @param   {Object} req The request.
-     * @returns {String} The authorization token.
+     * @param   {Object} req O request.
+     * @returns {String} O token de autorização.
      */
     _.getAuthorizationToken = (req) => {
         let authHeader = req.header('Authorization');

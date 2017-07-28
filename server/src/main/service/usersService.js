@@ -2,9 +2,9 @@ import _ from '../util/util';
 import {AuthService} from './authService';
 
 /**
- * O usersService lida com os detalhes mais complexos detalhes/lógica de usuário. É 
- * responsável por tudo relacionado a caching de usuários e é extremamente útil para identificar
- * o usuário logado.
+ * O usersService lida com detalhes/lógica de usuário mais complexas. É responsável 
+ * por tudo relacionado a caching de usuários e é extremamente útil 
+ * para identificar o usuário logado.
  *
  * @author Estácio Pereira.
  */
@@ -93,7 +93,7 @@ usersService.getUserById = (userId, callback) => {
  * Se o usuário está em cache, não precisa requisitar Auth0.
  *
  * @param {String}   accessToken Token de acesso.
- * @param {Function} callback    Funcao callback chamada após a query.
+ * @param {Function} callback    Função callback chamada após a query.
  */
 usersService.getUser = (accessToken, callback) => {
     if (usersService.cache[accessToken]) {
