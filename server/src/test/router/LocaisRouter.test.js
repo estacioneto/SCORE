@@ -48,6 +48,7 @@ describe('LocaisRouterTest', () => {
         cacheUsuarioComum();
         request(app)[_.toLower(metodoHttp)](uri)
             .set('Authorization', `Bearer ${token}`)
+            .set('access_token', token)
             .send(reqBody)
             .expect(_.FORBIDDEN).end((err, res) => {
 
@@ -67,6 +68,7 @@ describe('LocaisRouterTest', () => {
         it('retornar um array de Locais', done => {
             request(app).get(_.CONSTANTES_LOCAL.URI)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .expect(_.OK).end((err, res) => {
 
                 expect(err).to.not.be.ok;
@@ -81,6 +83,7 @@ describe('LocaisRouterTest', () => {
             const localMock = LocaisMock.getLocal();
             request(app).post(_.CONSTANTES_LOCAL.URI)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .send(localMock)
                 .expect(_.CREATED).end((err, res) => {
 
@@ -89,6 +92,7 @@ describe('LocaisRouterTest', () => {
 
                 request(app).get(_.CONSTANTES_LOCAL.URI)
                     .set('Authorization', `Bearer ${token}`)
+                    .set('access_token', token)
                     .expect(_.OK).end((err, res) => {
 
                     expect(err).to.not.be.ok;
@@ -116,6 +120,7 @@ describe('LocaisRouterTest', () => {
 
             request(app).post(_.CONSTANTES_LOCAL.URI)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .send(localMock)
                 .expect(_.BAD_REQUEST).end((err, res) => {
 
@@ -132,6 +137,7 @@ describe('LocaisRouterTest', () => {
 
             request(app).post(_.CONSTANTES_LOCAL.URI)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .send(localMock)
                 .expect(_.CREATED).end((err, res) => {
 
@@ -149,6 +155,7 @@ describe('LocaisRouterTest', () => {
         it('retornar o erro corretamente caso o local com o id informado não exista', done => {
             request(app).get(`${_.CONSTANTES_LOCAL.URI}/${mongoose.Types.ObjectId()}`)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .expect(_.NOT_FOUND).end((err, res) => {
 
                 expect(err).to.not.be.ok;
@@ -164,6 +171,7 @@ describe('LocaisRouterTest', () => {
 
             request(app).post(_.CONSTANTES_LOCAL.URI)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .send(localMock)
                 .expect(_.CREATED).end((err, res) => {
 
@@ -172,6 +180,7 @@ describe('LocaisRouterTest', () => {
 
                 request(app).get(`${_.CONSTANTES_LOCAL.URI}/${localCadastrado._id}`)
                     .set('Authorization', `Bearer ${token}`)
+                    .set('access_token', token)
                     .expect(_.OK).end((err, res) => {
 
                     expect(err).to.not.be.ok;
@@ -195,6 +204,7 @@ describe('LocaisRouterTest', () => {
         it('retornar o erro corretamente caso o local com o id informado não exista', done => {
             request(app).delete(`${_.CONSTANTES_LOCAL.URI}/${mongoose.Types.ObjectId()}`)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .expect(_.NOT_FOUND).end((err, res) => {
 
                 expect(err).to.not.be.ok;
@@ -211,6 +221,7 @@ describe('LocaisRouterTest', () => {
             // Cadastrar Local
             request(app).post(_.CONSTANTES_LOCAL.URI)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .send(localMock)
                 .expect(_.CREATED).end((err, res) => {
 
@@ -220,6 +231,7 @@ describe('LocaisRouterTest', () => {
                 // Deletar local
                 request(app).delete(`${_.CONSTANTES_LOCAL.URI}/${localCadastrado._id}`)
                     .set('Authorization', `Bearer ${token}`)
+                    .set('access_token', token)
                     .expect(_.OK).end((err, res) => {
 
                     expect(err).to.not.be.ok;
@@ -250,6 +262,7 @@ describe('LocaisRouterTest', () => {
             const localMock = LocaisMock.getLocal();
             request(app).post(_.CONSTANTES_LOCAL.URI)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .send(localMock)
                 .expect(_.CREATED).end((err, res) => {
 
@@ -271,6 +284,7 @@ describe('LocaisRouterTest', () => {
             delete novoLocal.bloco;
             request(app).put(`${_.CONSTANTES_LOCAL.URI}/${localCadastrado._id}`)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .send(novoLocal)
                 .expect(_.BAD_REQUEST).end((err, res) => {
 
@@ -286,6 +300,7 @@ describe('LocaisRouterTest', () => {
             novoLocal.bloco = 'LCC3';
             request(app).put(`${_.CONSTANTES_LOCAL.URI}/${localCadastrado._id}`)
                 .set('Authorization', `Bearer ${token}`)
+                .set('access_token', token)
                 .send(novoLocal)
                 .expect(_.OK).end((err, res) => {
 
