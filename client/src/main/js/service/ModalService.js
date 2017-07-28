@@ -16,13 +16,14 @@
          *
          * @param mensagem Mensagem a ser mostrada no modal.
          */
-        this.confirmar = mensagem => {
-            const modal = $mdDialog.confirm({
-                title: 'Confirmar',
-                textContent: mensagem,
-                ok: 'Sim',
-                cancel: 'Não'
-            });
+        this.confirmar = (titulo, mensagem) => {
+            //Sobre multiple: https://github.com/angular/material/issues/8630
+            const modal = $mdDialog.confirm()
+                .title(titulo)
+                .textContent(mensagem)
+                .multiple(true)
+                .ok('Sim')
+                .cancel('Não');
 
             return $mdDialog.show(modal);
         };

@@ -133,11 +133,13 @@
          * @return Promise.
          */
         this.excluirReserva = () => {
-            return self.reserva.excluir().then(data => {
-                AgendamentoService.excluir(self.reserva);
-                self.fecharModal();
-                ToastService.showActionToast("Reserva excluída.");
-                return data;
+            ModalService.confirmar("Excluir reserva", "Ação não pode ser desfeita. Confirma?").then(() => {
+                return self.reserva.excluir().then(data => {
+                    AgendamentoService.excluir(self.reserva);
+                    self.fecharModal();
+                    ToastService.showActionToast("Reserva excluída.");
+                    return data;
+                });
             });
         };
 
