@@ -204,7 +204,7 @@ function runTests() {
  */
 gulp.task('test-coverage', function (cb) {
     return gulp.src('./src/main/**/*.js')
-        .pipe(istanbul({includeAllSources: true, instrumenter: isparta.Instrumenter}))
+        .pipe(istanbul({includeUntested: true, instrumenter: isparta.Instrumenter}))
         .pipe(istanbul.hookRequire())
         .on('end', function (err) {
             var dropDB = spawn('mongo', ['SCORE-TESTDB', '--eval', '"db.dropDatabase();"']);
