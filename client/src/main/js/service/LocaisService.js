@@ -24,10 +24,7 @@
          * @return {Promise} Promise contendo o local.
          */
         this.carregarLocal = function (id) {
-            return $http.get(`${API}/${id}`).then(data => {
-                const local = data.data;
-                return {data: new Local(local)};
-            });
+            return $http.get(`${API}/${id}`).then(retornarLocal);
         };
 
         /**
@@ -47,10 +44,7 @@
          * @return {Promise} Promise contendo o local criado.
          */
         function criarLocal(local) {
-            return $http.post(API, local).then(data => {
-                const local = data.data;
-                return {data: new Local(local)};
-            });
+            return $http.post(API, local).then(retornarLocal);
         }
 
         /**
@@ -60,10 +54,7 @@
          * @return {Promise} Promise contendo o local editado.
          */
         function editarLocal(local) {
-            return $http.put(`${API}/${local._id}`, local).then(data => {
-                const local = data.data;
-                return {data: new Local(local)};
-            });
+            return $http.put(`${API}/${local._id}`, local).then(retornarLocal);
         }
 
         /**
@@ -73,10 +64,18 @@
          * @return {Promise} Promise contento o local deletado.
          */
         this.excluirLocal = function (id) {
-            return $http.delete(`${API}/${id}`).then(data => {
-                const local = data.data;
-                return {data: new Local(local)};
-            });
+            return $http.delete(`${API}/${id}`).then(retornarLocal);
         };
+
+        /**
+         * Retorna o local, como objeto Local, encapsulado pela resposa da requisição, data.
+         *
+         * @param data Resposta da requisição.
+         * @return {{data: (Local|*)}} Objeto contendo o local a ser retornado.
+         */
+        function retornarLocal(data) {
+            const local = data.data;
+            return {data: new Local(local)};
+        }
     }]);
 })();
