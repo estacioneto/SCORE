@@ -8,7 +8,8 @@
      */
     angular.module('localModulo', []).factory('Local', [function () {
 
-        const HORA_INICIO_INDICE = 2,
+        const PRIMEIRO_INDICE = 0,
+            HORA_INICIO_INDICE = 2,
             MINUTO_INICIO_INDICE = 4,
             HORA_FIM_INDICE = 6;
 
