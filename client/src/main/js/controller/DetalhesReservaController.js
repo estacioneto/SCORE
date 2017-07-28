@@ -131,7 +131,6 @@
          * @return Promise.
          */
         this.excluirReserva = () => {
-            //https://github.com/angular/material/issues/8630
             ModalService.confirmar("Excluir reserva", "Ação não pode ser desfeita. Confirma?").then(() => {
                 return self.reserva.excluir().then(data => {
                     AgendamentoService.excluir(self.reserva);

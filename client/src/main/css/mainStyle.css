@@ -106,10 +106,6 @@ md-dialog {
     overflow: visible;
 }
 
-md-dialog md-dialog-actions {
-   justify-content: space-around;
-}
-
 .note-modal-header {
     overflow: visible;
 }
