@@ -36,6 +36,18 @@ describe('LocaisRouterTest', () => {
     }
 
     /**
+     * Retorna a requisição desejada em /locais/:idLocal
+     *
+     * @param {String} metodoHttp     Método http do endpoint a ser testado.
+     * @param {String} [idLocal = ''] Id do local a ser realizado GET. Se não passado, retorna listagem.
+     */
+    function requisicaoLocais(metodoHttp, idLocal = '') {
+        return request(app)[_.toLower(metodoHttp)](`${_.CONSTANTES_LOCAL.URI}/${idLocal}`)
+            .set('Authorization', `Bearer ${token}`)
+            .set('access_token', token);
+    }
+
+    /**
      * Testa um endpoint para que o mesmo tenha resposta Forbidden (403).
      * Função auxiliar para aumentar o reúso de código.
      *
@@ -61,15 +73,25 @@ describe('LocaisRouterTest', () => {
     }
 
     /**
-     * Retorna a requisição desejada em /locais/:idLocal
+     * Testa um endpoint para que o mesmo tenha resposta Not Found (404).
+     * Função auxiliar para aumentar o reúso de código.
      *
-     * @param {String} metodoHttp     Método http do endpoint a ser testado.
-     * @param {String} [idLocal = ''] Id do local a ser realizado GET. Se não passado, retorna listagem.
+     * @param {String}   metodoHttp Método http do endpoint a ser testado.
+     * @param {String}   idLocal    Id do local.
+     * @param {Object}   reqBody    Objeto a ser enviado.
+     * @param {Function} done       Função chamada quando o teste acabar.
      */
-    function requisicaoLocais(metodoHttp, idLocal = '') {
-        return request(app)[_.toLower(metodoHttp)](`${_.CONSTANTES_LOCAL.URI}/${idLocal}`)
-                .set('Authorization', `Bearer ${token}`)
-                .set('access_token', token);
+    function testeEndPointNotFound({metodoHttp, idLocal, reqBody = {}, done}) {
+        requisicaoLocais(metodoHttp, idLocal)
+            .send(reqBody)
+            .expect(_.NOT_FOUND).end((err, res) => {
+
+            expect(err).to.not.be.ok;
+
+            const erro = res.body;
+            expect(erro.mensagem).to.be.eql(_.CONSTANTES_LOCAL.ERRO_LOCAL_NAO_ENCONTRADO);
+            done();
+        });
     }
 
     beforeEach(() => {
@@ -149,13 +171,9 @@ describe('LocaisRouterTest', () => {
 
     describe('GET /api/locais/:id deve', () => {
         it('retornar o erro corretamente caso o local com o id informado não exista', done => {
-            requisicaoLocais('GET', mongoose.Types.ObjectId()).expect(_.NOT_FOUND).end((err, res) => {
-                expect(err).to.not.be.ok;
-
-                const resposta = res.body;
-                expect(resposta.mensagem).to.be.eql(_.CONSTANTES_LOCAL.ERRO_LOCAL_NAO_ENCONTRADO);
-                done();
-            });
+            const metodoHttp = 'GET',
+                idLocal = mongoose.Types.ObjectId();
+            testeEndPointNotFound({metodoHttp, idLocal, done});
         });
 
         it('retornar o local dado o id do mesmo', done => {
@@ -188,15 +206,9 @@ describe('LocaisRouterTest', () => {
         });
 
         it('retornar o erro corretamente caso o local com o id informado não exista', done => {
-            requisicaoLocais('DELETE', mongoose.Types.ObjectId())
-                .expect(_.NOT_FOUND).end((err, res) => {
-
-                expect(err).to.not.be.ok;
-
-                const resposta = res.body;
-                expect(resposta.mensagem).to.be.eql(_.CONSTANTES_LOCAL.ERRO_LOCAL_NAO_ENCONTRADO);
-                done();
-            });
+            const metodoHttp = 'DELETE',
+                idLocal = mongoose.Types.ObjectId();
+            testeEndPointNotFound({metodoHttp, idLocal, done});
         });
 
         it('retornar o local removido e remover o mesmo corretamente', done => {
