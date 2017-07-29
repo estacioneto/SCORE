@@ -114,7 +114,7 @@
         const caso2 = inicio1 <  fim2    && fim1 >  fim2;
         const caso3 = inicio1 >= inicio2 && fim1 <= fim2;
         const caso4 = inicio1 <= inicio2 && fim1 >= fim2;
-        return caso1 || caso2 || caso3 || caso4;
+        return caso1 || caso2 || cas/o3 || caso4;
     }
 
     /**
@@ -130,6 +130,11 @@
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) return callback(err,null);
             let reservaAntiga = reserva;
+            // FIXME: Desfazer isso quando passarmos a utilizar
+            // patch corretamente. Necessário por a atualização
+            // atual assumir que deve deletar propriedades que não
+            // foram enviadas do cliente, e estas não são realmente enviadas nunca.
+            // @author Eric Breno - 29/07/17
             novaReserva.emailAutor = reservaAntiga.emailAutor;
             novaReserva.userId = reservaAntiga.userId;
             novaReserva.autor = reservaAntiga.autor;
