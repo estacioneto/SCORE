@@ -7,8 +7,10 @@
     "prestart": "yarn install",
     "start": "babel-node app.js",
     "pretest": "yarn install",
-    "test": "gulp --gulpfile ./server/gulpfile.js test-coverage --color",
-	"coveralls": "cat ./server/coverage/lcov.info | coveralls"
+    "test": "npm run coverage",
+    "coverage": "npm run coverage-server",
+    "coverage-server": "babel-node ./node_modules/.bin/babel-istanbul cover _mocha -- --reporter nyan --compilers js:babel-core/register --recursive 'server/src/test/**/*.test.js'",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "author": "",
   "license": "ISC",
@@ -64,6 +66,7 @@
     "auth0-angular": "^4.2.7",
     "auth0-js": "^8.8.0",
     "auth0-lock": "^10.7.3",
+    "babel-istanbul": "^0.12.2",
     "body-parser": "*",
     "bootstrap": "^3.3.7",
     "bootstrap-material-design": "^0.5.10",

@@ -6,5 +6,5 @@ node_modules/
 npm-debug.log
 yarn-error.log
 /**/*.js.html
-server/coverage/
+**/coverage/
 package-lock.json
