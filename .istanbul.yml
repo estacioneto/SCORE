@@ -5,4 +5,5 @@ instrumentation:
     extensions:
         - .js
     default-excludes: true
-    excludes: ['**/mock/**/*.js']
+    excludes: ['**/mock/**/*.js', '**/client/**/**.js', "**/server/*.js", "*.js", "**/coverage/**", "**/middleware/bootstrapMiddleware.js"]
+    include-all-sources: true
