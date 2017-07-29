@@ -118,11 +118,16 @@
                     <br>
                     <br>
 
-                    <md-checkbox ng-if="reservaCtrl.isCriacao()" 
-                            ng-model="reservaCtrl.reserva.termoAceito" 
-                            aria-label="Checkbox 1">
-                        Li e aceito os termos para criação da reserva. {{ termoAceito }}
-                    </md-checkbox>
+                    <div layout="row">
+                        <md-checkbox ng-if="reservaCtrl.isCriacao()" 
+                                ng-model="reservaCtrl.reserva.termoAceito" 
+                                aria-label="Checkbox 1"
+                                id="checkbox-termos">
+                        </md-checkbox>
+                        <span class="md-subhead">
+                            Li e aceito os <a href="" ng-click="reservaCtrl.verTermo()">termos</a> para criação da reserva.
+                        </span>
+                    </div>
 
                     <!--Botões-->
                     <div layout="row"
