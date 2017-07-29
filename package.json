@@ -7,9 +7,10 @@
     "prestart": "yarn install",
     "start": "babel-node app.js",
     "pretest": "yarn install",
-    "test": "gulp --gulpfile ./server/gulpfile.js test --color",
+    "test": "npm run coverage",
+    "coverage": "npm run coverage-server",
     "coverage-server": "babel-node ./node_modules/.bin/babel-istanbul cover _mocha -- --reporter nyan --compilers js:babel-core/register --recursive 'server/src/test/**/*.test.js'",
-    "coveralls": "npm run coverage-server && cat ./server/coverage/lcov.info | coveralls"
+    "coveralls": "cat ./server/coverage/lcov.info | coveralls"
   },
   "author": "",
   "license": "ISC",
