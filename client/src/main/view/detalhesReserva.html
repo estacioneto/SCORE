@@ -45,7 +45,7 @@
                             <div layout="row" data-ng-if="reservaCtrl.isEdicao">
                                 <md-input-container flex>
                                     <md-select data-ng-model="reservaCtrl.reserva.tipo" required>
-                                        <md-option data-ng-repeat="(tipo, x) in reservaCtrl.tiposReserva" data-ng-value="tipo">
+                                        <md-option data-ng-repeat="(tipo, propriedades) in reservaCtrl.tiposReserva" data-ng-value="tipo">
                                             {{tipo}}
                                         </md-option>
                                     </md-select>
@@ -70,7 +70,7 @@
                         <div layout="row" data-ng-if="reservaCtrl.isEdicao">
                             <md-input-container flex>
                                 <md-select data-ng-model="reservaCtrl.reserva.tipo" required>
-                                    <md-option data-ng-repeat="(tipo, x) in reservaCtrl.tiposReserva" data-ng-value="tipo">
+                                    <md-option data-ng-repeat="(tipo, propriedades) in reservaCtrl.tiposReserva" data-ng-value="tipo">
                                         {{tipo}}
                                     </md-option>
                                 </md-select>
