@@ -1,9 +1,12 @@
 instrumentation:
-    report: lcov
-    dir: server/coverage
     root: .
     extensions:
         - .js
     default-excludes: true
     excludes: ['**/mock/**/*.js', '**/client/**/**.js', "**/server/*.js", "*.js", "**/coverage/**", "**/middleware/bootstrapMiddleware.js"]
     include-all-sources: true
+reporting:
+    print: summary
+    reports:
+        - lcov
+    dir: ./server/coverage
