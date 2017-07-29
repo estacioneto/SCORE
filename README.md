@@ -1,7 +1,7 @@
 # SCORE - Sistema de COntrole de REservas
 
 [![Build Status](https://travis-ci.org/estacioneto/SCORE.svg?branch=master)](https://travis-ci.org/estacioneto/SCORE) 
-[![Coverage Status](https://coveralls.io/repos/github/estacioneto/SCORE/badge.svg)](https://coveralls.io/github/estacioneto/SCORE)
+[![Coverage Status](https://coveralls.io/repos/github/estacioneto/SCORE/badge.svg?branch=master)](https://coveralls.io/github/estacioneto/SCORE?branch=master)
 [![Code Climate](https://codeclimate.com/github/estacioneto/SCORE/badges/gpa.svg)](https://codeclimate.com/github/estacioneto/SCORE)
 [![dependencies Status](https://david-dm.org/estacioneto/SCORE/status.svg)](https://david-dm.org/estacioneto/SCORE)
 [![devDependencies Status](https://david-dm.org/estacioneto/SCORE/dev-status.svg)](https://david-dm.org/estacioneto/SCORE?type=dev)
