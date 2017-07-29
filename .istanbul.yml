@@ -1,4 +1,8 @@
-{
-    "presets": ["es2015", "stage-2"],
-    "plugins": []
-}
+instrumentation:
+    report: lcov
+    dir: server/coverage
+    root: .
+    extensions:
+        - .js
+    default-excludes: true
+    excludes: ['**/mock/**/*.js']
