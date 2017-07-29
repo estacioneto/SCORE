@@ -13,12 +13,14 @@
 
         /**
          * Autentica o usuário e guarda seu token e user.
-         * 
-         * @param   {String}  token   O token de identificação do usuário.
-         * @param   {Object}  user    O user Auth0.
+         *
+         * @param   {String}  accessToken Token de acesso do usuário.
+         * @param   {String}  token       O token de identificação do usuário.
+         * @param   {Object}  user        O user Auth0.
          * @returns {Promise} Promise retornar user.
          */
-        this.authenticate = function (token, user) {
+        this.authenticate = function (accessToken, token, user) {
+            store.set('accessToken', accessToken);
             store.set('idToken', token);
             if (!_.isUndefined(user)) {
                 store.set('user', JSON.stringify(user));

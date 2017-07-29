@@ -1,6 +1,6 @@
 (() => {
     'use strict';
-    angular.module('agendamentoModulo').service('AgendamentoService', ['$http', '$q', 'Reserva', function ($http, $q, Reserva) {
+    angular.module('agendamentoModulo', []).service('AgendamentoService', ['$http', '$q', 'Reserva', function ($http, $q, Reserva) {
 
         const self = this;
 

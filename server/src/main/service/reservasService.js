@@ -35,37 +35,42 @@
             reserva.emailAutor = user.email;
             reserva.userId = user.user_id;
             reserva.autor = user.user_metadata.nome_completo;
-            validarHorario(reserva, temChoque => {
-                if (temChoque)
-                    return callback("Horário ocupado.", null)
+            validarHorario(reserva, err => {
+                if (err) return callback(err, null)
                 return persisteReserva(new Reserva(reserva), callback);
             });
         });
     };
 
     /**
-     * Valida se existe choque de horário para a reserva.
+     * Realiza as validações relacionadas ao horário da reserva.
      * Verifica se o horário da reserva intercepta algum outro
      * para o mesmo dia.
-     * A validação ignora checagem com a própria reserva.
+     * Valida se o intervalo de horas é positivo.
+     * 
+     * TODO: Se esse método crescer, criar um validador. @author Eric Breno
      * 
      * @param {Reserva} reserva Reserva a ser validada.
-     * @param {Function} cb Callback a ser invocado com resultado. True passado
-     *               como parâmetro caso hajam conflitos.
+     * @param {Function} cb Callback a ser invocado com resultado. Se algum
+     *                      dado estiver incorreto, o callback é invocado com
+     *                      a mensagem de erro.
      */
     function validarHorario(reserva, cb) {
+        const intervaloNegativo = reserva.inicio >= reserva.fim;
+        if (intervaloNegativo) return cb("Intervalo de horários inválido.");
+
         Reserva.findByDay(reserva.dia, (err, reservas) => {
-            if(err) return cb(true);
+            if(err) return cb(err);
             for (let i in reservas) {
                 const r = reservas[i];
                 if (r._id.toString() === reserva._id) {
                     continue;
                 }
                 if (hasChoqueHorario(r, reserva)) {
-                    return cb(true);
+                    return cb("Horário ocupado.");
                 }
             };
-            return cb(false);
+            return cb(null);
         });
     }
 
@@ -125,9 +130,8 @@
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) return callback(err,null);
             let reservaAntiga = reserva;//.toObject();
-            validarHorario(novaReserva, temChoque => {
-                if (temChoque)
-                    return callback("Horário ocupado.", null)
+            validarHorario(novaReserva, err => {
+                if (err) return callback(err, null)
 
                 _.updateModel(reservaAntiga, novaReserva);
                 persisteReserva(reservaAntiga, callback);

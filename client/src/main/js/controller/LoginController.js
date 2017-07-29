@@ -3,14 +3,14 @@
 
     var loginModule = angular.module('login', []);
 
-    loginModule.controller('LoginController', ['$rootScope', '$state', '$location', 'ToastService', 'AuthService',
-        function ($rootScope, $state, $location, ToastService, AuthService) {
+    loginModule.controller('LoginController', ['$rootScope', '$state', '$location', 'APP_STATES', 'ToastService', 'AuthService',
+        function ($rootScope, $state, $location, APP_STATES, ToastService, AuthService) {
             var self = this;
 
             this.user = AuthService.getLoggedUser();
 
             function redirect() {
-                $state.go('app.home');
+                $state.go(APP_STATES.HOME.nome);
             }
 
             (function () {

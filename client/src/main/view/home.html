@@ -22,9 +22,9 @@
                 <!--end Select search para local-->
                 <!--Barra legenda de cores-->
                 <md-content layout="row" layout-align="center center" layout-padding>
-                    <div layout="row" ng-repeat="(tipo, cor) in ::calendarioCtrl.cores track by $index"> 
-                         <div layout-padding class="circulo-legenda" data-md-colors="{{ ::cor }}"></div>
-                         <div>{{ ::tipo }}</div>
+                    <div layout="row" ng-repeat="(nome, cor) in ::calendarioCtrl.cores track by $index"> 
+                         <div layout-padding class="circulo-legenda" data-md-colors="{{ ::cor.corMd }}"></div>
+                         <div>{{ ::nome }}</div>
                     </div>
                 </md-content>
                 <!--end Barra legenda de cores-->

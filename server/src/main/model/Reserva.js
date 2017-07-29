@@ -60,11 +60,10 @@
                 message: "Dia da reserva deve estar no formato dd-MM-yyyy."
             }
         },
-        cor : {
-            type: String
-        },
-        corTexto: {
-            type: String
+        tipo : {
+            type: String,
+            enum: ['Defesa', 'Video-conferencia', 'Reuniao', 'Assembleia'],
+            required: [true, 'A reserva deve possuir um tipo']
         }
     });
 

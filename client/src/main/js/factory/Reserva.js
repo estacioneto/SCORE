@@ -4,10 +4,9 @@ let sequenceReserva = 1;
     /**
      * Factory que representa a entidade de reserva.
      */
-    angular.module('agendamentoModulo', []).factory('Reserva', ['$http', function ($http) {
+    angular.module('reservaModulo').factory('Reserva', ['$http', 'TIPOS_RESERVA', function ($http, TIPOS_RESERVA) {
 
-        const COR_DEFAULT = '', COR_TEXTO_DEFAULT = '',
-              DIA_INDICE = 0, MES_INDICE = 1, ANO_INDICE = 2,
+        const DIA_INDICE = 0, MES_INDICE = 1, ANO_INDICE = 2,
               HORA_INDICE = 0, MINUTO_INDICE = 1;
 
         const API = "/api/reservas";
@@ -27,8 +26,7 @@ let sequenceReserva = 1;
                           inicio,
                           fim,
                           dia,
-                          cor = COR_DEFAULT,
-                          corTexto = COR_TEXTO_DEFAULT}) {
+                          tipo}) {
 
             obterPropriedades(this, {_id,
                                  autor,
@@ -37,8 +35,7 @@ let sequenceReserva = 1;
                                  inicio,
                                  fim,
                                  dia,
-                                 cor,
-                                 corTexto});
+                                 tipo});
         }
 
         /**
@@ -132,14 +129,28 @@ let sequenceReserva = 1;
             return true;
         });
 
-        Reserva.prototype.__defineGetter__('color', function () {
-            return this.cor;
-            // TODO: descomentar ao adicionar o tipo para reserva.
-            // return Reserva.getCores()[this.tipo];
+        /**
+         * Getter para a cor de fundo para o evento no calendário.
+         * Deve ser RGB ou HEX.
+         */
+        Reserva.prototype.__defineGetter__('backgroundColor', function () {
+            return TIPOS_RESERVA[this.tipo].corRgb;
         });
 
+        /**
+         * Getter para a cor de borda para o evento no calendário.
+         * Deve ser RGB ou HEX.
+         */
+        Reserva.prototype.__defineGetter__('borderColor', function () {
+            return this.backgroundColor;
+        });
+
+        /**
+         * Getter para a cor do texto para o evento no calendário.
+         * Deve ser RGB ou HEX.
+         */
         Reserva.prototype.__defineGetter__('textColor', function () {
-            return this.corTexto;
+            return TIPOS_RESERVA[this.tipo].corTexto;
         });
 
         /**
@@ -219,15 +230,6 @@ let sequenceReserva = 1;
         }
 
         Reserva.prototype.constructor = Reserva;
-
-        Reserva.getCores = function () {
-            return {
-                "Tipo 1": { 'background-color': 'red'},
-                "Tipo 2": { 'background-color': 'orange'},
-                "Tipo 3": { 'background-color': 'green'},
-                "Tipo 4": { 'background-color': 'blue'}
-            };
-        };
 
         return Reserva;
     }]);

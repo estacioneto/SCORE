@@ -4,11 +4,11 @@
     angular.module('localModulo').component('buscaLocal', {
         templateUrl: 'view/component/local/busca-local.html',
         bindings: {},
-        controller: ['$state', function ($state) {
+        controller: ['$state', 'APP_STATES', function ($state, APP_STATES) {
 
             this.onChangeLocal = function (local) {
                 if (local) {
-                    $state.go('app.local.id', {idLocal: local._id});
+                    $state.go(APP_STATES.LOCAL_ID.nome, {idLocal: local._id});
                 }
             };
         }]

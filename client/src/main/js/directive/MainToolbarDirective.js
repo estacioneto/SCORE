@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('toolbarModulo', []).directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', 'SearchService', '$mdSidenav', 'Usuario',
-        function ($state, $rootScope, AuthService, AuthLockService, ToastService, SearchService, $mdSidenav, Usuario) {
+    angular.module('toolbarModulo', []).directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', 'SearchService', '$mdSidenav', 'Usuario', 'APP_STATES',
+        function ($state, $rootScope, AuthService, AuthLockService, ToastService, SearchService, $mdSidenav, Usuario, APP_STATES) {
             return {
                 restrict: 'AE',
                 templateUrl: './view/mainToolbar.html',
@@ -32,7 +32,7 @@
                      */
                     scope.logout = function () {
                         scope.auth.logout();
-                        $state.go('app.login');
+                        $state.go(APP_STATES.LOGIN.nome);
                     };
 
                     /**
@@ -55,8 +55,8 @@
                                 return console.log('Auth error: ' + error);
                             }
                             scope.user = new Usuario(user);
-                            AuthService.authenticate(authResult.idToken, scope.user);
-                            $state.go('app.home');
+                            AuthService.authenticate(authResult.accessToken, authResult.idToken, scope.user);
+                            $state.go(APP_STATES.HOME.nome);
                         });
                     }
 
@@ -67,7 +67,7 @@
                      */
                     scope.getCurrentStateName = function () {
                         var currentState = $state.current;
-                        if (currentState.name !== 'app.home' && currentState.name !== 'app.login') {
+                        if (currentState.name !== APP_STATES.HOME.nome && currentState.name !== APP_STATES.LOGIN.nome) {
                             const nomeState = $state.current.nome || $state.current.name;
                             return scope.getNomeState(nomeState.toUpperCase());
                         }
@@ -80,7 +80,7 @@
                      * Vai para home.
                      */
                     scope.goHome = function () {
-                        $state.go(true || scope.auth.isAuthenticated() ? 'app.home' : 'app.login');
+                        $state.go(true || scope.auth.isAuthenticated() ? APP_STATES.HOME.nome : APP_STATES.LOGIN.nome);
                     };
 
                     /**
