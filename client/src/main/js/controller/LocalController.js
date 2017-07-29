@@ -11,8 +11,6 @@
 
         /**
          * Redireciona para tela de detalhes do local, após o mesmo ser clicado.
-         * // TODO: Deverá selecionar entre redirecionar para tela de detalhes ou para
-         * // TODO: calendário do local.
          *
          * @param local Local clicado.
          */
@@ -50,9 +48,20 @@
         };
 
         /**
-         * Exclui o local atualmente exibido.
+         * Exibe modal de confirmação de exclusão.
          */
         this.excluirLocal = function () {
+            const titulo = 'Excluir Local',
+                mensagem = 'Ação não pode ser desfeita. Confirma?';
+
+            ModalService.confirmar(titulo, mensagem)
+                .then(excluirLocal, () => {});
+        };
+
+        /**
+         * Exclui o local atualmente exibido.
+         */
+        function excluirLocal() {
             function callbackSucesso() {
                 const mensagem = 'Local excluído com sucesso!';
                 ToastService.showActionToast(mensagem);
@@ -68,7 +77,7 @@
             LocaisService.excluirLocal(self.local._id)
                 .then(callbackSucesso)
                 .catch(callbackErro);
-        };
+        }
 
     }]);
 })();
