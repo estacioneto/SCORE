@@ -61,16 +61,33 @@
          *
          * @return {boolean} {@code true} caso o local atual tenha algum campo a ser
          * limpo, {@code false} caso contrário.
-         *
-         * FIXME: Os array inicializados (e.g. equipamentos) são retornados pelo _.values() como vazios,
-         * FIXME: porém ainda contam como atributos, então a lista de atributos nunca é vazia.
          */
         function podeLimparCampos() {
             const local = angular.copy(self.local);
             delete local._id;
 
+            return !contemApenasAtributosVazios(local);
+        }
+
+        /**
+         * Retorna se todos os atributos do local especificado são vazios. Utiliza a função
+         * values do lodash, a qual retorna a lista com todos os atributos não vazios de um
+         * objeto, porém, um array vazio é um objeto não vazio, logo temos que desconsiderá-los.
+         *
+         * @param local Local a ter seus atributos verificados como vazios ou não.
+         * @return {boolean} {@code true} caso todos os atributos do local sejam vazios ou sejam
+         * arrays vazios, {@code false} caso contrário.
+         */
+        function contemApenasAtributosVazios(local) {
             const atributosLocal = _.values(local);
-            return !_.isEmpty(atributosLocal);
+
+            let contemApenasAtributosVazios = true;
+
+            _.each(atributosLocal, (atributo) => {
+                contemApenasAtributosVazios &= _.isArray(atributo) && _.isEmpty(atributo);
+            });
+
+            return contemApenasAtributosVazios;
         }
 
         /**
