@@ -9,4 +9,4 @@ reporting:
     print: summary
     reports:
         - lcov
-    dir: ./server/coverage
+    dir: ./coverage
