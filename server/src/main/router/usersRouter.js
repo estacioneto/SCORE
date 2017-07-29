@@ -7,9 +7,9 @@
         _ = require('../util/util');
 
     /**
-     * This is the router to access the user. Today we don't use it yet.
-     * Maybe it could be useful on future... Maybe not, because our client app
-     * stores the user. Well... We could set up a meeting to discuss that...
+     * Esta é a rota para acessar o usuário. Ainda não está em uso.
+     * (Talvez possa ser usado no futuro... talvez não, porque o nosso client app
+     * armazena o usuário. Bem... Nós podemos discutir isso na reunião).
      *
      * Endpoint: /users
      * @author Estácio Pereira
@@ -17,8 +17,9 @@
     let usersRouter = express.Router();
 
     /**
-     * The HTTP GET method to get the logged user. Well... Auth0 could do that.
-     * We do it with cache... Again, we need a meeting.
+     * O método HTTP GET para recuperar o usuário logado. 
+     * (Bem... o Auth0 pode fazer isso.. Fizemos isso com cache... Novamente, 
+     * precisamos discutir isso na reunião).
      */
     usersRouter.get('/', (req, res) => {
         let token = _.getToken(req);

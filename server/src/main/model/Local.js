@@ -52,7 +52,7 @@
     });
 
     /**
-     * Middleware to handle pre-save.
+     * Middleware para lidar com pre-save.
      */
     localSchema.pre('save', function (next) {
         // http://stackoverflow.com/questions/7327296/how-do-i-extract-the-created-date-out-of-a-mongo-objectid
