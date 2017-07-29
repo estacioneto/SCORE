@@ -1,3 +1,5 @@
+import {LocaisService} from "../service/LocaisService";
+
 (function () {
     'use strict';
     let Reserva = require('../model/Reserva'),
@@ -32,13 +34,17 @@
     reservasService.salvaReserva = (token, reserva, callback) => {
         usersService.getUser(token, (err, user) => {
             if(err) return callback(err, null);
-            reserva.emailAutor = user.email;
-            reserva.userId = user.user_id;
-            reserva.autor = user.user_metadata.nome_completo;
-            validarHorario(reserva, err => {
-                if (err) return callback(err, null)
-                return persisteReserva(new Reserva(reserva), callback);
-            });
+            LocaisService.consultarLocalPorId(reserva.localId)
+                .then(() => {
+                    reserva.emailAutor = user.email;
+                    reserva.userId = user.user_id;
+                    reserva.autor = user.user_metadata.nome_completo;
+                    validarHorario(reserva, err => {
+                        if (err) return callback(err, null);
+                        return persisteReserva(new Reserva(reserva), callback);
+                    });
+                })
+                .catch((err) => callback(err, null));
         });
     };
 
@@ -59,7 +65,7 @@
         const intervaloNegativo = reserva.inicio >= reserva.fim;
         if (intervaloNegativo) return cb("Intervalo de horários inválido.");
 
-        Reserva.findByDay(reserva.dia, (err, reservas) => {
+        Reserva.findByDayAndLocalId(reserva.dia, reserva.localId, (err, reservas) => {
             if(err) return cb(err);
             for (let i in reservas) {
                 const r = reservas[i];
@@ -69,7 +75,7 @@
                 if (hasChoqueHorario(r, reserva)) {
                     return cb("Horário ocupado.");
                 }
-            };
+            }
             return cb(null);
         });
     }
@@ -131,7 +137,7 @@
            if(err) return callback(err,null);
             let reservaAntiga = reserva;//.toObject();
             validarHorario(novaReserva, err => {
-                if (err) return callback(err, null)
+                if (err) return callback(err, null);
 
                 _.updateModel(reservaAntiga, novaReserva);
                 persisteReserva(reservaAntiga, callback);
