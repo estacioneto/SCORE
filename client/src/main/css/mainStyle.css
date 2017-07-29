@@ -248,6 +248,14 @@ md-input-container.md-input-invalid > md-icon {
     max-height: 100px;
 }
 
+.circulo-legenda {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+    margin-top: 3px;
+}
+
 .tipo-reserva {
     margin-left: 50px;
 }

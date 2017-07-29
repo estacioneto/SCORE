@@ -5,13 +5,15 @@
      * 
      */
     angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
-        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES,
-                                                                                                    Reserva, reservas, DataManipuladorService, LocaisService, ModalService) {
+        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA',
+        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, reservas, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA) {
 
         const self = this;
 
         this.reservas = reservas;
         this.reservasFonte = [this.reservas];
+
+        this.tiposReserva = TIPOS_RESERVA;
 
         /**
          * Callback executado quando o usuário clica em uma determinada reserva.
