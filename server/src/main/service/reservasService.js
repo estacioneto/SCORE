@@ -129,7 +129,11 @@
     reservasService.atualizaReserva = (token, idReserva, novaReserva, callback) => {
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) return callback(err,null);
-            let reservaAntiga = reserva;//.toObject();
+            let reservaAntiga = reserva;
+            novaReserva.emailAutor = reservaAntiga.emailAutor;
+            novaReserva.userId = reservaAntiga.userId;
+            novaReserva.autor = reservaAntiga.autor;
+
             validarHorario(novaReserva, err => {
                 if (err) return callback(err, null)
 
