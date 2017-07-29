@@ -13,7 +13,7 @@
         this.reservas = reservas;
         this.reservasFonte = [this.reservas];
 
-        this.cores = TIPOS_RESERVA;
+        this.tiposReserva = TIPOS_RESERVA;
 
         /**
          * Callback executado quando o usuário clica em uma determinada reserva.
