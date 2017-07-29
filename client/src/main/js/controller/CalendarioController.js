@@ -5,13 +5,15 @@
      * 
      */
     angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
-        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES,
-                                                                                                    Reserva, reservas, DataManipuladorService, LocaisService, ModalService) {
+        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA',
+        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, reservas, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA) {
 
         const self = this;
 
         this.reservas = reservas;
         this.reservasFonte = [this.reservas];
+
+        this.tiposReserva = TIPOS_RESERVA;
 
         /**
          * Callback executado quando o usuário clica em uma determinada reserva.
@@ -85,6 +87,7 @@
                 },
                 eventClick: self.clickReserva,
                 dayClick: self.clickDia,
+                eventAfterAllRender: transformaBotoesCalendario,
                 buttonText: {
                     agendaWeek: 'Semana',
                     agendaDay: 'Dia'
@@ -136,5 +139,17 @@
             return [];
         }
 
+        /**
+         * Modifica os botões do calendário para terem os estilos seguindo padrão
+         * material, adicionando a classe md-button.
+         */
+        function transformaBotoesCalendario() {
+            const listaBotoes = $('button[class*="fc-button"]');
+            const mdButton = "md-button";
+            listaBotoes.each(function (i) {
+                if (!$(this).hasClass(mdButton)) 
+                    $(this).addClass(mdButton);
+            });
+        }
     }]);
 })();

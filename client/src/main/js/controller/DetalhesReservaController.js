@@ -4,7 +4,7 @@
      * Controller responsável pelo modal de detalhes da reserva.
      * 
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', '$q', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, $q) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', '$q', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, $q) {
 
         const self = this;
 
@@ -13,6 +13,8 @@
         this.reservaOriginal;
 
         this.isEdicao = !reserva.autor;
+
+        this.tiposReserva = TIPOS_RESERVA;
 
         /**
          * Ativa o modo de edição de reserva.
@@ -134,11 +136,13 @@
          * @return Promise.
          */
         this.excluirReserva = () => {
-            return self.reserva.excluir().then(data => {
-                AgendamentoService.excluir(self.reserva);
-                self.fecharModal();
-                ToastService.showActionToast("Reserva excluída.");
-                return data;
+            ModalService.confirmar("Excluir reserva", "Ação não pode ser desfeita. Confirma?").then(() => {
+                return self.reserva.excluir().then(data => {
+                    AgendamentoService.excluir(self.reserva);
+                    self.fecharModal();
+                    ToastService.showActionToast("Reserva excluída.");
+                    return data;
+                });
             });
         };
 

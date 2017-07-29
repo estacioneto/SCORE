@@ -2,7 +2,7 @@
     'use strict';
 
     /**
-     * Oh yes... We add some interesting things to lodash and use it as an util module.
+     * Sim, adiciona features interessantes do lodash e usa como módulo 'util'.
      */
     let _ = require('lodash');
 
@@ -44,11 +44,11 @@
     _.ERRO_USUARIO_SEM_PERMISSAO = 'Usuário não tem permissão ao recurso.';
 
     /**
-     * Given two objects (the target should be a mongoose object), soft copies the properties from one
-     * object to another.
+     * Dado dois objetos (o target deve ser um objeto mangoose), 
+     * soft copia as propriedades de um objeto para outro.
      *
-     * @param {Mongoose.Model} toObject   Mongoose object that will have new properties
-     * @param {Object}         fromObject Object to have properties copied
+     * @param {Mongoose.Model} toObject   Objeto mongoose que terá novas propriedades
+     * @param {Object}         fromObject Objeto para ter as propriedades copiadas
      */
     _.updateModel = (toObject, fromObject) => {
         _.each(fromObject, (value, key) => {
@@ -70,11 +70,10 @@
     };
 
     /**
-     * Once I tried to use some ways to compare mongoose objects and didn't work. So,
-     * in this function, I compare then by the id.
+     * Pesquisa um objeto comparando esse objetos por id.
      *
-     * @param {Array}  arr            Array to have the object searched.
-     * @param {Object} mongooseObject Object to be searched.
+     * @param {Array}  arr            Array de objetos.
+     * @param {Object} mongooseObject Objeto a ser pesquisado.
      */
     _.containsMongoose = (arr, mongooseObject) =>
         !_.isEmpty(_.filter(arr, obj => JSON.stringify(obj._id) === JSON.stringify(mongooseObject._id)));
@@ -89,18 +88,18 @@
     _.contains = (arr, object) => arr.indexOf(object) !== _.INVALID_INDEX;
 
     /**
-     * Given the request, this function returns the authorization token present on headers.
+     * Dada a requisição, esta função retorna o token de autorização presente nos headers.
      *
-     * @param   {Object} req The request.
-     * @returns {string} The token on headers.
+     * @param   {Object} req A requisição.
+     * @returns {string} O token dos headers.
      */
     _.getToken = req => req.header('access_token') || _.getAuthorizationToken(req);
 
     /**
-     * Returns the token present at the authorization header property.
+     * Retorna o token presente na propriedade de autorização do header.
      *
-     * @param   {Object} req The request.
-     * @returns {String} The authorization token.
+     * @param   {Object} req O request.
+     * @returns {String} O token de autorização.
      */
     _.getAuthorizationToken = (req) => {
         let authHeader = req.header('Authorization');
@@ -108,10 +107,10 @@
     };
 
     /**
-     * Generates a new String (pretty small probability of same String), given it's size.
+     * Gera uma nova string (com probabilidade de repetição muito pequena) dado o tamanho.
      *
-     * @param   {Number} size Length of the random String.
-     * @returns {string} Random string with the given length
+     * @param   {Number} size O tamanho da String aleatória.
+     * @returns {string} A string aleatória com o tamanho dado
      */
     _.generateNewString = size => {
         let text = "";
@@ -122,10 +121,10 @@
     };
 
     /**
-     * Handles the validation error from mongoose.
+     * Lida com o erro de validação do mangoose.
      *
-     * @param   {Object}   err  Mongoose error object.
-     * @param   {Function} next Callback function to redirect to the next function.
+     * @param   {Object}   err  Objeto de erro mongoose.
+     * @param   {Function} next Função callback para redirecionar para a próxima função.
      */
     _.handleValidationError = (err, next) => {
         let message = 'Erro de validação: ';

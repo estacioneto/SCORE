@@ -4,7 +4,7 @@
     let _ = require('../main/util/util');
 
     /**
-     * UserMock deals with the mocks related to Auth0 used on our tests.
+     * UserMock lida com os mocks relacionado ao Auth0 usado em nossos testes.
      *
      * @author Estácio Pereira
      */
@@ -50,16 +50,16 @@
     let email = 'test-email@test.email';
 
     /**
-     * Returns a valid user to our Auth0 system.
+     * Retorna um usuário valido para o nosso sistema Auth0
      *
      * @returns {Object} Valid user.
      */
     UserMock.getValidUser = () => clone(validUser);
 
     /**
-     * Returns an Auth0 user's object.
+     * Retorna um usuário Auth0.
      *
-     * @returns {Object} Auth0 user.
+     * @returns {Object} O usuário Auth0.
      */
     UserMock.getAuth0User = () => {
         let user = clone(auth0User);
@@ -90,17 +90,17 @@
     };
 
     /**
-     * Returns a new email.
+     * Retorna um novo email.
      *
-     * @returns {String} An unique email.
+     * @returns {String} Um email único.
      */
     UserMock.getNewEmail = () => _.generateNewString(Math.floor(Math.random() * _.RANDOM_STRING_LENGTH)) + 'a@' +
     _.generateNewString(Math.floor(Math.random() * _.RANDOM_STRING_LENGTH)) + '.com';
 
     /**
-     * Returns a real JWT with no expiration.
+     * Retorna um 'real JWT' sem expiração.
      *
-     * @returns {String} A real JWT with no expiration.
+     * @returns {String} O 'real JWT' sem expiração.
      */
     UserMock.getToken = () => token;
 
