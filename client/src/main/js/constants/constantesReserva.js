@@ -9,7 +9,7 @@
             corRgb: 'rgb(46, 125, 50)',
             corTexto: ''
         },
-        "Video-conferência": {
+        "Videoconferência": {
             corMd: {
                 "background-color": "red"
             },
