@@ -129,7 +129,16 @@
     reservasService.atualizaReserva = (token, idReserva, novaReserva, callback) => {
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) return callback(err,null);
-            let reservaAntiga = reserva;//.toObject();
+            let reservaAntiga = reserva;
+            // FIXME: Desfazer isso quando passarmos a utilizar
+            // patch corretamente. Necessário por a atualização
+            // atual assumir que deve deletar propriedades que não
+            // foram enviadas do cliente, e estas não são realmente enviadas nunca.
+            // @author Eric Breno - 29/07/17
+            novaReserva.emailAutor = reservaAntiga.emailAutor;
+            novaReserva.userId = reservaAntiga.userId;
+            novaReserva.autor = reservaAntiga.autor;
+
             validarHorario(novaReserva, err => {
                 if (err) return callback(err, null)
 
