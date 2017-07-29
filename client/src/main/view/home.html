@@ -24,7 +24,7 @@
                 <md-content layout="row" layout-align="center center" layout-padding>
                     <div layout="row" ng-repeat="(nome, cor) in ::calendarioCtrl.tiposReserva track by $index"> 
                          <div layout-padding class="circulo-legenda" data-md-colors="{{ ::cor.corMd }}"></div>
-                         <div>{{ ::nome }}</div>
+                         <span class="md-subhead">{{ ::nome }}</span>
                     </div>
                 </md-content>
                 <!--end Barra legenda de cores-->
