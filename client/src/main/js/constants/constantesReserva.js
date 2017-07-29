@@ -2,21 +2,21 @@
     'use strict';
 
     angular.module('reservaModulo', []).constant('TIPOS_RESERVA', {
-        "Reuniao": {
+        "Reunião": {
             corMd: {
                 "background-color": "green-800"
             },
             corRgb: 'rgb(46, 125, 50)',
             corTexto: ''
         },
-        "Video-conferencia": {
+        "Video-conferência": {
             corMd: {
                 "background-color": "red"
             },
             corRgb: 'rgb(255, 82, 82)',
             corTexto: ''
         },
-        "Assembleia": {
+        "Assembléia": {
             corMd: {
                 "background-color": "blue"
             },
