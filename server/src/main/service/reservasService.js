@@ -114,7 +114,7 @@
         const caso2 = inicio1 <  fim2    && fim1 >  fim2;
         const caso3 = inicio1 >= inicio2 && fim1 <= fim2;
         const caso4 = inicio1 <= inicio2 && fim1 >= fim2;
-        return caso1 || caso2 || cas/o3 || caso4;
+        return caso1 || caso2 || caso3 || caso4;
     }
 
     /**
