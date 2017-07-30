@@ -25,7 +25,6 @@
                             store.remove('user');
                             store.remove('idToken');
                             store.remove('accessToken');
-                            console.log(APP_STATES.LOGIN.nome);
                             $injector.get('$state').go(APP_STATES.LOGIN.nome);
                         }
                         return $q.reject(rejection);
