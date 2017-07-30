@@ -1,7 +1,7 @@
 <md-content>
-    <md-content class="fill" layout-padding>
+    <md-content layout-padding>
         <!-- Content -->
-        <md-content ng-if="!localCtrl.local">
+        <div ng-if="!localCtrl.local">
             <div class="content" flex>
                 <form name="formularioLocal">
                     <div class="md-toolbar-tools search-bar" layout layout-align="center">
@@ -12,7 +12,7 @@
                 </form>
             </div>
             <listagem-locais on-click-local="localCtrl.onChangeLocal(local)"></listagem-locais>
-        </md-content>
+        </div>
 
         <md-content ng-if="localCtrl.local">
             <imagens-local local="localCtrl.local"
