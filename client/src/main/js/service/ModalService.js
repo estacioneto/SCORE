@@ -21,6 +21,7 @@
             //Sobre multiple: https://github.com/angular/material/issues/8630
             const modal = $mdDialog.confirm()
                 .title(titulo)
+                .theme($rootScope.theme)
                 .textContent(mensagem)
                 .multiple(true)
                 .ok('Sim')

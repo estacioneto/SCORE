@@ -3,7 +3,7 @@
 
     var toast = angular.module('toastModule', []);
 
-    toast.service('ToastService', ['$mdToast', function ($mdToast) {
+    toast.service('ToastService', ['$mdToast', '$rootScope', function ($mdToast, $rootScope) {
         var self = this;
         var FOUR_SECONDS = 4000;
         var THREE_SECONDS = 3000;
@@ -24,6 +24,7 @@
                 };
             }
             var toast = $mdToast.simple()
+                .theme($rootScope.theme)
                 .textContent(options.textContent)
                 .action(options.action || 'DONE')
                 .highlightAction(options.highlightAction || true)
