@@ -18,3 +18,4 @@ exclude_paths:
     - "node_modules/**/*"
     - "img/**/*"
     - "**/vendor/**/*"
+    - "**/*.test.js"
