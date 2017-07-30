@@ -13,7 +13,7 @@
         bindings: {
             onClickLocal: '&'
         },
-        controller: ['$scope', '$window', 'LocaisService', function ($scope, $window, LocaisService) {
+        controller: ['$scope', '$window', 'LocaisService', 'ModalService', function ($scope, $window, LocaisService, ModalService) {
 
             const self = this;
             const MIN_WIDTH = 600, CARD_WIDTH = 250, MAX_COLUMNS = 4;

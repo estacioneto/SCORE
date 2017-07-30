@@ -14,6 +14,7 @@
         /**
          * Abre um modal de confirmação.
          *
+         * @param titulo Titulo a ser exibido no modal.
          * @param mensagem Mensagem a ser mostrada no modal.
          */
         this.confirmar = (titulo, mensagem) => {
