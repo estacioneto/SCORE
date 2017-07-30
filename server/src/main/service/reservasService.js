@@ -15,9 +15,26 @@ import {LocaisService} from "../service/LocaisService";
      * @param {Function} callback Função chamada após erro ou sucesso na operação.
      */
     reservasService.getReservas = (token, callback) => {
-        usersService.getUser(token, (err,user) => {
+        usersService.getUser(token, (err, user) => {
             if(err) return callback(err, null);
             Reserva.find({}, function(err, result) {
+                if (err) return callback(err, null);
+                return callback(null, result);
+            });
+        });
+    };
+
+    /**
+     * Obtém todas as reservas do local que teve o id especificado.
+     *
+     * @param {String}   token    Token de identificação do usuário logado.
+     * @param {String}   localId  Id do local a ter suas reservas retornadas.
+     * @param {Function} callback Função chamada após erro ou sucesso na operação.
+     */
+    reservasService.getReservasDoLocal = (token, localId, callback) => {
+        usersService.getUser(token, (err, user) => {
+            if(err) return callback(err, null);
+            Reserva.find({localId: localId}, function(err, result) {
                 if (err) return callback(err, null);
                 return callback(null, result);
             });
