@@ -62,7 +62,7 @@ describe('LocaisRouterTest', () => {
             .set('Authorization', `Bearer ${token}`)
             .set('access_token', token)
             .send(reqBody)
-            .expect(_.FORBIDDEN).end((err, res) => {
+            .expect(_.OK).end((err, res) => {
 
             expect(err).to.not.be.ok;
 
