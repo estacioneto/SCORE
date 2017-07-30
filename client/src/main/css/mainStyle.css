@@ -259,3 +259,7 @@ md-input-container.md-input-invalid > md-icon {
 .tipo-reserva {
     margin-left: 50px;
 }
+
+.fill {
+    min-height: calc(100% - 50px);
+}
