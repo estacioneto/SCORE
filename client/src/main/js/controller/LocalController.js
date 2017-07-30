@@ -1,7 +1,7 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').controller('LocalController', ['$state', '$stateParams', 'APP_STATES', 'Local', 'local', 'LocaisService', 'ModalService', 'ToastService', function ($state, $stateParams, APP_STATES, Local, local, LocaisService, ModalService, ToastService) {
+    angular.module('localModulo').controller('LocalController', ['$state', '$stateParams', '$q', 'APP_STATES', 'Local', 'local', 'LocaisService', 'ModalService', 'ToastService', function ($state, $stateParams, $q, APP_STATES, Local, local, LocaisService, ModalService, ToastService) {
         const self = this;
 
         this.isAdmin = () => true;
@@ -21,7 +21,8 @@
         };
 
         /**
-         * Checa se o local clicado é válido para ser exibido.
+         * Checa se o local clicado é válido para ser exibido, ou seja, caso o local
+         * seja definido e não seja o local atual.
          *
          * @param local Local a ser validado.
          * @return {boolean} {@code true} se o local puder ser exibido, {@code false}
@@ -54,29 +55,27 @@
             const titulo = 'Excluir Local',
                 mensagem = 'Ação não pode ser desfeita. Confirma?';
 
-            ModalService.confirmar(titulo, mensagem)
-                .then(excluirLocal, () => {});
+            return ModalService.confirmar(titulo, mensagem)
+                .then(excluirLocal);
         };
 
         /**
          * Exclui o local atualmente exibido.
          */
         function excluirLocal() {
-            function callbackSucesso() {
-                const mensagem = 'Local excluído com sucesso!';
-                ToastService.showActionToast(mensagem);
-                $state.go(APP_STATES.LOCAL_INFO.nome);
-            }
-
-            function callbackErro() {
-                const mensagem = 'Um erro ocorreu, o local não foi excluído. Por favor, ' +
-                    'tente novamente.';
-                ModalService.error(mensagem);
-            }
-
-            LocaisService.excluirLocal(self.local._id)
-                .then(callbackSucesso)
-                .catch(callbackErro);
+            return LocaisService.excluirLocal(self.local._id)
+                .then((data) => {
+                    const mensagem = 'Local excluído com sucesso!';
+                    ToastService.showActionToast(mensagem);
+                    $state.go(APP_STATES.LOCAL_INFO.nome);
+                    return data;
+                })
+                .catch(() => {
+                    const mensagem = 'Um erro ocorreu, o local não foi excluído. Por favor, ' +
+                        'tente novamente.';
+                    ModalService.error(mensagem);
+                    return $q.reject();
+                });
         }
 
     }]);

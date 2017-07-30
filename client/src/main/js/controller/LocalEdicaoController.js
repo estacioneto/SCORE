@@ -1,7 +1,7 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').controller('LocalEdicaoController', ['$state', 'APP_STATES', 'Local', 'local', 'LocaisService', 'ModalService', 'ToastService', function ($state, APP_STATES, Local, local, LocaisService, ModalService, ToastService) {
+    angular.module('localModulo').controller('LocalEdicaoController', ['$state', '$q', 'APP_STATES', 'Local', 'local', 'LocaisService', 'ModalService', 'ToastService', function ($state, $q, APP_STATES, Local, local, LocaisService, ModalService, ToastService) {
 
         const self = this;
         this.local = local || new Local();
@@ -12,22 +12,20 @@
          * de sucesso, ou exibindo um modal de erro caso contrário.
          */
         this.salvarLocal = function () {
-            function callbackSucesso(data) {
-                self.local = data.data;
-                const mensagem = 'Local salvo com sucesso!';
-                ToastService.showActionToast(mensagem);
-                $state.go(APP_STATES.LOCAL_ID_INFO.nome, {idLocal: self.local._id});
-            }
-
-            function callbackErro() {
-                const mensagem = 'Um erro ocorreu, o local não foi salvo. Por favor, ' +
-                    'tente novamente.';
-                ModalService.error(mensagem);
-            }
-
-            LocaisService.salvarLocal(self.local)
-               .then(callbackSucesso)
-               .catch(callbackErro);
+            return LocaisService.salvarLocal(self.local)
+               .then((data) => {
+                   self.local = data.data;
+                   const mensagem = 'Local salvo com sucesso!';
+                   ToastService.showActionToast(mensagem);
+                   $state.go(APP_STATES.LOCAL_ID_INFO.nome, {idLocal: self.local._id});
+                   return data;
+               })
+               .catch(() => {
+                   const mensagem = 'Um erro ocorreu, o local não foi salvo. Por favor, ' +
+                       'tente novamente.';
+                   ModalService.error(mensagem);
+                   return $q.reject();
+               });
         };
 
         /**
@@ -39,6 +37,21 @@
                 limparCampos();
             }
         };
+
+        /**
+         * Checa se os campos do formulário podem ser limpos, ou seja, se há pelo
+         * menos um campo preenchido.
+         * .
+         *
+         * @return {boolean} {@code true} caso o local atual tenha algum campo a ser
+         * limpo, {@code false} caso contrário.
+         */
+        function podeLimparCampos() {
+            const local = angular.copy(self.local);
+            delete local._id;
+
+            return !contemApenasAtributosVazios(local);
+        }
 
         /**
          * Limpa todos os campos, fornecendo ao usuário a opção de desfazer a limpeza.
@@ -54,19 +67,6 @@
             ToastService.showUndoToast(opcoesToast).then(info => {
                 if (info) { desfazerLimpezaDeCampos(); }
             });
-        }
-
-        /**
-         * Checa se os campos do formulário podem ser limpos.
-         *
-         * @return {boolean} {@code true} caso o local atual tenha algum campo a ser
-         * limpo, {@code false} caso contrário.
-         */
-        function podeLimparCampos() {
-            const local = angular.copy(self.local);
-            delete local._id;
-
-            return !contemApenasAtributosVazios(local);
         }
 
         /**
