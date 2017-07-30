@@ -5,12 +5,13 @@
      * 
      */
     angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
-        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA',
-        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, reservas, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA) {
+        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA', '$q',
+        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, reservas, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA, $q) {
 
         const self = this;
 
         this.reservas = reservas;
+        this.isLocalSelecionado = false;
         this.reservasFonte = [this.reservas];
 
         this.tiposReserva = TIPOS_RESERVA;
@@ -107,7 +108,12 @@
         this.onChangeLocal = function (local) {
             this.local = local;
             // TODO: Implementar mudança de calendário quando auditório selecionado. @author Estácio Pereira.
-            console.log('Local selecionado: ', local);
+            this.isLocalSelecionado = true;
+            console.log(local);
+        };
+
+        this.voltaParaListagem = () => {
+            this.isLocalSelecionado = false;
         };
 
         this.visualizarAuditorio = function () {

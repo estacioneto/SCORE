@@ -6,7 +6,7 @@
             <div class="caixa-calendario"
                  layout="column" flex>
                  <!--Select search para local-->
-                <form name="formularioLocal">
+                <form name="formularioLocal" ng-if="!calendarioCtrl.isLocalSelecionado">
                     <div class="md-toolbar-tools search-bar" layout layout-align="center">
                         <select-search-local flex
                                              formulario="formularioLocal"
@@ -20,8 +20,19 @@
                     </div>
                 </form>
                 <!--end Select search para local-->
+                <div layout="row" layout align="space-between start" ng-if="calendarioCtrl.isLocalSelecionado">
+                    <md-icon flex="10" ng-click="calendarioCtrl.voltaParaListagem()">arrow_back</md-icon>
+                    <div layout="column" layout-align="center center" flex>
+                        <span class="md-subhead">Auditório selecionado</span>
+                        <span class="md-headline">{{calendarioCtrl.local.nome}}</span>
+                    </div>
+                    <div flex="10"></div>
+                </div>
+                <!--Listagem de auditorios-->
+                <listagem-locais on-click-local="calendarioCtrl.onChangeLocal(local)" ng-if="!calendarioCtrl.isLocalSelecionado"></listagem-locais>
+                <!--end Listagem de auditorios-->
                 <!--Barra legenda de cores-->
-                <md-content layout="row" layout-align="center center" layout-padding>
+                <md-content layout="row" layout-align="center center" ng-if="calendarioCtrl.isLocalSelecionado" layout-padding>
                     <div layout="row" ng-repeat="(nome, cor) in ::calendarioCtrl.tiposReserva track by $index"> 
                          <div layout-padding class="circulo-legenda" data-md-colors="{{ ::cor.corMd }}"></div>
                          <span class="md-subhead">{{ ::nome }}</span>
@@ -29,7 +40,7 @@
                 </md-content>
                 <!--end Barra legenda de cores-->
                 <!-- Calendario -->
-                <md-content id="main-field" layout="row" layout-padding layout-wrap>
+                <md-content id="main-field" layout="row" ng-if="calendarioCtrl.isLocalSelecionado" layout-padding layout-wrap>
                     <div class="content"
                          ui-calendar="calendarioCtrl.calendarioConfig.calendario"
                          calendar="calendario"
