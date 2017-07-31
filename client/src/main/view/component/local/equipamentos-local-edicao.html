@@ -4,24 +4,23 @@
     </md-content>
     <md-content ng-repeat="equipamento in $ctrl.local.equipamentos"
                 layout="row"
-                layout-align="center"
-                layout-wrap>
-        <md-input-container flex="85">
+                layout-align="center">
+        <md-input-container flex-gt-xs>
             <input id="nome-equipamento"
                    placeholder="Descrição"
                    required
                    data-ng-model="equipamento.nome"/>
         </md-input-container>
-        <md-input-container flex="10">
+        <md-input-container>
             <input id="quantidade-equipamento"
                    type="number"
                    placeholder="Quantidade"
                    required
                    data-ng-model="equipamento.quantidade"/>
         </md-input-container>
-        <md-input-container layout layout-align="center" flex="5">
+        <md-input-container layout layout-align="center">
             <md-button class="md-icon-button md-warn"
-                       ng-click="$ctrl.removerEquipamento(equipamento)">
+                       ng-click="$ctrl.removerEquipamento($index)">
                 <md-icon>delete</md-icon>
                 <md-tooltip md-direction="top">Remover Equipamento</md-tooltip>
             </md-button>

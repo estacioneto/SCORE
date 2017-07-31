@@ -5,6 +5,7 @@
             <!-- MainContent -->
             <div class="caixa-calendario"
                  layout="column" flex>
+                 <!--Select search para local-->
                 <form name="formularioLocal">
                     <div class="md-toolbar-tools search-bar" layout layout-align="center">
                         <select-search-local flex
@@ -18,6 +19,15 @@
                         </md-button>
                     </div>
                 </form>
+                <!--end Select search para local-->
+                <!--Barra legenda de cores-->
+                <md-content layout="row" layout-align="center center" layout-padding>
+                    <div layout="row" ng-repeat="(nome, cor) in ::calendarioCtrl.tiposReserva track by $index"> 
+                         <div layout-padding class="circulo-legenda" data-md-colors="{{ ::cor.corMd }}"></div>
+                         <span class="md-subhead">{{ ::nome }}</span>
+                    </div>
+                </md-content>
+                <!--end Barra legenda de cores-->
                 <!-- Calendario -->
                 <md-content id="main-field" layout="row" layout-padding layout-wrap>
                     <div class="content"

@@ -11,8 +11,8 @@
     let _ = require('../../main/util/util');
 
     /**
-     * Tests the UsersService. We need to secure the integrity of it's behavior, specially
-     * the cache.
+     * Testa o UsersService. Precisa assegurar a integridade de seu comportamento, especialmente
+     * para o cache.
      *
      * @author Estácio Pereira.
      */

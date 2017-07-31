@@ -17,7 +17,7 @@
                 }
             });
 
-            $provide.factory('redirect', ['$q', '$injector', 'store', function ($q, $injector, store) {
+            $provide.factory('redirect', ['$q', '$injector', 'store', 'APP_STATES', function ($q, $injector, store, APP_STATES) {
                 return {
                     responseError: function (rejection) {
                         if (rejection.status === 401) {
@@ -25,7 +25,7 @@
                             store.remove('user');
                             store.remove('idToken');
                             store.remove('accessToken');
-                            $injector.get('$state').go('login');
+                            $injector.get('$state').go(APP_STATES.LOGIN.nome);
                         }
                         return $q.reject(rejection);
                     }
