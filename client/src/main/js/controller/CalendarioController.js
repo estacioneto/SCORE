@@ -107,9 +107,9 @@
 
         this.onChangeLocal = function (local) {
             this.local = local;
-            // TODO: Implementar mudança de calendário quando auditório selecionado. @author Estácio Pereira.
             this.isLocalSelecionado = true;
-            console.log(local);
+            // TODO: Implementar mudança de calendário quando auditório selecionado. @author Estácio Pereira.
+            console.log(reservas);
         };
 
         this.voltaParaListagem = () => {

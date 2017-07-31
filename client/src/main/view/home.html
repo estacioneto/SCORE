@@ -20,14 +20,22 @@
                     </div>
                 </form>
                 <!--end Select search para local-->
+                <!--Nome do auditório selecionado e botão voltar-->
                 <div layout="row" layout align="space-between start" ng-if="calendarioCtrl.isLocalSelecionado">
-                    <md-icon flex="10" ng-click="calendarioCtrl.voltaParaListagem()">arrow_back</md-icon>
+                    <md-button class="md-icon-button"
+                               type="button"
+                               ng-click="calendarioCtrl.voltaParaListagem()"
+                               flex="3">
+                        <md-icon>arrow_back</md-icon>
+                        <md-tooltip>Voltar</md-tooltip>
+                    </md-button>
                     <div layout="column" layout-align="center center" flex>
-                        <span class="md-subhead">Auditório selecionado</span>
+                        <span class="md-subhead">Agenda do Auditório</span>
                         <span class="md-headline">{{calendarioCtrl.local.nome}}</span>
                     </div>
-                    <div flex="10"></div>
+                    <div flex="3"></div>
                 </div>
+                <!--end Nome do auditório selecionado e botão voltar>
                 <!--Listagem de auditorios-->
                 <listagem-locais on-click-local="calendarioCtrl.onChangeLocal(local)" ng-if="!calendarioCtrl.isLocalSelecionado"></listagem-locais>
                 <!--end Listagem de auditorios-->
