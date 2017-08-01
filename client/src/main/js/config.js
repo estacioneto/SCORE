@@ -110,7 +110,9 @@
                     controller: 'CalendarioController as calendarioCtrl',
                     resolve: {
                         reservas: function (AgendamentoService) {
-                            return AgendamentoService.loadReservasFuturas();
+                            return AgendamentoService.carregarReservas().then(function (data) {
+                                return data;
+                            });
                         }
                     }
                 })

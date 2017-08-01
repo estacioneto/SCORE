@@ -8,7 +8,9 @@
 
         let reservas = [];
 
-        let promiseEventosFuturos;
+        this.carregarReservas = function() {
+            return $q.resolve(reservas);
+        };
 
         /**
          * Remove uma reserva da lista do client.
@@ -61,34 +63,5 @@
         function getIndiceReserva(lista, id) {
             return _.findIndex(lista, e => e._id === id);
         }
-
-        /**
-         * Retorna as reservas de um dado dia.
-         * 
-         */
-        this.getReservasDia = data => {
-            return promiseEventosFuturos.then(reservasRes => {
-                const reservasDia = reservasRes.filter(r => r.dia === data);
-                return reservasDia;
-            });
-        };
-
-        this.loadReservasFuturas = () => {
-            // Assim não perdemos a referência
-            if (promiseEventosFuturos) {
-                return promiseEventosFuturos;
-            }
-            return $http.get(API_RESERVAS).then(data => {
-                const listaReservas = data.data.map(r => new Reserva(r));
-                return listaReservas;
-            });
-        };
-
-        (() => {
-            promiseEventosFuturos = self.loadReservasFuturas();
-            promiseEventosFuturos.then(reservasConsulta => {
-                reservas = reservasConsulta;
-            });
-        })();
     }]);
 })();

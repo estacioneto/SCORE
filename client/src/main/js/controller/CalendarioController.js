@@ -5,15 +5,16 @@
      * 
      */
     angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
-        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA', '$q',
-        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, reservas, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA, $q) {
+        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA', 'AgendamentoService', '$q',
+        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, reservas, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA, AgendamentoService, $q) {
 
         const self = this;
 
-        this.reservas = reservas;
+        this.local;
         this.isLocalSelecionado = false;
-        this.reservasFonte = [this.reservas];
 
+        this.reservas = reservas;
+        this.reservasFonte = [this.reservas];
         this.tiposReserva = TIPOS_RESERVA;
 
         /**
@@ -55,7 +56,7 @@
              * dia._d.setHours(dia._d.getHours() + fatorFusoHorario);
              */
 
-            let calendario = uiCalendarConfig.calendars.calendario;
+            const calendario = uiCalendarConfig.calendars.calendario;
 
             if (calendario.fullCalendar('getView').type === 'agendaDay' ||
                 calendario.fullCalendar('getView').type === 'basicDay') {
@@ -102,14 +103,28 @@
          * @return {Promise} Promise do modal.
          */
         this.criarReserva = (data) => {
-            return ModalService.verReserva(new Reserva({dia: DataManipuladorService.parseData(data)}));
+            const reserva = new Reserva({
+                dia: DataManipuladorService.parseData(data),
+                localId: self.local._id
+            });
+
+            return ModalService.verReserva(reserva);
         };
 
         this.onChangeLocal = function (local) {
             this.local = local;
             this.isLocalSelecionado = true;
-            // TODO: Implementar mudança de calendário quando auditório selecionado. @author Estácio Pereira.
-            console.log(reservas);
+
+            LocaisService.carregarReservasDoLocal(local._id).then(data => {
+                const calendario = uiCalendarConfig.calendars.calendario;
+
+                self.reservas = data.data;
+
+                /**
+                 * FIXME: A partir daqui, o two way não funciona mais
+                 */
+                calendario.fullCalendar('addEventSource', self.reservas);
+            });
         };
 
         this.voltaParaListagem = () => {

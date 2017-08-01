@@ -1,9 +1,10 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').service('LocaisService', ['$http', '$q', 'Local', function ($http, $q, Local) {
+    angular.module('localModulo').service('LocaisService', ['$http', '$q', 'Local', 'Reserva', function ($http, $q, Local, Reserva) {
 
-        const API = '/api/locais';
+        const API = '/api/locais',
+            RESERVA_SUB_API = 'reservas';
 
         /**
          * Retorna todos os locais.
@@ -25,6 +26,13 @@
          */
         this.carregarLocal = function (id) {
             return $http.get(`${API}/${id}`).then(retornarLocal);
+        };
+
+        this.carregarReservasDoLocal = function (id) {
+            return $http.get(`${API}/${id}/${RESERVA_SUB_API}`).then(data => {
+                const listaReservas = data.data.map(r => new Reserva(r));
+                return {data: listaReservas};
+            });
         };
 
         /**
