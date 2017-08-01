@@ -20,6 +20,7 @@ let sequenceReserva = 1;
          * Todo: Remover id, o qual será gerado pelo mongodb
          */
         function Reserva({_id,
+                          localId,
                           autor,
                           titulo,
                           descricao,
@@ -29,6 +30,7 @@ let sequenceReserva = 1;
                           tipo}) {
 
             obterPropriedades(this, {_id,
+                                 localId,
                                  autor,
                                  titulo,
                                  descricao,
