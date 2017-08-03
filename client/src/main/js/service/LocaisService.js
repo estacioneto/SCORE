@@ -28,13 +28,6 @@
             return $http.get(`${API}/${id}`).then(retornarLocal);
         };
 
-        this.carregarReservasDoLocal = function (id) {
-            return $http.get(`${API}/${id}/${RESERVA_SUB_API}`).then(data => {
-                const listaReservas = data.data.map(r => new Reserva(r));
-                return {data: listaReservas};
-            });
-        };
-
         /**
          * Salva o local especificado, ou editando-o se o mesmo já pertence ao BD ou
          * criando-o caso contrário.

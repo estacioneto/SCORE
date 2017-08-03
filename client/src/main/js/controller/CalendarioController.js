@@ -5,16 +5,15 @@
      * 
      */
     angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
-        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA', 'AgendamentoService', '$q',
-        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, reservas, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA, AgendamentoService, $q) {
+        'Reserva', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA', 'AgendamentoService', '$q',
+        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA, AgendamentoService, $q) {
 
         const self = this;
 
         this.local;
         this.isLocalSelecionado = false;
+        this.reservasSource = [];
 
-        this.reservas = reservas;
-        this.reservasFonte = [this.reservas];
         this.tiposReserva = TIPOS_RESERVA;
 
         /**
@@ -115,15 +114,10 @@
             this.local = local;
             this.isLocalSelecionado = true;
 
-            LocaisService.carregarReservasDoLocal(local._id).then(data => {
-                const calendario = uiCalendarConfig.calendars.calendario;
-
-                self.reservas = data.data;
-
-                /**
-                 * FIXME: A partir daqui, o two way não funciona mais
-                 */
-                calendario.fullCalendar('addEventSource', self.reservas);
+            AgendamentoService.carregarReservasDoLocal(local._id).then(data => {
+                self.reservasSource.splice(0, self.reservasSource.length);
+                const reservas = data.data;
+                self.reservasSource.push(reservas);
             });
         };
 

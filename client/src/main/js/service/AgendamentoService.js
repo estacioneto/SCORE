@@ -2,14 +2,25 @@
     'use strict';
     angular.module('agendamentoModulo', []).service('AgendamentoService', ['$http', '$q', 'Reserva', function ($http, $q, Reserva) {
 
+        const API = '/api/locais',
+            RESERVA_SUB_API = 'reservas';
+
         const self = this;
 
         const API_RESERVAS = "/api/reservas";
 
         let reservas = [];
 
-        this.carregarReservas = function() {
-            return $q.resolve(reservas);
+        /**
+         * Realiza a consulta de reservas por local.
+         * @param {Number} idLocal Local.
+         * @return {Promise} Promise contendo um data com a lista de reservas.
+         */
+        this.carregarReservasDoLocal = (idLocal) => {
+            return $http.get(`${API}/${idLocal}/${RESERVA_SUB_API}`).then(data => {
+                reservas = data.data.map(r => new Reserva(r));
+                return { data: reservas };
+            });
         };
 
         /**
