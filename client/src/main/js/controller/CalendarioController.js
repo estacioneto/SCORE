@@ -112,12 +112,12 @@
 
         this.onChangeLocal = function (local) {
             this.local = local;
-            this.isLocalSelecionado = true;
-
-            AgendamentoService.carregarReservasDoLocal(local._id).then(data => {
+            return AgendamentoService.carregarReservasDoLocal(local._id).then(data => {
                 self.reservasSource.splice(0, self.reservasSource.length);
                 const reservas = data.data;
                 self.reservasSource.push(reservas);
+                this.isLocalSelecionado = true;
+                return data;
             });
         };
 
