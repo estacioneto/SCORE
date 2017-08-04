@@ -62,7 +62,7 @@
         },
         tipo : {
             type: String,
-            enum: ['Defesa', 'Videoconferência', 'Reunião', 'Assembléia'],
+            enum: ['Defesa', 'Videoconferência', 'Reunião', 'Assembleia', 'Palestra', 'Outro'],
             required: [true, 'A reserva deve possuir um tipo']
         }
     });
