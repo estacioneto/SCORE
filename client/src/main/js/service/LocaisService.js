@@ -1,10 +1,9 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').service('LocaisService', ['$http', '$q', 'Local', 'Reserva', function ($http, $q, Local, Reserva) {
+    angular.module('localModulo').service('LocaisService', ['$http', '$q', 'Local', function ($http, $q, Local) {
 
-        const API = '/api/locais',
-            RESERVA_SUB_API = 'reservas';
+        const API = '/api/locais';
 
         /**
          * Retorna todos os locais.
