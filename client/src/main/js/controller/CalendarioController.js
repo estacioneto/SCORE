@@ -71,7 +71,7 @@
         this.calendarioConfig = {
             calendario: {
                 height: "100%",
-                editable: true,
+                editable: false,
                 timezone: false,
                 lang: 'pt-br',
                 header:{
@@ -101,7 +101,12 @@
          * @return {Promise} Promise do modal.
          */
         this.criarReserva = (data) => {
-            return ModalService.verReserva(new Reserva({dia: DataManipuladorService.parseData(data)}));
+            const reserva = new Reserva({
+                dia: DataManipuladorService.parseData(data),
+                inicio: DataManipuladorService.getHorarioEmString(data)
+            });
+
+            return ModalService.verReserva(reserva);
         };
 
         this.onChangeLocal = function (local) {
