@@ -72,7 +72,7 @@
         this.calendarioConfig = {
             calendario: {
                 height: "100%",
-                editable: true,
+                editable: false,
                 timezone: false,
                 lang: 'pt-br',
                 header:{
@@ -104,6 +104,7 @@
         this.criarReserva = (data) => {
             const reserva = new Reserva({
                 dia: DataManipuladorService.parseData(data),
+                inicio: DataManipuladorService.getHorarioEmString(data),  
                 localId: self.local._id
             });
 
