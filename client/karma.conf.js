@@ -49,7 +49,6 @@
                 'src/main/js/controller/AppController.js',
                 'src/main/js/controller/LoginController.js',
                 'src/main/js/controller/CalendarioController.js',
-                'src/main/js/controller/DetalhesDiaController.js',
                 'src/main/js/controller/DetalhesReservaController.js',
                 'src/test/testSetup.js',
                 'src/test/Mocks.js',

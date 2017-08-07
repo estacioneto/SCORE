@@ -1,3 +1,5 @@
+import {LocaisService} from "../service/LocaisService";
+
 (function () {
     'use strict';
     let Reserva = require('../model/Reserva'),
@@ -13,9 +15,26 @@
      * @param {Function} callback Função chamada após erro ou sucesso na operação.
      */
     reservasService.getReservas = (token, callback) => {
-        usersService.getUser(token, (err,user) => {
+        usersService.getUser(token, (err, user) => {
             if(err) return callback(err, null);
             Reserva.find({}, function(err, result) {
+                if (err) return callback(err, null);
+                return callback(null, result);
+            });
+        });
+    };
+
+    /**
+     * Obtém todas as reservas do local que teve o id especificado.
+     *
+     * @param {String}   token    Token de identificação do usuário logado.
+     * @param {String}   localId  Id do local a ter suas reservas retornadas.
+     * @param {Function} callback Função chamada após erro ou sucesso na operação.
+     */
+    reservasService.getReservasDoLocal = (token, localId, callback) => {
+        usersService.getUser(token, (err, user) => {
+            if(err) return callback(err, null);
+            Reserva.find({localId: localId}, function(err, result) {
                 if (err) return callback(err, null);
                 return callback(null, result);
             });
@@ -32,13 +51,17 @@
     reservasService.salvaReserva = (token, reserva, callback) => {
         usersService.getUser(token, (err, user) => {
             if(err) return callback(err, null);
-            reserva.emailAutor = user.email;
-            reserva.userId = user.user_id;
-            reserva.autor = user.user_metadata.nome_completo;
-            validarHorario(reserva, err => {
-                if (err) return callback(err, null)
-                return persisteReserva(new Reserva(reserva), callback);
-            });
+            LocaisService.consultarLocalPorId(reserva.localId)
+                .then(() => {
+                    reserva.emailAutor = user.email;
+                    reserva.userId = user.user_id;
+                    reserva.autor = user.user_metadata.nome_completo;
+                    validarHorario(reserva, err => {
+                        if (err) return callback(err, null);
+                        return persisteReserva(new Reserva(reserva), callback);
+                    });
+                })
+                .catch((err) => callback(err, null));
         });
     };
 
@@ -59,7 +82,7 @@
         const intervaloNegativo = reserva.inicio >= reserva.fim;
         if (intervaloNegativo) return cb("Intervalo de horários inválido.");
 
-        Reserva.findByDay(reserva.dia, (err, reservas) => {
+        Reserva.findByDayAndLocalId(reserva.dia, reserva.localId, (err, reservas) => {
             if(err) return cb(err);
             for (let i in reservas) {
                 const r = reservas[i];
@@ -69,7 +92,7 @@
                 if (hasChoqueHorario(r, reserva)) {
                     return cb("Horário ocupado.");
                 }
-            };
+            }
             return cb(null);
         });
     }
@@ -140,7 +163,7 @@
             novaReserva.autor = reservaAntiga.autor;
 
             validarHorario(novaReserva, err => {
-                if (err) return callback(err, null)
+                if (err) return callback(err, null);
 
                 _.updateModel(reservaAntiga, novaReserva);
                 persisteReserva(reservaAntiga, callback);

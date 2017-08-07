@@ -2,13 +2,24 @@
     'use strict';
     angular.module('agendamentoModulo', []).service('AgendamentoService', ['$http', '$q', 'Reserva', function ($http, $q, Reserva) {
 
-        const self = this;
+        const API = '/api/locais',
+            RESERVA_SUB_API = 'reservas';
 
-        const API_RESERVAS = "/api/reservas";
+        const self = this;
 
         let reservas = [];
 
-        let promiseEventosFuturos;
+        /**
+         * Realiza a consulta de reservas por local.
+         * @param {Number} idLocal Local.
+         * @return {Promise} Promise contendo um data com a lista de reservas.
+         */
+        this.carregarReservasDoLocal = (idLocal) => {
+            return $http.get(`${API}/${idLocal}/${RESERVA_SUB_API}`).then(data => {
+                reservas = data.data.map(r => new Reserva(r));
+                return { data: reservas };
+            });
+        };
 
         /**
          * Remove uma reserva da lista do client.
@@ -61,34 +72,5 @@
         function getIndiceReserva(lista, id) {
             return _.findIndex(lista, e => e._id === id);
         }
-
-        /**
-         * Retorna as reservas de um dado dia.
-         * 
-         */
-        this.getReservasDia = data => {
-            return promiseEventosFuturos.then(reservasRes => {
-                const reservasDia = reservasRes.filter(r => r.dia === data);
-                return reservasDia;
-            });
-        };
-
-        this.loadReservasFuturas = () => {
-            // Assim não perdemos a referência
-            if (promiseEventosFuturos) {
-                return promiseEventosFuturos;
-            }
-            return $http.get(API_RESERVAS).then(data => {
-                const listaReservas = data.data.map(r => new Reserva(r));
-                return listaReservas;
-            });
-        };
-
-        (() => {
-            promiseEventosFuturos = self.loadReservasFuturas();
-            promiseEventosFuturos.then(reservasConsulta => {
-                reservas = reservasConsulta;
-            });
-        })();
     }]);
 })();

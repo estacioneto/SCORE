@@ -1,6 +1,7 @@
 import express from 'express';
 
 import {AdminMiddleware} from '../middleware/AdminMiddleware';
+import ReservasSubRouter from '../router/ReservasSubRouter';
 import {LocaisService} from "../service/LocaisService";
 
 import _ from '../util/util';
@@ -16,6 +17,15 @@ function getLocal(router) {
             .then(local => res.status(_.OK).json(local))
             .catch(_.retornarResponseErro(res))
     );
+}
+
+/**
+ * Configura o GET em /api/locais/:id/reservas. Retorna as reservas do local dado o id.
+ *
+ * @param {Router} router Express Router.
+ */
+function getReservasPorLocal(router) {
+    router.use('/:id/reservas', ReservasSubRouter);
 }
 
 /**
@@ -92,6 +102,16 @@ function configurarRouter(router) {
     cadastrarLocal(router);
     atualizarLocal(router);
     deletarLocal(router);
+    configurarSubRouter(router);
+}
+
+/**
+ * Configura o router incluindo seus subrouters e respectivos endpoints.
+ *
+ * @param {Router} router Router a ser configurado.
+ */
+function configurarSubRouter(router) {
+    getReservasPorLocal(router);
 }
 
 module.exports = getLocaisRouter(express.Router());

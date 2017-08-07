@@ -5,13 +5,14 @@
      * 
      */
     angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
-        'Reserva', 'reservas', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA',
-        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, reservas, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA) {
+        'Reserva', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA', 'AgendamentoService', '$q',
+        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA, AgendamentoService, $q) {
 
         const self = this;
 
-        this.reservas = reservas;
-        this.reservasFonte = [this.reservas];
+        this.local;
+        this.isLocalSelecionado = false;
+        this.reservasSource = [];
 
         this.tiposReserva = TIPOS_RESERVA;
 
@@ -54,7 +55,7 @@
              * dia._d.setHours(dia._d.getHours() + fatorFusoHorario);
              */
 
-            let calendario = uiCalendarConfig.calendars.calendario;
+            const calendario = uiCalendarConfig.calendars.calendario;
 
             if (calendario.fullCalendar('getView').type === 'agendaDay' ||
                 calendario.fullCalendar('getView').type === 'basicDay') {
@@ -103,18 +104,41 @@
         this.criarReserva = (data) => {
             const reserva = new Reserva({
                 dia: DataManipuladorService.parseData(data),
-                inicio: DataManipuladorService.getHorarioEmString(data)
+                inicio: DataManipuladorService.getHorarioEmString(data),  
+                localId: self.local._id
             });
 
             return ModalService.verReserva(reserva);
         };
 
+        /**
+         * Atualiza as reservas exibidas quando um local é selecionado, exibindo apenas as
+         * reservas pertencentes ao mesmo.
+         *
+         * @param local Local a ter suas reservas carregadas e exibidas no calendário.
+         * @return {Promise} Promessa contendo as reservas do local selecionado.
+         */
         this.onChangeLocal = function (local) {
             this.local = local;
-            // TODO: Implementar mudança de calendário quando auditório selecionado. @author Estácio Pereira.
-            console.log('Local selecionado: ', local);
+            return AgendamentoService.carregarReservasDoLocal(local._id).then(data => {
+                self.reservasSource.splice(0, self.reservasSource.length);
+                const reservas = data.data;
+                self.reservasSource.push(reservas);
+                this.isLocalSelecionado = true;
+                return data;
+            });
         };
 
+        /**
+         * Retorna a visualização para listagem de calendários.
+         */
+        this.voltaParaListagem = () => {
+            this.isLocalSelecionado = false;
+        };
+
+        /**
+         * Redireciona para tela de informações do auditório atual.
+         */
         this.visualizarAuditorio = function () {
             $state.go(APP_STATES.LOCAL_ID_INFO.nome, {idLocal: self.local._id});
         };

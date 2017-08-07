@@ -107,12 +107,7 @@
                 .state(APP_STATES.HOME.nome, {
                     url: '/home',
                     templateUrl: view + 'home.html',
-                    controller: 'CalendarioController as calendarioCtrl',
-                    resolve: {
-                        reservas: function (AgendamentoService) {
-                            return AgendamentoService.loadReservasFuturas();
-                        }
-                    }
+                    controller: 'CalendarioController as calendarioCtrl'
                 })
                 .state(APP_STATES.LOCAL.nome, {
                     url: '/local',
