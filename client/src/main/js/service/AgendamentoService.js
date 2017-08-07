@@ -7,8 +7,6 @@
 
         const self = this;
 
-        const API_RESERVAS = "/api/reservas";
-
         let reservas = [];
 
         /**
