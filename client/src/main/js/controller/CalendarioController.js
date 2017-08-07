@@ -110,6 +110,13 @@
             return ModalService.verReserva(reserva);
         };
 
+        /**
+         * Atualiza as reservas exibidas quando um local é selecionado, exibindo apenas as
+         * reservas pertencentes ao mesmo.
+         *
+         * @param local Local a ter suas reservas carregadas e exibidas no calendário.
+         * @return {Promise} Promessa contendo as reservas do local selecionado.
+         */
         this.onChangeLocal = function (local) {
             this.local = local;
             return AgendamentoService.carregarReservasDoLocal(local._id).then(data => {
@@ -121,10 +128,16 @@
             });
         };
 
+        /**
+         * Retorna a visualização para listagem de calendários.
+         */
         this.voltaParaListagem = () => {
             this.isLocalSelecionado = false;
         };
 
+        /**
+         * Redireciona para tela de informações do auditório atual.
+         */
         this.visualizarAuditorio = function () {
             $state.go(APP_STATES.LOCAL_ID_INFO.nome, {idLocal: self.local._id});
         };
