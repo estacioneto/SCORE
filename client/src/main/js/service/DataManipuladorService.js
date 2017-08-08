@@ -25,6 +25,53 @@
         };
 
         /**
+         * Retornam, em string, no formato HH:mm o horário da data especificada.
+         *
+         * @param data Data a ter seu horário formatado. Deve ser do tipo Date ou possuir
+         * atributo '_d' to tipo Date.
+         * @return {string|undefined} Horário no formato HH:mm ou {@code undefined} caso
+         * a data especificada não seja definida.
+         */
+        this.getHorarioEmString = (data) => {
+            if (!data) return undefined;
+
+            data = data._d || data;
+
+            const horarioIndice = 4, horarioInicioIndice = 0, horarioFimIndice = 5, separador = ' ';
+            let horarioFormatado, horario;
+
+            horario = _.split(data.toGMTString(), separador)[horarioIndice];
+            horarioFormatado = horario.substring(horarioInicioIndice, horarioFimIndice);
+
+            return horarioFormatado;
+        };
+
+        /**
+         * Retorna, em Date, o horário especificado.
+         *
+         * @param horario Horário a ser retornado no tipo Date. Deve estar ser do
+         * formato HH:mm.
+         * @return {Date|undefined} Objeto Date contendo o horário especificado ou
+         * {@code undefined} caso o horário especificado não seja definido.
+         */
+        this.getHorarioEmDate = (horario) => {
+            if (!horario) return undefined;
+
+            const horaIndice = 0, minutoIndice = 1, separador = ':';
+
+            const horarioEmDate = new Date(),
+                horaInicio = horario.split(separador)[horaIndice],
+                minutosInicio = horario.split(separador)[minutoIndice];
+
+            horarioEmDate.setHours(horaInicio);
+            horarioEmDate.setMinutes(minutosInicio);
+            horarioEmDate.setSeconds(0);
+            horarioEmDate.setMilliseconds(0);
+
+            return horarioEmDate;
+        };
+
+        /**
          * Retorna se a data especificada é futura em relação a data atual.
          *
          * @param {Date} data

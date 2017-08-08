@@ -17,18 +17,6 @@ import {AdminMiddleware} from '../middleware/AdminMiddleware';
     let reservasRouter = express.Router();
 
     /**
-     * Obtém todas as reservas.
-     */
-    reservasRouter.get('/', (req,res) => {
-        reservasService.getReservas(_.getToken(req), (err,result) => {
-            if (err) {
-                return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
-            }
-            return res.status(_.OK).json(result);
-        });
-    });
-
-    /**
      * Salva uma nova reserva
      */
     reservasRouter.post('/', AdminMiddleware, (req, res) => {

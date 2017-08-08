@@ -17,7 +17,11 @@
         },
         userId: {
             type: String,
-            required: [true, "A reserva deve possuir o usuário relacionado."]
+            required: [true, "A reserva deve possuir um usuário relacionado."]
+        },
+        localId: {
+            type: Schema.Types.ObjectId,
+            required: [true, "A reserva deve possuir um local relacionado."]
         },
         titulo : {
             type: String,
@@ -62,7 +66,7 @@
         },
         tipo : {
             type: String,
-            enum: ['Defesa', 'Videoconferência', 'Reunião', 'Assembléia'],
+            enum: ['Defesa', 'Videoconferência', 'Reunião', 'Assembleia', 'Palestra', 'Outro'],
             required: [true, 'A reserva deve possuir um tipo']
         }
     });
@@ -75,8 +79,8 @@
         });
     });
 
-    reservaSchema.static('findByDay', function (dia, callback) {
-        return this.find({dia: dia}, (err, results) => {
+    reservaSchema.static('findByDayAndLocalId', function (dia, localId, callback) {
+        return this.find({dia: dia, localId: localId}, (err, results) => {
             if (err) return callback(err, null);
             return callback(err, results);
         });

@@ -107,12 +107,7 @@
                 .state(APP_STATES.HOME.nome, {
                     url: '/home',
                     templateUrl: view + 'home.html',
-                    controller: 'CalendarioController as calendarioCtrl',
-                    resolve: {
-                        reservas: function (AgendamentoService) {
-                            return AgendamentoService.loadReservasFuturas();
-                        }
-                    }
+                    controller: 'CalendarioController as calendarioCtrl'
                 })
                 .state(APP_STATES.LOCAL.nome, {
                     url: '/local',
@@ -139,10 +134,9 @@
                     templateUrl: view + 'local.html',
                     controller: 'LocalController as localCtrl',
                     resolve: {
-                        local: ($stateParams, LocaisService, Local) => {
-                            const id = parseInt($stateParams.idLocal);
-                            if (id) {
-                                return LocaisService.carregarLocal(id).then(info => new Local(info.data));
+                        local: ($stateParams, LocaisService) => {
+                            if ($stateParams.idLocal) {
+                                return LocaisService.carregarLocal($stateParams.idLocal).then(info => info.data);
                             }
                             return undefined;
                         }
@@ -163,10 +157,9 @@
                     templateUrl: view + 'local-edicao.html',
                     controller: 'LocalEdicaoController as localCtrl',
                     resolve: {
-                        local: ($stateParams, LocaisService, Local) => {
-                            const id = parseInt($stateParams.idLocal);
-                            if (id) {
-                                return LocaisService.carregarLocal(id).then(info => new Local(info.data));
+                        local: ($stateParams, LocaisService) => {
+                            if ($stateParams.idLocal) {
+                                return LocaisService.carregarLocal($stateParams.idLocal).then(info => info.data);
                             }
                             return undefined;
                         }

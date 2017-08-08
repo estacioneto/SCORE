@@ -4,7 +4,7 @@
      * Controller responsável pelo modal de detalhes da reserva.
      * 
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', '$q', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, $q) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'DataManipuladorService', '$q', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, DataManipuladorService, $q) {
 
         const self = this;
 
@@ -41,29 +41,8 @@
          * Date.
          */
         function ajustarInicioFim() {
-            // deveriamos precisar validar só um, actually
-            // condição para criação, onde não existe início e fim ainda
-            if (!self.reserva.inicio || !self.reserva.fim) {
-                return;
-            }
-            const inicio = new Date();
-            const fim = new Date();
-
-            const horaInicio = self.reserva.inicio.split(':')[0];
-            const minutosInicio = self.reserva.inicio.split(':')[1];
-
-            const horaFim = self.reserva.fim.split(':')[0];
-            const minutosFim = self.reserva.fim.split(':')[1];
-
-            inicio.setHours(horaInicio);
-            inicio.setMinutes(minutosInicio);
-            inicio.setSeconds(0);
-            inicio.setMilliseconds(0);
-
-            fim.setHours(horaFim);
-            fim.setMinutes(minutosFim);
-            fim.setSeconds(0);
-            fim.setMilliseconds(0);
+            const inicio = DataManipuladorService.getHorarioEmDate(self.reserva.inicio);
+            const fim = DataManipuladorService.getHorarioEmDate(self.reserva.fim);
 
             self.reserva.inicio = inicio;
             self.reserva.fim = fim;
