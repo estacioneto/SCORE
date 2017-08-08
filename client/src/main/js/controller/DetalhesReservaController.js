@@ -4,7 +4,8 @@
      * Controller responsável pelo modal de detalhes da reserva.
      * 
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'DataManipuladorService', '$q', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, DataManipuladorService, $q) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'DataManipuladorService', '$q', 'local', 
+        function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, DataManipuladorService, $q, local) {
 
         const self = this;
 
@@ -15,6 +16,15 @@
         this.isEdicao = !reserva.autor;
 
         this.tiposReserva = TIPOS_RESERVA;
+
+        /**
+         * Abre um modal com a visualização dos termos para o local relacionado
+         * a reserva.
+         * @param {Event} event Evento do clique.
+         * @return {Promise} Promise do modal.
+         */
+        this.verTermos = ($event) => 
+            ModalService.verTermosLocal(local, false, $event);
 
         /**
          * Ativa o modo de edição de reserva.

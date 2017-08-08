@@ -40,7 +40,11 @@
                 <listagem-locais on-click-local="calendarioCtrl.onChangeLocal(local)" ng-if="!calendarioCtrl.isLocalSelecionado"></listagem-locais>
                 <!--end Listagem de auditorios-->
                 <!--Barra legenda de cores-->
-                <md-content layout="row" layout-align="center center" ng-if="calendarioCtrl.isLocalSelecionado" layout-padding>
+                <md-content layout="row" 
+                    layout-align="center center" 
+                    ng-if="calendarioCtrl.isLocalSelecionado" 
+                    layout-padding
+                    layout-wrap>
                     <div layout="row" ng-repeat="(nome, cor) in ::calendarioCtrl.tiposReserva track by $index"> 
                          <div layout-padding class="circulo-legenda" data-md-colors="{{ ::cor.corMd }}"></div>
                          <span class="md-subhead">{{ ::nome }}</span>

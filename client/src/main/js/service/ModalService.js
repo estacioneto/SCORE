@@ -59,10 +59,11 @@
         /**
          * Abre o modal com a visualização de detalhes e edição de reserva.
          *
-         * @param reserva Horário a ser visualizado.
-         * @return Promise do modal.
+         * @param {Reserva} reserva Horário a ser visualizado.
+         * @param {Local} local Local relacionado a reserva.
+         * @return {Promise} Promise do modal.
          */
-        this.verReserva = (reserva) => {
+        this.verReserva = (reserva, local) => {
             return $mdDialog.show({
                 controller: 'DetalhesReservaController as reservaCtrl',
                 templateUrl: 'view/detalhesReserva.html',
@@ -70,9 +71,31 @@
                 clickOutsideToClose: false,
                 escapeToClose: false,
                 locals: {
-                    reserva: reserva
+                    reserva,
+                    local
                 }
             });
+        };
+
+        /**
+         * Abre o modal de visualização para termos do local.
+         * 
+         * @param {Local} local Local
+         * @param {Boolean} editavel identificação se os termos devem ser editáveis.
+         * @param {Event} $event Evento do clique.
+         * @return {Promise} Promise do modal.
+         */
+        this.verTermosLocal = function (local, editavel, $event) {
+            const options = {
+                templateUrl: 'view/dialog/local/termo-de-condicoes-dialog.html',
+                controller: 'TermoDeCondicoesDialogController as dialogCtrl',
+                targetEvent: $event,
+                resolve: {
+                    local: () => local,
+                    editavel: () => editavel
+                }
+            };
+            return self.custom(options);
         };
 
         /**
@@ -119,7 +142,8 @@
                 targetEvent,
                 attachTo,
                 parent: angular.element(document.body),
-                resolve
+                resolve,
+                multiple: true
             });
         };
 
