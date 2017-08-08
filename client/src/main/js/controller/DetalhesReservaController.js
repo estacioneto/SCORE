@@ -64,7 +64,7 @@
          * @return Promise.
          */
         this.salvarReserva = () => {
-            if (!self.reserva.termoAceito) {
+            if (!self.reserva.termoAceito && this.isCriacao()) {
                 return $q.reject("Você deve aceitar os termos de criação da reserva.");
             }
             self.isEdicao = false;

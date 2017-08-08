@@ -117,9 +117,9 @@
                     <md-divider></md-divider>
                     <br>
                     <br>
-
-                    <div layout="row">
-                        <md-checkbox ng-if="reservaCtrl.isCriacao()" 
+                    <!--Checkbox para aceitação de termos-->
+                    <div layout="row" ng-if="reservaCtrl.isCriacao()">
+                        <md-checkbox 
                                 ng-model="reservaCtrl.reserva.termoAceito" 
                                 aria-label="Checkbox 1"
                                 id="checkbox-termos">
@@ -128,7 +128,7 @@
                             Li e aceito os <a href="" ng-click="reservaCtrl.verTermos($event)">termos</a> para criação da reserva.
                         </span>
                     </div>
-
+                    <!--end Checkbox para aceitação de termos-->
                     <!--Botões-->
                     <div layout="row"
                          layout-align="center center">
@@ -142,7 +142,7 @@
                         <!--Botão de salvar-->
                         <md-button class="md-primary"
                                 ng-if="reservaCtrl.isEdicao"
-                                ng-disabled="!reservaCtrl.reserva.termoAceito"
+                                ng-disabled="!reservaCtrl.reserva.termoAceito && reservaCtrl.isCriacao()"
                                 type="submit">
                                 Salvar
                         </md-button>
