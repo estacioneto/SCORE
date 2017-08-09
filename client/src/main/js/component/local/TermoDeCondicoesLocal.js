@@ -23,19 +23,8 @@
              * @param   {event}   $event Evento capturado pelo clique no botão.
              * @returns {Promise} Promise de exibição do modal do Termo de Condições.
              */
-            this.mostrarTermoDeCondicoes = function ($event) {
-                const options = {
-                    templateUrl: 'view/dialog/local/termo-de-condicoes-dialog.html',
-                    controller: 'TermoDeCondicoesDialogController as dialogCtrl',
-                    targetEvent: $event,
-                    resolve: {
-                        local: () => this.local,
-                        editavel: () => this.editavel
-                    }
-                };
-
-                return ModalService.custom(options);
-            };
+            this.mostrarTermoDeCondicoes = ($event) => 
+                ModalService.verTermosLocal(this.local, this.editavel, $event);   
         }],
     });
 })();

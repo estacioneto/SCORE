@@ -25,7 +25,7 @@ function iniciarAuth0Management() {
     };
 
     auth0Authentication.clientCredentialsGrant(opcoesManagement, (err, response) => {
-        if (err) console.log(err);
+        if (err) return console.log(err);
         auth0Management = new ManagementClient({
             token: response.access_token,
             domain: _.AUTH0.DOMAIN

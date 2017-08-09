@@ -108,7 +108,7 @@
                 localId: self.local._id
             });
 
-            return ModalService.verReserva(reserva);
+            return ModalService.verReserva(reserva, this.local);
         };
 
         /**

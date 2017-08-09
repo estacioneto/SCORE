@@ -4,7 +4,8 @@
      * Controller responsável pelo modal de detalhes da reserva.
      * 
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'DataManipuladorService', function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, DataManipuladorService) {
+    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'DataManipuladorService', '$q', 'local', 
+        function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, DataManipuladorService, $q, local) {
 
         const self = this;
 
@@ -15,6 +16,15 @@
         this.isEdicao = !reserva.autor;
 
         this.tiposReserva = TIPOS_RESERVA;
+
+        /**
+         * Abre um modal com a visualização dos termos para o local relacionado
+         * a reserva.
+         * @param {Event} event Evento do clique.
+         * @return {Promise} Promise do modal.
+         */
+        this.verTermos = ($event) => 
+            ModalService.verTermosLocal(local, false, $event);
 
         /**
          * Ativa o modo de edição de reserva.
@@ -54,6 +64,9 @@
          * @return Promise.
          */
         this.salvarReserva = () => {
+            if (!self.reserva.termoAceito && this.isCriacao()) {
+                return $q.reject("Você deve aceitar os termos de criação da reserva.");
+            }
             self.isEdicao = false;
             preSalvar();
 
@@ -137,6 +150,11 @@
         this.podeExcluir = () => {
             return self.ehDonoDaReserva() && !self.isEdicao;
         };
+
+        /**
+         * Indica se a reserva ainda não foi persistida.
+         */
+        this.isCriacao = () => !self.reserva._id;
 
         /**
          * Indica se o usuário logado pode editar a reserva.
