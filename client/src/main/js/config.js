@@ -35,7 +35,8 @@
             'localModulo',
             'dataModulo',
             'constantesModulo',
-            'reservaModulo'
+            'reservaModulo',
+            'imagemModulo'
         ]);
 
     app.constant('_', window._)

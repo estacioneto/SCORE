@@ -1,12 +1,24 @@
-<md-content layout="row">
+<md-content layout="column">
+    <div layout="row" flex="30" layout-align="center center" ng-if="$ctrl.editavel">
+        <!--Input paras imagens (invisível)-->
+        <input multiple type="file" 
+            aria-label="selecao-imagem"
+            class="ng-hide" id="input-file-id"
+            ng-model="$ctrl.local.imagens" 
+            upload-imagem="onFileSelect($files)"/>
+        <!--end Input paras imagens (invisível)-->
+
+        <!--Label para o Input, o que é visto-->
+        <label for="input-file-id" class="md-button md-raised md-primary">Selecionar Imagens</label>
+        <!--end Label para o Input, o que é visto-->
+    </div>
 
     <!-- TODO: Cards com as imagens -->
-
-    <md-input-container layout layout-align="center center" flex>
-        <!--TODO: Diretiva de upload-->
-        <md-button class="md-raised md-primary" ng-if="$ctrl.editavel"
-                ng-click="$ctrl.upload()">
-            Adicionar imagem
-        </md-button>
-    </md-input-container>
+    <!--Visualização das imagens-->
+    <div layout="row" layout-align="center center" layout-wrap>
+        <div ng-repeat="src in $ctrl.local.imagens">
+            <img ng-if="src.conteudo" ng-src="{{src.conteudo}}"/><br/>
+        </div>
+    </div>
+    <!--end Visualização das imagens-->
 </md-content>
