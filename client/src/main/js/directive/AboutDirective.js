@@ -14,8 +14,6 @@
                 scope.devs1 = [];
                 scope.devs2 = [];
 
-                var pitonImg = "/img/icons/ms-icon-150x150.png";
-
                 /**
                  * Mock, enquanto nao temos dados do servidor.
                  */
@@ -123,30 +121,6 @@
                         ]
                     }
                 ];
-
-
-                var timesClicked = 1;
-                var lastFirstLetter = "";
-
-                /**
-                 * Aciona o nome relacionado ao easter egg.
-                 * 
-                 * @param name O nome clicado.
-                 */
-                scope.eeTrigger = function (name) {
-                    var firstLetter = name.substring(0, 1);
-                    var shouldTrigger = false;
-                    if (firstLetter === lastFirstLetter) {
-                        timesClicked++;
-                    } else {
-                        shouldTrigger = timesClicked === 19;
-                        lastFirstLetter = firstLetter;
-                        timesClicked = 1;
-                    }
-                    if (shouldTrigger) {
-                        ToastService.showActionToast('Chega, vai procurar em outro canto agora.');
-                    }
-                };
 
                 /**
                  * Funcao principal que embaralha listas devs.
