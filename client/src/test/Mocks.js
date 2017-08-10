@@ -3,16 +3,16 @@
 
     var mocksModule = angular.module('Mocks', ['userModule', 'localModulo']);
 
-    mocksModule.factory('UserMock', ['User', function (User) {
+    mocksModule.factory('UsuarioMock', ['Usuario', function (Usuario) {
         this.get = function () {
-            return new User({
+            return new Usuario({
                 clientID: AUTH0_CLIENT_ID,
                 created_at: "2016-11-11T22:07:49.974Z",
                 email: "test-email@test.email",
                 email_verified: false,
                 global_client_id: "Bf7bnZtJH6CP6AlOXibuSTwguliKrymD",
                 identities: [{
-                    connection: "Username-Password-Authentication",
+                    connection: "Usuarioname-Password-Authentication",
                     isSocial: false,
                     provider: "auth0",
                     user_id: "58264135c8c5c2816298f466"

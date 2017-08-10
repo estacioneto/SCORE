@@ -10,48 +10,48 @@
 
         beforeEach(module('scoreApp', 'stateMock', 'Mocks'));
 
-        var store, auth, AuthService, ToastService, UserMock;
+        var store, auth, AuthService, ToastService, UsuarioMock;
         var self = this;
 
         beforeEach(inject(defaultInjections(self)));
 
-        beforeEach(inject(function (_store_, _auth_, _AuthService_, _ToastService_, _UserMock_) {
+        beforeEach(inject(function (_store_, _auth_, _AuthService_, _ToastService_, _UsuarioMock_) {
             store = _store_;
             auth = _auth_;
             AuthService = _AuthService_;
             ToastService = _ToastService_;
-            UserMock = _UserMock_;
+            UsuarioMock = _UsuarioMock_;
         }));
 
         describe('deve ser logout', function () {
             it('limpar o usuario do servico e do repositorio local', function () {
 
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
                 var getProfileStub = sinon.stub(auth, 'getProfile');
 
 
-                assert.equal(AuthService.getLoggedUser(), null);
+                assert.equal(AuthService.getLoggedUsuario(), null);
                 assert.equal(AuthService.getIdToken(), null);
                 AuthService.isAuthenticated().should.equal(false);
 
                 AuthService.authenticate(token, user);
 
-                assert.equal(AuthService.getLoggedUser(), user);
+                assert.equal(AuthService.getLoggedUsuario(), user);
                 assert.equal(AuthService.getIdToken(), token);
                 AuthService.isAuthenticated().should.equal(true);
 
                 AuthService.logout();
 
                 AuthService.isAuthenticated().should.equal(false);
-                assert.equal(AuthService.getLoggedUser(), null);
+                assert.equal(AuthService.getLoggedUsuario(), null);
                 assert.equal(AuthService.getIdToken(), null);
             });
         });
 
         describe('deve ser authenticate', function () {
             it('salvar o usuario, o token e autenticar o usuario', function (done) {
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
                 var storeSetStub = sinon.stub(store, 'set');
                 var authenticateStub = sinon.stub(auth, 'authenticate');
@@ -65,7 +65,7 @@
             });
 
             it('solicitar usuario, se for dado somente o token', function (done) {
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
                 var storeSetStub = sinon.stub(store, 'set');
                 var authenticateStub = sinon.stub(auth, 'authenticate');
@@ -81,7 +81,7 @@
             });
 
             it('solicitar usuario, e mostrar o toast se o token eh invalido', function (done) {
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
                 var storeSetStub = sinon.stub(store, 'set');
                 var authenticateStub = sinon.stub(auth, 'authenticate');
@@ -108,7 +108,7 @@
             });
 
             it('retornar TRUE se o usuario ja esta autenticado', function () {
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
                 var getProfileStub = sinon.stub(auth, 'getProfile');
 
@@ -117,7 +117,7 @@
             });
 
             it('retornar FALSE se o usuario nao esta autenticado', function () {
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
 
                 // AuthService.authenticate(token, user);
@@ -126,7 +126,7 @@
         });
 
 
-        describe('deve getLoggedUser', function () {
+        describe('deve getLoggedUsuario', function () {
             beforeEach(function () {
                 if (AuthService.isAuthenticated()) {
                     AuthService.logout();
@@ -134,20 +134,20 @@
             });
 
             it('retornar um objeto Usuario se o usuario esta logado', function () {
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
                 var getProfileStub = sinon.stub(auth, 'getProfile');
 
                 AuthService.authenticate(token, user);
-                assert.equal(AuthService.getLoggedUser(), user);
+                assert.equal(AuthService.getLoggedUsuario(), user);
             });
 
             it('retornar NULL se o usuario nao eh um usuario logado', function () {
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
 
                 // AuthService.authenticate(token, user);
-                assert.equal(AuthService.getLoggedUser(), null);
+                assert.equal(AuthService.getLoggedUsuario(), null);
             });
         });
 
@@ -160,7 +160,7 @@
             });
 
             it('retornar o token do usuario logado, se existir um', function () {
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
                 var getProfileStub = sinon.stub(auth, 'getProfile');
 
@@ -170,7 +170,7 @@
             });
 
             it('retornar NULL se o usuario nao esta logado', function () {
-                var user = UserMock.get();
+                var user = UsuarioMock.get();
                 var token = 'token';
 
                 // AuthService.authenticate(token, user);
