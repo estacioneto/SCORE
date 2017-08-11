@@ -1,5 +1,7 @@
 (function () {
     'use strict';
+
+    const path = require('path');
     // Karma configuration
     // Generated on Mon Dec 26 2016 19:59:43 GMT-0300 (BRT)
 
@@ -29,23 +31,34 @@
                 '../node_modules/angular-material/angular-material.min.js',
                 '../node_modules/auth0-angular/build/auth0-angular.min.js',
                 '../node_modules/angular-storage/dist/angular-storage.min.js',
-                './resources/auth0lock.min.js',
+                '../node_modules/angular-ui-calendar/src/calendar.js',
+                '../node_modules/angular-ui-mask/dist/mask.min.js',
+                '../node_modules/angular-messages/angular-messages.min.js',
+                'resources/auth0lock.min.js',
                 '../node_modules/angular-jwt/dist/angular-jwt.min.js',
                 '../node_modules/angular-lock/dist/angular-lock.min.js',
                 '../node_modules/angular-sanitize/angular-sanitize.min.js',
                 '../node_modules/angular-material-calendar/angular-material-calendar.min.js',
                 'src/main/config/Auth0Variables.js',
                 'src/main/js/config.js',
-                'src/main/js/directive/AboutDirective.js',
-                'src/main/js/directive/MainToolbarDirective.js',
-                'src/main/js/directive/SidebarDirective.js',
-                'src/main/js/directive/MainFooterDirective.js',
+                'src/main/js/Constants.js',
+                'src/main/js/constants/constantesReserva.js',
+                'src/main/js/factory/Usuario.js',
+                'src/main/js/factory/Reserva.js',
+                'src/main/js/factory/Local.js',
+                'src/main/js/factory/FileReader.js',
+                'src/main/js/service/LocaisService.js',
+                'src/main/js/service/AgendamentoService.js',
+                'src/main/js/service/AuthLockService.js',
+                'src/main/js/service/DataManipuladorService.js',
                 'src/main/js/service/ModalService.js',
                 'src/main/js/service/SearchService.js',
                 'src/main/js/service/AuthService.js',
                 'src/main/js/service/ToastService.js',
-                'src/main/js/factory/Usuario.js',
-                'src/main/js/factory/Reserva.js',
+                'src/main/js/directive/AboutDirective.js',
+                'src/main/js/directive/MainToolbarDirective.js',
+                'src/main/js/directive/SidebarDirective.js',
+                'src/main/js/directive/MainFooterDirective.js',
                 'src/main/js/controller/AppController.js',
                 'src/main/js/controller/LoginController.js',
                 'src/main/js/controller/CalendarioController.js',
@@ -61,20 +74,39 @@
                 }
             },
 
-
             // list of files to exclude
             exclude: [],
 
 
             // preprocess matching files before serving them to the browser
             // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-            preprocessors: {},
 
+            customLaunchers: {
+                Chrome_travis_ci: {
+                    base: 'Chrome',
+                    flags: ['--no-sandbox']
+                }
+            },
 
             // test results reporter to use
             // possible values: 'dots', 'progress'
             // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-            reporters: ['nyan'],
+            reporters: ['nyan', 'coverage'],
+
+            preprocessors: {
+                // Arquivos que serão analisados pela cobertura de testes.
+                'src/main/js/**/*.js': ['coverage']
+            },
+
+            // optionally, configure the reporter
+            coverageReporter: {
+                dir : '../coverage',
+                reporters: [{
+                    type: 'lcovonly',
+                    subdir: '.',
+                    file: 'lcov_client.info'
+                }]
+            },
 
             nyanReporter: {
                 bail: true
@@ -99,7 +131,7 @@
 
             // start these browsers
             // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-            browsers: ['Chrome'],
+            browsers: ((process.env.TRAVIS) ? ['Chrome_travis_ci'] : ['Chrome']),
 
 
             // Continuous Integration mode

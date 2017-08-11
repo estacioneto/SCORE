@@ -23,7 +23,7 @@
             };
         }));
 
-        describe('deve clickDia', function () {
+        describe.skip('deve clickDia', function () {
             it('abrir pagina das reservas referentes a aquele dia', function () {
                 var controller = createController();
                 var date = new Date();
