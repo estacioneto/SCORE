@@ -21,6 +21,7 @@
          */
         function Local(local) {
             this.equipamentos = [];
+            this.imagens = [];
             Object.assign(this, local);
         }
 
