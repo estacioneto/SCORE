@@ -46,6 +46,7 @@
                 'src/main/js/factory/Usuario.js',
                 'src/main/js/factory/Reserva.js',
                 'src/main/js/factory/Local.js',
+                'src/main/js/factory/FileReader.js',
                 'src/main/js/service/LocaisService.js',
                 'src/main/js/service/AgendamentoService.js',
                 'src/main/js/service/AuthLockService.js',
