@@ -1,5 +1,5 @@
 <md-content layout="column">
-    <div layout="row" flex="30" layout-align="center center" ng-if="$ctrl.editavel">
+    <div layout="row" flex="10" layout-align="center center" ng-if="$ctrl.editavel">
         <!--Input paras imagens (invisível)-->
         <input multiple type="file" 
             aria-label="selecao-imagem"
@@ -13,12 +13,16 @@
         <!--end Label para o Input, o que é visto-->
     </div>
 
-    <!-- TODO: Cards com as imagens -->
     <!--Visualização das imagens-->
-    <div layout="row" layout-align="center center" layout-wrap>
-        <div ng-repeat="src in $ctrl.local.imagens">
-            <img ng-if="src.conteudo" ng-src="{{src.conteudo}}"/><br/>
-        </div>
+    <div flex="40" class="container-carousel" ng-if="$ctrl.existemImagens()">
+        <ui-carousel slides="$ctrl.local.imagens" slides-to-show="3" slides-to-scroll="1" dots="true" layout="row" layout-align="center center">
+            <carousel-item>
+                <md-card>
+                    <img ng-src="{{item.conteudo}}" class="imagem-local-card"/>
+                </md-card>
+            </carousel-item>
+        </ui-carousel>
     </div>
+    <br/>
     <!--end Visualização das imagens-->
 </md-content>

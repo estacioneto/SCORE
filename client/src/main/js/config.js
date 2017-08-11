@@ -5,6 +5,7 @@
         [
             'app',
             'ui.router',
+            'ui.carousel',
             'ui.bootstrap',
             'ui.calendar',
             'ui.mask',

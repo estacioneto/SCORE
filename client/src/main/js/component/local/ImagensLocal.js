@@ -15,6 +15,10 @@
             editavel: '<'
         },
         controller: [function () {
+            var self = this;
+            this.existemImagens = () => {
+                return self.local.imagens.length !== 0;
+            }
         }]
     });
 })();

@@ -243,9 +243,26 @@ md-input-container.md-input-invalid > md-icon {
     height: 100%;
 }
 
+.slide {
+    max-height: 300px;
+    margin: 0 auto;
+}
+
+.container-carousel {
+    overflow: hidden;
+}
+
 .imagem-local-card {
-    max-width: 100px;
-    max-height: 100px;
+    /*max-width: 300px;*/
+    max-height: 280px;
+    object-fit: cover;
+    width: auto;
+    height: auto;
+}
+
+.imagem-local-card {
+    max-width: 300px;
+    max-height: 280px;
 }
 
 .circulo-legenda {
