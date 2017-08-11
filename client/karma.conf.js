@@ -103,11 +103,11 @@
 
             // optionally, configure the reporter
             coverageReporter: {
-                dir : 'coverage/',
+                dir : '../coverage',
                 reporters: [{
                     type: 'lcovonly',
                     subdir: '.',
-                    file: 'lcov.info'
+                    file: 'lcov_client.info'
                 }]
             },
 
