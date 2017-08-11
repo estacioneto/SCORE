@@ -260,14 +260,6 @@ md-input-container.md-input-invalid > md-icon {
     height: auto;
 }
 
-.imagem-local-card {
-    /*max-width: 300px;*/
-    max-height: 280px;
-    object-fit: cover;
-    width: auto;
-    height: auto;
-}
-
 .circulo-legenda {
     height: 10px;
     width: 10px;
