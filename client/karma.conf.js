@@ -82,6 +82,13 @@
             // preprocessors: {},
 
 
+            customLaunchers: {
+                Chrome_travis_ci: {
+                    base: 'Chrome',
+                    flags: ['--no-sandbox']
+                }
+            },
+
             // test results reporter to use
             // possible values: 'dots', 'progress'
             // available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -127,7 +134,7 @@
 
             // start these browsers
             // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-            browsers: ['Chrome'],
+            browsers: ((process.env.TRAVIS) ? ['Chrome_travis_ci'] : ['Chrome']),
 
 
             // Continuous Integration mode
