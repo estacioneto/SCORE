@@ -11,7 +11,7 @@
     "coverage": "npm run coverage-server && npm run coverage-client && npm run merge-lcov && cat lcov.info",
     "coverage-client": "gulp --gulpfile client/gulpfile.js test",
     "coverage-server": "./node_modules/.bin/babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --reporter nyan --recursive \"./server/src/test/**/*.test.js\"",
-    "merge-lcov": "./node_modules/.bin/lcov-result-merger ./coverage/lcov*.info >> lcov.info ",
+    "merge-lcov": "./node_modules/.bin/lcov-result-merger './coverage/lcov*.info' 'lcov.info'",
     "coveralls": "cat lcov.info | coveralls"
   },
   "author": "",
