@@ -24,46 +24,5 @@
                 });
             };
         }));
-
-        describe('deve showActionToast', function () {
-            it('invocar o actionToast com a mensagem passada', function () {
-                var toastStub = sinon.stub(ToastService, 'showActionToast', function(mensagem){});
-                var controller = createController();
-                var mensagem = {
-                    textContent: "Mensagem de teste lel",
-                    action: 'OK',
-                    hideDelay: 5000
-                };
-
-                controller.showActionToast(mensagem.textContent);
-
-                expect(toastStub.called).to.be.true;
-                expect(toastStub.calledWith(mensagem)).to.be.true;
-            });
-        });
-
-        // TODO : HomeToolbarTest @auhtor Estácio Pereira 14/01/2017
-        // describe('signIn should', function () {
-        //     it('show the Auth lock', function () {
-        //         var controller = createController();
-        //         var lockShowStub = sinon.stub(controller.lock, 'show', function () {
-        //         });
-        //         controller.signIn();
-        //         // 'lockShowStub.should.not.have.been.called' passed!?
-        //         expect(lockShowStub.called).to.be.ok;
-        //     });
-        // });
-        //
-        // describe('logout should', function () {
-        //     it('signout and go home', function () {
-        //         var logoutStub = sinon.stub(AuthService, 'logout');
-        //         var controller = createController();
-        //
-        //         controller.$state = self.$state;
-        //         self.$state.expectTransitionTo('home');
-        //         controller.logout();
-        //         expect(logoutStub.called).to.be.true;
-        //     });
-        // });
     });
 })();

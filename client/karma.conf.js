@@ -1,5 +1,7 @@
 (function () {
     'use strict';
+
+    const path = require('path');
     // Karma configuration
     // Generated on Mon Dec 26 2016 19:59:43 GMT-0300 (BRT)
 
@@ -41,10 +43,10 @@
                 'src/main/js/config.js',
                 'src/main/js/Constants.js',
                 'src/main/js/constants/constantesReserva.js',
-                'src/main/js/directive/AboutDirective.js',
-                'src/main/js/directive/MainToolbarDirective.js',
-                'src/main/js/directive/SidebarDirective.js',
-                'src/main/js/directive/MainFooterDirective.js',
+                'src/main/js/factory/Usuario.js',
+                'src/main/js/factory/Reserva.js',
+                'src/main/js/factory/Local.js',
+                'src/main/js/service/LocaisService.js',
                 'src/main/js/service/AgendamentoService.js',
                 'src/main/js/service/AuthLockService.js',
                 'src/main/js/service/DataManipuladorService.js',
@@ -52,9 +54,10 @@
                 'src/main/js/service/SearchService.js',
                 'src/main/js/service/AuthService.js',
                 'src/main/js/service/ToastService.js',
-                'src/main/js/factory/Usuario.js',
-                'src/main/js/factory/Reserva.js',
-                'src/main/js/factory/Local.js',
+                'src/main/js/directive/AboutDirective.js',
+                'src/main/js/directive/MainToolbarDirective.js',
+                'src/main/js/directive/SidebarDirective.js',
+                'src/main/js/directive/MainFooterDirective.js',
                 'src/main/js/controller/AppController.js',
                 'src/main/js/controller/LoginController.js',
                 'src/main/js/controller/CalendarioController.js',
@@ -70,20 +73,36 @@
                 }
             },
 
-
             // list of files to exclude
             exclude: [],
 
 
             // preprocess matching files before serving them to the browser
             // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-            preprocessors: {},
+            // preprocessors: {},
 
 
             // test results reporter to use
             // possible values: 'dots', 'progress'
             // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-            reporters: ['nyan'],
+            reporters: ['nyan', 'coverage'],
+
+            preprocessors: {
+                // source files, that you wanna generate coverage for
+                // do not include tests or libraries
+                // (these files will be instrumented by Istanbul)
+                'src/main/js/**/*.js': ['coverage']
+            },
+
+            // optionally, configure the reporter
+            coverageReporter: {
+                dir : 'coverage/',
+                reporters: [{
+                    type: 'lcovonly',
+                    subdir: '.',
+                    file: 'lcov.info'
+                }]
+            },
 
             nyanReporter: {
                 bail: true
