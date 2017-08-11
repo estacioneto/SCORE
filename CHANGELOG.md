@@ -7,6 +7,7 @@
 * Funcionalidade: Adicionada função de abrir modal de reserva com horário de início preenchido.
 * Funcionalidade: Adicionada confirmação sobre termos de Local para criação de Reserva.
 * Funcionalidade: Adicionada opção de upload de imagem para local.
+* Manutenção: Limpeza da suite de testes do frontend e adicionada cobertura de testes no mesmo.
 
 # 0.0.2
 * Início versionamento.
