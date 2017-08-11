@@ -20,8 +20,10 @@
             required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_BLOCO]
         },
         imagens: [{
-            conteudo: {type: Buffer},
-            tipo: {type: String}
+            conteudo: {
+                type: String,
+                required: [true, "Imagem precisa de conteudo."]
+            }
         }], // TODO: Funciona? @author Estácio Pereira, 29/06/2017
         equipamentos: [
             {

@@ -15,10 +15,6 @@
             editavel: '<'
         },
         controller: [function () {
-            // TODO: Diretiva ao invés desse método
-            this.upload = function () {
-                alert('Funcionalidade não implementada!')
-            };
         }]
     });
 })();
