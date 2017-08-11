@@ -11,7 +11,7 @@
     "coverage": "npm run coverage-server && npm run coverage-client",
     "coverage-client": "gulp --gulpfile client/gulpfile.js test",
     "coverage-server": "./node_modules/.bin/babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --reporter nyan --recursive \"./server/src/test/**/*.test.js\"",
-    "coveralls": "./node_modules/.bin/lcov-result-merger coverage/lcov*.info | coveralls"
+    "coveralls": "ls coverage && ./node_modules/.bin/lcov-result-merger ./coverage/lcov*.info | coveralls"
   },
   "author": "",
   "license": "ISC",
