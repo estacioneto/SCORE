@@ -8,7 +8,7 @@
      *
      * @author Estácio Pereira
      */
-    let UserMock = {};
+    let UsersMock = {};
 
     let validUser = {
         username: 'test@test.email.com',
@@ -54,16 +54,16 @@
      *
      * @returns {Object} Valid user.
      */
-    UserMock.getValidUser = () => clone(validUser);
+    UsersMock.getValidUser = () => clone(validUser);
 
     /**
      * Retorna um usuário Auth0.
      *
      * @returns {Object} O usuário Auth0.
      */
-    UserMock.getAuth0User = () => {
+    UsersMock.getAuth0User = () => {
         let user = clone(auth0User);
-        user.email = UserMock.getNewEmail();
+        user.email = UsersMock.getNewEmail();
         return user;
     };
 
@@ -72,8 +72,8 @@
      *
      * @returns {Object} Usuário com permissões comuns.
      */
-    UserMock.getAuth0UserComum = () => {
-        const usuario = UserMock.getAuth0User();
+    UsersMock.getAuth0UserComum = () => {
+        const usuario = UsersMock.getAuth0User();
         usuario.app_metadata.permissoes = [];
         return usuario;
     };
@@ -83,9 +83,20 @@
      *
      * @returns {Object} Usuário com permissões de admin.
      */
-    UserMock.getAuth0UserAdmin = () => {
-        const usuario = UserMock.getAuth0User();
+    UsersMock.getAuth0UserAdmin = () => {
+        const usuario = UsersMock.getAuth0User();
         usuario.app_metadata.permissoes = [_.ADMIN];
+        return usuario;
+    };
+
+    /**
+     * Retorna um usuário com permissão de reserva do Auth0.
+     *
+     * @returns {Object} Usuário com permissões de reservas.
+     */
+    UsersMock.getAuth0UserReserva = () => {
+        const usuario = UsersMock.getAuth0User();
+        usuario.app_metadata.permissoes = [_.RESERVAS];
         return usuario;
     };
 
@@ -94,7 +105,7 @@
      *
      * @returns {String} Um email único.
      */
-    UserMock.getNewEmail = () => _.generateNewString(Math.floor(Math.random() * _.RANDOM_STRING_LENGTH)) + 'a@' +
+    UsersMock.getNewEmail = () => _.generateNewString(Math.floor(Math.random() * _.RANDOM_STRING_LENGTH)) + 'a@' +
     _.generateNewString(Math.floor(Math.random() * _.RANDOM_STRING_LENGTH)) + '.com';
 
     /**
@@ -102,7 +113,42 @@
      *
      * @returns {String} O 'real JWT' sem expiração.
      */
-    UserMock.getToken = () => token;
+    UsersMock.getToken = () => token;
 
-    module.exports = UserMock;
+    /**
+     * Coloca um usuário com permissão comum no cache de usuários, dado o service.
+     */
+    UsersMock.cacheUsuarioComum = usersService => {
+        const usuarioComumMock = UsersMock.getAuth0UserComum();
+        cacheUsuario(usersService, usuarioComumMock);
+    };
+
+    /**
+     * Coloca um usuário com permissão de Admin no cache de usuários, dado o service.
+     */
+    UsersMock.cacheUsuarioAdmin = usersService => {
+        const usuarioAdminMock = UsersMock.getAuth0UserAdmin();
+        cacheUsuario(usersService, usuarioAdminMock);
+    };
+
+    /**
+     * Coloca um usuário com permissão de Reesrvas no cache de usuários, dado o service.
+     */
+    UsersMock.cacheUsuarioReservas = usersService => {
+        const usuarioAdminMock = UsersMock.getAuth0UserReserva();
+        cacheUsuario(usersService, usuarioAdminMock);
+    };
+
+    /**
+     * Coloca um usuário no cache.
+     *
+     * @param {UsersService} usersService Service de usuários.
+     * @param {Object}       usuario      Usuário a ser colocado no cache.
+     */
+    function cacheUsuario(usersService, usuario) {
+        const token = UsersMock.getToken();
+        usersService.cacheUser(token, usuario);
+    }
+
+    module.exports = UsersMock;
 })();

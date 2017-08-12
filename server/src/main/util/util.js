@@ -41,6 +41,8 @@
     };
 
     _.ADMIN = 'admin';
+    _.RESERVAS = 'reservas';
+    _.ACCESS_TOKEN = 'access_token';
     _.ERRO_USUARIO_SEM_PERMISSAO = 'Usuário não tem permissão ao recurso.';
 
     /**

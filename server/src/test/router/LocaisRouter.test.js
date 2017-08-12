@@ -15,25 +15,7 @@ describe('LocaisRouterTest', () => {
     const app = express();
     routesMiddleware.set(app);
 
-    let usuarioComumMock, usuarioAdminMock, token;
-
-    /**
-     * Coloca um usuário comum no cache de usuários.
-     */
-    function cacheUsuarioComum() {
-        usuarioComumMock = UsersMock.getAuth0UserComum();
-        token = UsersMock.getToken();
-        UsersService.cacheUser(token, usuarioComumMock);
-    }
-
-    /**
-     * Coloca um usuário com permissão de Admin no cache de usuários.
-     */
-    function cacheUsuarioAdmin() {
-        usuarioAdminMock = UsersMock.getAuth0UserAdmin();
-        token = UsersMock.getToken();
-        UsersService.cacheUser(token, usuarioAdminMock);
-    }
+    const token = UsersMock.getToken();
 
     /**
      * Retorna a requisição desejada em /locais/:idLocal
@@ -57,7 +39,7 @@ describe('LocaisRouterTest', () => {
      * @param {Function} done       Função chamada quando o teste acabar.
      */
     function testeEndPointForbidden({metodoHttp, uri, reqBody = {}, done}) {
-        cacheUsuarioComum();
+        UsersMock.cacheUsuarioComum(UsersService);
         request(app)[_.toLower(metodoHttp)](uri)
             .set('Authorization', `Bearer ${token}`)
             .set('access_token', token)
@@ -95,7 +77,7 @@ describe('LocaisRouterTest', () => {
     }
 
     beforeEach(() => {
-        cacheUsuarioAdmin();
+        UsersMock.cacheUsuarioAdmin(UsersService);
     });
 
     describe('GET /api/locais deve', () => {
