@@ -10,6 +10,8 @@
 * Manutenção: Limpeza da suite de testes do frontend e adicionada cobertura de testes no mesmo.
 * Funcionalidade: Adicionada validação de permissão ao criar e alterar reservas no servidor.
 * Correção: Corrigidos testes no servidor com mudança de Secret do Auth0.
+* Funcionalidade: Adicionada verificação da permissão do usuário para criar reserva.
+
 
 # 0.0.2
 * Início versionamento.

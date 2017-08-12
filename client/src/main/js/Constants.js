@@ -28,5 +28,8 @@
         LOCAL_ID_INFO: getLocalState('app.local.id.info'),
         LOCAL_EDICAO: getLocalState('app.local.edicao'),
         LOCAL_ID_EDICAO: getLocalState('app.local.id.edicao')
+    }).constant('PERMISSOES', {
+        ADMIN: 'admin',
+        RESERVAS: 'reservas'
     });
 })();
