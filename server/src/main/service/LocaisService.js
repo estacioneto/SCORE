@@ -20,10 +20,15 @@ export class LocaisService {
     static cadastrarLocal(local) {
         const localMongoose = new Local(local);
 
-        return new Promise((resolve, reject) =>
-            localMongoose.save((err, result) =>
-                (err) ? reject(err.message || err) : resolve(_.mongooseToObject(result)))
-        );
+        return new Promise((resolve, reject) => {
+            const err = LocaisService.validarImagens(local.imagens);
+            if (err) {
+                reject(err);
+            } else {
+                localMongoose.save((err, result) =>
+                    (err) ? reject(err.message) : resolve(_.mongooseToObject(result)));
+            }
+        });
     }
 
     /**
@@ -77,10 +82,15 @@ export class LocaisService {
         return LocaisService.getMongooseLocalPorId(idLocal)
             .then(localPersistido => {
                 _.updateModel(localPersistido, novoLocal);
-                return new Promise((resolve, reject) =>
-                    localPersistido.save((err, result) =>
-                        (err) ? reject(err.message || err) : resolve(_.mongooseToObject(result)))
-                );
+                return new Promise((resolve, reject) => {
+                    const err = LocaisService.validarImagens(novoLocal.imagens);
+                    if (err) {
+                        reject(err);
+                    } else {
+                        localPersistido.save((err, result) =>
+                            (err) ? reject(err.message || err) : resolve(_.mongooseToObject(result)));
+                    }
+                });
             });
     }
 
@@ -99,6 +109,26 @@ export class LocaisService {
                         return resolve(_.mongooseToObject(result));
                     }))
             );
+    }
+
+    /**
+     * Verifica a validade das imagens para local.
+     * - Verifica se o tipo é válido.
+     * 
+     * Não precisa verificar tamanho, uma vez que o BodyParser já limita as requisições para até 
+     * 16 mb.
+     * @param {Array<Object>} imagens Lista de imagens.
+     * @return {String} Mensagem de validação, vazio caso esteja tudo ok.
+     */
+    static validarImagens(imagens) {
+        let mensagemErro = '';
+        const TIPOS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/bitmap'];
+        imagens.forEach(imagem => {
+            if (!_.some(TIPOS, tipo => imagem.conteudo.substring(5, 15) === tipo)) {
+                mensagemErro = "Tipo de imagem não suportado."
+            }
+        });
+        return mensagemErro;
     }
 }
 

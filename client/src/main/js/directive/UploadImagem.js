@@ -20,7 +20,7 @@
                     // Não funciona utilizar _.each por não ser um array.
                     for (let i = 0; i < arquivosObj.length; i++) {
                         const arquivo = arquivosObj[i];
-                        if (validarArquivo(arquivo))
+                        if (isArquivoValido(arquivo))
                             lerArquivo(arquivo);
                     }
                 });
@@ -33,7 +33,7 @@
                  * @param {File} arquivo Arquivo a ser validado
                  * @return {Boolean} True caso o arquivo seja válido
                  */
-                function validarArquivo(arquivo) {
+                function isArquivoValido(arquivo) {
                     // 16 MB
                     const TAM_MAX = 16 * 1000 * 1000;
                     const TIPOS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/bitmap'];
