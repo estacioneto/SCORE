@@ -2,6 +2,7 @@
     'use strict';
     let clone = require('clone');
     let _ = require('../main/util/util');
+    const jwt = require('jsonwebtoken');
 
     /**
      * UserMock lida com os mocks relacionado ao Auth0 usado em nossos testes.
@@ -45,7 +46,7 @@
         }
     };
 
-    let token = process.env.SCORE_TEST_TOKEN;
+    let token = jwt.sign({ just: 'a token', aud: _.AUTH0.SCORE_CLIENT_ID }, _.AUTH0.SCORE_CLIENT_SECRET);
 
     let email = 'test-email@test.email';
 

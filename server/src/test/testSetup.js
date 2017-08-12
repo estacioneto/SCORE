@@ -16,8 +16,7 @@ const assert = require('assert'),
 const expect = chai.expect;
 const _ = require('../main/util/util');
 
-const TEST_DB = 'SCORE-TESTDB',
-    TEST_TOKEN = process.env.SCORE_TEST_TOKEN;
+const TEST_DB = 'SCORE-TESTDB';
 
 Object.assign(global, {
     assert,
@@ -29,6 +28,5 @@ Object.assign(global, {
     mockery,
     expect,
     _,
-    TEST_DB,
-    TEST_TOKEN
+    TEST_DB
 });
