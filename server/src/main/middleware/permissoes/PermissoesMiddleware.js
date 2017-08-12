@@ -13,7 +13,7 @@ export class PermissoesMiddleware {
      * @returns {Function} Middleware.
      */
     static getAdminMiddleware() {
-        return PermissoesMiddleware.construirMiddleware(_.ADMIN);
+        return PermissoesMiddleware.construirMiddleware();
     }
 
     /**
@@ -27,10 +27,10 @@ export class PermissoesMiddleware {
     /**
      * Função geradora de middlewares de Permissão com comportamento padrão.
      *
-     * @param   {String}            permissao Permissão a ser analisada.
+     * @param   {String}            [permissao=''] Permissão a ser analisada.
      * @returns {function(*, *, *)} Retorna função middleware com implementação padrão de verificação.
      */
-    static construirMiddleware(permissao) {
+    static construirMiddleware(permissao = '') {
         return (req, res, next) => {
             const token = req.header(_.ACCESS_TOKEN);
 
@@ -40,9 +40,10 @@ export class PermissoesMiddleware {
                         return reject(res.status(_.FORBIDDEN).json({mensagem: `Falha ao acessar recurso. ${(err || '')}.`}));
 
                     const permissoes = usuario.app_metadata.permissoes || [];
-                    if (!_.includes(permissoes, permissao))
+                    // Como o Admin pode tudo, se incluir Admin, pode passar.
+                    if (!_.includes(permissoes, _.ADMIN) && !_.includes(permissoes, permissao))
                         return reject(res.status(_.FORBIDDEN).json({mensagem: _.ERRO_USUARIO_SEM_PERMISSAO}));
-                    resolve(next());
+                    return resolve(next());
                 })
             );
         };

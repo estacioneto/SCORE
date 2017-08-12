@@ -62,9 +62,10 @@
      * @returns {Object} O usuário Auth0.
      */
     UsersMock.getAuth0User = () => {
-        let user = clone(auth0User);
-        user.email = UsersMock.getNewEmail();
-        return user;
+        let usuario = clone(auth0User);
+        usuario.email = UsersMock.getNewEmail();
+        usuario.app_metadata.permissoes = [];
+        return usuario;
     };
 
     /**
@@ -72,11 +73,11 @@
      *
      * @returns {Object} Usuário com permissões comuns.
      */
-    UsersMock.getAuth0UserComum = () => {
-        const usuario = UsersMock.getAuth0User();
-        usuario.app_metadata.permissoes = [];
-        return usuario;
-    };
+    UsersMock.getAuth0UserComum = () => Object.assign(UsersMock.getAuth0User(), {
+        app_metadata: {
+            permissoes: []
+        }
+    });
 
     /**
      * Retorna um usuário admin do Auth0.
@@ -106,7 +107,7 @@
      * @returns {String} Um email único.
      */
     UsersMock.getNewEmail = () => _.generateNewString(Math.floor(Math.random() * _.RANDOM_STRING_LENGTH)) + 'a@' +
-    _.generateNewString(Math.floor(Math.random() * _.RANDOM_STRING_LENGTH)) + '.com';
+        _.generateNewString(Math.floor(Math.random() * _.RANDOM_STRING_LENGTH)) + '.com';
 
     /**
      * Retorna um 'real JWT' sem expiração.

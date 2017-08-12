@@ -31,6 +31,17 @@ describe('PermissoesMiddlewareTest', () => {
             });
         });
 
+        it('aceitar usuario com permissão de Admin', done => {
+            const reservasMiddleware = PermissoesMiddleware.getReservasMiddleware();
+            UsersMock.cacheUsuarioAdmin(UsersService);
+            reservasMiddleware(req, res, () => {
+                sinon.assert.calledWith(req.header, _.ACCESS_TOKEN);
+                sinon.assert.notCalled(res.status);
+                sinon.assert.notCalled(res.json);
+                done();
+            });
+        });
+
         it('enviar mensagem de erro se usuário não tiver permissão', () => {
             const reservasMiddleware = PermissoesMiddleware.getReservasMiddleware();
             const next = sinon.stub();
