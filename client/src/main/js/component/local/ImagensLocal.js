@@ -14,10 +14,38 @@
             local: '=',
             editavel: '<'
         },
-        controller: [function () {
+        controller: ['ModalService', 'ToastService', '$scope', '$mdDialog', function (ModalService, ToastService, $scope, $mdDialog) {
             var self = this;
+
+
+            $scope.$on('deleteImageById', function (event, response) {
+
+                ModalService.confirmar("Deletar Imagem", "Deseja continuar. Ação não pode ser desfeita.").then(function(){
+                    self.excluirImagem(response.id);
+                    ToastService.showActionToast('Imagem excluída.');
+                    fecharModal();
+                }, function(){
+
+                });
+
+            });
+
+            function fecharModal(){
+                $mdDialog.hide();
+            }
+
+            this.excluirImagem = function (id) {
+                _.remove(self.local.imagens, {
+                    _id: id
+                });
+            };
+
             this.existemImagens = () => {
-                return self.local.imagens.length !== 0;
+                return !_.isEmpty(self.local.imagens);
+            };
+
+            this.mostraModalImagem = function ($event, imagem, editavel) {
+                ModalService.verImagem(imagem, $event, editavel);
             }
         }]
     });

@@ -77,6 +77,20 @@
             });
         };
 
+
+        this.verImagem = function (imagem, $event, editavel) {
+            const options = {
+                templateUrl: 'view/dialog/full-size-image.html',
+                controller: 'ImagemController as imagemCtrl',
+                targetEvent: $event,
+                resolve: {
+                    imagem: () => imagem,
+                    editavel: () => editavel
+                }
+            };
+            return self.custom(options);
+        };
+
         /**
          * Abre o modal de visualização para termos do local.
          * 

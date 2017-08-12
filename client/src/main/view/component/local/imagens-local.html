@@ -14,10 +14,10 @@
     </div>
 
     <!--Visualização das imagens-->
-    <div flex="40" class="container-carousel" ng-if="$ctrl.existemImagens()">
+    <div flex="50" class="container-carousel" ng-if="$ctrl.existemImagens()">
         <ui-carousel slides="$ctrl.local.imagens" slides-to-show="3" slides-to-scroll="1" dots="true" layout="row" layout-align="center center">
             <carousel-item>
-                <md-card>
+                <md-card ng-click="$parent.$parent.$ctrl.mostraModalImagem($event, item, $parent.$parent.$ctrl.editavel)">
                     <img ng-src="{{item.conteudo}}" class="imagem-local-card"/>
                 </md-card>
             </carousel-item>
