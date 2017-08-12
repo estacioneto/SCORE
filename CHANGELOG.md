@@ -9,6 +9,7 @@
 * Funcionalidade: Adicionada opção de upload de imagem para local.
 * Manutenção: Limpeza da suite de testes do frontend e adicionada cobertura de testes no mesmo.
 * Funcionalidade: Adicionada validação de permissão ao criar e alterar reservas no servidor.
+* Funcionalidade: Adicionada validação para tamanho e formato da imagem de upload.
 
 # 0.0.2
 * Início versionamento.

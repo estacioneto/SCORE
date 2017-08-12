@@ -20,9 +20,34 @@
                     // Não funciona utilizar _.each por não ser um array.
                     for (let i = 0; i < arquivosObj.length; i++) {
                         const arquivo = arquivosObj[i];
-                        lerArquivo(arquivo);
+                        if (validarArquivo(arquivo))
+                            lerArquivo(arquivo);
                     }
                 });
+
+                /**
+                 * Realiza a validação do arquivo de entrada.
+                 * - O arquivo não pode ter mais de 16 MB.
+                 * - O arquivo precisa ser do tipo PNG, JPG, JPEG, GIF ou BITMAP.
+                 * 
+                 * @param {File} arquivo Arquivo a ser validado
+                 * @return {Boolean} True caso o arquivo seja válido
+                 */
+                function validarArquivo(arquivo) {
+                    // 16 MB
+                    const TAM_MAX = 16 * 1000 * 1000;
+                    const TIPOS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/bitmap'];
+                    if (arquivo.size > TAM_MAX) {
+                        alert(`O tamanho máximo suportado é de 16 MB. ${arquivo.name}`);
+                        return false;
+                    }
+                    const tipoNaoListado = _.findIndex(TIPOS, tipo => tipo === arquivo.type) === -1;
+                    if (tipoNaoListado) {
+                        alert(`Tipo de imagem não suportado. ${arquivo.name}`);
+                        return false;
+                    }
+                    return true;
+                }
 
                 /**
                  * Realiza a leitura do arquivo e o transforma em bas64, em seguida
