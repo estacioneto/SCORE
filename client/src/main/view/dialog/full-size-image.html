@@ -1,4 +1,13 @@
-<div layout="column">
-    <img src="{{imagemCtrl.imagem.conteudo}}" class="imagem-modal" aria-label="full-size-image">
-    <md-button class="md-raised md-warn" ng-if="imagemCtrl.editavel" aria-label="deleteImage" ng-click="imagemCtrl.deletarImagem()">Excluir</md-button>
+<div layout="column" class="imagem-modal-full">
+    <img src="{{imagemCtrl.imagem.conteudo}}"
+         class="imagem-modal"
+         aria-label="Imagem expandida">
+
+    <md-button class="excluir-imagem-modal-button md-warn md-icon-button"
+               ng-if="imagemCtrl.editavel"
+               aria-label="Excluir imagem"
+               ng-click="imagemCtrl.excluirImagem()">
+        <md-icon>delete</md-icon>
+        <md-tooltip md-direction="top">Excluir imagem</md-tooltip>
+    </md-button>
 </div>

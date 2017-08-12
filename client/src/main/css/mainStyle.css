@@ -273,6 +273,16 @@ md-input-container.md-input-invalid > md-icon {
     height: auto;
 }
 
+.imagem-modal-full {
+    position: relative;
+}
+
+.excluir-imagem-modal-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
 .circulo-legenda {
     height: 10px;
     width: 10px;

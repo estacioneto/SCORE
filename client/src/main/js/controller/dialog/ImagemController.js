@@ -6,7 +6,7 @@
         this.imagem = imagem;
         this.editavel = editavel;
 
-        this.deletarImagem = function () {
+        this.excluirImagem = function () {
             $rootScope.$broadcast('deleteImageById',{id: self.imagem._id});
         };
 
