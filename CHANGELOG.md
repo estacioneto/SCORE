@@ -8,6 +8,7 @@
 * Funcionalidade: Adicionada confirmação sobre termos de Local para criação de Reserva.
 * Funcionalidade: Adicionada opção de upload de imagem para local.
 * Manutenção: Limpeza da suite de testes do frontend e adicionada cobertura de testes no mesmo.
+* Funcionalidade: Adicionada validação de permissão ao criar e alterar reservas no servidor.
 
 # 0.0.2
 * Início versionamento.

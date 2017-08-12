@@ -1,6 +1,6 @@
 import express from 'express';
 
-import {AdminMiddleware} from '../middleware/AdminMiddleware';
+import {PermissoesMiddleware} from '../middleware/permissoes/PermissoesMiddleware';
 import ReservasSubRouter from '../router/ReservasSubRouter';
 import {LocaisService} from "../service/LocaisService";
 
@@ -47,7 +47,7 @@ function getLocais(router) {
  * @param {Router} router Express Router.
  */
 function cadastrarLocal(router) {
-    router.post(['', '/'], AdminMiddleware, (req, res) =>
+    router.post(['', '/'], [PermissoesMiddleware.getAdminMiddleware()], (req, res) =>
         LocaisService.cadastrarLocal(req.body)
             .then(localCadastrado => res.status(_.CREATED).json(localCadastrado))
             .catch(_.retornarResponseErro(res))
@@ -60,7 +60,7 @@ function cadastrarLocal(router) {
  * @param {Router} router Express Router.
  */
 function atualizarLocal(router) {
-    router.put('/:id', AdminMiddleware, (req, res) =>
+    router.put('/:id', [PermissoesMiddleware.getAdminMiddleware()], (req, res) =>
         LocaisService.atualizarLocal(req.params.id, req.body)
             .then(localAtualizado => res.status(_.OK).json(localAtualizado))
             .catch(_.retornarResponseErro(res))
@@ -73,7 +73,7 @@ function atualizarLocal(router) {
  * @param {Router} router Express Router.
  */
 function deletarLocal(router) {
-    router.delete('/:id', AdminMiddleware, (req, res) =>
+    router.delete('/:id', [PermissoesMiddleware.getAdminMiddleware()], (req, res) =>
         LocaisService.deletarLocal(req.params.id)
             .then(localRemovido => res.status(_.OK).json(localRemovido))
             .catch(_.retornarResponseErro(res))
