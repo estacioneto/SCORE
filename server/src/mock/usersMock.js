@@ -84,22 +84,26 @@
      *
      * @returns {Object} Usuário com permissões de admin.
      */
-    UsersMock.getAuth0UserAdmin = () => {
-        const usuario = UsersMock.getAuth0User();
-        usuario.app_metadata.permissoes = [_.ADMIN];
-        return usuario;
-    };
+    UsersMock.getAuth0UserAdmin = () => getAuth0UserPermissao(_.ADMIN);
 
     /**
      * Retorna um usuário com permissão de reserva do Auth0.
      *
      * @returns {Object} Usuário com permissões de reservas.
      */
-    UsersMock.getAuth0UserReserva = () => {
+    UsersMock.getAuth0UserReserva = () => getAuth0UserPermissao(_.RESERVAS);
+
+    /**
+     * Retorna um mock do usuário do Auth0 com uma dada permissão.
+     *
+     * @param   {String} permissao Permissão do usuário.
+     * @returns {Object} Usuário do Auth0 com a dada permissão
+     */
+    function getAuth0UserPermissao(permissao) {
         const usuario = UsersMock.getAuth0User();
-        usuario.app_metadata.permissoes = [_.RESERVAS];
+        usuario.app_metadata.permissoes.push(permissao);
         return usuario;
-    };
+    }
 
     /**
      * Retorna um novo email.
