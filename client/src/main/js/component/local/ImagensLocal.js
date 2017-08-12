@@ -20,7 +20,7 @@
 
             $scope.$on('deleteImageById', function (event, response) {
 
-                ModalService.confirmar("Deletar Imagem", "Deseja continuar. Ação não pode ser desfeita.").then(function(){
+                ModalService.confirmar("Deletar Imagem", "Deseja continuar? Ação não pode ser desfeita.").then(function(){
                     self.excluirImagem(response.id);
                     ToastService.showActionToast('Imagem excluída.');
                     fecharModal();
@@ -31,7 +31,7 @@
             });
 
             function fecharModal(){
-                $mdDialog.hide();
+                $mdDialog.hide('close');
             }
 
             this.excluirImagem = function (id) {
