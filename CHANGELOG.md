@@ -11,7 +11,7 @@
 * Funcionalidade: Adicionada validação de permissão ao criar e alterar reservas no servidor.
 * Correção: Corrigidos testes no servidor com mudança de Secret do Auth0.
 * Funcionalidade: Adicionada verificação da permissão do usuário para criar reserva.
-
+* Funcionalidade: Adicionada função de fechar o modal da reserva após a criaçao da mesma.
 
 # 0.0.2
 * Início versionamento.
