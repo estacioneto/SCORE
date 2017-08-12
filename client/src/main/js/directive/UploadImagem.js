@@ -4,7 +4,7 @@
      * Diretiva que trata a seleção de imagens para upload.
      * @param ngModel Lista a qual as imagens (em base 64) serão adicionadas.
      */
-    angular.module('imagemModulo').directive("uploadImagem", ['FileReader', function (FileReader) {
+    angular.module('imagemModulo').directive("uploadImagem", ['FileReader', 'ModalService', function (FileReader, ModalService) {
         return {
             template: '<div></div>',
             scope: {
@@ -37,13 +37,16 @@
                     // 16 MB
                     const TAM_MAX = 16 * 1000 * 1000;
                     const TIPOS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/bitmap'];
+                    let mensagem = '';
                     if (arquivo.size > TAM_MAX) {
-                        alert(`O tamanho máximo suportado é de 16 MB. ${arquivo.name}`);
-                        return false;
+                        mensagem = `O tamanho máximo suportado é de 16 MB. ${arquivo.name}. `;
                     }
-                    const tipoNaoListado = _.findIndex(TIPOS, tipo => tipo === arquivo.type) === -1;
+                    const tipoNaoListado = !_.some(TIPOS, tipo => tipo === arquivo.type);
                     if (tipoNaoListado) {
-                        alert(`Tipo de imagem não suportado. ${arquivo.name}`);
+                        mensagem += `Tipo de imagem não suportado. ${arquivo.name}. `;
+                    }
+                    if (mensagem) {
+                        ModalService.error(mensagem);
                         return false;
                     }
                     return true;

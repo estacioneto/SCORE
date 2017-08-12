@@ -123,8 +123,11 @@ export class LocaisService {
     static validarImagens(imagens) {
         let mensagemErro = '';
         const TIPOS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/bitmap'];
+        const getTipoArquivo = arquivo => arquivo.conteudo.substring(5, 15);
+
         imagens.forEach(imagem => {
-            if (!_.some(TIPOS, tipo => imagem.conteudo.substring(5, 15) === tipo)) {
+            const tipoArquivo = getTipoArquivo(imagem);
+            if (!_.some(TIPOS, tipo => tipoArquivo === tipo)) {
                 mensagemErro = "Tipo de imagem não suportado."
             }
         });
