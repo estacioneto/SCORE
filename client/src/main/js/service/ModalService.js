@@ -78,6 +78,14 @@
         };
 
 
+        /**
+         * Abre o modal de visualização da imagem em 'full size'
+         *
+         * @param {Object} imagem Imagem a ser visualizada
+         * @param {Event} $event Evendo do clique.
+         * @param {Boolean} editavel Identifica se a imagem pode ser excluída ou não.
+         * @returns {Promise} Promise do modal.
+         */
         this.verImagem = function (imagem, $event, editavel) {
             const options = {
                 templateUrl: 'view/dialog/full-size-image.html',

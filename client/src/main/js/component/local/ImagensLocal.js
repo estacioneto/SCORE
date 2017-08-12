@@ -21,8 +21,11 @@
             $scope.$on('deleteImageById', function (event, response) {
 
                 ModalService.confirmar("Deletar Imagem", "Deseja continuar? Ação não pode ser desfeita.").then(function(){
-                    self.excluirImagem(response.id);
-                    ToastService.showActionToast('Imagem excluída.');
+                    if(!_.isUndefined(response.id)) {
+                        self.excluirImagem(response.id);
+                        ToastService.showActionToast('Imagem excluída.');
+                    }
+                    else ModalService.error("Salve as suas modificações antes de excluir a imagem", "Imagem ainda não foi salva");
                     fecharModal();
                 }, function(){
 
@@ -40,7 +43,7 @@
                 });
             };
 
-            this.existemImagens = () => {
+            this.existemImagens = function(){
                 return !_.isEmpty(self.local.imagens);
             };
 
