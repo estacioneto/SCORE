@@ -146,10 +146,6 @@ md-dialog:hover .cover-scroll-bar {
 
 /*end Scrollbar controller - hide and show*/
 
-#dev-link {
-    margin-right: 4px;
-}
-
 .disable-chips .md-chip-input-container div input {
     display: none;
 }
@@ -258,4 +254,9 @@ md-input-container.md-input-invalid > md-icon {
 
 .tipo-reserva {
     margin-left: 50px;
+}
+
+.md-avatar-icon {
+    max-width: 70px;
+    max-height: 70px;
 }
