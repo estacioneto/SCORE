@@ -82,7 +82,7 @@
             const permissoesUser = this.getLoggedUser().permissoes;
 
             return (_.includes(permissoesUser, PERMISSOES.ADMIN)
-                || _.includes(permissoesUser, permissao))
+                || _.includes(permissoesUser, permissao));
         };
 
         /**
