@@ -1,22 +1,22 @@
 <md-dialog>
-    <md-dialog-content layout-padding>
+    <md-dialog-content>
         <div layout layout-padding layout-align="center center">
             <span class="md-title">Sobre os desenvolvedores</span>
         </div>
-        <div layout="row" layout-align="center center">
+        <div layout="row" layout-align="center start">
             <div data-ng-repeat="dev in sobreCtrl.desenvolvedores track by $index" layout-padding>
                 <!-- Dev informacoes -->
                 <div layout="column" layout-align="center center">
                     <!-- Dev avatar -->
                     <md-list-item>
-                        <div layout="column">
+                        <div layout="column" layout-align="center center">
                             <img ng-src="{{ dev.img }}" class="md-avatar-icon"/>
                             <span class="md-subhead" data-ng-bind="dev.nome"></span>
                         </div>
                     </md-list-item>
                     <!-- Dev avatar -->
                     <!-- Dev infos -->
-                    <div class="md-list-item-text" layout="row">
+                    <div class="md-list-item-text" layout="column" layout-align="center center">
                         <p data-ng-repeat="link in dev.links" id="dev-link">
                             <a href="{{ link.link }}"
                                data-ng-bind="link.nome"
@@ -30,8 +30,8 @@
                 <!-- end Dev informacoes -->
             </div>
         </div>
+        <div layout="row" layout-align="end center">
+            <md-button ng-click="sobreCtrl.fecharModal()">Fechar</md-button>
+        </div>
     </md-dialog-content>
-    <md-dialog-actions layout="row" layout-align="end center">
-        <md-button ng-click="sobreCtrl.fecharModal()">Fechar</md-button>
-    </md-dialog-actions>
 </md-dialog>

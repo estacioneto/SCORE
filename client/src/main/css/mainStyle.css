@@ -146,10 +146,6 @@ md-dialog:hover .cover-scroll-bar {
 
 /*end Scrollbar controller - hide and show*/
 
-#dev-link {
-    margin-right: 4px;
-}
-
 .disable-chips .md-chip-input-container div input {
     display: none;
 }
