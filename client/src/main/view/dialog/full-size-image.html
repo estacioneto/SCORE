@@ -1,4 +1,6 @@
-<div layout="column">
+<div layout="column" layout-align="space-around center">
     <img src="{{imagemCtrl.imagem.conteudo}}" class="imagem-modal" aria-label="full-size-image">
-    <md-button class="md-raised md-warn" ng-if="imagemCtrl.editavel" aria-label="deleteImage" ng-click="imagemCtrl.deletarImagem()">Excluir</md-button>
+    <div layout="row" flex>
+        <md-button class="md-raised md-warn" ng-if="imagemCtrl.editavel" aria-label="deleteImage" ng-click="imagemCtrl.deletarImagem()">Excluir</md-button>
+    </div>
 </div>
