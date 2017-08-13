@@ -26,7 +26,6 @@
             'toastModule',
             'sidebarModulo',
             'buscaModulo',
-            'aboutModule',
             'footerModule',
             'materialCalendar',
             'calendarioModulo',
@@ -84,7 +83,7 @@
          * State config
          */
         .config(['$stateProvider', '$locationProvider', 'APP_STATES', function ($stateProvider, $locationProvider, APP_STATES) {
-            const view = './view/';
+            const view = 'view/';
 
             $stateProvider
                 .state(APP_STATES.APP.nome, {

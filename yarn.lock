@@ -3789,6 +3789,10 @@ karma-mocha@^1.3.0:
   dependencies:
     minimist "1.2.0"
 
+karma-ng-html2js-preprocessor@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/karma-ng-html2js-preprocessor/-/karma-ng-html2js-preprocessor-1.0.0.tgz#10d8c8cfaa4136f1c8a76d91a4cbceedebec4a31"
+
 karma-nyan-reporter@^0.2.4:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/karma-nyan-reporter/-/karma-nyan-reporter-0.2.5.tgz#aab7925f34166ebcef9308bbee11679f58ddaa31"

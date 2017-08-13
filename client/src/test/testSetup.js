@@ -1,3 +1,5 @@
+beforeEach(module('templatesModule'));
+
 function defaultInjections(self) {
     return function (_$httpBackend_, _$q_, _$rootScope_, _$state_) {
         self.$httpBackend = _$httpBackend_;

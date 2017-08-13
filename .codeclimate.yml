@@ -21,5 +21,7 @@ exclude_paths:
     - "**/test/**/*"
     - "server/*.js"
     - "client/*.js"
+    - "server/src/main/middleware/bootstrapMiddleware.js"
+    - "server/src/main/middleware/routesMiddleware.js"
     - "**/resources/**/*"
     - "**/coverage/**/*"
