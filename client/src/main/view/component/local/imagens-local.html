@@ -11,14 +11,17 @@
         <!--Label para o Input, o que é visto-->
         <label for="input-file-id"
                class="md-button md-raised md-primary"
-               md-colors="{'background-color': '{{$root.theme}}-primary'}">Selecionar Imagens</label>
+               md-colors="{'background-color': '{{$root.theme}}-primary'}">Adicionar Imagens</label>
         <!--end Label para o Input, o que é visto-->
     </div>
 
     <!--Visualização das imagens-->
-    <div flex="50" class="container-carousel" ng-if="$ctrl.existemImagens()">
+    <div flex="60" class="container-carousel" ng-if="$ctrl.existemImagens()">
         <ui-carousel slides="$ctrl.local.imagens" slides-to-show="3" slides-to-scroll="1" dots="true" layout="row" layout-align="center center">
             <carousel-item>
+                <!--FIXME: Foi necessário usar $parent devido a problemas internos no ui-carousel. Mudar isso.-->
+                <!--Ver issue: https://github.com/mihnsen/ui-carousel/issues/34-->
+                <!--Código fonte: https://github.com/mihnsen/ui-carousel/blob/master/src/ui-carousel/directives/carousel.directive.js-->
                 <md-card ng-click="$parent.$parent.$ctrl.mostraModalImagem($event, item, $parent.$parent.$ctrl.editavel)">
                     <img ng-src="{{item.conteudo}}" class="imagem-local-card"/>
                 </md-card>

@@ -244,7 +244,7 @@ md-input-container.md-input-invalid > md-icon {
 }
 
 .slide {
-    max-height: 300px;
+    max-height: 50%;
     margin: 0 auto;
 }
 
@@ -253,7 +253,7 @@ md-input-container.md-input-invalid > md-icon {
 }
 
 .imagem-local-card {
-    max-height: 280px;
+    max-height: 85%;
     object-fit: cover;
     width: auto;
     height: auto;
