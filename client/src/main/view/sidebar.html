@@ -16,6 +16,19 @@
             <h5 class="text-center" data-ng-bind="getNomeEmail()"></h5>
             <h6 class="text-center" data-ng-bind="getDominioEmail()"></h6>
         </div>
-
+        <md-divider layout-padding></md-divider>
+        <div layout-wrap layout="column">
+            <a href=""
+               class="md-primary md-subhead text-center"
+               ng-click="sobreDesenvolvedores($event)">Desenvolvedores</a>
+            <a href=""
+               class="md-primary md-subhead text-center"
+               md-no-ink
+               ng-click="goGithub()">Github</a>
+            <a href=""
+               class="md-primary md-subhead text-center"
+               md-no-ink
+               ng-click="goIssuesGithub()">Reportar Erro</a>
+        </div>
     </md-content>
 </md-sidenav>
