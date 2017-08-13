@@ -84,16 +84,18 @@
          * @param {Object} imagem Imagem a ser visualizada
          * @param {Event} $event Evendo do clique.
          * @param {Boolean} editavel Identifica se a imagem pode ser excluída ou não.
+         * @param {Function} excluirImagemCallback Callback a ser chamado ao apertar o botão de excluir imagem no modal.
          * @returns {Promise} Promise do modal.
          */
-        this.verImagem = function (imagem, $event, editavel) {
+        this.verImagem = function (imagem, $event, editavel, excluirImagemCallback) {
             const options = {
                 templateUrl: 'view/dialog/full-size-image.html',
                 controller: 'ImagemController as imagemCtrl',
                 targetEvent: $event,
                 resolve: {
                     imagem: () => imagem,
-                    editavel: () => editavel
+                    editavel: () => editavel,
+                    excluirImagemCallback : () => excluirImagemCallback
                 }
             };
             return self.custom(options);

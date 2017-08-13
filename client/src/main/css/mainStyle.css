@@ -281,6 +281,7 @@ md-input-container.md-input-invalid > md-icon {
     position: absolute;
     bottom: 10px;
     right: 10px;
+    background: white;
 }
 
 .circulo-legenda {

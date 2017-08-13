@@ -1,13 +1,16 @@
 (function () {
     'use strict';
 
-    angular.module('localModulo').controller('ImagemController', ['imagem', 'editavel', '$rootScope', '$mdDialog', function (imagem, editavel, $rootScope, $mdDialog) {
+    angular.module('localModulo').controller('ImagemController', ['imagem', 'editavel', 'excluirImagemCallback', '$rootScope', '$mdDialog', function (imagem, editavel, excluirImagemCallback, $mdDialog) {
         var self = this;
         this.imagem = imagem;
         this.editavel = editavel;
 
+        /**
+         * Função que chama o callback de exclusão de imagens.
+         */
         this.excluirImagem = function () {
-            $rootScope.$broadcast('deleteImageById',{id: self.imagem._id});
+            excluirImagemCallback(self.imagem._id);
         };
 
     }]);
