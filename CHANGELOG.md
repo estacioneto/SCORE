@@ -10,6 +10,7 @@
 * Manutenção: Limpeza da suite de testes do frontend e adicionada cobertura de testes no mesmo.
 * Funcionalidade: Adicionada validação de permissão ao criar e alterar reservas no servidor.
 * Correção: Corrigidos testes no servidor com mudança de Secret do Auth0.
+* Funcionalidade: Adicionada validação para tamanho e formato da imagem de upload.
 * Funcionalidade: Adicionado modal com informações sobre os desenvolvedores e links para github.
 * Correção: Adicionada validação para intervalo em funcionamento de local.
 

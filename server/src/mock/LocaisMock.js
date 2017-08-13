@@ -24,14 +24,15 @@ export class LocaisMock {
      * @param   {String}         funcionamento Horário de funcionamento do Local.
      * @returns {{_id, nome: string, bloco: string, equipamentos: Array, capacidade: number, funcionamento: string}} Mock do local.
      */
-    static getLocal({_id, nome = 'Auditório Hattori', bloco = 'CN', equipamentos = [], capacidade = 800, funcionamento = '08:00 - 12:00'} = {}) {
+    static getLocal({_id, nome = 'Auditório Hattori', bloco = 'CN', equipamentos = [], capacidade = 800, funcionamento = '08:00 - 12:00', imagens = []} = {}) {
         return {
             _id,
             nome,
             bloco,
             equipamentos,
             capacidade,
-            funcionamento
+            funcionamento,
+            imagens
         };
     }
 }
