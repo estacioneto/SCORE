@@ -38,13 +38,13 @@
                         <!--end Hora da reserva-->
                         <!--Tipo Reserva-->
                         <div class="tipo-reserva" layout="column" hide-xs flex>
-                            <span class="md-subhead">Tipo do evento</span>
+                            <span class="md-subhead" data-ng-if="!reservaCtrl.isEdicao">Tipo do evento</span>
                             <span class="md-title" data-ng-if="!reservaCtrl.isEdicao">
                                 {{::reservaCtrl.reserva.tipo}}
                             </span>
                             <div layout="row" data-ng-if="reservaCtrl.isEdicao">
                                 <md-input-container flex>
-                                    <md-select data-ng-model="reservaCtrl.reserva.tipo" required>
+                                    <md-select data-ng-model="reservaCtrl.reserva.tipo" required placeholder="Tipo do evento">
                                         <md-option data-ng-repeat="(tipo, propriedades) in reservaCtrl.tiposReserva" data-ng-value="tipo">
                                             {{tipo}}
                                         </md-option>
