@@ -41,7 +41,7 @@
                     if (arquivo.size > TAM_MAX) {
                         mensagem = `O tamanho máximo suportado é de 16 MB. ${arquivo.name}. `;
                     }
-                    const tipoNaoListado = !_.some(TIPOS, tipo => tipo === arquivo.type);
+                    const tipoNaoListado = !_.includes(TIPOS, arquivo.type);
                     if (tipoNaoListado) {
                         mensagem += `Tipo de imagem não suportado. ${arquivo.name}. `;
                     }

@@ -20,8 +20,8 @@ export class LocaisService {
     static cadastrarLocal(local) {
         const localMongoose = new Local(local);
 
+        const err = LocaisService.validarImagens(local.imagens);
         return new Promise((resolve, reject) => {
-            const err = LocaisService.validarImagens(local.imagens);
             if (err) {
                 reject(err);
             } else {
@@ -82,13 +82,12 @@ export class LocaisService {
         return LocaisService.getMongooseLocalPorId(idLocal)
             .then(localPersistido => {
                 _.updateModel(localPersistido, novoLocal);
+                const err = LocaisService.validarImagens(novoLocal.imagens);
                 return new Promise((resolve, reject) => {
-                    const err = LocaisService.validarImagens(novoLocal.imagens);
                     if (err) {
                         reject(err);
                     } else {
-                        localPersistido.save((err, result) =>
-                            (err) ? reject(err.message || err) : resolve(_.mongooseToObject(result)));
+                        localPersistido.save((err, result) => (err) ? reject(err.message) : resolve(_.mongooseToObject(result)));
                     }
                 });
             });
@@ -123,11 +122,12 @@ export class LocaisService {
     static validarImagens(imagens) {
         let mensagemErro = '';
         const TIPOS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/bitmap'];
-        const getTipoArquivo = arquivo => arquivo.conteudo.substring(5, 15);
+        const inicioTipo = 5, fimTipo = 15;
+        const getTipoArquivo = arquivo => arquivo.conteudo.substring(inicioTipo, fimTipo);
 
         imagens.forEach(imagem => {
             const tipoArquivo = getTipoArquivo(imagem);
-            if (!_.some(TIPOS, tipo => tipoArquivo === tipo)) {
+            if (!_.includes(TIPOS, tipoArquivo)) {
                 mensagemErro = "Tipo de imagem não suportado."
             }
         });
