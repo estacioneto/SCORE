@@ -26,9 +26,14 @@
                 <md-icon>schedule</md-icon>
                 <label for="funcionamento-local">Funcionamento</label>
                 <input id="funcionamento-local"
+                       name="funcionamento"
+                       funcionamento-local-validator
                        ui-mask="99:99 - 99:99"
                        required
                        data-ng-model="$ctrl.local.funcionamento"/>
+                <div ng-messages="$ctrl.formulario.funcionamento.$error" ng-if="$ctrl.formulario.funcionamento.$touched">
+                    <div ng-message="funcionamentoLocal">Intervalo de funcionamento inválido!</div>
+                </div>
             </md-input-container>
             <div flex></div>
             <md-input-container>

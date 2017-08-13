@@ -42,6 +42,7 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-coverage": "^1.1.1",
     "karma-mocha": "^1.3.0",
+    "karma-ng-html2js-preprocessor": "^1.0.0",
     "karma-nyan-reporter": "^0.2.4",
     "karma-sinon": "^1.0.5",
     "lcov-result-merger": "^1.2.0",

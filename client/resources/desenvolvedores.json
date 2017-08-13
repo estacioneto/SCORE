@@ -1,0 +1,66 @@
+[
+  {
+    "img": "https://scontent.frec7-1.fna.fbcdn.net/v/t1.0-9/14238081_1113263298761799_1919877617174904524_n.jpg?oh=90150cf39765944f0dc6b56c35855600&oe=5A26EA4D",
+    "nome": "Eric Breno",
+    "links": [
+      {
+        "link": "https://github.com/ericbreno",
+        "nome": "GitHub"
+      },
+      {
+        "link": "https://facebook.com/ebreno02",
+        "nome": "Facebook"
+      },
+      {
+        "link": "https://br.linkedin.com/in/eric-breno-a5aab612b",
+        "nome": "LinkedIn"
+      }
+    ]
+  },
+  {
+    "img": "https://scontent.frec7-1.fna.fbcdn.net/v/t1.0-9/12227607_916959888381245_1242392325075309635_n.jpg?oh=f72f15c27e10b016632cb02f440928b7&oe=5A2E38E5",
+    "nome": "Estacio Neto",
+    "links": [
+      {
+        "link": "https://github.com/estacioneto",
+        "nome": "GitHub"
+      },
+      {
+        "link": "https://www.facebook.com/estacio.pereira",
+        "nome": "Facebook"
+      },
+      {
+        "link": "https://br.linkedin.com/in/estácio-pereira-33264b130",
+        "nome": "LinkedIn"
+      }
+    ]
+  },
+  {
+    "img": "https://scontent.frec7-1.fna.fbcdn.net/v/t1.0-9/20621338_1500901673310802_142952303273340208_n.jpg?oh=c0149bcf587a4fe3260a27d07fd4baa4&oe=59ED2473",
+    "nome": "Lucas Diniz",
+    "links": [
+      {
+        "link": "https://github.com/lucasdiniz",
+        "nome": "GitHub"
+      },
+      {
+        "link": "https://www.facebook.com/lucazdinis",
+        "nome": "Facebook"
+      }
+    ]
+  },
+  {
+    "img": "https://scontent.frec7-1.fna.fbcdn.net/v/t1.0-9/1531815_769485323080087_817876459_n.jpg?oh=4d05c4f5c72c4f5855bfd8428a781954&oe=5A236B81",
+    "nome": "Velmer Oliveira",
+    "links": [
+      {
+        "link": "https://github.com/Velmer",
+        "nome": "GitHub"
+      },
+      {
+        "link": "https://www.facebook.com/velmer.oliveira",
+        "nome": "Facebook"
+      }
+    ]
+  }
+]

@@ -3722,6 +3722,16 @@ jsonwebtoken@^7.3.0:
     ms "^2.0.0"
     xtend "^4.0.1"
 
+jsonwebtoken@^7.4.2:
+  version "7.4.2"
+  resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-7.4.2.tgz#571b903c07e875c0fc59203d1ac78667d80e09cd"
+  dependencies:
+    joi "^6.10.1"
+    jws "^3.1.4"
+    lodash.once "^4.0.0"
+    ms "^2.0.0"
+    xtend "^4.0.1"
+
 jsprim@^1.2.2:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.0.tgz#a3b87e40298d8c380552d8cc7628a0bb95a22918"
@@ -3782,6 +3792,10 @@ karma-mocha@^1.3.0:
   resolved "https://registry.yarnpkg.com/karma-mocha/-/karma-mocha-1.3.0.tgz#eeaac7ffc0e201eb63c467440d2b69c7cf3778bf"
   dependencies:
     minimist "1.2.0"
+
+karma-ng-html2js-preprocessor@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/karma-ng-html2js-preprocessor/-/karma-ng-html2js-preprocessor-1.0.0.tgz#10d8c8cfaa4136f1c8a76d91a4cbceedebec4a31"
 
 karma-nyan-reporter@^0.2.4:
   version "0.2.5"

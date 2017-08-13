@@ -1,17 +1,20 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').controller('LocalEdicaoController', ['$state', '$q', 'APP_STATES', 'Local', 'local', 'LocaisService', 'ModalService', 'ToastService', function ($state, $q, APP_STATES, Local, local, LocaisService, ModalService, ToastService) {
+    angular.module('localModulo').controller('LocalEdicaoController', ['$scope', '$state', '$q', 'APP_STATES', 'Local', 'local', 'LocaisService', 'ModalService', 'ToastService', function ($scope, $state, $q, APP_STATES, Local, local, LocaisService, ModalService, ToastService) {
 
         const self = this;
         this.local = local || new Local();
         this.localBackup;
 
         /**
-         * Salva o local atual redirecionando para tela de visualização do mesmo em caso
+         * Caso o local seja válido, salva o mesmo redirecionando para tela de visualização do mesmo em caso
          * de sucesso, ou exibindo um modal de erro caso contrário.
          */
         this.salvarLocal = function () {
+            if (!$scope.formularioLocal.$valid) {
+                return ModalService.error(`Preencha os campos corretamente antes de salvar!`);
+            }
             return LocaisService.salvarLocal(self.local)
                .then((data) => {
                    self.local = data.data;

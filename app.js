@@ -11,7 +11,7 @@
     // Cria um objeto Application do Express
     var app = express();
 
-    app.use(bodyParser.json({limit: '16mb'}));
+    app.use(bodyParser.json({limit: '30mb'}));
     app.use(morgan('combined'));
 
     routesMiddlware.set(app);
