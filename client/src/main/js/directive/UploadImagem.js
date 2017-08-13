@@ -43,7 +43,7 @@
                     }
                     const tipoNaoListado = !_.includes(TIPOS, arquivo.type);
                     if (tipoNaoListado) {
-                        mensagem += `Tipo de imagem não suportado. ${arquivo.name}. `;
+                        mensagem += `Tipo de imagem não suportado, deve ser jpg, jpeg, png, bitmap ou gif. ${arquivo.name}. `;
                     }
                     if (mensagem) {
                         ModalService.error(mensagem);

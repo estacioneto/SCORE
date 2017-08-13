@@ -79,7 +79,7 @@ describe('LocaisServiceTest', () => {
                 .then(local => assert.fail('Não deveria salvar imagem com tipo inválido.'))
                 .catch(err => {
                     expect(err).to.exist;
-                    expect(err).to.be.equal("Tipo de imagem não suportado.");
+                    expect(err).to.be.equal("Tipo de imagem não suportado, deve ser jpg, jpeg, png, bitmap ou gif.");
                 });
         });
 
@@ -92,7 +92,7 @@ describe('LocaisServiceTest', () => {
                 .then(local => assert.fail('Não deveria salvar imagem com tipo e tamanho inválido.'))
                 .catch(err => {
                     expect(err).to.exist;
-                    expect(err).to.be.equal("O tamanho máximo suportado é 16MB. Tipo de imagem não suportado.");
+                    expect(err).to.be.equal("O tamanho máximo suportado é 16MB. Tipo de imagem não suportado, deve ser jpg, jpeg, png, bitmap ou gif.");
                 });
         });
 
@@ -247,7 +247,7 @@ describe('LocaisServiceTest', () => {
                 .then(localAtualizado => assert.fail("Não deveria ser possível atualizar local com imagem maior que 16mb."))
                 .catch(err => {
                     expect(err).to.exist;
-                    expect(err).to.be.equal("O tamanho máximo suportado é 16MB. Tipo de imagem não suportado.");
+                    expect(err).to.be.equal("O tamanho máximo suportado é 16MB. Tipo de imagem não suportado, deve ser jpg, jpeg, png, bitmap ou gif.");
             });
         });
 
@@ -259,7 +259,7 @@ describe('LocaisServiceTest', () => {
                 .then(localAtualizado => assert.fail("Não deveria ser possível atualizar local com imagem maior que 16mb."))
                 .catch(err => {
                     expect(err).to.exist;
-                    expect(err).to.be.equal("Tipo de imagem não suportado.");
+                    expect(err).to.be.equal("Tipo de imagem não suportado, deve ser jpg, jpeg, png, bitmap ou gif.");
             });
         });
     });

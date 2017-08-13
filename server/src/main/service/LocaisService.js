@@ -137,7 +137,7 @@ export class LocaisService {
                 mensagemErro = "O tamanho máximo suportado é 16MB. "
             }
             if (!_.includes(TIPOS, tipoArquivo)) {
-                mensagemErro += "Tipo de imagem não suportado."
+                mensagemErro += "Tipo de imagem não suportado, deve ser jpg, jpeg, png, bitmap ou gif."
             }
         });
         return mensagemErro;
