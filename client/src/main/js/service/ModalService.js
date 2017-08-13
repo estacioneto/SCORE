@@ -162,16 +162,19 @@
         };
 
         /**
-         * Cria um modal com infos sobre a aplicação.
+         * Exibe o modal de informações dos desenvolvedores.
+         *
+         * @param   {$event}  $event evento no html.
+         * @returns {Promise} Promise do modal.
          */
-        this.aboutModal = function () {
-            return $mdPanel.create({
-                template: '<about></about>',
-                attachTo: angular.element(document.body),
-                position: $mdPanel.newPanelPosition().center(),
-                hasBackdrop: true,
-                clickOutsideToClose: true,
-                escapeToClose: true
+        this.exibirModalSobreDesenvolvedores = function ($event) {
+            const templateUrl = 'view/dialog/sobre-desenvolvedores.html',
+                controller = 'SobreDesenvolvedoresController as sobreCtrl',
+                targetEvent = $event;
+            return this.custom({
+                templateUrl,
+                controller,
+                targetEvent
             });
         };
     }])

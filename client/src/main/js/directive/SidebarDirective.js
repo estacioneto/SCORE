@@ -43,16 +43,7 @@
                      * @param   {$event}  $event evento no html.
                      * @returns {Promise} Promise do modal.
                      */
-                    scope.sobreDesenvolvedores = $event => {
-                        const templateUrl = 'view/dialog/sobre-desenvolvedores.html',
-                            controller = 'SobreDesenvolvedoresController as sobreCtrl',
-                            targetEvent = $event;
-                        return ModalService.custom({
-                            templateUrl,
-                            controller,
-                            targetEvent
-                        });
-                    };
+                    scope.sobreDesenvolvedores = $event => ModalService.exibirModalSobreDesenvolvedores($event);
 
                     /**
                      * Abre uma nova aba nas issues do projeto no github.
