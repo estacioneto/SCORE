@@ -120,6 +120,7 @@
          * @param {event}              targetEvent         Evento de clique para exibição do modal a partir do elemento.
          * @param {boolean}            clickOutsideToClose Booleano indicando se deve fechar ao clicar fora do modal. (Valor padrão {@code true})
          * @param {boolean}            escapeToClose       Booleano indicando se deve fechar ao pressionar tecla ESC. (Valor padrão {@code true})
+         * @param {boolean}            multiple            Booleano indicando se deve . (Valor padrão {@code true})
          * @param {angular.element}    attachTo            Elemento indicando onde deve o modal deve ser 'attached'. (Valor padrão {@code angular.element(document.body)})
          * @param {Object}             resolve             Objeto contendo 'resolve' do controller do modal. (Valor padrão {@code {} })
          *
@@ -131,6 +132,7 @@
                                     targetEvent,
                                     clickOutsideToClose = true,
                                     escapeToClose = true,
+                                    multiple = true,
                                     attachTo = angular.element(document.body),
                                     resolve = {}
                                 }) {
@@ -143,7 +145,7 @@
                 attachTo,
                 parent: angular.element(document.body),
                 resolve,
-                multiple: true
+                multiple
             });
         };
 
