@@ -15,22 +15,23 @@ describe('LocaisServiceTest', () => {
 
     describe('cadastrarLocal deve', () => {
         /**
-         * Gera uma String com o tipo especificado que tem mais de 16 mb.
-         * Cria uma string de 1000 caracteres e a repete por 16 mil vezes.
+         * Cria um Mock de String para o conteúdo.
+         * O mock vai retornar no método substrig um início de string válido
+         * para ser utilizado no validador.
+         * O método split vai retornar apenas um objeto com a propriedade length
+         * com tamanho maior que o máximo (16 MB).
          * 
          * @param {String} tipo Tipo do arquivo;
          */
         function gerarConteudoMaiorLimite(tipo) {
-            let conteudo = `data:${tipo};base64,`;
-            let strDezCaracteres = 'aaaaaaaaaa';
-            let strMilCaracteres = '';
-            for (let i = 0; i < 100; i++) {
-                strMilCaracteres += strDezCaracteres;
-            }
-            for (let i = 0; i < 16 * 1000; i++) {
-                conteudo += strMilCaracteres;
-            }
-            return conteudo;
+            let conteudo = `${tipo};base64,asdasdasdasdasdasdasdasddassasdasda`;
+            let tamMaiorLimite = 16*1000*1005;
+            return { 
+                substring: () => conteudo, 
+                split: () => { 
+                    return {  length: tamMaiorLimite }; 
+                } 
+            };
         }
 
         it('não salvar um local nulo', () => {
