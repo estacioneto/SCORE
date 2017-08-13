@@ -1,4 +1,4 @@
-import {AdminMiddleware} from '../middleware/AdminMiddleware';
+import {PermissoesMiddleware} from '../middleware/permissoes/PermissoesMiddleware';
 
 (function(){
     'use strict';
@@ -19,7 +19,7 @@ import {AdminMiddleware} from '../middleware/AdminMiddleware';
     /**
      * Salva uma nova reserva
      */
-    reservasRouter.post('/', AdminMiddleware, (req, res) => {
+    reservasRouter.post('/', [PermissoesMiddleware.getReservasMiddleware()], (req, res) => {
         reservasService.salvaReserva(_.getToken(req), req.body, (err, result) => {
             if (err) {
                 return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
@@ -31,7 +31,7 @@ import {AdminMiddleware} from '../middleware/AdminMiddleware';
     /**
      * Atualiza a reserva com o id passado
      */
-    reservasRouter.patch('/:id', AdminMiddleware, (req,res) => {
+    reservasRouter.patch('/:id', [PermissoesMiddleware.getReservasMiddleware()], (req,res) => {
         reservasService.atualizaReserva(_.getToken(req), req.params.id, req.body, (err,result) => {
             if (err) return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
             return res.status(_.OK).json(result);
@@ -51,7 +51,7 @@ import {AdminMiddleware} from '../middleware/AdminMiddleware';
     /**
      * Deleta a reserva com o id passado
      */
-    reservasRouter.delete('/:id', AdminMiddleware, (req, res) =>
+    reservasRouter.delete('/:id', [PermissoesMiddleware.getReservasMiddleware()], (req, res) =>
         reservasService.deletaReserva(_.getToken(req), req.params.id, (err, result) => {
             if (err) return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
             return res.status(_.OK).json(result);

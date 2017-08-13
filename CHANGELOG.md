@@ -8,6 +8,8 @@
 * Funcionalidade: Adicionada confirmação sobre termos de Local para criação de Reserva.
 * Funcionalidade: Adicionada opção de upload de imagem para local.
 * Manutenção: Limpeza da suite de testes do frontend e adicionada cobertura de testes no mesmo.
+* Funcionalidade: Adicionada validação de permissão ao criar e alterar reservas no servidor.
+* Correção: Corrigidos testes no servidor com mudança de Secret do Auth0.
 * Funcionalidade: Adicionada visualização de imagens do local e modal para visualização da imagem 'full size'.
 * Funcionalidade: Adicionada deleção de imagens do local.
 
