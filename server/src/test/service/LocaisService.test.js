@@ -14,6 +14,25 @@ import mongoose from 'mongoose';
 describe('LocaisServiceTest', () => {
 
     describe('cadastrarLocal deve', () => {
+        /**
+         * Gera uma String com o tipo especificado que tem mais de 16 mb.
+         * Cria uma string de 1000 caracteres e a repete por 16 mil vezes.
+         * 
+         * @param {String} tipo Tipo do arquivo;
+         */
+        function gerarConteudoMaiorLimite(tipo) {
+            let conteudo = `data:${tipo};base64,`;
+            let strDezCaracteres = 'aaaaaaaaaa';
+            let strMilCaracteres = '';
+            for (let i = 0; i < 100; i++) {
+                strMilCaracteres += strDezCaracteres;
+            }
+            for (let i = 0; i < 16 * 1000; i++) {
+                conteudo += strMilCaracteres;
+            }
+            return conteudo;
+        }
+
         it('não salvar um local nulo', () => {
             return LocaisService.cadastrarLocal(null)
                 .then(
@@ -42,6 +61,81 @@ describe('LocaisServiceTest', () => {
                     expect(local.capacidade).to.be.eql(mockLocal.capacidade);
                     expect(local.funcionamento).to.be.eql(mockLocal.funcionamento);
                 });
+        });
+
+        it('não salvar um local com imagem de tipo inválido', () => {
+            const mockLocal = LocaisMock.getLocal();
+
+            const imagemInvalida = {conteudo: 'data:file/pdf;base64,yEhsacSk09S86h2bA...'};
+            mockLocal.imagens.push(imagemInvalida);
+            return LocaisService.cadastrarLocal(mockLocal)
+                .then(local => assert.fail('Não deveria salvar imagem com tipo inválido.'))
+                .catch(err => {
+                    expect(err).to.exist;
+                    expect(err).to.be.equal("Tipo de imagem não suportado.");
+                });
+        });
+
+        it('não salvar um local com imagem de tamanho maior que 16MB e tipo inválido', () => {
+            const mockLocal = LocaisMock.getLocal();
+            let conteudo = gerarConteudoMaiorLimite('file/pdf');
+            const imagemInvalida = { conteudo };
+            mockLocal.imagens.push(imagemInvalida);
+            return LocaisService.cadastrarLocal(mockLocal)
+                .then(local => assert.fail('Não deveria salvar imagem com tipo e tamanho inválido.'))
+                .catch(err => {
+                    expect(err).to.exist;
+                    expect(err).to.be.equal("O tamanho máximo suportado é 16MB. Tipo de imagem não suportado.");
+                });
+        });
+
+        it('não salvar um local com imagem de tamanho maior que 16MB', () => {
+            const mockLocal = LocaisMock.getLocal();
+            let conteudo = gerarConteudoMaiorLimite('image/png');
+            const imagemInvalida = { conteudo };
+            mockLocal.imagens.push(imagemInvalida);
+            return LocaisService.cadastrarLocal(mockLocal)
+                .then(local => assert.fail('Não deveria salvar imagem com tamanho inválido.'))
+                .catch(err => {
+                    expect(err).to.exist;
+                    expect(err).to.be.equal("O tamanho máximo suportado é 16MB. ");
+                });
+        });
+
+        it(' salvar um local com imagem de tipo válido jpeg', () => {
+            const mockLocal = LocaisMock.getLocal();
+
+            const imagemValida = {conteudo: 'data:image/jpeg;base64,yEhsacSk09S86h2bA...'};
+            mockLocal.imagens.push(imagemValida);
+            return LocaisService.cadastrarLocal(mockLocal)
+                .then(local => {
+                    expect(local.imagens).to.have.length(1);
+                })
+                .catch(err => assert.fail('Deveria salvar imagem com tipo válido.'));
+        });
+
+        it(' salvar um local com imagem de tipo válido bitmap', () => {
+            const mockLocal = LocaisMock.getLocal();
+
+            const imagemValida = {conteudo: 'data:image/bitmap;base64,yEhsacSk09S86h2bA...'};
+            mockLocal.imagens.push(imagemValida);
+            return LocaisService.cadastrarLocal(mockLocal)
+                .then(local => {
+                    expect(local.imagens).to.have.length(1);
+                })
+                .catch(err => assert.fail('Deveria salvar imagem com tipo válido.'));
+        });
+
+        it(' salvar um local com imagem de tipo válido png', () => {
+            const mockLocal = LocaisMock.getLocal();
+
+            const imagemValida = {conteudo: 'data:image/png;base64,yEhsacSk09S86h2bA...'};
+            mockLocal.imagens.push(imagemValida);
+            return LocaisService.cadastrarLocal(mockLocal)
+                .then(local => {
+                    expect(local.imagens).to.have.length(1);
+                })
+                .catch(err => assert.fail('Deveria salvar imagem com tipo válido.'));
         });
     });
 

@@ -19,9 +19,8 @@ export class LocaisService {
      */
     static cadastrarLocal(local) {
         const localMongoose = new Local(local);
-
-        const err = LocaisService.validarImagens(local.imagens);
         return new Promise((resolve, reject) => {
+            const err = LocaisService.validarImagens(local.imagens);
             if (err) {
                 reject(err);
             } else {
@@ -82,8 +81,8 @@ export class LocaisService {
         return LocaisService.getMongooseLocalPorId(idLocal)
             .then(localPersistido => {
                 _.updateModel(localPersistido, novoLocal);
-                const err = LocaisService.validarImagens(novoLocal.imagens);
                 return new Promise((resolve, reject) => {
+                    const err = LocaisService.validarImagens(novoLocal.imagens);
                     if (err) {
                         reject(err);
                     } else {
@@ -113,22 +112,32 @@ export class LocaisService {
     /**
      * Verifica a validade das imagens para local.
      * - Verifica se o tipo é válido.
+     * - Se todas as imagens tem menos de 16 MB.
      * 
-     * Não precisa verificar tamanho, uma vez que o BodyParser já limita as requisições para até 
-     * 16 mb.
      * @param {Array<Object>} imagens Lista de imagens.
      * @return {String} Mensagem de validação, vazio caso esteja tudo ok.
      */
     static validarImagens(imagens) {
         let mensagemErro = '';
         const TIPOS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/bitmap'];
-        const inicioTipo = 5, fimTipo = 15;
-        const getTipoArquivo = arquivo => arquivo.conteudo.substring(inicioTipo, fimTipo);
+        const inicioTipo = 5, fimTipo = 30;
+        const TAM_MAX = 16 * 1000 * 1000;
+        const getTipoArquivo = arquivo => {
+            const inicioArquivo = arquivo.conteudo.substring(inicioTipo, fimTipo);
+            const tipo = _.first(inicioArquivo.split(';base64'));
+            return tipo;
+        };
 
         imagens.forEach(imagem => {
             const tipoArquivo = getTipoArquivo(imagem);
+            // https://stackoverflow.com/questions/2219526/how-many-bytes-in-a-javascript-string
+            const tamImagem = imagem.conteudo.split(/%(?:u[0-9A-F]{2})?[0-9A-F]{2}|./).length - 1;
+
+            if (tamImagem > TAM_MAX) {
+                mensagemErro = "O tamanho máximo suportado é 16MB. "
+            }
             if (!_.includes(TIPOS, tipoArquivo)) {
-                mensagemErro = "Tipo de imagem não suportado."
+                mensagemErro += "Tipo de imagem não suportado."
             }
         });
         return mensagemErro;
