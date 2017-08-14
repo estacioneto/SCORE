@@ -132,6 +132,10 @@ angular-ui-calendar@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/angular-ui-calendar/-/angular-ui-calendar-1.0.2.tgz#fa271057425572efaadf6660243cc33cb99f33c1"
 
+angular-ui-carousel@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/angular-ui-carousel/-/angular-ui-carousel-0.1.10.tgz#0a5b1066018b40e700b8c6ee34b0c97fc321952b"
+
 angular-ui-mask@^1.8.7:
   version "1.8.7"
   resolved "https://registry.yarnpkg.com/angular-ui-mask/-/angular-ui-mask-1.8.7.tgz#2935ae82345aded60e7b8c997f3902dfb8ed465b"

@@ -13,6 +13,8 @@
 * Funcionalidade: Adicionada validação para tamanho e formato da imagem de upload.
 * Funcionalidade: Adicionado modal com informações sobre os desenvolvedores e links para github.
 * Correção: Adicionada validação para intervalo em funcionamento de local.
+* Funcionalidade: Adicionada visualização de imagens do local e modal para visualização da imagem 'full size'.
+* Funcionalidade: Adicionada deleção de imagens do local.
 
 # 0.0.2
 * Início versionamento.
