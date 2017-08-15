@@ -10,7 +10,7 @@
          * Função que chama o callback de exclusão de imagens.
          */
         this.excluirImagem = function () {
-            excluirImagemCallback(self.imagem._id);
+            excluirImagemCallback(self.imagem._id || self.imagem.tempId);
         };
 
     }]);

@@ -21,7 +21,7 @@
                     for (let i = 0; i < arquivosObj.length; i++) {
                         const arquivo = arquivosObj[i];
                         if (isArquivoValido(arquivo))
-                            lerArquivo(arquivo);
+                            lerArquivo(arquivo, i);
                     }
                 });
 
@@ -57,12 +57,14 @@
                  * adiciona no model.
                  * 
                  * @param {File} arquivo 
+                 * @param {Number} indice Indíce do arquivo,
                  */
-                function lerArquivo(arquivo) {
+                function lerArquivo(arquivo, indice) {
                     FileReader.readAsDataUrl(arquivo, scope)
                         .then(function (urlImagem) {
                             scope.model.push({
-                                conteudo: urlImagem
+                                conteudo: urlImagem,
+                                tempId: indice
                             });
                         });
                 }

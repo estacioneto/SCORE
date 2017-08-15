@@ -47,9 +47,7 @@
              * @param {String} idImagem Id da imagem que será removida.
              */
             this.removerImagem = function (idImagem) {
-                _.remove(self.local.imagens, {
-                    _id: idImagem
-                });
+                _.remove(self.local.imagens, imagem => (imagem._id || imagem.tempId) === idImagem);
             };
 
             /**
