@@ -1,6 +1,6 @@
 {
   "name": "SCORE",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Sistema web de alocação de horário para os auditórios da UFCG.",
   "main": "app.js",
   "scripts": {

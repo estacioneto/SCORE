@@ -1,6 +1,8 @@
 # CHANGELOG
 
 # Unstable
+
+# 0.1.0
 * Funcionalidade: Adicionados tipos "Outro" e "Palestra" para Reserva.
 * Correção: Corrigido tipo de Reserva "Assembleia".
 * Funcionalidade: Adicionada exibição de reservas de acordo com o auditório selecionado.
