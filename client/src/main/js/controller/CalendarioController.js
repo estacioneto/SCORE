@@ -5,8 +5,8 @@
      * 
      */
     angular.module("calendarioModulo", []).controller("CalendarioController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
-        'Reserva', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA', 'AgendamentoService', '$q',
-        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA, AgendamentoService, $q) {
+        'Reserva', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA', 'AgendamentoService', '$q', 'AuthService', 'PERMISSOES',
+        function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA, AgendamentoService, $q, AuthService, PERMISSOES) {
 
         const self = this;
 
@@ -58,7 +58,7 @@
             const calendario = uiCalendarConfig.calendars.calendario;
 
             if (calendario.fullCalendar('getView').type === 'agendaDay' ||
-                calendario.fullCalendar('getView').type === 'basicDay') {
+                calendario.fullCalendar('getView').type === 'agendaWeek') {
                 self.criarReserva(data);
             } else {
                 calendario.fullCalendar('changeView', 'agendaDay', data);
@@ -97,18 +97,21 @@
         };
 
         /**
-         * Abre o modal para criação de reserva no dia especificado.
+         * Abre o modal para criação de reserva no dia especificado, caso o usuário tenha a
+         * permissão necessária para tal.
          * 
          * @return {Promise} Promise do modal.
          */
         this.criarReserva = (data) => {
-            const reserva = new Reserva({
-                dia: DataManipuladorService.parseData(data),
-                inicio: DataManipuladorService.getHorarioEmString(data),  
-                localId: self.local._id
-            });
+            if (AuthService.userTemPermissao(PERMISSOES.RESERVAS)) {
+                const reserva = new Reserva({
+                    dia: DataManipuladorService.parseData(data),
+                    inicio: DataManipuladorService.getHorarioEmString(data),
+                    localId: self.local._id
+                });
 
-            return ModalService.verReserva(reserva, this.local);
+                return ModalService.verReserva(reserva, this.local);
+            }
         };
 
         /**
