@@ -15,6 +15,8 @@
 * Correção: Adicionada validação para intervalo em funcionamento de local.
 * Funcionalidade: Adicionada visualização de imagens do local e modal para visualização da imagem 'full size'.
 * Funcionalidade: Adicionada deleção de imagens do local.
+* Funcionalidade: Adicionada verificação da permissão do usuário para criar reserva.
+* Funcionalidade: Adicionada função de fechar o modal da reserva após a criação da mesma.
 
 # 0.0.2
 * Início versionamento.

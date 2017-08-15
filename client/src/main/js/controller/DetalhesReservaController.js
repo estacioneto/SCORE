@@ -94,10 +94,15 @@
 
         /**
          * Operações que devem ser executadas após o salvamento de agentamento.
-         * -Copiar os dados do agendamento para o antigo (necessário apenas para não precisar recarregar o dia)
+         * - Copiar os dados do agendamento para o antigo (necessário apenas para não precisar recarregar o dia)
+         * - Fechar modal, caso seja a criação da reserva
          */
         function posSalvar() {
+            const isCriacao = self.isCriacao();
+
             Object.assign(self.reservaOriginal, self.reserva);
+
+            if (isCriacao) self.fecharModal();
         }
 
         /**
@@ -152,9 +157,11 @@
         };
 
         /**
-         * Indica se a reserva ainda não foi persistida.
+         * Indica se a reserva ainda não foi persistida. Caso {@code reservaOriginal} não
+         * seja definida, significa que o modal não está em modo de edição, consequentemente
+         * não é a criação da reserva.
          */
-        this.isCriacao = () => !self.reserva._id;
+        this.isCriacao = () => self.reservaOriginal && !self.reservaOriginal._id;
 
         /**
          * Indica se o usuário logado pode editar a reserva.

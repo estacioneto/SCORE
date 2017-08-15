@@ -8,7 +8,7 @@
      *
      * @author Estácio Pereira
      */
-    angular.module('authModule', []).service('AuthService', ['$http', 'store', '$rootScope', '$q', 'auth', 'Usuario', 'ToastService', function ($http, store, $rootScope, $q, auth, Usuario, ToastService) {
+    angular.module('authModule', []).service('AuthService', ['$http', 'store', '$rootScope', '$q', 'auth', 'Usuario', 'ToastService', 'PERMISSOES', function ($http, store, $rootScope, $q, auth, Usuario, ToastService, PERMISSOES) {
         var self = this;
 
         /**
@@ -67,6 +67,22 @@
          */
         this.getIdToken = function () {
             return auth.idToken;
+        };
+
+        /**
+         * Retorna se o usuário logado tem a permissão especificada. Caso o usuário tenha a
+         * permissão de Admin, signifca que o mesmo possui a permissão especificada, pois o
+         * Admin pode realizar todas as ações.
+         *
+         * @param permissao Permissão que será verificada se o usuário logado a possui.
+         * @return {boolean} {@code true} caso o usuário tenha a permissão especificada ou
+         * seja Admin, {@code false} caso contrário.
+         */
+        this.userTemPermissao = function (permissao) {
+            const permissoesUser = this.getLoggedUser().permissoes;
+
+            return (_.includes(permissoesUser, PERMISSOES.ADMIN)
+                || _.includes(permissoesUser, permissao));
         };
 
         /**
