@@ -39,6 +39,7 @@
                 '../node_modules/angular-lock/dist/angular-lock.min.js',
                 '../node_modules/angular-sanitize/angular-sanitize.min.js',
                 '../node_modules/angular-material-calendar/angular-material-calendar.min.js',
+                '../node_modules/angular-ui-carousel/dist/ui-carousel.min.js',
                 'src/main/config/Auth0Variables.js',
                 'src/main/js/config.js',
                 'src/main/js/Constants.js',
@@ -55,16 +56,18 @@
                 'src/main/js/service/SearchService.js',
                 'src/main/js/service/AuthService.js',
                 'src/main/js/service/ToastService.js',
-                'src/main/js/directive/AboutDirective.js',
                 'src/main/js/directive/MainToolbarDirective.js',
                 'src/main/js/directive/SidebarDirective.js',
                 'src/main/js/directive/MainFooterDirective.js',
+                'src/main/js/directive/FuncionamentoLocalValidator.js',
                 'src/main/js/controller/AppController.js',
                 'src/main/js/controller/LoginController.js',
                 'src/main/js/controller/CalendarioController.js',
                 'src/main/js/controller/DetalhesReservaController.js',
+                'src/main/view/**/*.html',
                 'src/test/testSetup.js',
                 'src/test/Mocks.js',
+                'src/test/configOverwrite.js',
                 'src/test/mock/*.js',
                 'src/test/spec/**/*.js'
             ],
@@ -95,7 +98,8 @@
 
             preprocessors: {
                 // Arquivos que serão analisados pela cobertura de testes.
-                'src/main/js/**/*.js': ['coverage']
+                'src/main/js/**/*.js': ['coverage'],
+                'src/main/view/**/*.html': 'ng-html2js'
             },
 
             // optionally, configure the reporter
@@ -140,7 +144,11 @@
 
             // Concurrency level
             // how many browser should be started simultaneous
-            concurrency: Infinity
+            concurrency: Infinity,
+
+            ngHtml2JsPreprocessor: {
+                moduleName: 'templatesModule'
+            }
         })
     };
 })();

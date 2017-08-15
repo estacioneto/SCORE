@@ -77,6 +77,30 @@
             });
         };
 
+
+        /**
+         * Abre o modal de visualização da imagem em 'full size'
+         *
+         * @param {Object} imagem Imagem a ser visualizada
+         * @param {Event} $event Evendo do clique.
+         * @param {Boolean} editavel Identifica se a imagem pode ser excluída ou não.
+         * @param {Function} excluirImagemCallback Callback a ser chamado ao apertar o botão de excluir imagem no modal.
+         * @returns {Promise} Promise do modal.
+         */
+        this.verImagem = function (imagem, $event, editavel, excluirImagemCallback) {
+            const options = {
+                templateUrl: 'view/dialog/full-size-image.html',
+                controller: 'ImagemController as imagemCtrl',
+                targetEvent: $event,
+                resolve: {
+                    imagem: () => imagem,
+                    editavel: () => editavel,
+                    excluirImagemCallback : () => excluirImagemCallback
+                }
+            };
+            return self.custom(options);
+        };
+
         /**
          * Abre o modal de visualização para termos do local.
          * 
@@ -120,6 +144,7 @@
          * @param {event}              targetEvent         Evento de clique para exibição do modal a partir do elemento.
          * @param {boolean}            clickOutsideToClose Booleano indicando se deve fechar ao clicar fora do modal. (Valor padrão {@code true})
          * @param {boolean}            escapeToClose       Booleano indicando se deve fechar ao pressionar tecla ESC. (Valor padrão {@code true})
+         * @param {boolean}            multiple            Booleano indicando se deve . (Valor padrão {@code true})
          * @param {angular.element}    attachTo            Elemento indicando onde deve o modal deve ser 'attached'. (Valor padrão {@code angular.element(document.body)})
          * @param {Object}             resolve             Objeto contendo 'resolve' do controller do modal. (Valor padrão {@code {} })
          *
@@ -131,6 +156,7 @@
                                     targetEvent,
                                     clickOutsideToClose = true,
                                     escapeToClose = true,
+                                    multiple = true,
                                     attachTo = angular.element(document.body),
                                     resolve = {}
                                 }) {
@@ -143,7 +169,7 @@
                 attachTo,
                 parent: angular.element(document.body),
                 resolve,
-                multiple: true
+                multiple
             });
         };
 
@@ -160,16 +186,19 @@
         };
 
         /**
-         * Cria um modal com infos sobre a aplicação.
+         * Exibe o modal de informações dos desenvolvedores.
+         *
+         * @param   {$event}  $event evento no html.
+         * @returns {Promise} Promise do modal.
          */
-        this.aboutModal = function () {
-            return $mdPanel.create({
-                template: '<about></about>',
-                attachTo: angular.element(document.body),
-                position: $mdPanel.newPanelPosition().center(),
-                hasBackdrop: true,
-                clickOutsideToClose: true,
-                escapeToClose: true
+        this.exibirModalSobreDesenvolvedores = function ($event) {
+            const templateUrl = 'view/dialog/sobre-desenvolvedores.html',
+                controller = 'SobreDesenvolvedoresController as sobreCtrl',
+                targetEvent = $event;
+            return this.custom({
+                templateUrl,
+                controller,
+                targetEvent
             });
         };
     }])
