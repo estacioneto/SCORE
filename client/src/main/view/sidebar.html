@@ -5,6 +5,7 @@
             <img alt="Profile Picture" src="{{usuario.picture_large || usuario.picture}}"
                  class="img-circle img-responsive custom-centered">
             <h3 class="text-center" data-ng-bind="nomeUsuario"></h3>
+            <h5 class="text-center" ng-if="::isAdmin()">Administrador</h5>
         </div>
         <md-divider layout-padding></md-divider>
         <div>
