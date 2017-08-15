@@ -17,6 +17,8 @@
 * Funcionalidade: Adicionada deleção de imagens do local.
 * Funcionalidade: Adicionada verificação da permissão do usuário para criar reserva.
 * Funcionalidade: Adicionada função de fechar o modal da reserva após a criação da mesma.
+* Funcionalidade: Adicionada identificação para Administradores.
+* Funcionalidade: Adicionada deleção de imagem antes de seu salvamento.
 
 # 0.0.2
 * Início versionamento.
