@@ -28,6 +28,13 @@
             });
         };
 
+        /**
+         * @return {Boolean} True caso o usuário seja administrador.
+         */
+        Usuario.prototype.isAdmin = function() { 
+            return _.some(this.app_metadata.permissoes, permissao => permissao === 'admin');
+        };
+
         Usuario.prototype.constructor = Usuario;
 
         return Usuario;

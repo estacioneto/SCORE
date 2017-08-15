@@ -15,8 +15,6 @@
 
                     scope.nomeUsuario = _.first(scope.usuario.nome_completo.split(' '));
 
-                    scope.isAdmin = () => _.some(scope.usuario.app_metadata.permissoes, permissao => permissao === 'admin');
-
                     scope.getNomeEmail = function () {
                         const indiceQuebra = scope.usuario.email.indexOf('@');
                         return scope.usuario.email.substring(PRIMEIRO_INDICE, indiceQuebra);
