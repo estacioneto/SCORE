@@ -1,14 +1,16 @@
 <md-dialog aria-label="reserva-detalhes" flex="60">
-    <md-dialog-content>
-        <div class="md-dialog-content"
-             data-layout="row"
-             data-layout-align="start start"
-             data-layout-padding
-             data-layout-wrap
-             md-colors="{background: 'grey-200'}">
-            <!--Conteudo modal-->
-            <form data-ng-submit="reservaCtrl.salvarReserva()"
-                  data-flex="100">
+    <form name="formReserva"
+          data-ng-submit="reservaCtrl.salvarReserva()">
+        <cabecalho-reserva formulario="formReserva" reserva="reservaCtrl.reserva"></cabecalho-reserva>
+        <md-dialog-content>
+            <div class="md-dialog-content"
+                 data-layout="row"
+                 data-layout-align="start start"
+                 data-layout-padding
+                 data-layout-wrap
+                 md-colors="{background: 'grey-200'}">
+                <!--Conteudo modal-->
+
                 <div layout="column"
                      flex="100"
                      layout-wrap>
@@ -44,8 +46,10 @@
                             </span>
                             <div layout="row" data-ng-if="reservaCtrl.isEdicao">
                                 <md-input-container flex>
-                                    <md-select data-ng-model="reservaCtrl.reserva.tipo" required placeholder="Tipo do evento">
-                                        <md-option data-ng-repeat="(tipo, propriedades) in reservaCtrl.tiposReserva" data-ng-value="tipo">
+                                    <md-select data-ng-model="reservaCtrl.reserva.tipo" required
+                                               placeholder="Tipo do evento">
+                                        <md-option data-ng-repeat="(tipo, propriedades) in reservaCtrl.tiposReserva"
+                                                   data-ng-value="tipo">
                                             {{tipo}}
                                         </md-option>
                                     </md-select>
@@ -70,7 +74,8 @@
                         <div layout="row" data-ng-if="reservaCtrl.isEdicao">
                             <md-input-container flex>
                                 <md-select data-ng-model="reservaCtrl.reserva.tipo" required>
-                                    <md-option data-ng-repeat="(tipo, propriedades) in reservaCtrl.tiposReserva" data-ng-value="tipo">
+                                    <md-option data-ng-repeat="(tipo, propriedades) in reservaCtrl.tiposReserva"
+                                               data-ng-value="tipo">
                                         {{tipo}}
                                     </md-option>
                                 </md-select>
@@ -119,8 +124,8 @@
                     <br>
                     <!--Checkbox para aceitação de termos-->
                     <div layout="row" ng-if="reservaCtrl.isCriacao()">
-                        <md-checkbox 
-                                ng-model="reservaCtrl.reserva.termoAceito" 
+                        <md-checkbox
+                                ng-model="reservaCtrl.reserva.termoAceito"
                                 aria-label="Checkbox Termos"
                                 id="checkbox-termos">
                         </md-checkbox>
@@ -141,10 +146,10 @@
                         <!--end Botão de editar-->
                         <!--Botão de salvar-->
                         <md-button class="md-primary"
-                                ng-if="reservaCtrl.isEdicao"
-                                ng-disabled="!reservaCtrl.reserva.termoAceito && reservaCtrl.isCriacao()"
-                                type="submit">
-                                Salvar
+                                   ng-if="reservaCtrl.isEdicao"
+                                   ng-disabled="!reservaCtrl.reserva.termoAceito && reservaCtrl.isCriacao()"
+                                   type="submit">
+                            Salvar
                         </md-button>
                         <!--end Botão de salvar-->
                         <!--Descartar botão-->
@@ -164,8 +169,8 @@
                     </div>
                     <!--end Botões-->
                 </div>
-            </form>
-            <!--end Conteudo modal-->
-        </div>
-    </md-dialog-content>
+                <!--end Conteudo modal-->
+            </div>
+        </md-dialog-content>
+    </form>
 </md-dialog>

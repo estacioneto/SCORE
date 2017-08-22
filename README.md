@@ -12,6 +12,7 @@
 Sistema web de alocação de horário para os auditórios da UFCG.
 
 Para utilizar o projeto localmente, é necessário ter as variáveis de ambiente relacionadas à autenticação na máquina.
+Além disso, o serviço do mongo deve estar de pé. Para isso, execute `sudo service mongodb start`.
 
 # Tecnologias utilizadas
 * Front-end: [AngularJS](https://angularjs.org/) v1.6.2
