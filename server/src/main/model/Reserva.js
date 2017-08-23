@@ -5,6 +5,16 @@
 
     const Schema = mongoose.Schema;
 
+    const criarValidacaoData = nomeProp => {
+        return {
+            validator: function (dataDia) {
+                //https://stackoverflow.com/questions/8937408/regular-expression-for-date-format-dd-mm-yyyy-in-javascript
+                return /(^(((0[1-9]|1[0-9]|2[0-8])[-](0[1-9]|1[012]))|((29|30|31)[-](0[13578]|1[02]))|((29|30)[-](0[4,6,9]|11)))[-](19|[2-9][0-9])\d\d$)|(^29[-]02[-](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/.test(dataDia);
+            },
+            message: `${nomeProp} deve estar no formato dd-MM-yyyy.`
+        }
+    }
+
     const reservaSchema = new Schema({
         autor : {
             type: String,
@@ -56,18 +66,28 @@
         dia : {
             type: String,
             required: [true, "A reserva deve possuir um dia."],
-            validate: {
-                validator: function (dataDia) {
-                    //https://stackoverflow.com/questions/8937408/regular-expression-for-date-format-dd-mm-yyyy-in-javascript
-                    return /(^(((0[1-9]|1[0-9]|2[0-8])[-](0[1-9]|1[012]))|((29|30|31)[-](0[13578]|1[02]))|((29|30)[-](0[4,6,9]|11)))[-](19|[2-9][0-9])\d\d$)|(^29[-]02[-](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/.test(dataDia);
-                },
-                message: "Dia da reserva deve estar no formato dd-MM-yyyy."
-            }
+            validate: criarValidacaoData("Dia da reserva")
         },
         tipo : {
             type: String,
             enum: ['Defesa', 'Videoconferência', 'Reunião', 'Assembleia', 'Palestra', 'Outro'],
             required: [true, 'A reserva deve possuir um tipo']
+        },
+        repeticao: {
+            inicio: {
+                type: String,
+                required: [true, 'Repetição deve ter uma data de início.'],
+                validate: criarValidacaoData("Dia de início para repetição")
+            },
+            fim: {
+                type: String,
+                required: [true, 'Repetição deve ter uma data de fim.'],
+                validate: criarValidacaoData("Dia de fim para repetição")
+            },
+            frequencia: {
+                type: Number,
+                required: [true, 'Repetição deve ter a frequência de repetição para o evento.']
+            }
         }
     });
 
