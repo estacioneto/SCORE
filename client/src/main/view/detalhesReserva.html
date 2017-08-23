@@ -1,4 +1,4 @@
-<md-dialog aria-label="reserva-detalhes" flex="60">
+<md-dialog aria-label="reserva-detalhes" flex="60" md-theme="{{reservaCtrl.getTemaReserva()}}">
     <form name="formReserva"
           data-ng-submit="reservaCtrl.salvarReserva()">
         <cabecalho-reserva formulario="formReserva" reserva="reservaCtrl.reserva"></cabecalho-reserva>
@@ -7,14 +7,27 @@
                  data-layout="row"
                  data-layout-align="start start"
                  data-layout-padding
-                 data-layout-wrap
-                 md-colors="{background: 'grey-200'}">
+                 data-layout-wrap>
                 <!--Conteudo modal-->
 
                 <div layout="column"
                      flex="100"
                      layout-wrap>
-                    <!--Barra com hora, fechar e tipo-->
+
+                    <!--Titulo reserva-->
+                    <div data-ng-if="!reservaCtrl.isEdicao" layout="column">
+                        <span class="md-subhead">Título</span>
+                        <span class="md-title">{{ ::reservaCtrl.reserva.titulo}}</span>
+                    </div>
+                    <div data-ng-if="reservaCtrl.isEdicao" layout>
+                        <md-input-container flex>
+                            <label>Título</label>
+                            <input type="text" required data-ng-model="reservaCtrl.reserva.titulo">
+                        </md-input-container>
+                    </div>
+                    <!--end Titulo reserva-->
+
+                    <!--Barra com hora e tipo-->
                     <div layout="row" layout-align="space-between start">
                         <!--Hora da reserva-->
                         <div layout="column">
@@ -77,27 +90,13 @@
                         </div>
                     </div>
                     <!--end Tipo reserva mobile-->
-                    <br hide-gt-xs>
-                    <!--Titulo reserva-->
-                    <div data-ng-if="!reservaCtrl.isEdicao" layout="column">
-                        <span class="md-subhead">Título</span>
-                        <span class="md-title">{{ ::reservaCtrl.reserva.titulo}}</span>
-                    </div>
-                    <div data-ng-if="reservaCtrl.isEdicao" layout>
-                        <md-input-container flex>
-                            <label>Título</label>
-                            <input type="text" required data-ng-model="reservaCtrl.reserva.titulo">
-                        </md-input-container>
-                    </div>
-                    <!--end Titulo reserva-->
                     <!--Descrição reserva-->
                     <div data-ng-if="!reservaCtrl.isEdicao" layout="column">
                         <span class="md-subhead">Descrição</span>
                         <span class="md-subhead">{{ ::reservaCtrl.reserva.descricao || '-' }}</span>
                         <md-divider></md-divider>
                     </div>
-                    <md-input-container data-ng-if="reservaCtrl.isEdicao"
-                                        class="entrada-descricao">
+                    <md-input-container data-ng-if="reservaCtrl.isEdicao">
                         <label>Descrição</label>
                         <textarea type="text"
                                   ng-model="reservaCtrl.reserva.descricao"
@@ -107,22 +106,21 @@
                     </md-input-container>
                     <!--end Descrição reserva-->
                     <!--Autor-->
-                    <div layout="column">
-                        <span class="md-subhead">Responsável</span>
-                        <span class="md-title">{{ reservaCtrl.reserva.autor || '-' }}</span>
+                    <div layout>
+                        <span class="md-title">Responsável: {{ reservaCtrl.reserva.autor || '-' }}</span>
                     </div>
                     <!--end Autor-->
                     <!--Checkbox para aceitação de termos-->
-                    <div layout="row" ng-if="reservaCtrl.isCriacao()">
+                    <md-input-container layout="row" data-ng-if="reservaCtrl.isCriacao()">
                         <md-checkbox
                                 ng-model="reservaCtrl.reserva.termoAceito"
                                 aria-label="Checkbox Termos"
                                 id="checkbox-termos">
                         </md-checkbox>
                         <span class="md-subhead">
-                            Li e aceito os <a href="" ng-click="reservaCtrl.verTermos($event)">termos</a> para criação da reserva.
+                                Li e aceito os <a href="" class="md-primary" ng-click="reservaCtrl.verTermos($event)">termos</a> para criação da reserva.
                         </span>
-                    </div>
+                    </md-input-container>
                     <!--end Checkbox para aceitação de termos-->
                 </div>
                 <!--end Conteudo modal-->

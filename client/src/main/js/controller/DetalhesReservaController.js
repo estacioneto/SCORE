@@ -180,6 +180,10 @@
             $mdDialog.hide('close');
         };
 
+        this.getTemaReserva = function () {
+            return (TIPOS_RESERVA[this.reserva.tipo]) ? TIPOS_RESERVA[this.reserva.tipo].mdTheme || 'default' : 'default';
+        };
+
         /**
          * Descarta as mudanças atuais.
          */
