@@ -1,6 +1,6 @@
 <md-toolbar ng-style="{'background-color': $ctrl.reserva.backgroundColor }">
     <div class="md-toolbar-tools">
-        <h2>Reserva</h2>
+        <h2>{{($ctrl.reserva.titulo || "Reserva")}}</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="$ctrl.fechar()">
             <md-icon aria-label="Fechar Dialog">close</md-icon>

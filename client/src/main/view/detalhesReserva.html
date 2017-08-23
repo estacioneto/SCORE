@@ -18,7 +18,7 @@
                     <div layout="row" layout-align="space-between start">
                         <!--Hora da reserva-->
                         <div layout="column">
-                            <span class="md-subhead">Hora</span>
+                            <span data-ng-if="!reservaCtrl.isEdicao" class="md-subhead">Hora</span>
                             <span data-ng-if="!reservaCtrl.isEdicao" class="md-display-2">{{ ::reservaCtrl.reserva.getHoraFormatada() }}</span>
                             <!--Edição hora-->
                             <div layout="row" data-ng-if="reservaCtrl.isEdicao">
@@ -57,14 +57,8 @@
                             </div>
                         </div>
                         <!--end Tipo de Reserva-->
-                        <!--Fechar modal-->
-                        <md-button class="md-warn" ng-click="reservaCtrl.fecharModal()">
-                            <i class="material-icons">close</i>
-                        </md-button>
-                        <!--end Fechar modal-->
                     </div>
                     <!--end Barra com hora, fechar e tipo-->
-                    <br>
                     <!--Tipo reserva mobile-->
                     <div layout="column" hide-gt-xs>
                         <span class="md-subhead">Tipo do evento</span>
@@ -96,7 +90,6 @@
                         </md-input-container>
                     </div>
                     <!--end Titulo reserva-->
-                    <br>
                     <!--Descrição reserva-->
                     <div data-ng-if="!reservaCtrl.isEdicao" layout="column">
                         <span class="md-subhead">Descrição</span>
@@ -113,15 +106,12 @@
                         </textarea>
                     </md-input-container>
                     <!--end Descrição reserva-->
-                    <br>
-                    <br>
                     <!--Autor-->
-                    <span class="md-subhead">Responsável</span>
-                    <span class="md-title">{{ reservaCtrl.reserva.autor || '-' }}</span>
+                    <div layout="column">
+                        <span class="md-subhead">Responsável</span>
+                        <span class="md-title">{{ reservaCtrl.reserva.autor || '-' }}</span>
+                    </div>
                     <!--end Autor-->
-                    <md-divider></md-divider>
-                    <br>
-                    <br>
                     <!--Checkbox para aceitação de termos-->
                     <div layout="row" ng-if="reservaCtrl.isCriacao()">
                         <md-checkbox
@@ -134,43 +124,32 @@
                         </span>
                     </div>
                     <!--end Checkbox para aceitação de termos-->
-                    <!--Botões-->
-                    <div layout="row"
-                         layout-align="center center">
-                        <!--Botão de editar-->
-                        <md-button
-                                ng-if="reservaCtrl.podeEditar()"
-                                ng-click="reservaCtrl.toggleEdicao()">
-                            Editar
-                        </md-button>
-                        <!--end Botão de editar-->
-                        <!--Botão de salvar-->
-                        <md-button class="md-primary"
-                                   ng-if="reservaCtrl.isEdicao"
-                                   ng-disabled="!reservaCtrl.reserva.termoAceito && reservaCtrl.isCriacao()"
-                                   type="submit">
-                            Salvar
-                        </md-button>
-                        <!--end Botão de salvar-->
-                        <!--Descartar botão-->
-                        <md-button class="md-warn"
-                                   ng-if="reservaCtrl.isEdicao"
-                                   ng-click="reservaCtrl.descartarMudancas()">
-                            Descartar
-                        </md-button>
-                        <!--end Descartar botão-->
-                        <!--Botão de excluir-->
-                        <md-button class="md-warn"
-                                   ng-if="reservaCtrl.podeExcluir()"
-                                   ng-click="reservaCtrl.excluirReserva()">
-                            Excluir
-                        </md-button>
-                        <!--Botão de excluir-->
-                    </div>
-                    <!--end Botões-->
                 </div>
                 <!--end Conteudo modal-->
             </div>
         </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button class="md-warn"
+                       ng-if="reservaCtrl.podeExcluir()"
+                       ng-click="reservaCtrl.excluirReserva()">
+                Excluir
+            </md-button>
+            <md-button
+                    ng-if="reservaCtrl.podeEditar()"
+                    ng-click="reservaCtrl.toggleEdicao()">
+                Editar
+            </md-button>
+            <md-button class="md-warn"
+                       ng-if="reservaCtrl.isEdicao"
+                       ng-click="reservaCtrl.descartarMudancas()">
+                Descartar
+            </md-button>
+            <md-button class="md-primary"
+                       ng-if="reservaCtrl.isEdicao"
+                       ng-disabled="!reservaCtrl.reserva.termoAceito && reservaCtrl.isCriacao()"
+                       type="submit">
+                Salvar
+            </md-button>
+        </md-dialog-actions>
     </form>
 </md-dialog>
