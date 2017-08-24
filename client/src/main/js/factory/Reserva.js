@@ -4,7 +4,7 @@ let sequenceReserva = 1;
     /**
      * Factory que representa a entidade de reserva.
      */
-    angular.module('reservaModulo').factory('Reserva', ['$http', 'TIPOS_RESERVA', function ($http, TIPOS_RESERVA) {
+    angular.module('reservaModulo').factory('Reserva', ['$http', 'TIPOS_RESERVA', 'COR_RESERVA_PASSADA', function ($http, TIPOS_RESERVA, COR_RESERVA_PASSADA) {
 
         const DIA_INDICE = 0, MES_INDICE = 1, ANO_INDICE = 2,
               HORA_INDICE = 0, MINUTO_INDICE = 1;
@@ -110,6 +110,10 @@ let sequenceReserva = 1;
             return `${this.inicio}-${this.fim}`;
         };
 
+        Reserva.prototype.ehReservaPassada = function () {
+            return this.end < Date.now();
+        };
+
         Reserva.prototype.__defineGetter__('author', function () {
             return this.autor;
         });
@@ -136,6 +140,7 @@ let sequenceReserva = 1;
          * Deve ser RGB ou HEX.
          */
         Reserva.prototype.__defineGetter__('backgroundColor', function () {
+            if(this.ehReservaPassada()) return COR_RESERVA_PASSADA.corRgb;
             return TIPOS_RESERVA[this.tipo].corRgb;
         });
 
@@ -152,6 +157,7 @@ let sequenceReserva = 1;
          * Deve ser RGB ou HEX.
          */
         Reserva.prototype.__defineGetter__('textColor', function () {
+            if(this.ehReservaPassada()) return COR_RESERVA_PASSADA.corTexto ;
             return TIPOS_RESERVA[this.tipo].corTexto;
         });
 

@@ -167,7 +167,7 @@
          * Indica se o usuário logado pode editar a reserva.
          */
         this.podeEditar = () => {
-            return self.ehDonoDaReserva() && !self.isEdicao
+            return self.ehDonoDaReserva() && !self.isEdicao && !reserva.ehReservaPassada();
         };
 
         /**

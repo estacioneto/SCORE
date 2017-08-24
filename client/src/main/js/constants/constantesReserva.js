@@ -39,10 +39,18 @@
         },
         "Outro": {
             corMd: {
-                "background-color": "grey-600"
+                "background-color": "pink-400"
             },
-            corRgb: "rgb(117, 117, 117)",
+            corRgb: "rgb(236,64,122)",
             corTexto: ''
         }
+    })
+    .constant('COR_RESERVA_PASSADA', {
+        corMd: {
+            "background-color": "grey-400"
+        },
+        corRgb: "rgb(189, 189, 189)",
+        corTexto: ''
+
     });
 })();
