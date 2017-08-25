@@ -1,6 +1,11 @@
 (() => {
     'use strict';
 
+    /**
+     * Componente responsável pelos detalhes da reserva no modal no caso de edição.
+     *
+     * @param {Reserva} reserva Reserva com os detalhes a serem mudados.
+     */
     angular.module('reservaModulo').component('detalhesReservaEdicao', {
         templateUrl: 'view/component/reserva/detalhes-reserva-edicao.html',
         bindings: {

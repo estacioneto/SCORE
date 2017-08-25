@@ -3,9 +3,11 @@
         <span class="md-title">Horário: {{ ::$ctrl.reserva.getHoraFormatada() }}</span>
         <span class="md-subhead">{{::$ctrl.reserva.tipo}}</span>
     </div>
-    <div layout="column" flex>
+    <div layout="column" layout-align="space-between start">
         <span class="md-subhead">Descrição</span>
         <span class="md-subhead">{{ ::$ctrl.reserva.descricao || '-' }}</span>
+    </div>
+    <div layout="column">
         <md-divider></md-divider>
     </div>
     <!--Autor-->

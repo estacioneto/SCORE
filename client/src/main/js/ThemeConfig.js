@@ -26,6 +26,7 @@
 
         setLocalTheme('LOCAL');
 
+        // --------------- Temas Reserva -------------------
         $mdThemingProvider.theme(TIPOS_RESERVA["Reunião"].mdTheme)
             .primaryPalette('indigo', {default: 'A700'})
             .accentPalette('blue', {default: '500'})
