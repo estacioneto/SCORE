@@ -19,8 +19,8 @@
              * @type {{[state]: [{[nome]: [string], [icone]: [string]}]}}
              */
             this.statesDisponiveis = {
-                HOME: [APP_STATES.LOCAL_INFO],
-                LOCAL: [APP_STATES.HOME, APP_STATES.LOCAL_INFO]
+                AGENDA: [APP_STATES.LOCAL_INFO],
+                LOCAL: [APP_STATES.AGENDA_INFO, APP_STATES.LOCAL_INFO]
             };
 
             /**

@@ -4,7 +4,7 @@
      * Controller responsável pelo modal de detalhes da reserva.
      *
      */
-    angular.module('calendarioModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'DataManipuladorService', '$q', 'local',
+    angular.module('agendaModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'DataManipuladorService', '$q', 'local',
         function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, DataManipuladorService, $q, local) {
 
             const self = this;
