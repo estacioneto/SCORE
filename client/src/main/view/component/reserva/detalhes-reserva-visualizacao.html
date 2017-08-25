@@ -1,11 +1,14 @@
 <div layout-padding>
     <div layout="row" layout-align="space-between start">
-        <span class="md-title">Horário: {{ ::$ctrl.reserva.getHoraFormatada() }}</span>
+        <div layout="column" layout-align="space-between start">
+            <span class="md-body-2">Horário</span>
+            <span class="md-headline">{{ ::$ctrl.reserva.getHoraFormatada() }}</span>
+        </div>
         <span class="md-subhead">{{::$ctrl.reserva.tipo}}</span>
     </div>
     <div layout="column" layout-align="space-between start">
-        <span class="md-subhead">Descrição</span>
-        <span class="md-subhead">{{ ::$ctrl.reserva.descricao || '-' }}</span>
+        <span class="md-body-2">Descrição</span>
+        <span class="md-headline">{{ ::$ctrl.reserva.descricao || '-' }}</span>
     </div>
     <div layout="column">
         <md-divider></md-divider>
