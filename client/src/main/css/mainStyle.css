@@ -249,9 +249,10 @@ md-input-container.md-input-invalid > md-icon {
 }
 
 .imagem-local-card {
-    max-height: 85%;
+    max-height: inherit;
+    min-width: inherit;
     object-fit: cover;
-    height: auto;
+
 }
 
 .local-listagem-card {
