@@ -10,7 +10,7 @@
             this.user = AuthService.getLoggedUser();
 
             function redirect() {
-                $state.go(APP_STATES.AGENDA.nome);
+                $state.go(APP_STATES.AGENDA_INFO.nome);
             }
 
             (function () {

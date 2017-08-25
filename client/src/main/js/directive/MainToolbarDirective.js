@@ -56,7 +56,7 @@
                             }
                             scope.user = new Usuario(user);
                             AuthService.authenticate(authResult.accessToken, authResult.idToken, scope.user);
-                            $state.go(APP_STATES.AGENDA.nome);
+                            $state.go(APP_STATES.AGENDA_INFO.nome);
                         });
                     }
 
@@ -67,7 +67,7 @@
                      */
                     scope.getCurrentStateName = function () {
                         var currentState = $state.current;
-                        if (currentState.name !== APP_STATES.AGENDA.nome && currentState.name !== APP_STATES.LOGIN.nome) {
+                        if (currentState.name !== APP_STATES.AGENDA_INFO.nome && currentState.name !== APP_STATES.LOGIN.nome) {
                             const nomeState = $state.current.nome || $state.current.name;
                             return scope.getNomeState(nomeState.toUpperCase());
                         }
@@ -80,7 +80,7 @@
                      * Vai para home.
                      */
                     scope.goHome = function () {
-                        $state.go(true || scope.auth.isAuthenticated() ? APP_STATES.AGENDA.nome : APP_STATES.LOGIN.nome);
+                        $state.go(true || scope.auth.isAuthenticated() ? APP_STATES.AGENDA_INFO.nome : APP_STATES.LOGIN.nome);
                     };
 
                     /**
