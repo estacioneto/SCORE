@@ -11,8 +11,9 @@
         <md-divider></md-divider>
     </div>
     <!--Autor-->
-    <div layout>
-        <span class="md-title">Responsável: {{ $ctrl.reserva.autor || '-' }}</span>
+    <div layout="column" layout-align="space-between start">
+        <span class="md-body-2">Responsável</span>
+        <span class="md-headline">{{ $ctrl.reserva.autor || '-' }}</span>
     </div>
     <!--end Autor-->
 </div>
