@@ -21,7 +21,7 @@
         }
 
         setDefaultTheme('default');
-        setDefaultTheme('HOME');
+        setDefaultTheme('AGENDA');
         setDefaultTheme('LOGIN');
 
         setLocalTheme('LOCAL');

@@ -95,7 +95,7 @@
                     resolve: {
                         authCheck: function (auth, $state) {
                             if (!auth.isAuthenticated) {
-                                $state.go(APP_STATES.LOGIN.info);
+                                $state.go(APP_STATES.LOGIN.nome);
                             }
                         }
                     }
@@ -105,11 +105,9 @@
                     templateUrl: view + 'login.html',
                     controller: 'LoginController as loginCtrl'
                 })
-                .state(APP_STATES.HOME.nome, {
-                    url: '/home',
-                    templateUrl: view + 'home.html',
-                    controller: 'CalendarioController as calendarioCtrl'
-                })
+                .state(APP_STATES.AGENDA.nome, APP_STATES.AGENDA)
+                .state(APP_STATES.AGENDA_INFO.nome, APP_STATES.AGENDA_INFO)
+                .state(APP_STATES.AGENDA_ID.nome, APP_STATES.AGENDA_ID)
                 .state(APP_STATES.LOCAL.nome, {
                     url: '/local',
                     abstract: true,
