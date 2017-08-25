@@ -13,46 +13,38 @@
                class="md-button md-raised md-primary"
                md-colors="{'background-color': '{{$root.theme}}-primary'}">Adicionar Imagens</label>
         <!--end Label para o Input, o que é visto-->
+
+        <md-button class="md-raised md-warn">
+            Selecionar Imagem de Capa
+        </md-button>
+
     </div>
 
-
-    <div id="myCarousel" class="carousel slide container-carousel" data-ride="carousel" flex="60" layout="row" style="min-width: 60%;">
-        <!-- Indicators -->
+    <!--Visualização das imagens-->
+    <div id="myCarousel" class="carousel slide container-carousel" data-ride="carousel" flex="60" layout="row" ng-if="$ctrl.existemImagens()">
+        <!-- Bolinhas -->
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" ng-repeat="imagem in $ctrl.local.imagens track by $index" data-slide-to="{{$index}}" ng-class="{'active': !$index}">
         </ol>
+        <!-- end Bolinhas -->
 
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" style="max-height: inherit; min-width: inherit;">
-            <div class="item" style="max-height: inherit; min-width: inherit;" ng-class="{active:!$index}"  ng-repeat="imagem in $ctrl.local.imagens">
-                <img class="imagem-local-card" src="{{imagem.conteudo}}" alt="Los Angeles">
+        <!-- Wrapper -->
+        <div class="carousel-inner wrapper-carousel">
+            <div class="item container-imagem" ng-repeat="imagem in $ctrl.local.imagens track by $index" ng-class="{'active': !$index}" >
+                <img class="imagem-local-card" ng-class="{'border-color': ($index)? 'none' : 'red'}" src="{{imagem.conteudo}}">
             </div>
         </div>
+        <!-- end Wrapper -->
 
-        <!-- Left and right controls -->
+        <!-- Setas -->
         <a class="left carousel-control" href="#myCarousel" data-slide="prev" layout="column" layout-align="center center">
             <i class="material-icons">keyboard_arrow_left</i>
         </a>
         <a class="right carousel-control" href="#myCarousel" data-slide="next" layout="column" layout-align="center center">
             <i class="material-icons">keyboard_arrow_right</i>
         </a>
+        <!-- end Setas -->
     </div>
-
-    <!--&lt;!&ndash;Visualização das imagens&ndash;&gt;-->
-    <!--<div flex="60" class="container-carousel" ng-if="$ctrl.existemImagens()">-->
-        <!--<ui-carousel slides="$ctrl.local.imagens" slides-to-show="3" slides-to-scroll="1" dots="true" layout="row" layout-align="center center">-->
-            <!--<carousel-item>-->
-                <!--&lt;!&ndash;FIXME: Foi necessário usar $parent devido a problemas internos no ui-carousel. Mudar isso.&ndash;&gt;-->
-                <!--&lt;!&ndash;Ver issue: https://github.com/mihnsen/ui-carousel/issues/34&ndash;&gt;-->
-                <!--&lt;!&ndash;Código fonte: https://github.com/mihnsen/ui-carousel/blob/master/src/ui-carousel/directives/carousel.directive.js&ndash;&gt;-->
-                <!--<md-card ng-click="$parent.$parent.$ctrl.mostraModalImagem($event, item, $parent.$parent.$ctrl.editavel)">-->
-                    <!--<img ng-src="{{item.conteudo}}" class="imagem-local-card"/>-->
-                <!--</md-card>-->
-            <!--</carousel-item>-->
-        <!--</ui-carousel>-->
-    <!--</div>-->
-    <!--<br/>-->
+    <br>
     <!--end Visualização das imagens-->
 </md-content>

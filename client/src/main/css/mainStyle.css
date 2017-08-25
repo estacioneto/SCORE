@@ -246,12 +246,15 @@ md-input-container.md-input-invalid > md-icon {
 
 .container-carousel {
     overflow: hidden;
+    min-width: 100%;
+    max-height: 100%;
 }
 
 .imagem-local-card {
-    max-height: inherit;
+    max-height: ;
     min-width: inherit;
     object-fit: cover;
+    border: 3px solid red;
 
 }
 
@@ -296,3 +299,14 @@ md-input-container.md-input-invalid > md-icon {
     max-width: 70px;
     max-height: 70px;
 }
+
+.wrapper-carousel {
+    min-width: inherit;
+    max-height: inherit;
+}
+
+.container-imagem {
+    max-height: inherit;
+    min-width: inherit;
+}
+
