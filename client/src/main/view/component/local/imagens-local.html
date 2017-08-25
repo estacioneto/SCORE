@@ -13,15 +13,10 @@
                class="md-button md-raised md-primary"
                md-colors="{'background-color': '{{$root.theme}}-primary'}">Adicionar Imagens</label>
         <!--end Label para o Input, o que é visto-->
-
-        <md-button class="md-raised md-warn">
-            Selecionar Imagem de Capa
-        </md-button>
-
     </div>
 
     <!--Visualização das imagens-->
-    <div id="myCarousel" class="carousel slide container-carousel" data-ride="carousel" flex="60" layout="row" ng-if="$ctrl.existemImagens()">
+    <div id="myCarousel" class="carousel slide container-carousel" data-ride="carousel" flex="70" layout="row" ng-if="$ctrl.existemImagens()">
         <!-- Bolinhas -->
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" ng-repeat="imagem in $ctrl.local.imagens track by $index" data-slide-to="{{$index}}" ng-class="{'active': !$index}">
@@ -31,7 +26,8 @@
         <!-- Wrapper -->
         <div class="carousel-inner wrapper-carousel">
             <div class="item container-imagem" ng-repeat="imagem in $ctrl.local.imagens track by $index" ng-class="{'active': !$index}" >
-                <img class="imagem-local-card" ng-class="{'border-color': ($index)? 'none' : 'red'}" src="{{imagem.conteudo}}">
+                <img class="imagem-local-card" src="{{imagem.conteudo}}" ng-click="$ctrl.mostraModalImagem($event, imagem, $ctrl.editavel)">
+                <span>Imagem de capa</span>
             </div>
         </div>
         <!-- end Wrapper -->

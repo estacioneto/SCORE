@@ -87,7 +87,7 @@
          * @param {Function} excluirImagemCallback Callback a ser chamado ao apertar o botão de excluir imagem no modal.
          * @returns {Promise} Promise do modal.
          */
-        this.verImagem = function (imagem, $event, editavel, excluirImagemCallback) {
+        this.verImagem = function (imagem, $event, editavel, excluirImagemCallback, definirComoCapaCallback) {
             const options = {
                 templateUrl: 'view/dialog/full-size-image.html',
                 controller: 'ImagemController as imagemCtrl',
@@ -95,7 +95,8 @@
                 resolve: {
                     imagem: () => imagem,
                     editavel: () => editavel,
-                    excluirImagemCallback : () => excluirImagemCallback
+                    excluirImagemCallback : () => excluirImagemCallback,
+                    definirComoCapaCallback : () => definirComoCapaCallback
                 }
             };
             return self.custom(options);

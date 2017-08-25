@@ -251,11 +251,8 @@ md-input-container.md-input-invalid > md-icon {
 }
 
 .imagem-local-card {
-    max-height: ;
     min-width: inherit;
     object-fit: cover;
-    border: 3px solid red;
-
 }
 
 .local-listagem-card {
@@ -269,7 +266,7 @@ md-input-container.md-input-invalid > md-icon {
     max-height: 80%;
     object-fit: cover;
     width: auto;
-    height: auto;
+    height: 100%;
 }
 
 .imagem-modal-full {
@@ -280,6 +277,13 @@ md-input-container.md-input-invalid > md-icon {
     position: absolute;
     bottom: 10px;
     right: 10px;
+    background: white;
+}
+
+.favoritar-imagem-modal-button {
+    position: absolute;
+    bottom: 10px;
+    right: 60px;
     background: white;
 }
 
