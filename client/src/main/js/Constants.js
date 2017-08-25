@@ -24,7 +24,7 @@
         return Object.assign({
             nome: 'app.agenda',
             mdIcon: 'event',
-            url: '/agenda',
+            url: '/agenda'
         }, state);
     }
 
@@ -34,7 +34,7 @@
         LOGIN: {nome: 'app.login'},
         AGENDA: getAgendaState({
             abstract: true,
-            template: '<ui-view/>',
+            template: '<ui-view/>'
         }),
         AGENDA_INFO: getAgendaState({
             nome: 'app.agenda.info',
