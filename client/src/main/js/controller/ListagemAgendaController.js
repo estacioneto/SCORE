@@ -17,7 +17,5 @@
             $state.go(APP_STATES.AGENDA_ID.nome, {idLocal: local._id});
         };
 
-        console.log($state.current);
-
     }]);
 })();
