@@ -4,7 +4,7 @@
      * Controller responsável pela view do calendário.
      *
      */
-    angular.module("calendarioModulo").controller("AgendaController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
+    angular.module("agendaModulo", []).controller("AgendaController", ['$scope', '$compile', '$filter', '$state', 'uiCalendarConfig', 'APP_STATES',
         'Reserva', 'DataManipuladorService', 'LocaisService', 'ModalService', 'TIPOS_RESERVA', 'AgendamentoService', '$q', 'AuthService', 'PERMISSOES', 'local',
         function ($scope, $compile, $filter, $state, uiCalendarConfig, APP_STATES, Reserva, DataManipuladorService, LocaisService, ModalService, TIPOS_RESERVA, AgendamentoService, $q, AuthService, PERMISSOES, local) {
 

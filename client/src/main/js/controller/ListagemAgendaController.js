@@ -6,7 +6,7 @@
      *
      * @author Estácio Pereira.
      */
-    angular.module("calendarioModulo").controller("ListagemAgendaController", ['$state', 'APP_STATES', function ($state, APP_STATES) {
+    angular.module("agendaModulo").controller("ListagemAgendaController", ['$state', 'APP_STATES', function ($state, APP_STATES) {
 
         /**
          * Redireciona para a tela da agenda de local.

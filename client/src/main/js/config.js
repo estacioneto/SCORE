@@ -29,7 +29,7 @@
             'buscaModulo',
             'footerModule',
             'materialCalendar',
-            'calendarioModulo',
+            'agendaModulo',
             'agendamentoModulo',
             'autenticacaoModulo',
             'localModulo',
