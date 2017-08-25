@@ -141,7 +141,7 @@ let sequenceReserva = 1;
          */
         Reserva.prototype.__defineGetter__('backgroundColor', function () {
             if(this.ehReservaPassada()) return COR_RESERVA_PASSADA.corRgb;
-            return TIPOS_RESERVA[this.tipo].corRgb;
+            return (TIPOS_RESERVA[this.tipo]) ? TIPOS_RESERVA[this.tipo].corRgb : TIPOS_RESERVA["Reunião"].corRgb;
         });
 
         /**

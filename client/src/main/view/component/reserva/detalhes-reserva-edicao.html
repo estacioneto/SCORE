@@ -1,0 +1,97 @@
+<div layout="column"
+     flex="100"
+     layout-padding
+     layout-wrap>
+
+    <!--Titulo reserva-->
+    <div layout>
+        <md-input-container flex>
+            <label>Título</label>
+            <input required data-ng-model="$ctrl.reserva.titulo">
+        </md-input-container>
+    </div>
+    <!--end Titulo reserva-->
+
+    <!--Barra com hora e tipo-->
+    <div layout="row" layout-align="space-between start">
+        <!--Hora da reserva-->
+        <div layout="column">
+            <!--Edição hora-->
+            <div layout="row">
+                <md-input-container>
+                    <label>Início</label>
+                    <input type="time"
+                           required
+                           ng-model="$ctrl.reserva.inicio">
+                </md-input-container>
+                <md-input-container>
+                    <label>Fim</label>
+                    <input type="time"
+                           required
+                           ng-model="$ctrl.reserva.fim">
+                </md-input-container>
+            </div>
+            <!--end Edição hora-->
+        </div>
+        <!--end Hora da reserva-->
+        <!--Tipo Reserva-->
+        <div class="tipo-reserva" layout="column" hide-xs flex>
+            <div layout="row">
+                <md-input-container flex>
+                    <md-select data-ng-model="$ctrl.reserva.tipo" required
+                               placeholder="Tipo do evento">
+                        <md-option data-ng-repeat="(tipo, propriedades) in $ctrl.tiposReserva"
+                                   data-ng-value="tipo">
+                            {{tipo}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+        <!--end Tipo de Reserva-->
+    </div>
+    <!--end Barra com hora, fechar e tipo-->
+    <!--Tipo reserva mobile-->
+    <div layout="column" hide-gt-xs>
+        <div layout="row">
+            <md-input-container flex>
+                <md-select data-ng-model="$ctrl.reserva.tipo" required>
+                    <md-option data-ng-repeat="(tipo, propriedades) in $ctrl.tiposReserva"
+                               data-ng-value="tipo">
+                        {{tipo}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <!--end Tipo reserva mobile-->
+    <!--Descrição reserva-->
+    <md-input-container>
+        <label>Descrição</label>
+        <textarea type="text"
+                  ng-model="$ctrl.reserva.descricao"
+                  rows="2"
+                  aria-label="entradaDescricao">
+                        </textarea>
+    </md-input-container>
+    <!--end Descrição reserva-->
+    <!--Autor-->
+    <div layout="column" layout-align="space-between start">
+        <span class="md-body-2">Responsável</span>
+        <span class="md-headline">{{ $ctrl.reserva.autor || '-' }}</span>
+    </div>
+    <!--end Autor-->
+    <!--Checkbox para aceitação de termos-->
+    <md-input-container layout="row" data-ng-if="$ctrl.isCriacao()">
+        <md-checkbox
+                ng-model="$ctrl.reserva.termoAceito"
+                aria-label="Checkbox Termos"
+                id="checkbox-termos">
+        </md-checkbox>
+        <span class="md-subhead">
+                                Li e aceito os <a href="" class="md-primary"
+                                                  ng-click="$ctrl.verTermos($event)">termos</a> para criação da reserva.
+                        </span>
+    </md-input-container>
+    <!--end Checkbox para aceitação de termos-->
+</div>

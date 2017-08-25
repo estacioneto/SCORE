@@ -3,6 +3,7 @@
 
     angular.module('reservaModulo', []).constant('TIPOS_RESERVA', {
         "Reunião": {
+            mdTheme: 'reuniao',
             corMd: {
                 "background-color": "indigo-A700"
             },
@@ -10,6 +11,7 @@
             corTexto: ''
         },
         "Videoconferência": {
+            mdTheme: 'videoconferencia',
             corMd: {
                 "background-color": "green-600"
             },
@@ -17,13 +19,15 @@
             corTexto: ''
         },
         "Assembleia": {
+            mdTheme: 'assembleia',
             corMd: {
-                "background-color": "indigo-800"
+                "background-color": "teal-700"
             },
-            corRgb: "rgb(40, 53, 147)",
+            corRgb: "rgb(0, 121, 107)",
             corTexto: ''
         },
         "Defesa": {
+            mdTheme: 'defesa',
             corMd: {
                 "background-color": "purple-400"
             },
@@ -31,17 +35,19 @@
             corTexto: ''
         },
         "Palestra": {
+            mdTheme: 'palestra',
             corMd: {
-                "background-color": "red-600"
+                "background-color": "red-A700"
             },
-            corRgb: "rgb(229, 57, 53)",
+            corRgb: "rgb(213, 0, 0)",
             corTexto: ''
         },
         "Outro": {
+            mdTheme: 'outro',
             corMd: {
-                "background-color": "pink-400"
+                "background-color": "amber-700"
             },
-            corRgb: "rgb(236,64,122)",
+            corRgb: "rgb(255, 160, 0)",
             corTexto: ''
         }
     })

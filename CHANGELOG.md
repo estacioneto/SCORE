@@ -1,8 +1,9 @@
 # CHANGELOG
 
-# Unstable
+## unstable
+* Manuteção: Mudado design do modal de reserva.
 
-# 0.1.0
+## 0.1.0
 * Funcionalidade: Adicionados tipos "Outro" e "Palestra" para Reserva.
 * Correção: Corrigido tipo de Reserva "Assembleia".
 * Funcionalidade: Adicionada exibição de reservas de acordo com o auditório selecionado.
@@ -22,5 +23,5 @@
 * Funcionalidade: Adicionada identificação para Administradores.
 * Funcionalidade: Adicionada deleção de imagem antes de seu salvamento.
 
-# 0.0.2
+## 0.0.2
 * Início versionamento.
