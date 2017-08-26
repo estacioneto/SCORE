@@ -40,6 +40,11 @@ let sequenceReserva = 1;
                                  dia,
                                  tipo,
                                  repeticao});
+
+            this.repeticao = this.repeticao || {
+                fim: dia,
+                frequecia: 1
+            };
         }
 
         /**
@@ -181,6 +186,15 @@ let sequenceReserva = 1;
                 return this.start;
             }
             return new Date(getAno(this.repeticao.fim), getMes(this.repeticao.fim), getDia(this.repeticao.fim));
+        });
+
+        Reserva.prototype.__defineSetter__('fimRepeticao', function (data) {
+            const ano = data.getFullYear();
+            let mes = `0${data.getMonth() + 1}`;
+            mes = mes.substring(mes.length - 2);
+            let dia = `0${data.getDate()}`;
+            dia = dia.substring(dia.length - 2);
+            this.repeticao.fim = `${ano}-${mes}-${dia}`;
         });
 
         /**

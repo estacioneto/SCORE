@@ -8,6 +8,8 @@
         const self = this;
 
         let reservas = [];
+        let reservasCopy = [];
+        let local;
 
         /**
          * Realiza a consulta de reservas por local.
@@ -15,8 +17,12 @@
          * @return {Promise} Promise contendo um data com a lista de reservas.
          */
         this.carregarReservasDoLocal = (idLocal) => {
+            local = idLocal;
             return $http.get(`${API}/${idLocal}/${RESERVA_SUB_API}`).then(data => {
-                reservas = data.data.map(r => new Reserva(r));
+                reservas.splice(0, reservas.length);
+                _.concat(reservas, data.data.map(r => new Reserva(r)));
+                // reservasCopy = angular.copy(data.data);
+                // atualizarRepeticoes();
                 repetirReservas(reservas);
                 return { data: reservas };
             });
@@ -59,9 +65,19 @@
          * @param {Reserva} reserva
          */
         this.salvarReserva = (reserva) => {
-            if (reserva._id)
-                atualizarReservasClient(reserva);
+            self.carregarReservasDoLocal(local);
+            // if (reserva._id)
+            //     atualizarReservasClient(reserva);
+            // atualizarRepeticoes();    
         };
+
+        function atualizarRepeticoes() {
+            reservasCopy.splice(0, reservasCopy.length);
+            _.concat(reservasCopy, reservas);
+            console.log("antes eu tinha", reservasCopy.length);
+            repetirReservas(reservasCopy);
+            console.log("dps", reservasCopy.length);
+        }
 
         /**
          * Atualiza a lista de reservas no client.

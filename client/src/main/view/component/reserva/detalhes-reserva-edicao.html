@@ -75,6 +75,18 @@
                         </textarea>
     </md-input-container>
     <!--end Descrição reserva-->
+    <!--Repeticao-->
+    <div layout="row">
+        <md-input-container ng-init="fr = $ctrl.reserva.fimRepeticao">
+            <label>Fim repetição</label>
+            <input type="date" ng-model="fr" ng-change="$ctrl.reserva.fimRepeticao = fr">
+        </md-input-container>
+        <md-input-container>
+            <label>Frequência</label>
+            <input type="number" ng-model="$ctrl.reserva.repeticao.frequencia">
+        </md-input-container>
+    </div>
+    <!--end Repeticao-->
     <!--Autor-->
     <div layout="column" layout-align="space-between start">
         <span class="md-body-2">Responsável</span>
