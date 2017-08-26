@@ -16,29 +16,31 @@
     </div>
 
     <!--Visualização das imagens-->
-    <div id="myCarousel" class="carousel slide container-carousel" data-ride="carousel" flex="70" layout="row" ng-if="$ctrl.existemImagens()">
-        <!-- Bolinhas -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" ng-repeat="imagem in $ctrl.local.imagens track by $index" data-slide-to="{{$index}}" ng-class="{'active': !$index}">
-        </ol>
-        <!-- end Bolinhas -->
+    <div layout="column" layout-align="center center">
+        <div id="myCarousel" class="carousel slide container-carousel" data-ride="carousel" flex="70" ng-if="$ctrl.existemImagens()">
+            <!-- Bolinhas -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" ng-repeat="imagem in $ctrl.local.imagens track by $index" data-slide-to="{{$index}}" ng-class="{'active': !$index}">
+            </ol>
+            <!-- end Bolinhas -->
 
-        <!-- Wrapper -->
-        <div class="carousel-inner wrapper-carousel">
-            <div class="item container-imagem" ng-repeat="imagem in $ctrl.local.imagens track by $index" ng-class="{'active': !$index}" >
-                <img class="imagem-local-card" src="{{imagem.conteudo}}" ng-click="$ctrl.mostraModalImagem($event, imagem, $ctrl.editavel)">
+            <!-- Wrapper -->
+            <div class="carousel-inner wrapper-carousel">
+                <div class="item container-imagem" ng-repeat="imagem in $ctrl.local.imagens track by $index" ng-class="{'active': !$index}" >
+                    <img class="imagem-local-card" src="{{imagem.conteudo}}" ng-click="$ctrl.mostraModalImagem($event, imagem, $ctrl.editavel)">
+                </div>
             </div>
-        </div>
-        <!-- end Wrapper -->
+            <!-- end Wrapper -->
 
-        <!-- Setas -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev" layout="column" layout-align="center center">
-            <i class="material-icons">keyboard_arrow_left</i>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next" layout="column" layout-align="center center">
-            <i class="material-icons">keyboard_arrow_right</i>
-        </a>
-        <!-- end Setas -->
+            <!-- Setas -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev" layout="column" layout-align="center center">
+                <i class="material-icons">keyboard_arrow_left</i>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next" layout="column" layout-align="center center">
+                <i class="material-icons">keyboard_arrow_right</i>
+            </a>
+            <!-- end Setas -->
+        </div>
     </div>
     <br>
     <!--end Visualização das imagens-->

@@ -239,22 +239,6 @@ md-input-container.md-input-invalid > md-icon {
     height: 100%;
 }
 
-.slide {
-    max-height: 50%;
-    margin: 0 auto;
-}
-
-.container-carousel {
-    overflow: hidden;
-    min-width: 100%;
-    max-height: 100%;
-}
-
-.imagem-local-card {
-    min-width: inherit;
-    object-fit: cover;
-}
-
 .local-listagem-card {
     max-width: 100%;
     object-fit: cover;
@@ -305,13 +289,25 @@ md-input-container.md-input-invalid > md-icon {
 }
 
 .wrapper-carousel {
-    min-width: inherit;
+    width: 100%;
     max-height: inherit;
 }
 
 .container-imagem {
     max-height: inherit;
-    min-width: inherit;
+    width: auto;
+}
+
+.container-carousel {
+    overflow: hidden;
+    max-height : 100%;
+    width: 60%;
+}
+
+.imagem-local-card {
+    width: auto;
+    max-height: 100%;
+    object-fit: cover;
 }
 
 .local-card {
