@@ -4,6 +4,7 @@
 * Manuteção: Mudado design do modal de reserva.
 * Refatoração: Adicionado state para a agenda dos locais (agora é possível compartilhar o link da agenda de um local).
 * Correção: Corrigido link para termos do local no modal de reserva.
+* Funcionalidade: Reservas passadas agora tem a cor cinza e não são editáveis.
 
 ## 0.1.0
 * Funcionalidade: Adicionados tipos "Outro" e "Palestra" para Reserva.
