@@ -5,11 +5,19 @@
 
     const Schema = mongoose.Schema;
 
+    
+
     const criarValidacaoData = nomeProp => {
         return {
-            validator: function (dataDia) {
-                //https://stackoverflow.com/questions/8937408/regular-expression-for-date-format-dd-mm-yyyy-in-javascript
-                return /(^(((0[1-9]|1[0-9]|2[0-8])[-](0[1-9]|1[012]))|((29|30|31)[-](0[13578]|1[02]))|((29|30)[-](0[4,6,9]|11)))[-](19|[2-9][0-9])\d\d$)|(^29[-]02[-](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/.test(dataDia);
+            // https://stackoverflow.com/questions/18758772/how-do-i-validate-a-date-in-this-format-yyyy-mm-dd-using-jquery
+            validator: function (stringData) {
+                const regEx = /^\d{4}-\d{2}-\d{2}$/;
+                if(!stringData.match(regEx))
+                    return false;
+                let d;
+                if(!((d = new Date(stringData))|0))
+                    return false;
+                return d.toISOString().slice(0,10) == stringData;
             },
             message: `${nomeProp} deve estar no formato dd-MM-yyyy.`
         }
@@ -74,11 +82,6 @@
             required: [true, 'A reserva deve possuir um tipo']
         },
         repeticao: {
-            inicio: {
-                type: String,
-                required: [true, 'Repetição deve ter uma data de início.'],
-                validate: criarValidacaoData("Dia de início para repetição")
-            },
             fim: {
                 type: String,
                 required: [true, 'Repetição deve ter uma data de fim.'],
