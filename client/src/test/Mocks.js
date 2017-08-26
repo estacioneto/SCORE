@@ -33,10 +33,34 @@
         };
     }]);
 
+    mocksModule.factory('ReservasMock', ['Reserva', function (Reserva) {
+        const reservaMock = {
+            "autor":"Estácio Neto",
+            "titulo":"Reserva",
+            "descricao":"Uma descrição qualquer",
+            "inicio":"07:30",
+            "fim":"20:00",
+            "dia":"10-08-2017",
+            "tipo":"Palestra",
+            "emailAutor":"email@ccc.ufcg.edu.br"
+        };
+
+        /**
+         * Retorna um mock de reserva.
+         * 
+         * @param {*} data Dados a serem alterados na reserva.
+         */
+        function getReserva(data = {}) {
+            return new Reserva(Object.assign({}, reservaMock, data));
+        }
+
+        return {getReserva};
+    }]);
+
     mocksModule.factory('LocaisMock', ['Local', function (Local) {
-        const auditorioSPLab = {nome: 'Auditório SPLab', predio: 'SPLab'},
-            auditorioHattori = {nome: 'Auditório Hattori', predio: 'CN'},
-            salaReunioes = {nome: 'Sala de Reuniões', predio: 'SPLab'};
+        const auditorioSPLab = {nome: 'Auditório SPLab', bloco: 'SPLab'},
+            auditorioHattori = {nome: 'Auditório Hattori', bloco: 'CN'},
+            salaReunioes = {nome: 'Sala de Reuniões', bloco: 'SPLab'};
         const locais = [auditorioSPLab, auditorioHattori, salaReunioes];
 
         function getLocais() {

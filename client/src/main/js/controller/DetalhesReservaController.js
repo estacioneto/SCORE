@@ -9,6 +9,8 @@
 
             const self = this;
 
+            this.local = local;
+
             this.reserva = reserva;
 
             this.reservaOriginal;
@@ -74,6 +76,11 @@
                     return ModalService.error(err.data).then(callbackReabrirReserva);
                 });
             };
+
+            /**
+             * Fecha o modal de Reserva.
+             */
+            this.fecharModal = () => $mdDialog.hide('close');
 
             /**
              * Operações que devem ser executadas antes do salvamento de agendamento.
