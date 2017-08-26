@@ -62,7 +62,7 @@
                 'src/main/js/directive/FuncionamentoLocalValidator.js',
                 'src/main/js/controller/AppController.js',
                 'src/main/js/controller/LoginController.js',
-                'src/main/js/controller/CalendarioController.js',
+                'src/main/js/controller/AgendaController.js',
                 'src/main/js/controller/DetalhesReservaController.js',
                 'src/main/view/**/*.html',
                 'src/test/testSetup.js',

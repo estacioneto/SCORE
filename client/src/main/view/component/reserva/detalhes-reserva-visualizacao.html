@@ -1,0 +1,22 @@
+<div layout-padding>
+    <div layout="row" layout-align="space-between start">
+        <div layout="column" layout-align="space-between start">
+            <span class="md-body-2">Horário</span>
+            <span class="md-headline">{{ ::$ctrl.reserva.getHoraFormatada() }}</span>
+        </div>
+        <span class="md-subhead">{{::$ctrl.reserva.tipo}}</span>
+    </div>
+    <div layout="column" layout-align="space-between start">
+        <span class="md-body-2">Descrição</span>
+        <span class="md-headline">{{ ::$ctrl.reserva.descricao || '-' }}</span>
+    </div>
+    <div layout="column">
+        <md-divider></md-divider>
+    </div>
+    <!--Autor-->
+    <div layout="column" layout-align="space-between start">
+        <span class="md-body-2">Responsável</span>
+        <span class="md-headline">{{ $ctrl.reserva.autor || '-' }}</span>
+    </div>
+    <!--end Autor-->
+</div>
