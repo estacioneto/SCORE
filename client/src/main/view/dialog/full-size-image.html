@@ -15,7 +15,8 @@
                ng-if="imagemCtrl.editavel"
                aria-label="Definir capa"
                ng-click="imagemCtrl.definirComoCapa()">
-        <md-icon>star</md-icon>
+        <md-icon ng-if="!imagemCtrl.isCapa">star_border</md-icon>
+        <md-icon ng-if="imagemCtrl.isCapa">star</md-icon>
         <md-tooltip md-direction="top">Definir como capa</md-tooltip>
     </md-button>
 </div>

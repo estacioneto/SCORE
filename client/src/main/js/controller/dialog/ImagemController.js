@@ -1,10 +1,11 @@
 (function () {
     'use strict';
 
-    angular.module('localModulo').controller('ImagemController', ['imagem', 'editavel', 'excluirImagemCallback', 'definirComoCapaCallback', function (imagem, editavel, excluirImagemCallback, definirComoCapaCallback) {
+    angular.module('localModulo').controller('ImagemController', ['imagem', 'editavel', 'excluirImagemCallback', 'definirComoCapaCallback', 'isCapa', function (imagem, editavel, excluirImagemCallback, definirComoCapaCallback, isCapa) {
         var self = this;
         this.imagem = imagem;
         this.editavel = editavel;
+        this.isCapa = isCapa;
 
         /**
          * Chama o callback de exclusão de imagens.

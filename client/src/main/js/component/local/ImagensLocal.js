@@ -90,12 +90,14 @@
             /**
              *
              * @param {Event} $event Evento do clique.
-             * @param {Object} imagem Imagem a ser exibida.
+             * @param {Integer} indiceImagem Indice da imagem a ser exibida.
              * @param {Boolean} editavel Flag que indica se a imagem pode ou não ser excluida.
              * @returns {Promise} Promise do modal.
              */
-            this.mostraModalImagem = function ($event, imagem, editavel) {
-                return ModalService.verImagem(imagem, $event, editavel, excluirImagemCallback, definirComoCapaCallback);
+            this.mostraModalImagem = function ($event, indiceImagem, editavel) {
+                var isCapa = (indiceImagem == 0);
+                console.log(isCapa);
+                return ModalService.verImagem(self.local.imagens[indiceImagem], $event, editavel, excluirImagemCallback, definirComoCapaCallback, isCapa);
             }
         }]
     });

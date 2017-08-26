@@ -85,9 +85,11 @@
          * @param {Event} $event Evendo do clique.
          * @param {Boolean} editavel Identifica se a imagem pode ser excluída ou não.
          * @param {Function} excluirImagemCallback Callback a ser chamado ao apertar o botão de excluir imagem no modal.
+         * @param {Function} definirComoCapaCallback Callback a ser chamado ao apertar o botão de favoritar imagem no modal.
+         * @param {Boolean} isCapa True caso a imagem sendo visualizada seja a capa do local.
          * @returns {Promise} Promise do modal.
          */
-        this.verImagem = function (imagem, $event, editavel, excluirImagemCallback, definirComoCapaCallback) {
+        this.verImagem = function (imagem, $event, editavel, excluirImagemCallback, definirComoCapaCallback, isCapa) {
             const options = {
                 templateUrl: 'view/dialog/full-size-image.html',
                 controller: 'ImagemController as imagemCtrl',
@@ -96,7 +98,8 @@
                     imagem: () => imagem,
                     editavel: () => editavel,
                     excluirImagemCallback : () => excluirImagemCallback,
-                    definirComoCapaCallback : () => definirComoCapaCallback
+                    definirComoCapaCallback : () => definirComoCapaCallback,
+                    isCapa : () => isCapa
                 }
             };
             return self.custom(options);
