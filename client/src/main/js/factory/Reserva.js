@@ -6,7 +6,7 @@ let sequenceReserva = 1;
      */
     angular.module('reservaModulo').factory('Reserva', ['$http', 'TIPOS_RESERVA', function ($http, TIPOS_RESERVA) {
 
-        const DIA_INDICE = 0, MES_INDICE = 1, ANO_INDICE = 2,
+        const DIA_INDICE = 2, MES_INDICE = 1, ANO_INDICE = 0,
               HORA_INDICE = 0, MINUTO_INDICE = 1;
 
         const API = "/api/reservas";
@@ -27,7 +27,8 @@ let sequenceReserva = 1;
                           inicio,
                           fim,
                           dia,
-                          tipo}) {
+                          tipo,
+                          repeticao}) {
 
             obterPropriedades(this, {_id,
                                  localId,
@@ -37,7 +38,8 @@ let sequenceReserva = 1;
                                  inicio,
                                  fim,
                                  dia,
-                                 tipo});
+                                 tipo,
+                                 repeticao});
         }
 
         /**
@@ -169,6 +171,16 @@ let sequenceReserva = 1;
         Reserva.prototype.__defineGetter__('end', function () {
             return new Date(getAno(this.dia), getMes(this.dia), getDia(this.dia),
                 getHora(this.fim), getMinuto(this.fim));
+        });
+
+        /**
+         * Recupera o fim da repetição como um Date.
+         */
+        Reserva.prototype.__defineGetter__('fimRepeticao', function () {
+            if (!this.repeticao.fim) {
+                return this.start;
+            }
+            return new Date(getAno(this.repeticao.fim), getMes(this.repeticao.fim), getDia(this.repeticao.fim));
         });
 
         /**

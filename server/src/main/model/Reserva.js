@@ -5,8 +5,6 @@
 
     const Schema = mongoose.Schema;
 
-    
-
     const criarValidacaoData = nomeProp => {
         return {
             // https://stackoverflow.com/questions/18758772/how-do-i-validate-a-date-in-this-format-yyyy-mm-dd-using-jquery
@@ -54,7 +52,6 @@
             validate: {
                 validator: function (horaInicio) {
                     return /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(horaInicio);
-
                 },
                 message: "Hora de inicio da reserva deve estar no formato HH:mm."
             }

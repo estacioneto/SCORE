@@ -1,6 +1,6 @@
 (() => {
     'use strict';
-    angular.module('agendamentoModulo', []).service('AgendamentoService', ['$http', '$q', 'Reserva', function ($http, $q, Reserva) {
+    angular.module('agendamentoModulo', []).service('AgendamentoService', ['$http', '$q', 'Reserva', 'DataManipuladorService', function ($http, $q, Reserva, DataManipuladorService) {
 
         const API = '/api/locais',
             RESERVA_SUB_API = 'reservas';
@@ -17,9 +17,31 @@
         this.carregarReservasDoLocal = (idLocal) => {
             return $http.get(`${API}/${idLocal}/${RESERVA_SUB_API}`).then(data => {
                 reservas = data.data.map(r => new Reserva(r));
+                repetirReservas(reservas);
                 return { data: reservas };
             });
         };
+
+        function repetirReservas(reservas) {
+            reservas.forEach(r => {
+                if (r.repeticao && r.repeticao.frequencia) {
+                    const freq = r.repeticao.frequencia;
+                    const dataReserva = r.start.getTime();
+                    let diasExtras = r.start.getDate() + freq;
+                    let repeticao = new Date(dataReserva);
+                    repeticao.setDate(diasExtras);
+                    while (repeticao.getTime() < r.fimRepeticao.getTime()) {
+                        const reserva = new Reserva(r);
+                        reserva.dia = DataManipuladorService.parseData(repeticao);
+                        reservas.push(reserva);
+                        
+                        diasExtras += freq;
+                        repeticao = new Date(dataReserva);
+                        repeticao.setDate(diasExtras);
+                    }
+                }
+            });
+        }
 
         /**
          * Remove uma reserva da lista do client.

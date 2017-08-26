@@ -4,7 +4,7 @@
     angular.module('dataModulo', []).service('DataManipuladorService', [function () {
 
         /**
-         * Transforma uma data para o formato dd-MM-yyyy, onde o mês terá uma unidade 
+         * Transforma uma data para o formato yyyy-MM-dd, onde o mês terá uma unidade 
          * incrementada, devido a objetos do tipo Date utilizarem um intervalor de 
          * índices de 0 a 11.
          *
@@ -19,7 +19,7 @@
             mesFormatado = (data.getMonth() < 9) ? `0${data.getMonth()+1}` : `${data.getMonth()+1}`;
             anoFormatado = `${data.getFullYear()}`;
 
-            dataFormatada = `${diaFormatado}-${mesFormatado}-${anoFormatado}`;
+            dataFormatada = `${anoFormatado}-${mesFormatado}-${diaFormatado}`;
 
             return dataFormatada;
         };
@@ -79,12 +79,21 @@
          * da data atual, {@code false} caso contrário.
          */
         this.isDataFutura = data => {
-            const agora = new Date(),
-                isAnoFuturo = agora.getFullYear() <= data.getFullYear(),
-                isAnoIgual = agora.getFullYear() === data.getFullYear(),
-                isMesFuturo = agora.getMonth() <= data.getMonth(),
-                isMesIgual = agora.getMonth() === data.getMonth(),
-                isDiaFuturo = agora.getDate() < data.getDate();
+            return self.isDataMaior(data, new Date());
+        };
+
+        /**
+         * Verifica se a primeira data é futura à segunda.
+         * @param {Date} data1
+         * @param {Date} data2
+         * @return {Boolean} True se a primeira data for futura.
+         */
+        this.isDataMaior = (data1, data2) => {
+            const isAnoFuturo = data2.getFullYear() <= data1.getFullYear(),
+                isAnoIgual = data2.getFullYear() === data1.getFullYear(),
+                isMesFuturo = data2.getMonth() <= data1.getMonth(),
+                isMesIgual = data2.getMonth() === data1.getMonth(),
+                isDiaFuturo = data2.getDate() < data1.getDate();
 
             return isAnoFuturo ||
                 (isAnoIgual && isMesFuturo) ||
