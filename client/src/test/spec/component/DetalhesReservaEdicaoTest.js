@@ -13,8 +13,8 @@
 
         beforeEach(inject(defaultInjections(self)));
 
-        beforeEach(inject(function (_$rootScope_, _$componentController_, _ReservasMock_, _LocaisMock_, _ModalService_) {
-            $scope = _$rootScope_.$new();
+        beforeEach(inject(function (_$componentController_, _ReservasMock_, _LocaisMock_, _ModalService_) {
+            $scope = self.$rootScope.$new();
             $componentController = _$componentController_;
             ReservasMock = _ReservasMock_;
             LocaisMock = _LocaisMock_;
