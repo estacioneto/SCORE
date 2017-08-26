@@ -52,8 +52,9 @@
         }
     })
     .constant('COR_RESERVA_PASSADA', {
+        mdTheme: 'passada',
         corMd: {
-            "background-color": "grey-400"
+            "background-color": "default-grey-400"
         },
         corRgb: "rgb(189, 189, 189)",
         corTexto: ''
