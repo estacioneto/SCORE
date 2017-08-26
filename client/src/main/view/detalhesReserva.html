@@ -12,8 +12,13 @@
                 <div layout="column"
                      flex="100"
                      layout-wrap>
-                    <detalhes-reserva-visualizacao ng-if="!reservaCtrl.isEdicao" reserva="reservaCtrl.reserva"></detalhes-reserva-visualizacao>
-                    <detalhes-reserva-edicao ng-if="reservaCtrl.isEdicao" reserva="reservaCtrl.reserva"></detalhes-reserva-edicao>
+                    <detalhes-reserva-visualizacao ng-if="!reservaCtrl.isEdicao"
+                        reserva="reservaCtrl.reserva">
+                    </detalhes-reserva-visualizacao>
+                    <detalhes-reserva-edicao ng-if="reservaCtrl.isEdicao" 
+                        reserva="reservaCtrl.reserva"
+                        local="reservaCtrl.local">
+                    </detalhes-reserva-edicao>
                 </div>
                 <!--end Conteudo modal-->
             </div>

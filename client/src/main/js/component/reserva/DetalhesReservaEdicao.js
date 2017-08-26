@@ -5,13 +5,15 @@
      * Componente responsável pelos detalhes da reserva no modal no caso de edição.
      *
      * @param {Reserva} reserva Reserva com os detalhes a serem mudados.
+     * @param {Local}   local   Local da reserva.
      */
     angular.module('reservaModulo').component('detalhesReservaEdicao', {
         templateUrl: 'view/component/reserva/detalhes-reserva-edicao.html',
         bindings: {
-            reserva: '='
+            reserva: '=',
+            local: '='
         },
-        controller: ['TIPOS_RESERVA', function (TIPOS_RESERVA) {
+        controller: ['TIPOS_RESERVA', 'ModalService', function (TIPOS_RESERVA, ModalService) {
 
             this.tiposReserva = TIPOS_RESERVA;
 
@@ -28,7 +30,7 @@
              * @param  {Event}   $event Evento do clique.
              * @return {Promise} Promise do modal.
              */
-            this.verTermos = ($event) => ModalService.verTermosLocal(local, false, $event);
+            this.verTermos = ($event) => ModalService.verTermosLocal(this.local, false, $event);
 
         }]
     });
