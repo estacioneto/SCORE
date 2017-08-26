@@ -5,59 +5,46 @@
             <!-- MainContent -->
             <div class="caixa-calendario"
                  layout="column" flex>
-                 <!--Select search para local-->
-                <form name="formularioLocal" ng-if="!calendarioCtrl.isLocalSelecionado">
-                    <div class="md-toolbar-tools search-bar" layout layout-align="center">
-                        <select-search-local flex
-                                             formulario="formularioLocal"
-                                             on-select-local="calendarioCtrl.onChangeLocal(local)"></select-search-local>
-                        <md-button class="md-icon-button" type="button"
-                                   ng-disabled="!calendarioCtrl.local"
-                                   ng-click="calendarioCtrl.visualizarAuditorio()">
-                            <md-icon>info_outline</md-icon>
-                            <md-tooltip>Sobre o local</md-tooltip>
-                        </md-button>
-                    </div>
-                </form>
-                <!--end Select search para local-->
                 <!--Nome do auditório selecionado e botão voltar-->
-                <div layout="row" layout align="space-between start" ng-if="calendarioCtrl.isLocalSelecionado">
+                <div layout="row" layout align="space-between start">
                     <md-button class="md-icon-button"
                                type="button"
-                               ng-click="calendarioCtrl.voltaParaListagem()"
+                               ng-click="agendaCtrl.voltaParaListagem()"
                                flex="3">
                         <md-icon>arrow_back</md-icon>
                         <md-tooltip>Voltar</md-tooltip>
                     </md-button>
                     <div layout="column" layout-align="center center" flex>
                         <span class="md-subhead">Agenda do Auditório</span>
-                        <span class="md-headline">{{calendarioCtrl.local.nome}}</span>
+                        <span class="md-headline">{{agendaCtrl.local.nome}}</span>
                     </div>
+                    <md-button class="md-icon-button" type="button"
+                               ng-disabled="!agendaCtrl.local"
+                               ng-click="agendaCtrl.visualizarAuditorio()">
+                        <md-icon>info_outline</md-icon>
+                        <md-tooltip>Sobre o local</md-tooltip>
+                    </md-button>
                     <div flex="3"></div>
                 </div>
                 <!--end Nome do auditório selecionado e botão voltar>
-                <!--Listagem de auditorios-->
-                <listagem-locais on-click-local="calendarioCtrl.onChangeLocal(local)" ng-if="!calendarioCtrl.isLocalSelecionado"></listagem-locais>
-                <!--end Listagem de auditorios-->
                 <!--Barra legenda de cores-->
-                <md-content layout="row" 
-                    layout-align="center center" 
-                    ng-if="calendarioCtrl.isLocalSelecionado" 
+                <md-content layout="row"
+                    layout-align="center center"
                     layout-padding
                     layout-wrap>
-                    <div layout="row" ng-repeat="(nome, cor) in ::calendarioCtrl.tiposReserva track by $index"> 
+                    <div layout="row" ng-repeat="(nome, cor) in ::agendaCtrl.tiposReserva track by $index">
                          <div layout-padding class="circulo-legenda" data-md-colors="{{ ::cor.corMd }}"></div>
                          <span class="md-subhead">{{ ::nome }}</span>
                     </div>
                 </md-content>
                 <!--end Barra legenda de cores-->
                 <!-- Calendario -->
-                <md-content id="main-field" layout="row" ng-if="calendarioCtrl.isLocalSelecionado" layout-padding layout-wrap>
+                <md-content id="main-field" layout="row" layout-padding layout-wrap>
                     <div class="content"
-                         ui-calendar="calendarioCtrl.calendarioConfig.calendario"
+                         ui-calendar="agendaCtrl.calendarioConfig.calendario"
                          calendar="calendario"
-                         config="calendarioCtrl.calendarioConfig.calendario"
-                         ng-model="calendarioCtrl.reservasSource">
+                         config="agendaCtrl.calendarioConfig.calendario"
+                         ng-model="agendaCtrl.reservasSource">
                     </div>
                 </md-content>
                 <!-- end Calendario -->
