@@ -27,7 +27,6 @@
         <div class="carousel-inner wrapper-carousel">
             <div class="item container-imagem" ng-repeat="imagem in $ctrl.local.imagens track by $index" ng-class="{'active': !$index}" >
                 <img class="imagem-local-card" src="{{imagem.conteudo}}" ng-click="$ctrl.mostraModalImagem($event, imagem, $ctrl.editavel)">
-                <span>Imagem de capa</span>
             </div>
         </div>
         <!-- end Wrapper -->

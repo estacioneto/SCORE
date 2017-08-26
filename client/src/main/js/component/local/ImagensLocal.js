@@ -16,7 +16,7 @@
         },
         controller: ['ModalService', 'ToastService', '$scope', '$mdDialog', function (ModalService, ToastService, $scope, $mdDialog) {
             var self = this;
-            const FIRST_IMAGE_INDEX = 0;
+            const INDICE_PRIMEIRA_IMAGEM = 0;
 
             /**
              * Função de callback passada para o controller do modal de imagem 'full size'.
@@ -39,16 +39,15 @@
             /**
              * Função de callback passada para o controller do modal de imagem 'full size'.
              * Será chamada ao apertar o botão de favoritar imagem presente no modal.
-             * A imagem selecionada como capa trocará de lugar com que está em primeiro.
+             * A imagem selecionada como capa será sempre a primeira da lista.
              * @param {String} idImagem Id da imagem que será definida como capa.
              */
             function definirComoCapaCallback(idImagem) {
-                var indiceImagem = _.findIndex(self.local.imagens, {
-                    _id: idImagem
-                });
+                var indiceImagem = _.findIndex(self.local.imagens, imagem => (imagem._id || imagem.tempId) === idImagem);
                 let imgArray = self.local.imagens;
-                [imgArray[indiceImagem], imgArray[FIRST_IMAGE_INDEX]] = [imgArray[FIRST_IMAGE_INDEX], imgArray[indiceImagem]];
-                
+                fecharModal();
+                [imgArray[indiceImagem], imgArray[INDICE_PRIMEIRA_IMAGEM]] = [imgArray[INDICE_PRIMEIRA_IMAGEM], imgArray[indiceImagem]];
+                ToastService.showActionToast('Imagem de capa redefinida com sucesso.');
             }
 
             /**
@@ -59,11 +58,25 @@
             }
 
             /**
+             * Faz com que o carousel volte para a primeira imagem (capa).
+             * Necessário chamar essa função após deletar uma imagem pois caso
+             * essa imagem seja a última a diretiva quebra (???)
+             */
+            function posDelete(){
+                var $carousel = $('#myCarousel');
+                var primeiraImagem = $carousel.find('.item').first();
+                primeiraImagem.addClass('active');
+                var primeiraBolinha = $carousel.find('li').first();
+                primeiraBolinha.addClass('active');
+            }
+
+            /**
              * Remove uma imagem da lista de imagens do local.
              * @param {String} idImagem Id da imagem que será removida.
              */
             this.removerImagem = function (idImagem) {
                 _.remove(self.local.imagens, imagem => (imagem._id || imagem.tempId) === idImagem);
+                posDelete();
             };
 
             /**

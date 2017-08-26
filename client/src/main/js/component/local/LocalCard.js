@@ -14,6 +14,18 @@
             local: '='
         },
         controller: [function () {
+            var self = this;
+            const INDICE_IMAGEM_CAPA = 0;
+            const IMAGEM_DEFAULT = 'img/icons/ufcg-360x388.png';
+
+            this.possuiImagens = function () {''
+                return !_.isEmpty(self.local.imagens);
+            };
+
+            this.getImagemDeCapa = function () {
+                if(self.possuiImagens()) return self.local.imagens[INDICE_IMAGEM_CAPA].conteudo;
+                return IMAGEM_DEFAULT;
+            };
         }],
     });
 })();

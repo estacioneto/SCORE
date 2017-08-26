@@ -256,7 +256,7 @@ md-input-container.md-input-invalid > md-icon {
 }
 
 .local-listagem-card {
-    max-width: 150px;
+    max-width: 100%;
     object-fit: cover;
     width: auto;
     height: auto;
@@ -282,8 +282,8 @@ md-input-container.md-input-invalid > md-icon {
 
 .favoritar-imagem-modal-button {
     position: absolute;
-    bottom: 10px;
-    right: 60px;
+    top: 10px;
+    right: 10px;
     background: white;
 }
 
@@ -314,3 +314,6 @@ md-input-container.md-input-invalid > md-icon {
     min-width: inherit;
 }
 
+.local-card {
+    max-width: 250px;
+}
