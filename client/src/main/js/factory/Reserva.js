@@ -136,7 +136,7 @@ let sequenceReserva = 1;
          * Deve ser RGB ou HEX.
          */
         Reserva.prototype.__defineGetter__('backgroundColor', function () {
-            return TIPOS_RESERVA[this.tipo].corRgb;
+            return (TIPOS_RESERVA[this.tipo]) ? TIPOS_RESERVA[this.tipo].corRgb : TIPOS_RESERVA["Reunião"].corRgb;
         });
 
         /**

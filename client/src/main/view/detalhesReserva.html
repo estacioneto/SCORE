@@ -1,171 +1,45 @@
-<md-dialog aria-label="reserva-detalhes" flex="60">
-    <md-dialog-content>
-        <div class="md-dialog-content"
-             data-layout="row"
-             data-layout-align="start start"
-             data-layout-padding
-             data-layout-wrap
-             md-colors="{background: 'grey-200'}">
-            <!--Conteudo modal-->
-            <form data-ng-submit="reservaCtrl.salvarReserva()"
-                  data-flex="100">
+<md-dialog aria-label="reserva-detalhes" flex="60" md-theme="{{reservaCtrl.getTemaReserva()}}">
+    <form name="formReserva"
+          data-ng-submit="reservaCtrl.salvarReserva()">
+        <cabecalho-reserva formulario="formReserva" reserva="reservaCtrl.reserva"></cabecalho-reserva>
+        <md-dialog-content>
+            <div class="md-dialog-content"
+                 data-layout="row"
+                 data-layout-align="start start"
+                 data-layout-wrap>
+
+                <!--Conteudo modal-->
                 <div layout="column"
                      flex="100"
                      layout-wrap>
-                    <!--Barra com hora, fechar e tipo-->
-                    <div layout="row" layout-align="space-between start">
-                        <!--Hora da reserva-->
-                        <div layout="column">
-                            <span class="md-subhead">Hora</span>
-                            <span data-ng-if="!reservaCtrl.isEdicao" class="md-display-2">{{ ::reservaCtrl.reserva.getHoraFormatada() }}</span>
-                            <!--Edição hora-->
-                            <div layout="row" data-ng-if="reservaCtrl.isEdicao">
-                                <md-input-container>
-                                    <label>Início</label>
-                                    <input type="time"
-                                           required
-                                           ng-model="reservaCtrl.reserva.inicio">
-                                </md-input-container>
-                                <md-input-container>
-                                    <label>Fim</label>
-                                    <input type="time"
-                                           required
-                                           ng-model="reservaCtrl.reserva.fim">
-                                </md-input-container>
-                            </div>
-                            <!--end Edição hora-->
-                        </div>
-                        <!--end Hora da reserva-->
-                        <!--Tipo Reserva-->
-                        <div class="tipo-reserva" layout="column" hide-xs flex>
-                            <span class="md-subhead" data-ng-if="!reservaCtrl.isEdicao">Tipo do evento</span>
-                            <span class="md-title" data-ng-if="!reservaCtrl.isEdicao">
-                                {{::reservaCtrl.reserva.tipo}}
-                            </span>
-                            <div layout="row" data-ng-if="reservaCtrl.isEdicao">
-                                <md-input-container flex>
-                                    <md-select data-ng-model="reservaCtrl.reserva.tipo" required placeholder="Tipo do evento">
-                                        <md-option data-ng-repeat="(tipo, propriedades) in reservaCtrl.tiposReserva" data-ng-value="tipo">
-                                            {{tipo}}
-                                        </md-option>
-                                    </md-select>
-                                </md-input-container>
-                            </div>
-                        </div>
-                        <!--end Tipo de Reserva-->
-                        <!--Fechar modal-->
-                        <md-button class="md-warn" ng-click="reservaCtrl.fecharModal()">
-                            <i class="material-icons">close</i>
-                        </md-button>
-                        <!--end Fechar modal-->
-                    </div>
-                    <!--end Barra com hora, fechar e tipo-->
-                    <br>
-                    <!--Tipo reserva mobile-->
-                    <div layout="column" hide-gt-xs>
-                        <span class="md-subhead">Tipo do evento</span>
-                        <span class="md-title" data-ng-if="!reservaCtrl.isEdicao">
-                                {{::reservaCtrl.reserva.tipo}}
-                            </span>
-                        <div layout="row" data-ng-if="reservaCtrl.isEdicao">
-                            <md-input-container flex>
-                                <md-select data-ng-model="reservaCtrl.reserva.tipo" required>
-                                    <md-option data-ng-repeat="(tipo, propriedades) in reservaCtrl.tiposReserva" data-ng-value="tipo">
-                                        {{tipo}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                        </div>
-                    </div>
-                    <!--end Tipo reserva mobile-->
-                    <br hide-gt-xs>
-                    <!--Titulo reserva-->
-                    <div data-ng-if="!reservaCtrl.isEdicao" layout="column">
-                        <span class="md-subhead">Título</span>
-                        <span class="md-title">{{ ::reservaCtrl.reserva.titulo}}</span>
-                    </div>
-                    <div data-ng-if="reservaCtrl.isEdicao" layout>
-                        <md-input-container flex>
-                            <label>Título</label>
-                            <input type="text" required data-ng-model="reservaCtrl.reserva.titulo">
-                        </md-input-container>
-                    </div>
-                    <!--end Titulo reserva-->
-                    <br>
-                    <!--Descrição reserva-->
-                    <div data-ng-if="!reservaCtrl.isEdicao" layout="column">
-                        <span class="md-subhead">Descrição</span>
-                        <span class="md-subhead">{{ ::reservaCtrl.reserva.descricao || '-' }}</span>
-                        <md-divider></md-divider>
-                    </div>
-                    <md-input-container data-ng-if="reservaCtrl.isEdicao"
-                                        class="entrada-descricao">
-                        <label>Descrição</label>
-                        <textarea type="text"
-                                  ng-model="reservaCtrl.reserva.descricao"
-                                  rows="2"
-                                  aria-label="entradaDescricao">
-                        </textarea>
-                    </md-input-container>
-                    <!--end Descrição reserva-->
-                    <br>
-                    <br>
-                    <!--Autor-->
-                    <span class="md-subhead">Responsável</span>
-                    <span class="md-title">{{ reservaCtrl.reserva.autor || '-' }}</span>
-                    <!--end Autor-->
-                    <md-divider></md-divider>
-                    <br>
-                    <br>
-                    <!--Checkbox para aceitação de termos-->
-                    <div layout="row" ng-if="reservaCtrl.isCriacao()">
-                        <md-checkbox 
-                                ng-model="reservaCtrl.reserva.termoAceito" 
-                                aria-label="Checkbox Termos"
-                                id="checkbox-termos">
-                        </md-checkbox>
-                        <span class="md-subhead">
-                            Li e aceito os <a href="" ng-click="reservaCtrl.verTermos($event)">termos</a> para criação da reserva.
-                        </span>
-                    </div>
-                    <!--end Checkbox para aceitação de termos-->
-                    <!--Botões-->
-                    <div layout="row"
-                         layout-align="center center">
-                        <!--Botão de editar-->
-                        <md-button
-                                ng-if="reservaCtrl.podeEditar()"
-                                ng-click="reservaCtrl.toggleEdicao()">
-                            Editar
-                        </md-button>
-                        <!--end Botão de editar-->
-                        <!--Botão de salvar-->
-                        <md-button class="md-primary"
-                                ng-if="reservaCtrl.isEdicao"
-                                ng-disabled="!reservaCtrl.reserva.termoAceito && reservaCtrl.isCriacao()"
-                                type="submit">
-                                Salvar
-                        </md-button>
-                        <!--end Botão de salvar-->
-                        <!--Descartar botão-->
-                        <md-button class="md-warn"
-                                   ng-if="reservaCtrl.isEdicao"
-                                   ng-click="reservaCtrl.descartarMudancas()">
-                            Descartar
-                        </md-button>
-                        <!--end Descartar botão-->
-                        <!--Botão de excluir-->
-                        <md-button class="md-warn"
-                                   ng-if="reservaCtrl.podeExcluir()"
-                                   ng-click="reservaCtrl.excluirReserva()">
-                            Excluir
-                        </md-button>
-                        <!--Botão de excluir-->
-                    </div>
-                    <!--end Botões-->
+                    <detalhes-reserva-visualizacao ng-if="!reservaCtrl.isEdicao" reserva="reservaCtrl.reserva"></detalhes-reserva-visualizacao>
+                    <detalhes-reserva-edicao ng-if="reservaCtrl.isEdicao" reserva="reservaCtrl.reserva"></detalhes-reserva-edicao>
                 </div>
-            </form>
-            <!--end Conteudo modal-->
-        </div>
-    </md-dialog-content>
+                <!--end Conteudo modal-->
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button class="md-warn"
+                       ng-if="reservaCtrl.podeExcluir()"
+                       ng-click="reservaCtrl.excluirReserva()">
+                Excluir
+            </md-button>
+            <md-button
+                    ng-if="reservaCtrl.podeEditar()"
+                    ng-click="reservaCtrl.toggleEdicao()">
+                Editar
+            </md-button>
+            <md-button class="md-warn"
+                       ng-if="reservaCtrl.isEdicao"
+                       ng-click="reservaCtrl.descartarMudancas()">
+                Descartar
+            </md-button>
+            <md-button class="md-primary"
+                       ng-if="reservaCtrl.isEdicao"
+                       ng-disabled="!reservaCtrl.reserva.termoAceito && reservaCtrl.isCriacao()"
+                       type="submit">
+                Salvar
+            </md-button>
+        </md-dialog-actions>
+    </form>
 </md-dialog>
