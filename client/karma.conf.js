@@ -39,7 +39,6 @@
                 '../node_modules/angular-lock/dist/angular-lock.min.js',
                 '../node_modules/angular-sanitize/angular-sanitize.min.js',
                 '../node_modules/angular-material-calendar/angular-material-calendar.min.js',
-                '../node_modules/angular-ui-carousel/dist/ui-carousel.min.js',
                 'src/main/config/Auth0Variables.js',
                 'src/main/js/config.js',
                 'src/main/js/Constants.js',
