@@ -79,8 +79,7 @@
             required: [true, 'A reserva deve possuir um tipo']
         },
         recorrente: {
-            type: Boolean,
-            required: [true, "Um evento deve ser recorrente ou não."]
+            type: Boolean
         },
         fimRepeticao: {
             type: Date,

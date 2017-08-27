@@ -53,8 +53,9 @@
          * @return {Promise} Promessa que contém a reserva excluída.
          */
         this.excluir = (reserva) => {
-            const indice = getIndiceReserva(reservas, reserva._id);
-            reservas.remove(indice);
+            self.carregarReservasDoLocal(local);
+            // const indice = getIndiceReserva(reservas, reserva._id);
+            // reservas.remove(indice);
         };
 
         /**

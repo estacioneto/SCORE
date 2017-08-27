@@ -69,7 +69,19 @@ import {ReservasValidador} from "../validator/reservasValidador";
         });
     };
 
-    function operacoesComRepeticao(reservaOriginal, reserva) {
+    function operacoesComRepeticaoAtualizacao(reserva) {
+        excluirRepeticoes(reserva, (err, resp) => {
+            if (reserva.recorrente)
+                adicionarRepeticoes(reserva, );
+        });
+    }
+
+    function adicionarRepeticoes(reserva) {
+        operacoesComRepeticaoCadastro(reserva);
+    }
+
+    function excluirRepeticoes(reserva, cb) {
+        Reserva.remove({ eventoPai: reserva._id }, cb);
     }
 
     /**
@@ -121,9 +133,11 @@ import {ReservasValidador} from "../validator/reservasValidador";
 
             ReservasValidador.validarHorario(novaReserva, err => {
                 if (err) return callback(err, null);
-
                 _.updateModel(reservaAntiga, novaReserva);
-                persisteReserva(reservaAntiga, callback);
+                persisteReserva(reservaAntiga, (err, resp) => {
+                    if (!err) operacoesComRepeticaoAtualizacao(resp)
+                    callback(err, resp);
+                });
             });
         });
     };
@@ -155,7 +169,7 @@ import {ReservasValidador} from "../validator/reservasValidador";
             if(err) return callback(err, null);
             return reserva.remove(err => {
                 if(err) return callback(err, null);
-                return callback(err, "Deleção efetuada com sucesso.")
+                excluirRepeticoes(reserva, (err, res) => callback(err, "Deleção efetuada com sucesso."));
             });
         });
     };

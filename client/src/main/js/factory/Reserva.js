@@ -77,6 +77,7 @@ let sequenceReserva = 1;
          * @return Promise da requisição.
          */
         Reserva.prototype.salvar = function () {
+            this.recorrente = Boolean(this.recorrente);
             if (this._id) {
                 return this.atualizar();
             }
@@ -104,6 +105,7 @@ let sequenceReserva = 1;
          * @return Promise da requisição.
          */
         Reserva.prototype.atualizar = function () {
+            this.recorrente = Boolean(this.recorrente);
             return $http.patch(`${API}/${this._id}`, this).then(data => {
                 obterPropriedades(this, data.data);
                 return data;
