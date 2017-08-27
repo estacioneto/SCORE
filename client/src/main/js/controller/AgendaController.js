@@ -45,20 +45,26 @@
              * @param data Data clicado.
              */
             this.clickDia = function (data) {
+
+                const fatorFusoHorario = 3;
                 /**
                  * O prório calendário liga com essa configuração do Locale, então ele sabe que está
                  * 3 horas atrasado, por isso a alteração do horário para 3 horas a mais só deve ser
                  * feita caso utilizemos o objeto Dia para alguma ação interna.
                  *
-                 * const fatorFusoHorario = 3;
                  * dia._d.setHours(dia._d.getHours() + fatorFusoHorario);
                  */
+
+                var tresHorasAtras = new Date(Date.now());
+                tresHorasAtras.setHours(tresHorasAtras.getHours() - fatorFusoHorario);
 
                 const calendario = uiCalendarConfig.calendars.calendario;
 
                 if (calendario.fullCalendar('getView').type === 'agendaDay' ||
                     calendario.fullCalendar('getView').type === 'agendaWeek') {
-                    self.criarReserva(data);
+                    if(data >= tresHorasAtras){
+                        self.criarReserva(data);
+                    }
                 } else {
                     calendario.fullCalendar('changeView', 'agendaDay', data);
                 }

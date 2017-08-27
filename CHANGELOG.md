@@ -4,6 +4,9 @@
 * Manuteção: Mudado design do modal de reserva.
 * Refatoração: Adicionado state para a agenda dos locais (agora é possível compartilhar o link da agenda de um local).
 * Correção: Corrigido link para termos do local no modal de reserva.
+* Funcionalidade: Adicionado script para backup do banco de dados.
+* Funcionalidade: Reservas passadas agora tem a cor cinza e não são editáveis.
+* Correção: Agora não é mais possível cadastrar reservas em horários passados.
 * Funcionalidade: Adcionada função de definir a imagem de capa de um local.
 * Refatoração: A diretiva utilizada para exibição das imagens do local foi trocada por uma mais robusta.
 

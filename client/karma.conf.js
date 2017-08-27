@@ -19,6 +19,7 @@
             // list of files / patterns to load in the browser
             files: [
                 '../node_modules/jquery/dist/jquery.min.js',
+                '../node_modules/moment/min/moment.min.js',
                 '../node_modules/lodash/lodash.min.js',
                 '../node_modules/angular/angular.js',
                 '../node_modules/angular-mocks/angular-mocks.js',
@@ -31,6 +32,7 @@
                 '../node_modules/angular-material/angular-material.min.js',
                 '../node_modules/auth0-angular/build/auth0-angular.min.js',
                 '../node_modules/angular-storage/dist/angular-storage.min.js',
+                '../node_modules/fullcalendar/dist/fullcalendar.min.js',
                 '../node_modules/angular-ui-calendar/src/calendar.js',
                 '../node_modules/angular-ui-mask/dist/mask.min.js',
                 '../node_modules/angular-messages/angular-messages.min.js',
