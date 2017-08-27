@@ -271,6 +271,10 @@ md-input-container.md-input-invalid > md-icon {
     background: white;
 }
 
+.material-icons.yellow{
+    color: yellow;
+}
+
 .circulo-legenda {
     height: 10px;
     width: 10px;
@@ -305,8 +309,8 @@ md-input-container.md-input-invalid > md-icon {
 }
 
 .imagem-local-card {
-    width: auto;
-    max-height: 100%;
+    min-width: 100%;
+    max-height: inherit;
     object-fit: cover;
 }
 

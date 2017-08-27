@@ -6,7 +6,6 @@
             'app',
             'ui.router',
             'ui.bootstrap',
-            'ui.calendar',
             'ui.mask',
             'ngAria',
             'ngMaterial',

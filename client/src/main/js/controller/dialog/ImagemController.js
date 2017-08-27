@@ -18,6 +18,7 @@
          * Chama o callback para definir a imagem como capa do local.
          */
         this.definirComoCapa = function() {
+            self.isCapa = true;
             return definirComoCapaCallback(self.imagem._id || self.imagem.tempId);
         }
 

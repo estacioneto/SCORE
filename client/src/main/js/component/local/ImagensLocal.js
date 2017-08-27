@@ -16,7 +16,7 @@
         },
         controller: ['ModalService', 'ToastService', '$scope', '$mdDialog', function (ModalService, ToastService, $scope, $mdDialog) {
             var self = this;
-            const INDICE_PRIMEIRA_IMAGEM = 0;
+            const INDICE_IMAGEM_CAPA= 0;
 
             /**
              * Função de callback passada para o controller do modal de imagem 'full size'.
@@ -45,9 +45,9 @@
             function definirComoCapaCallback(idImagem) {
                 var indiceImagem = _.findIndex(self.local.imagens, imagem => (imagem._id || imagem.tempId) === idImagem);
                 let imgArray = self.local.imagens;
-                fecharModal();
-                [imgArray[indiceImagem], imgArray[INDICE_PRIMEIRA_IMAGEM]] = [imgArray[INDICE_PRIMEIRA_IMAGEM], imgArray[indiceImagem]];
+                [imgArray[indiceImagem], imgArray[INDICE_IMAGEM_CAPA]] = [imgArray[INDICE_IMAGEM_CAPA], imgArray[indiceImagem]];
                 ToastService.showActionToast('Imagem de capa redefinida com sucesso.');
+                voltaParaPrimeiraImagem();
             }
 
             /**
@@ -62,12 +62,8 @@
              * Necessário chamar essa função após deletar uma imagem pois caso
              * essa imagem seja a última a diretiva quebra (???)
              */
-            function posDelete(){
-                var $carousel = $('#myCarousel');
-                var primeiraImagem = $carousel.find('.item').first();
-                primeiraImagem.addClass('active');
-                var primeiraBolinha = $carousel.find('li').first();
-                primeiraBolinha.addClass('active');
+            function voltaParaPrimeiraImagem(){
+                $('.carousel').carousel(0);
             }
 
             /**
@@ -76,7 +72,7 @@
              */
             this.removerImagem = function (idImagem) {
                 _.remove(self.local.imagens, imagem => (imagem._id || imagem.tempId) === idImagem);
-                posDelete();
+                voltaParaPrimeiraImagem();
             };
 
             /**
@@ -95,8 +91,7 @@
              * @returns {Promise} Promise do modal.
              */
             this.mostraModalImagem = function ($event, indiceImagem, editavel) {
-                var isCapa = (indiceImagem == 0);
-                console.log(isCapa);
+                var isCapa = (indiceImagem === INDICE_IMAGEM_CAPA);
                 return ModalService.verImagem(self.local.imagens[indiceImagem], $event, editavel, excluirImagemCallback, definirComoCapaCallback, isCapa);
             }
         }]
