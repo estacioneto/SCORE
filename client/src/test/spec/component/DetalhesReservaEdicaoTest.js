@@ -12,6 +12,7 @@
         const self = this;
 
         beforeEach(inject(defaultInjections(self)));
+        afterEach(defaultAfterEach(self));
 
         beforeEach(inject(function (_$componentController_, _ReservasMock_, _LocaisMock_, _ModalService_) {
             $scope = self.$rootScope.$new();

@@ -63,10 +63,14 @@
             salaReunioes = {nome: 'Sala de Reuniões', bloco: 'SPLab'};
         const locais = [auditorioSPLab, auditorioHattori, salaReunioes];
 
-        function getLocais(data = {}) {
-            return locais.map(local => new Local(Object.assign({}, local, data)));
+        function getLocais() {
+            return locais.map(local => new Local(local));
         }
 
-        return {getLocais};
+        function getLocal(data = {}) {
+            return Object.assign({}, _.first(getLocais), data);
+        }
+
+        return {getLocais, getLocal};
     }]);
 })();

@@ -7,18 +7,20 @@
         var self = this;
         const ID_LOCAL_TEST = 1;
 
-        let createController, scope, config, LocaisMock,
+        let createController, scope, config, LocaisMock, ReservasMock,
             AuthService, dependenciasController, $mdDialog;
 
         beforeEach(inject(defaultInjections(self)));
+        afterEach(defaultAfterEach(self));
 
-        beforeEach(inject(function ($injector, $controller, uiCalendarConfig, _LocaisMock_, _AuthService_) {
+        beforeEach(inject(function ($injector, $controller, uiCalendarConfig, _LocaisMock_, _AuthService_, _ReservasMock_) {
 
             $mdDialog = $injector.get('$mdDialog');
             scope = self.$rootScope.$new();
             config = uiCalendarConfig;
             LocaisMock = _LocaisMock_;
             AuthService = _AuthService_;
+            ReservasMock = _ReservasMock_;
 
             config.calendars = {
                 calendario: {
@@ -30,7 +32,7 @@
 
             dependenciasController = {
                 $scope: scope,
-                local: _.first(LocaisMock.getLocais({_id: ID_LOCAL_TEST})),
+                local: LocaisMock.getLocal({_id: ID_LOCAL_TEST}),
                 uiCalendarConfig: config,
                 AuthService: AuthService
             };
@@ -46,9 +48,9 @@
 
             beforeEach(inject(function () {
                 modalAberto = false;
+                self.$httpBackend.expectGET(`/api/locais/${ID_LOCAL_TEST}/reservas`).respond([ReservasMock.getReserva()]);
                 controller = createController();
-                self.$httpBackend.expectGET(`/api/locais/${ID_LOCAL_TEST}/reservas`).respond({});
-                scope.$digest();
+                self.$httpBackend.flush();
 
                 AuthService.userTemPermissao = sinon.stub().returns(true);
                 sinon.stub($mdDialog, 'show').callsFake(function () {
