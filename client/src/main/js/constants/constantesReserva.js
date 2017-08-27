@@ -51,7 +51,7 @@
             corTexto: ''
         }
     })
-    .constant('COR_RESERVA_PASSADA', {
+    .constant('RESERVA_PASSADA', {
         mdTheme: 'passada',
         corMd: {
             "background-color": "default-grey-400"

@@ -3,7 +3,7 @@
 
     const app = angular.module('scoreApp');
 
-    app.config(['$mdThemingProvider', 'TIPOS_RESERVA', 'COR_RESERVA_PASSADA', function ($mdThemingProvider, TIPOS_RESERVA, COR_RESERVA_PASSADA) {
+    app.config(['$mdThemingProvider', 'TIPOS_RESERVA', 'RESERVA_PASSADA', function ($mdThemingProvider, TIPOS_RESERVA, RESERVA_PASSADA) {
         $mdThemingProvider.setNonce();
         $mdThemingProvider.alwaysWatchTheme(true);
 
@@ -57,7 +57,7 @@
             .accentPalette('yellow', {default: 'A700'})
             .warnPalette('red');
 
-        $mdThemingProvider.theme(COR_RESERVA_PASSADA.mdTheme)
+        $mdThemingProvider.theme(RESERVA_PASSADA.mdTheme)
             .primaryPalette('grey', {default: '400'})
             .accentPalette('grey', {default: 'A400'})
             .warnPalette('red');
