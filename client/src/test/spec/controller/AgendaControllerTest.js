@@ -38,24 +38,38 @@
             };
 
             createController = function () {
-                return $controller('AgendaController as agendaCtrl',dependenciasController);
+                self.$httpBackend.expectGET(`/api/locais/${ID_LOCAL_TEST}/reservas`).respond([ReservasMock.getReserva()]);
+                const controller = $controller('AgendaController as agendaCtrl',dependenciasController);
+                self.$httpBackend.flush();
+
+                return controller;
             };
         }));
 
+        describe('calendarioConfig deve', function () {
+            let controller;
+            beforeEach(() => {
+                controller = createController();
+            });
+
+            it('ter propriedade calendario.ignoreTimezone como false', () => {
+                expect(controller.calendarioConfig.calendario.ignoreTimezone).to.be.false;
+            });
+
+            it('ter propriedade calendario.timezone como "local"', () => {
+                expect(controller.calendarioConfig.calendario.timezone).to.be.eql('local');
+            });
+        });
+
         describe('clickDia deve', function () {
 
-            let modalAberto, controller;
+            let controller;
 
             beforeEach(inject(function () {
-                modalAberto = false;
-                self.$httpBackend.expectGET(`/api/locais/${ID_LOCAL_TEST}/reservas`).respond([ReservasMock.getReserva()]);
                 controller = createController();
-                self.$httpBackend.flush();
 
                 AuthService.userTemPermissao = sinon.stub().returns(true);
-                sinon.stub($mdDialog, 'show').callsFake(function () {
-                    modalAberto = true;
-                });
+                $mdDialog.show = sinon.stub();
             }));
 
            it('Não permitir criação de reservas em horários passados', function () {
@@ -64,16 +78,16 @@
                dataPassada.setMonth(10);
                dataPassada.setDate(15);
 
-               controller.clickDia(dataPassada);
-               expect(modalAberto).to.be.false;
+               controller.clickDia(moment(dataPassada));
+               sinon.assert.notCalled($mdDialog.show);
            });
 
             it('Permitir criação de reservas em horários futuros', function () {
                 var dataFutura = new Date(Date.now());
                 dataFutura.setMonth(dataFutura.getMonth() + 1);
 
-                controller.clickDia(dataFutura);
-                expect(modalAberto).to.be.true;
+                controller.clickDia(moment(dataFutura));
+                sinon.assert.called($mdDialog.show);
             });
 
         });

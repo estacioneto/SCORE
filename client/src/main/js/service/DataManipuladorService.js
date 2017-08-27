@@ -12,7 +12,6 @@
          * @return {String} Data formatada.
          */
         this.parseData = data => {
-            data = data._d || data;
             let dataFormatada, diaFormatado, mesFormatado, anoFormatado;
 
             diaFormatado = (data.getDate() < 10) ? `0${data.getDate()}` : `${data.getDate()}`;
@@ -27,23 +26,13 @@
         /**
          * Retornam, em string, no formato HH:mm o horário da data especificada.
          *
-         * @param data Data a ter seu horário formatado. Deve ser do tipo Date ou possuir
-         * atributo '_d' to tipo Date.
+         * @param {Date} data Data a ter seu horário formatado. Deve ser do tipo Date.
          * @return {string|undefined} Horário no formato HH:mm ou {@code undefined} caso
          * a data especificada não seja definida.
          */
         this.getHorarioEmString = (data) => {
             if (!data) return undefined;
-
-            data = data._d || data;
-
-            const horarioIndice = 4, horarioInicioIndice = 0, horarioFimIndice = 5, separador = ' ';
-            let horarioFormatado, horario;
-
-            horario = _.split(data.toGMTString(), separador)[horarioIndice];
-            horarioFormatado = horario.substring(horarioInicioIndice, horarioFimIndice);
-
-            return horarioFormatado;
+            return `${data.getHours()}:${data.getMinutes()}`;
         };
 
         /**
