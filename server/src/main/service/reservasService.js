@@ -60,7 +60,7 @@ import {ReservasValidador} from "../validator/reservasValidador";
                     ReservasValidador.validarHorario(reserva, err => {
                         if (err) return callback(err, null);
                         return persisteReserva(new Reserva(reserva), (err, resp) => {
-                            if (!err) operacoesComRepeticaoCadastro(resp);
+                            if (!err) cadastrarRepeticoes(resp);
                             callback(err, resp);
                         });
                     });
@@ -69,29 +69,37 @@ import {ReservasValidador} from "../validator/reservasValidador";
         });
     };
 
+    /**
+     * Realiza as operações sobre repetição para atualização de reserva.
+     * Exclui as repetições e readiciona, caso se necessário.
+     * 
+     * @param {Reserva} reserva Reserva a ter as repetições atualizadas.
+     */
     function operacoesComRepeticaoAtualizacao(reserva) {
         excluirRepeticoes(reserva, (err, resp) => {
             if (reserva.recorrente)
-                adicionarRepeticoes(reserva, );
+                cadastrarRepeticoes(reserva);
         });
     }
 
-    function adicionarRepeticoes(reserva) {
-        operacoesComRepeticaoCadastro(reserva);
-    }
-
+    /**
+     * Exclui as repetições de uma reserva.
+     * 
+     * @param {Reserva} reserva Reserva a ter as repetições excluídas.
+     * @param {Function} cb Callback a ser executado quando a operação for concluída.
+     */
     function excluirRepeticoes(reserva, cb) {
         Reserva.remove({ eventoPai: reserva._id }, cb);
     }
 
     /**
-     * Assumindo que já foi validado.
+     * Cadastra as repetições para uma reserva.
      * 
-     * @param {*} reserva 
+     * @param {Reserva} reserva Reserva a ter as repetições cadastradas.
      */
-    function operacoesComRepeticaoCadastro(reserva) {
+    function cadastrarRepeticoes(reserva) {
         if (!reserva.recorrente) {
-            return "dahell";
+            return;
         }
         const dias = ReservasValidador.calcularDiasRepeticao(reserva);
         const reservasRepetidas = [];
@@ -102,10 +110,8 @@ import {ReservasValidador} from "../validator/reservasValidador";
             reservaTemp.dia = new Date(diaRepeticao);
             reservasRepetidas.push(reservaTemp);
         });
-        console.log(reservasRepetidas.length);
         Reserva.insertMany(reservasRepetidas, (err, docs) => {
-            if (err) console.log("erro", err);
-            console.log(docs);
+            if (err) console.log("Erro ao inserir", err);
         });
     }
 

@@ -26,11 +26,20 @@ export class ReservasValidador {
         });
     };
 
+    /**
+     * Verifica se existe choque de horário entre a reserva e a lista
+     * de reservas passadas. Não é checado a reserva com ela mesma nem a reserva
+     * com sua reserva pai.
+     * 
+     * @param {Reserva} reserva Reserva a ser checada.
+     * @param {[Reserva]} reservas Lista de reservas.
+     * @return {String} String contendo a mensagem sobre quais reservas dão choque, se houverem. 
+     */
     static verificarChoque(reserva, reservas) {
         let diasOcupados = [];
         for (let i in reservas) {
             const r = reservas[i];
-            if (r._id.toString() === reserva._id) {
+            if (r._id.toString() === reserva._id || r.eventoPai === reserva._id) {
                 continue;
             }
             if (ReservasValidador.hasChoqueHorario(r, reserva)) {
@@ -45,16 +54,30 @@ export class ReservasValidador {
         return "";
     }
 
+    /**
+     * Checa se alguma das repetições da reserva é inválida, ou, tenha choque de horário
+     * com outra reserva já cadastrada.
+     * 
+     * @param {Reserva} reserva Reserva a ter as repetições checadas.
+     * @param {Function} cb Callback executado ao finalizar a operação.
+     */
     static checarRepeticoes(reserva, cb) {
         let diasRepeticoes = ReservasValidador.calcularDiasRepeticao(reserva);
 
-        Reserva.findFutureFrom(diasRepeticoes, reserva.localId, (err, reservas) => {
+        Reserva.findInDays(diasRepeticoes, reserva.localId, (err, reservas) => {
             if (err) return cb(err);
             const choque = ReservasValidador.verificarChoque(reserva, reservas);
             cb(choque);
         });
     };
 
+    /**
+     * Calcula os dias (em Date, no formato ISO) das repetições
+     * para uma Reserva.
+     * 
+     * @param {Reserva} reserva Reserva a ter os dias das repetições calculados.
+     * @return {[String]} Lista das datas de repetição, no formato ISO.
+     */
     static calcularDiasRepeticao(reserva) {
         let diasRepeticao = [];
         let dataFim = new Date(reserva.fimRepeticao);

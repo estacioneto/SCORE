@@ -5,22 +5,6 @@
 
     const Schema = mongoose.Schema;
 
-    const criarValidacaoData = nomeProp => {
-        return {
-            // https://stackoverflow.com/questions/18758772/how-do-i-validate-a-date-in-this-format-yyyy-mm-dd-using-jquery
-            validator: function (stringData) {
-                const regEx = /^\d{4}-\d{2}-\d{2}$/;
-                if(!stringData.match(regEx))
-                    return false;
-                let d;
-                if(!((d = new Date(stringData))|0))
-                    return false;
-                return d.toISOString().slice(0,10) == stringData;
-            },
-            message: `${nomeProp} deve estar no formato dd-MM-yyyy.`
-        }
-    }
-
     const reservaSchema = new Schema({
         autor : {
             type: String,
@@ -70,8 +54,7 @@
         },
         dia : {
             type: Date,
-            required: [true, "A reserva deve possuir um dia."],
-            // validate: criarValidacaoData("Dia da reserva")
+            required: [true, "A reserva deve possuir um dia."]
         },
         tipo : {
             type: String,
@@ -107,7 +90,7 @@
         });
     });
 
-    reservaSchema.static('findFutureFrom', function(dias, localId, callback) {
+    reservaSchema.static('findInDays', function(dias, localId, callback) {
         return this.find({dia: { $in: dias }, localId }, (err, results) => {
             if (err) return callback(err, null);
             return callback(err, results);
@@ -123,6 +106,13 @@
         next();
     });
 
+    /**
+     * Limpa um objeto date deixando apenas as informações
+     * sobre seu ano, mês e dia.
+     * 
+     * @param {Date} date Objeto a ser limpo.
+     * @return {Date} Date final.
+     */
     function limparDate(date) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate());
     }

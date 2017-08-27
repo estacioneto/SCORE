@@ -77,9 +77,9 @@
     <!--end Descrição reserva-->
     <!--Repeticao-->
     <div layout="row">
-        <md-input-container ng-init="fr = $ctrl.reserva.fimRepeticaoDate">
+        <md-input-container>
             <label>Fim repetição</label>
-            <input type="date" ng-model="fr" ng-change="$ctrl.reserva.fimRepeticaoDate = fr">
+            <input type="date" ng-model="$ctrl.reserva.fimRepeticao">
         </md-input-container>
         <md-input-container>
             <label>Frequência</label>
@@ -90,6 +90,9 @@
             aria-label="Recorrente"
             id="checkbox-recorrente">
         </md-checkbox>
+        <span class="md-subhead">
+            Repetir Reserva    
+        </span>
     </div>
     <!--end Repeticao-->
     <!--Autor-->

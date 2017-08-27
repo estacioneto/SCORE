@@ -48,10 +48,6 @@ let sequenceReserva = 1;
                                  recorrente,
                                  diaSemana,
                                  eventoPai});
-
-            this.dia = new Date(this.dia);
-            this.fimRepeticao = new Date(this.fimRepeticao || dia);
-            this.diaSemana = this.diaSemana || 1;
         }
 
         /**
@@ -63,6 +59,9 @@ let sequenceReserva = 1;
          */
         function obterPropriedades(instancia, props) {
             Object.assign(instancia, props);
+            instancia.dia = new Date(instancia.dia);
+            instancia.fimRepeticao = new Date(instancia.fimRepeticao || dia);
+            instancia.diaSemana = instancia.diaSemana || 1;
         }
 
         /**
@@ -214,26 +213,6 @@ let sequenceReserva = 1;
         });
 
         /**
-         * Recupera o fim da repetição como um Date.
-         */
-        Reserva.prototype.__defineGetter__('fimRepeticaoDate', function () {
-            if (!this.fimRepeticao) {
-                return this.start;
-            }
-            return this.fimRepeticao; //new Date(getAno(this.fimRepeticao), getMes(this.fimRepeticao), getDia(this.fimRepeticao));
-        });
-
-        Reserva.prototype.__defineSetter__('fimRepeticaoDate', function (data) {
-            // const ano = data.getFullYear();
-            // let mes = `0${data.getMonth() + 1}`;
-            // mes = mes.substring(mes.length - 2);
-            // let dia = `0${data.getDate()}`;
-            // dia = dia.substring(dia.length - 2);
-            // this.fimRepeticao = `${ano}-${mes}-${dia}`;
-            this.fimRepeticao = data;
-        });
-
-        /**
          * Retorna o dia da data especificada.
          *
          * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
@@ -241,7 +220,7 @@ let sequenceReserva = 1;
          * @return {String} Dia da data especificada, no formato dd.
          */
         function getDia(data) {
-            return data.getDate(); //data.split('-')[DIA_INDICE];
+            return data.getDate();
         }
 
         /**
@@ -254,10 +233,7 @@ let sequenceReserva = 1;
          * @return {String} Mês da data especificada, no formato MM.
          */
         function getMes(data) {
-            // let mesString = data.split('-')[MES_INDICE];
-            // let mesInt = parseInt(mesString);
-            // mesInt = mesInt - 1;
-            return data.getMonth(); //mesInt.toString();
+            return data.getMonth();
         }
 
         /**
@@ -268,7 +244,7 @@ let sequenceReserva = 1;
          * @return {String} Ano da data especificada, no formato yyyy.
          */
         function getAno(data) {
-            return data.getFullYear(); //data.split('-')[ANO_INDICE];
+            return data.getFullYear();
         }
 
         /**
