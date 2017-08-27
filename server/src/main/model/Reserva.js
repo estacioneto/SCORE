@@ -69,9 +69,9 @@
 
         },
         dia : {
-            type: String,
+            type: Date,
             required: [true, "A reserva deve possuir um dia."],
-            validate: criarValidacaoData("Dia da reserva")
+            // validate: criarValidacaoData("Dia da reserva")
         },
         tipo : {
             type: String,
@@ -84,9 +84,9 @@
         },
         // repeticao: {
             fimRepeticao: {
-                type: String,
+                type: Date,
                 // required: [true, 'Repetição deve ter uma data de fim.'],
-                validate: criarValidacaoData("Dia de fim para repetição")
+                // validate: criarValidacaoData("Dia de fim para repetição")
             },
             diaSemana: [{
                 type: Number,

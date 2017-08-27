@@ -104,7 +104,7 @@
             this.criarReserva = (data) => {
                 if (AuthService.userTemPermissao(PERMISSOES.RESERVAS)) {
                     const reserva = new Reserva({
-                        dia: DataManipuladorService.parseData(data),
+                        dia: data._d,
                         inicio: DataManipuladorService.getHorarioEmString(data),
                         localId: self.local._id
                     });
