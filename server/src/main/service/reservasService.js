@@ -59,7 +59,10 @@ import {ReservasValidador} from "../validator/reservasValidador";
                     reserva.autor = user.user_metadata.nome_completo;
                     ReservasValidador.validarHorario(reserva, err => {
                         if (err) return callback(err, null);
-                        return persisteReserva(new Reserva(reserva), callback);
+                        return persisteReserva(new Reserva(reserva), (err, resp) => {
+                            if (!err) operacoesComRepeticaoCadastro(resp);
+                            callback(err, resp);
+                        });
                     });
                 })
                 .catch((err) => callback(err, null));
@@ -67,7 +70,31 @@ import {ReservasValidador} from "../validator/reservasValidador";
     };
 
     function operacoesComRepeticao(reservaOriginal, reserva) {
-        
+    }
+
+    /**
+     * Assumindo que já foi validado.
+     * 
+     * @param {*} reserva 
+     */
+    function operacoesComRepeticaoCadastro(reserva) {
+        if (!reserva.recorrente) {
+            return "dahell";
+        }
+        const dias = ReservasValidador.calcularDiasRepeticao(reserva);
+        const reservasRepetidas = [];
+        dias.forEach(diaRepeticao => {
+            const reservaTemp = new Reserva(reserva);
+            reservaTemp.eventoPai = reservaTemp._id;
+            reservaTemp._id = undefined;
+            reservaTemp.dia = new Date(diaRepeticao);
+            reservasRepetidas.push(reservaTemp);
+        });
+        console.log(reservasRepetidas.length);
+        Reserva.insertMany(reservasRepetidas, (err, docs) => {
+            if (err) console.log("erro", err);
+            console.log(docs);
+        });
     }
 
     /**

@@ -82,19 +82,15 @@
             type: Boolean,
             required: [true, "Um evento deve ser recorrente ou não."]
         },
-        // repeticao: {
-            fimRepeticao: {
-                type: Date,
-                // required: [true, 'Repetição deve ter uma data de fim.'],
-                // validate: criarValidacaoData("Dia de fim para repetição")
-            },
-            diaSemana: [{
-                type: Number,
-                max: [6, "Identificador de dia da semana inválido."],
-                min: [0, "Identificador de dia da semana inválido."]
-            }],
-            eventoPai: String
-        // },
+        fimRepeticao: {
+            type: Date,
+        },
+        diaSemana: [{
+            type: Number,
+            max: [7, "Identificador de dia da semana inválido."],
+            min: [1, "Identificador de dia da semana inválido."]
+        }],
+        eventoPai: String
     });
 
     reservaSchema.static('findById', function (email, id, callback) {

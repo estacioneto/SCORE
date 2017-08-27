@@ -46,26 +46,31 @@ export class ReservasValidador {
     }
 
     static checarRepeticoes(reserva, cb) {
-        let diasRepeticoes = [];
-        let dataFim = new Date(reserva.fimRepeticao);
-        let dataReserva = new Date(reserva.dia);
-        let diasExtras = dataReserva.getDate() + reserva.frequencia;
-        dataReserva.setDate(diasExtras);
+        let diasRepeticoes = ReservasValidador.calcularDiasRepeticao(reserva);
 
-        while (dataReserva <= dataFim) {
-            let diaStr = dataReserva.toISOString();
-            diasRepeticoes.push(diaStr);
-            
-            diasExtras += reserva.frequencia;
-            dataReserva.setDate(diasExtras);
-        }
-        console.log("dias das repeticoes", diasRepeticoes);
         Reserva.findFutureFrom(diasRepeticoes, reserva.localId, (err, reservas) => {
             if (err) return cb(err);
-            console.log("Reservas futuras", reservas);
             const choque = ReservasValidador.verificarChoque(reserva, reservas);
             cb(choque);
         });
+    };
+
+    static calcularDiasRepeticao(reserva) {
+        let diasRepeticao = [];
+        let dataFim = new Date(reserva.fimRepeticao);
+        let dataReserva = new Date(reserva.dia);
+
+        let diasExtras = dataReserva.getDate() + reserva.diaSemana[0];
+        dataReserva.setDate(diasExtras);
+        
+        while (dataReserva <= dataFim) {
+            let diaStr = dataReserva.toISOString();
+            diasRepeticao.push(diaStr);
+            
+            diasExtras += reserva.diaSemana[0];
+            dataReserva.setDate(diasExtras);
+        }
+        return diasRepeticao;
     };
 
     /**
