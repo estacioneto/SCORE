@@ -77,13 +77,13 @@
     <!--end Descrição reserva-->
     <!--Repeticao-->
     <div layout="row">
-        <md-input-container ng-init="fr = $ctrl.reserva.fimRepeticao">
+        <md-input-container ng-init="fr = $ctrl.reserva.fimRepeticaoDate">
             <label>Fim repetição</label>
-            <input type="date" ng-model="fr" ng-change="$ctrl.reserva.fimRepeticao = fr">
+            <input type="date" ng-model="fr" ng-change="$ctrl.reserva.fimRepeticaoDate = fr">
         </md-input-container>
         <md-input-container>
             <label>Frequência</label>
-            <input type="number" ng-model="$ctrl.reserva.repeticao.frequencia">
+            <input type="number" ng-model="$ctrl.reserva.frequencia">
         </md-input-container>
     </div>
     <!--end Repeticao-->

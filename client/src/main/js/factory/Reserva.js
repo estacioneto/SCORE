@@ -28,7 +28,8 @@ let sequenceReserva = 1;
                           fim,
                           dia,
                           tipo,
-                          repeticao}) {
+                          fimRepeticao,
+                          frequencia}) {
 
             obterPropriedades(this, {_id,
                                  localId,
@@ -39,12 +40,13 @@ let sequenceReserva = 1;
                                  fim,
                                  dia,
                                  tipo,
-                                 repeticao});
-
-            this.repeticao = this.repeticao || {
-                fim: dia,
-                frequecia: 1
-            };
+                                 fimRepeticao,
+                                 frequencia});
+            
+            this.fimRepeticao = this.fimRepeticao || dia;
+            this.frequencia = this.frequencia || dia;
+            this.diaSemana = 1;
+            this.recorrente = true;
         }
 
         /**
@@ -181,20 +183,20 @@ let sequenceReserva = 1;
         /**
          * Recupera o fim da repetição como um Date.
          */
-        Reserva.prototype.__defineGetter__('fimRepeticao', function () {
-            if (!this.repeticao.fim) {
+        Reserva.prototype.__defineGetter__('fimRepeticaoDate', function () {
+            if (!this.fimRepeticao) {
                 return this.start;
             }
-            return new Date(getAno(this.repeticao.fim), getMes(this.repeticao.fim), getDia(this.repeticao.fim));
+            return new Date(getAno(this.fimRepeticao), getMes(this.fimRepeticao), getDia(this.fimRepeticao));
         });
 
-        Reserva.prototype.__defineSetter__('fimRepeticao', function (data) {
+        Reserva.prototype.__defineSetter__('fimRepeticaoDate', function (data) {
             const ano = data.getFullYear();
             let mes = `0${data.getMonth() + 1}`;
             mes = mes.substring(mes.length - 2);
             let dia = `0${data.getDate()}`;
             dia = dia.substring(dia.length - 2);
-            this.repeticao.fim = `${ano}-${mes}-${dia}`;
+            this.fimRepeticao = `${ano}-${mes}-${dia}`;
         });
 
         /**

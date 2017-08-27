@@ -78,17 +78,23 @@
             enum: ['Defesa', 'Videoconferência', 'Reunião', 'Assembleia', 'Palestra', 'Outro'],
             required: [true, 'A reserva deve possuir um tipo']
         },
-        repeticao: {
-            fim: {
+        recorrente: {
+            type: Boolean,
+            required: [true, "Um evento deve ser recorrente ou não."]
+        },
+        // repeticao: {
+            fimRepeticao: {
                 type: String,
-                required: [true, 'Repetição deve ter uma data de fim.'],
+                // required: [true, 'Repetição deve ter uma data de fim.'],
                 validate: criarValidacaoData("Dia de fim para repetição")
             },
-            frequencia: {
+            diaSemana: [{
                 type: Number,
-                required: [true, 'Repetição deve ter a frequência de repetição para o evento.']
-            }
-        }
+                max: [6, "Identificador de dia da semana inválido."],
+                min: [0, "Identificador de dia da semana inválido."]
+            }],
+            eventoPai: String
+        // },
     });
 
     reservaSchema.static('findById', function (email, id, callback) {
@@ -101,6 +107,14 @@
 
     reservaSchema.static('findByDayAndLocalId', function (dia, localId, callback) {
         return this.find({dia: dia, localId: localId}, (err, results) => {
+            if (err) return callback(err, null);
+            return callback(err, results);
+        });
+    });
+
+    reservaSchema.static('findFutureFrom', function(diaInicio, diaFim, localId, callback) {
+        console.log("searching for", diaInicio, localId);
+        return this.find({fimRepeticao: { $gte: diaInicio }, dia: { $lte: diaFim }, localId }, (err, results) => {
             if (err) return callback(err, null);
             return callback(err, results);
         });
