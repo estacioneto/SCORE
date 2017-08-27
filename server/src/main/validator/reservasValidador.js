@@ -60,14 +60,14 @@ export class ReservasValidador {
         let dataFim = new Date(reserva.fimRepeticao);
         let dataReserva = new Date(reserva.dia);
 
-        let diasExtras = dataReserva.getDate() + reserva.diaSemana[0];
+        let diasExtras = dataReserva.getDate() + reserva.diaSemana;
         dataReserva.setDate(diasExtras);
         
         while (dataReserva <= dataFim) {
             let diaStr = dataReserva.toISOString();
             diasRepeticao.push(diaStr);
             
-            diasExtras += reserva.diaSemana[0];
+            diasExtras += reserva.diaSemana;
             dataReserva.setDate(diasExtras);
         }
         return diasRepeticao;

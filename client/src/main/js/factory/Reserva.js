@@ -29,7 +29,10 @@ let sequenceReserva = 1;
                           dia,
                           tipo,
                           fimRepeticao,
-                          frequencia}) {
+                          frequencia,
+                          recorrente,
+                          diaSemana,
+                          eventoPai}) {
 
             obterPropriedades(this, {_id,
                                  localId,
@@ -41,13 +44,14 @@ let sequenceReserva = 1;
                                  dia,
                                  tipo,
                                  fimRepeticao,
-                                 frequencia});
+                                 frequencia,
+                                 recorrente,
+                                 diaSemana,
+                                 eventoPai});
 
             this.dia = new Date(this.dia);
             this.fimRepeticao = new Date(this.fimRepeticao || dia);
-            this.frequencia = this.frequencia || 1;
-            this.diaSemana = 1;
-            this.recorrente = true;
+            this.diaSemana = this.diaSemana || 1;
         }
 
         /**

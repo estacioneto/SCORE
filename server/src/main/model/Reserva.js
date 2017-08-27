@@ -84,11 +84,11 @@
         fimRepeticao: {
             type: Date,
         },
-        diaSemana: [{
+        diaSemana: {
             type: Number,
             max: [7, "Identificador de dia da semana inválido."],
             min: [1, "Identificador de dia da semana inválido."]
-        }],
+        },
         eventoPai: String
     });
 
