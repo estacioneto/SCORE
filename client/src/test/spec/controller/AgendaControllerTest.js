@@ -5,67 +5,54 @@
 
         beforeEach(module('scoreApp', 'Mocks', 'stateMock'));
         var self = this;
+        const ID_LOCAL_TEST = 1;
 
-        let createController, scope, config, LocaisMock, compile,
-            AuthService, calendarioConfig, eventos, dependenciasController, $mdDialog;
+        let createController, scope, config, LocaisMock,
+            AuthService, dependenciasController, $mdDialog;
 
         beforeEach(inject(defaultInjections(self)));
 
-        beforeEach(inject(function ($injector, _$compile_, _$rootScope_, $controller, uiCalendarConfig, _LocaisMock_, _AuthService_) {
+        beforeEach(inject(function ($injector, $controller, uiCalendarConfig, _LocaisMock_, _AuthService_) {
 
             $mdDialog = $injector.get('$mdDialog');
-            scope = _$rootScope_.$new();
-            compile = _$compile_;
+            scope = self.$rootScope.$new();
             config = uiCalendarConfig;
             LocaisMock = _LocaisMock_;
             AuthService = _AuthService_;
 
+            config.calendars = {
+                calendario: {
+                   fullCalendar: function () {
+                       return {type: 'agendaDay'};
+                   }
+                }
+            };
+
             dependenciasController = {
                 $scope: scope,
-                local: _.first(LocaisMock.getLocais()),
+                local: _.first(LocaisMock.getLocais({_id: ID_LOCAL_TEST})),
                 uiCalendarConfig: config,
                 AuthService: AuthService
             };
 
-            calendarioConfig = {
-                calendar:{
-                    height: 200,
-                    weekends: false,
-                    defaultView: 'month'
-                }
-            };
-
-            eventos = [[{title: 'Evento Teste', start: new Date(Date.now())}]];
             createController = function () {
-                return $controller('AgendaController as agendaCtrl',dependenciasController, {
-                        calendarioConfig: calendarioConfig,
-                        eventosTeste: eventos},
-                    );
+                return $controller('AgendaController as agendaCtrl',dependenciasController);
             };
         }));
 
         describe('clickDia deve', function () {
 
-            let modalAberto;
-            let controller, elemento, elementoScope;
+            let modalAberto, controller;
 
             beforeEach(inject(function () {
                 modalAberto = false;
-                self.$httpBackend.expectGET().respond({});
                 controller = createController();
-                elemento = compile('<div ui-calendar="{{agendaCtrl.calendarioConfig.calendar}}" calendar="calendario" ng-model="agendaCtrl.eventosTeste"></div>')(scope);
-                scope.$apply();
-                elementoScope = elemento.scope();
-                elementoScope.$digest();
+                self.$httpBackend.expectGET(`/api/locais/${ID_LOCAL_TEST}/reservas`).respond({});
+                scope.$digest();
 
+                AuthService.userTemPermissao = sinon.stub().returns(true);
                 sinon.stub($mdDialog, 'show').callsFake(function () {
                     modalAberto = true;
-                });
-                sinon.stub(AuthService, 'userTemPermissao').callsFake(function () {
-                    return true;
-                });
-                sinon.stub(config.calendars.calendario, 'fullCalendar').callsFake(function () {
-                    return {type: 'agendaDay'};
                 });
             }));
 
