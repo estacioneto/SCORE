@@ -112,9 +112,8 @@
         });
     });
 
-    reservaSchema.static('findFutureFrom', function(diaInicio, diaFim, localId, callback) {
-        console.log("searching for", diaInicio, localId);
-        return this.find({fimRepeticao: { $gte: diaInicio }, dia: { $lte: diaFim }, localId }, (err, results) => {
+    reservaSchema.static('findFutureFrom', function(dias, localId, callback) {
+        return this.find({dia: { $in: dias }, localId }, (err, results) => {
             if (err) return callback(err, null);
             return callback(err, results);
         });
@@ -124,8 +123,14 @@
         // http://stackoverflow.com/questions/7327296/how-do-i-extract-the-created-date-out-of-a-mongo-objectid
         this.dataCriacao = this._id.getTimestamp().getTime();
         this.dataEdicao = Date.now();
+        this.dia = limparDate(this.dia);
+        this.fimRepeticao = limparDate(this.fimRepeticao);
         next();
     });
+
+    function limparDate(date) {
+        return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    }
 
     reservaSchema.post('save', (err, doc, next) => {
         if (err.name === 'ValidationError') {

@@ -22,21 +22,25 @@ export class ReservasValidador {
             if (err) return cb(err);
             const choque = ReservasValidador.verificarChoque(reserva, reservas);
             if (choque) return cb(choque);
-
             ReservasValidador.checarRepeticoes(reserva, cb);
-            return cb(null);
         });
     };
 
     static verificarChoque(reserva, reservas) {
+        let diasOcupados = [];
         for (let i in reservas) {
             const r = reservas[i];
             if (r._id.toString() === reserva._id) {
                 continue;
             }
             if (ReservasValidador.hasChoqueHorario(r, reserva)) {
-                return `Horário ocupado para o dia ${r.dia}`;
+                const dateDia = new Date(r.dia);
+                const diaFormatado = `${dateDia.getDate()}/${dateDia.getMonth() + 1}/${dateDia.getFullYear()}`;
+                diasOcupados.push(`${diaFormatado}`);
             }
+        }
+        if (diasOcupados.length > 0) {
+            return `Horário ocupado para o(s) dia(s) ${diasOcupados.join(", ")}.`;
         }
         return "";
     }
@@ -45,20 +49,22 @@ export class ReservasValidador {
         let diasRepeticoes = [];
         let dataFim = new Date(reserva.fimRepeticao);
         let dataReserva = new Date(reserva.dia);
-        let diasExtras = dataReserva.getDate() + 1 + reserva.frequencia;
+        let diasExtras = dataReserva.getDate() + reserva.frequencia;
         dataReserva.setDate(diasExtras);
+
         while (dataReserva <= dataFim) {
-            let diaStr = `${dataReserva.getFullYear()}-${dataReserva.getMonth() + 1}-${dataReserva.getDate()}`;
+            let diaStr = dataReserva.toISOString();
             diasRepeticoes.push(diaStr);
             
             diasExtras += reserva.frequencia;
             dataReserva.setDate(diasExtras);
         }
         console.log("dias das repeticoes", diasRepeticoes);
-        Reserva.findFutureFrom(reserva.dia, reserva.fimRepeticao, reserva.localId, (err, reservas) => {
+        Reserva.findFutureFrom(diasRepeticoes, reserva.localId, (err, reservas) => {
             if (err) return cb(err);
             console.log("Reservas futuras", reservas);
-            ReservasValidador.verificarChoque(reserva, reservas);
+            const choque = ReservasValidador.verificarChoque(reserva, reservas);
+            cb(choque);
         });
     };
 
