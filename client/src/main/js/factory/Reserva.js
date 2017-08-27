@@ -4,7 +4,7 @@ let sequenceReserva = 1;
     /**
      * Factory que representa a entidade de reserva.
      */
-    angular.module('reservaModulo').factory('Reserva', ['$http', 'TIPOS_RESERVA', function ($http, TIPOS_RESERVA) {
+    angular.module('reservaModulo').factory('Reserva', ['$http', 'TIPOS_RESERVA', 'RESERVA_PASSADA', function ($http, TIPOS_RESERVA, RESERVA_PASSADA) {
 
         const DIA_INDICE = 0, MES_INDICE = 1, ANO_INDICE = 2,
               HORA_INDICE = 0, MINUTO_INDICE = 1;
@@ -110,6 +110,17 @@ let sequenceReserva = 1;
             return `${this.inicio}-${this.fim}`;
         };
 
+        /**
+         * Retorna True caso a reserva seja de uma data já passada.
+         *
+         * OBS: Ter cuidado ao lidar com a variavel fim, pois esta
+         * pode vir a ser undefined. (Na criação de reserva, por exemplo). {Lucas}
+         * @returns {boolean}
+         */
+        Reserva.prototype.ehReservaPassada = function () {
+            return (this.fim)? this.end < Date.now() : false;
+        };
+
         Reserva.prototype.__defineGetter__('author', function () {
             return this.autor;
         });
@@ -132,10 +143,24 @@ let sequenceReserva = 1;
         });
 
         /**
+         * Getter para o tema utilizado no modal de
+         * criação/edição de reservas.
+         */
+        Reserva.prototype.__defineGetter__('tema', function () {
+            if(this.ehReservaPassada()){
+                return RESERVA_PASSADA.mdTheme;
+            }
+            return (TIPOS_RESERVA[this.tipo]) ? TIPOS_RESERVA[this.tipo].mdTheme || 'default' : 'default';
+        });
+
+        /**
          * Getter para a cor de fundo para o evento no calendário.
          * Deve ser RGB ou HEX.
          */
         Reserva.prototype.__defineGetter__('backgroundColor', function () {
+            if(this.ehReservaPassada()){
+                return RESERVA_PASSADA.corRgb;
+            }
             return (TIPOS_RESERVA[this.tipo]) ? TIPOS_RESERVA[this.tipo].corRgb : TIPOS_RESERVA["Reunião"].corRgb;
         });
 
@@ -152,6 +177,7 @@ let sequenceReserva = 1;
          * Deve ser RGB ou HEX.
          */
         Reserva.prototype.__defineGetter__('textColor', function () {
+            if(this.ehReservaPassada()) return RESERVA_PASSADA.corTexto ;
             return TIPOS_RESERVA[this.tipo].corTexto;
         });
 
@@ -212,22 +238,33 @@ let sequenceReserva = 1;
         /**
          * Retorna a hora do horário especificado.
          *
-         * @param {String} horario Horário, o qual deve seguir o padrão hh:mm, a ter sua
+         * OBS: Sobre a verificação do isDate: Não remover, pois ao
+         * entrar em modo de edição o modal de reserva transforma
+         * as horas de início e fim em Date quebrando todas as funções
+         * aqui que usavam essa variáveis. Levei só 3 horas pra descobrir. {Lucas}
+         *
+         * @param {String|Date} horario Horário, o qual deve seguir o padrão hh:mm, a ter sua
          * hora retornada.
          * @return {String} Hora do horário especificado, no formato hh.
          */
         function getHora(horario) {
+            if(_ .isDate(horario)){
+                return horario.getHours();
+            }
             return horario.split(':')[HORA_INDICE];
         }
 
         /**
          * Retorna o minuto do horário especificado.
          *
-         * @param {String} horario Horário, o qual deve seguir o padrão hh:mm, a ter seu
+         * @param {String|Date} horario Horário, o qual deve seguir o padrão hh:mm, a ter seu
          * minuto retornado.
          * @return {String} Minuto do horário especificado, no formato mm.
          */
         function getMinuto(horario) {
+            if(_ .isDate(horario)){
+                return horario.getMinutes();
+            }
             return horario.split(':')[MINUTO_INDICE];
         }
 

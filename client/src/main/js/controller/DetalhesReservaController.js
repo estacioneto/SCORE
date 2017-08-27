@@ -4,8 +4,8 @@
      * Controller responsável pelo modal de detalhes da reserva.
      *
      */
-    angular.module('agendaModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'DataManipuladorService', '$q', 'local',
-        function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, DataManipuladorService, $q, local) {
+    angular.module('agendaModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'RESERVA_PASSADA', 'DataManipuladorService', '$q', 'local',
+        function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, RESERVA_PASSADA, DataManipuladorService, $q, local) {
 
             const self = this;
 
@@ -165,16 +165,7 @@
              * Indica se o usuário logado pode editar a reserva.
              */
             this.podeEditar = () => {
-                return self.ehDonoDaReserva() && !self.isEdicao
-            };
-
-            /**
-             * Retorna o nome do tema de acordo do tipo da reserva.
-             *
-             * @returns {String} Nome do tema da reserva.
-             */
-            this.getTemaReserva = function () {
-                return (TIPOS_RESERVA[this.reserva.tipo]) ? TIPOS_RESERVA[this.reserva.tipo].mdTheme || 'default' : 'default';
+                return self.ehDonoDaReserva() && !self.isEdicao && !self.reserva.ehReservaPassada();
             };
 
             /**

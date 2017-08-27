@@ -50,5 +50,14 @@
             corRgb: "rgb(255, 160, 0)",
             corTexto: ''
         }
+    })
+    .constant('RESERVA_PASSADA', {
+        mdTheme: 'passada',
+        corMd: {
+            "background-color": "default-grey-400"
+        },
+        corRgb: "rgb(189, 189, 189)",
+        corTexto: ''
+
     });
 })();
