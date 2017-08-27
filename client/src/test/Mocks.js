@@ -67,6 +67,10 @@
             return locais.map(local => new Local(local));
         }
 
-        return {getLocais};
+        function getLocal(data = {}) {
+            return Object.assign({}, _.first(getLocais), data);
+        }
+
+        return {getLocais, getLocal};
     }]);
 })();
