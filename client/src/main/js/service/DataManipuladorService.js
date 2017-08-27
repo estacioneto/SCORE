@@ -32,7 +32,7 @@
          */
         this.getHorarioEmString = (data) => {
             if (!data) return undefined;
-            return `${data.getHours()}:${data.getMinutes()}`;
+            return moment(data).format('HH:mm');
         };
 
         /**
