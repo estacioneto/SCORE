@@ -77,8 +77,7 @@ import {ReservasValidador} from "../validator/reservasValidador";
      */
     function operacoesComRepeticaoAtualizacao(reserva) {
         excluirRepeticoes(reserva, (err, resp) => {
-            if (reserva.recorrente)
-                cadastrarRepeticoes(reserva);
+            cadastrarRepeticoes(reserva);
         });
     }
 

@@ -55,7 +55,7 @@
     <div layout="column" hide-gt-xs>
         <div layout="row">
             <md-input-container flex>
-                <md-select data-ng-model="$ctrl.reserva.tipo" required>
+                <md-select data-ng-model="$ctrl.reserva.tipo" required aria-label="selecao-tipo">
                     <md-option data-ng-repeat="(tipo, propriedades) in $ctrl.tiposReserva"
                                data-ng-value="tipo">
                         {{tipo}}
@@ -82,8 +82,12 @@
             <input type="date" ng-model="$ctrl.reserva.fimRepeticao">
         </md-input-container>
         <md-input-container>
-            <label>Frequência</label>
-            <input type="number" ng-model="$ctrl.reserva.diaSemana">
+            <md-select data-ng-model="$ctrl.reserva.diaSemana" required aria-label="selecao-dia"
+                        placeholder="Dia da Semana">
+                <md-option data-ng-repeat="(dia, propriedades) in ::$ctrl.diasRepeticao" data-ng-value="propriedades.numero">
+                    {{ dia }}
+                </md-option>
+            </md-select>
         </md-input-container>
         <md-checkbox
             ng-model="$ctrl.reserva.recorrente"

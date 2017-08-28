@@ -13,9 +13,11 @@
             reserva: '=',
             local: '='
         },
-        controller: ['TIPOS_RESERVA', 'ModalService', function (TIPOS_RESERVA, ModalService) {
+        controller: ['TIPOS_RESERVA', 'DIAS_REPETICAO', 'ModalService', function (TIPOS_RESERVA, DIAS_REPETICAO, ModalService) {
 
             this.tiposReserva = TIPOS_RESERVA;
+
+            this.diasRepeticao = DIAS_REPETICAO;
 
             /**
              * Verifica se a reserva está em criação.

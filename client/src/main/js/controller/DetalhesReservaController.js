@@ -4,8 +4,8 @@
      * Controller responsável pelo modal de detalhes da reserva.
      *
      */
-    angular.module('agendaModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'TIPOS_RESERVA', 'RESERVA_PASSADA', 'DataManipuladorService', '$q', 'local',
-        function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, TIPOS_RESERVA, RESERVA_PASSADA, DataManipuladorService, $q, local) {
+    angular.module('agendaModulo').controller('DetalhesReservaController', ['reserva', '$mdDialog', 'ModalService', 'AuthService', 'AgendamentoService', 'Reserva', 'ToastService', 'DataManipuladorService', '$q', 'local',
+        function (reserva, $mdDialog, ModalService, AuthService, AgendamentoService, Reserva, ToastService, DataManipuladorService, $q, local) {
 
             const self = this;
 
@@ -16,8 +16,6 @@
             this.reservaOriginal;
 
             this.isEdicao = !reserva.autor;
-
-            this.tiposReserva = TIPOS_RESERVA;
 
             /**
              * Ativa o modo de edição de reserva.
@@ -183,7 +181,7 @@
             function getNomeUsuarioLogado() {
                 const usuarioLogado = AuthService.getLoggedUser();
                 return usuarioLogado.user_metadata.nome_completo;
-            }
+            };
 
             (() => {
                 if (self.isEdicao) {

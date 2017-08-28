@@ -1,7 +1,31 @@
 (() => {
     'use strict';
 
-    angular.module('reservaModulo', []).constant('TIPOS_RESERVA', {
+    angular.module('reservaModulo', [])
+    .constant('DIAS_REPETICAO', {
+        'Segunda-Feira': {
+            numero: 1
+        },
+        'Terça-Feira': {
+            numero: 2
+        },
+        'Quarta-Feira': {
+            numero: 3
+        },
+        'Quinta-Feira': {
+            numero: 4
+        },
+        'Sexta-Feira': {
+            numero: 5
+        },
+        'Sábado': {
+            numero: 6
+        },
+        'Domingo': {
+            numero: 0
+        }
+    })
+    .constant('TIPOS_RESERVA', {
         "Reunião": {
             mdTheme: 'reuniao',
             corMd: {

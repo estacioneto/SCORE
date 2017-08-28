@@ -60,7 +60,7 @@ let sequenceReserva = 1;
         function obterPropriedades(instancia, props) {
             Object.assign(instancia, props);
             instancia.dia = new Date(instancia.dia);
-            instancia.fimRepeticao = new Date(instancia.fimRepeticao || dia);
+            instancia.fimRepeticao = new Date(instancia.fimRepeticao || instancia.dia);
             instancia.diaSemana = instancia.diaSemana || 1;
         }
 
