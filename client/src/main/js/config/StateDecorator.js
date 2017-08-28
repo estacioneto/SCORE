@@ -22,6 +22,7 @@
              */
             $transitions.onSuccess({}, function ($transition) {
                 const fromState = $transition.$from();
+                fromState.$params = $transition.params('from');
                 if (fromState.name && !$isGoingBack) {
                     $stateStack.push(fromState);
                 }
@@ -38,7 +39,7 @@
                 if (!_.isEmpty($stateStack)) {
                     const toState = $stateStack.pop();
                     $isGoingBack = true;
-                    $delegate.go(toState.name, toState.params);
+                    $delegate.go(toState.name, toState.$params);
                     return true;
                 }
                 return false;
