@@ -103,7 +103,7 @@
              * Retorna a visualização para listagem de calendários.
              */
             this.voltaParaListagem = () => {
-                $state.go(APP_STATES.AGENDA_INFO.nome);
+                $state.goBack() || $state.go(APP_STATES.AGENDA_INFO.nome);
             };
 
             /**

@@ -78,5 +78,11 @@
                 });
         }
 
+        /**
+         * Volta para o state anterior ou vai para a listagem de locais.
+         */
+        this.voltar = function () {
+            $state.goBack() || $state.go(APP_STATES.LOCAL_INFO.nome);
+        };
     }]);
 })();

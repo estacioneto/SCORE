@@ -15,6 +15,13 @@
         </div>
 
         <md-content ng-if="localCtrl.local">
+            <md-button class="md-icon-button"
+                       type="button"
+                       ng-click="localCtrl.voltar()"
+                       flex="3">
+                <md-icon>arrow_back</md-icon>
+                <md-tooltip>Voltar</md-tooltip>
+            </md-button>
             <imagens-local local="localCtrl.local"
                            editavel="false"></imagens-local>
             <local-visualizacao local="localCtrl.local"></local-visualizacao>
