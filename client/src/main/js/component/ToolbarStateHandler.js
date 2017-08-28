@@ -20,7 +20,7 @@
              */
             this.statesDisponiveis = {
                 AGENDA: [APP_STATES.LOCAL_INFO],
-                LOCAL: [APP_STATES.AGENDA_INFO, APP_STATES.LOCAL_INFO]
+                LOCAL: [APP_STATES.AGENDA_INFO]
             };
 
             /**

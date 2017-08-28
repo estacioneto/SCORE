@@ -10,6 +10,7 @@
 * Issue 33: Corrigido cadastro de reserva para caso em que reserva ficava cadastrada no dia anterior.
 * Funcionalidade: Adcionada função de definir a imagem de capa de um local.
 * Refatoração: A diretiva utilizada para exibição das imagens do local foi trocada por uma mais robusta.
+* Correção: Adicionado botão de voltar em edição e visualização de local e corrigida toolbar.
 
 ## 0.1.0
 * Funcionalidade: Adicionados tipos "Outro" e "Palestra" para Reserva.

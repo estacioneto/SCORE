@@ -102,9 +102,7 @@
             /**
              * Retorna a visualização para listagem de calendários.
              */
-            this.voltaParaListagem = () => {
-                $state.go(APP_STATES.AGENDA_INFO.nome);
-            };
+            this.voltaParaListagem = () => $state.goBack(APP_STATES.AGENDA_INFO.nome);
 
             /**
              * Redireciona para tela de informações do auditório atual.
