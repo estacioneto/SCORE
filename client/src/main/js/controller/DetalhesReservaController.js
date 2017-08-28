@@ -180,6 +180,15 @@
                 }
             };
 
+            /**
+             *  Verifica se os horários especificados pelo usuário
+             *  são inválidos. Ou seja horários passados.
+             */
+            this.isHorarioInvalido = function () {
+                var dataAgora = Date.now();
+                return (self.reserva.fim)? (self.reserva.start < dataAgora || self.reserva.end < dataAgora) : false;
+            };
+
             function getNomeUsuarioLogado() {
                 const usuarioLogado = AuthService.getLoggedUser();
                 return usuarioLogado.user_metadata.nome_completo;
