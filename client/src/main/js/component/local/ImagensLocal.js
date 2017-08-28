@@ -14,9 +14,8 @@
             local: '=',
             editavel: '<'
         },
-        controller: ['ModalService', 'ToastService', '$scope', '$mdDialog', function (ModalService, ToastService, $scope, $mdDialog) {
+        controller: ['ModalService', 'ToastService', '$scope', '$mdDialog', 'LOCAL_IMAGEM', function (ModalService, ToastService, $scope, $mdDialog, LOCAL_IMAGEM) {
             var self = this;
-            const INDICE_IMAGEM_CAPA= 0;
 
             /**
              * Função de callback passada para o controller do modal de imagem 'full size'.
@@ -24,12 +23,14 @@
              * @param {String} idImagem Id da imagem que será excluída.
              */
             function excluirImagemCallback(idImagem){
-                ModalService.confirmar("Deletar Imagem", "Deseja continuar? Ação não pode ser desfeita.").then(function(){
+                ModalService.confirmar(LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.CONFIRMA_TITULO,
+                    LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.CONFIRMA_TEXTO).then(function(){
                     if(!_.isUndefined(idImagem)) {
                         self.removerImagem(idImagem);
-                        ToastService.showActionToast('Imagem excluída.');
+                        ToastService.showActionToast(LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.SUCESSO);
                     }
-                    else ModalService.error("Salve as suas modificações antes de excluir a imagem", "Imagem ainda não foi salva");
+                    else ModalService.error(LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.ERRO_TITULO,
+                        LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.ERRO_TEXTO);
                     fecharModal();
                 }, function(){
 
@@ -45,8 +46,8 @@
             function definirComoCapaCallback(idImagem) {
                 var indiceImagem = _.findIndex(self.local.imagens, imagem => (imagem._id || imagem.tempId) === idImagem);
                 let imgArray = self.local.imagens;
-                [imgArray[indiceImagem], imgArray[INDICE_IMAGEM_CAPA]] = [imgArray[INDICE_IMAGEM_CAPA], imgArray[indiceImagem]];
-                ToastService.showActionToast('Imagem de capa redefinida com sucesso.');
+                [imgArray[indiceImagem], imgArray[LOCAL_IMAGEM.INDICE_IMAGEM_CAPA]] = [imgArray[LOCAL_IMAGEM.INDICE_IMAGEM_CAPA], imgArray[indiceImagem]];
+                ToastService.showActionToast(LOCAL_IMAGEM.MENSAGENS.ALTERAR_CAPA.SUCESSO);
                 voltaParaPrimeiraImagem();
             }
 
@@ -63,7 +64,7 @@
              * essa imagem seja a última a diretiva quebra (???)
              */
             function voltaParaPrimeiraImagem(){
-                $('.carousel').carousel(0);
+                $('.carousel').carousel(LOCAL_IMAGEM.INDICE_IMAGEM_CAPA);
             }
 
             /**
@@ -91,7 +92,7 @@
              * @returns {Promise} Promise do modal.
              */
             this.mostraModalImagem = function ($event, indiceImagem, editavel) {
-                var isCapa = (indiceImagem === INDICE_IMAGEM_CAPA);
+                var isCapa = (indiceImagem === LOCAL_IMAGEM.INDICE_IMAGEM_CAPA);
                 return ModalService.verImagem(self.local.imagens[indiceImagem], $event, editavel, excluirImagemCallback, definirComoCapaCallback, isCapa);
             }
         }]

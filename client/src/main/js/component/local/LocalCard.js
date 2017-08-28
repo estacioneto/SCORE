@@ -13,10 +13,8 @@
         bindings: {
             local: '='
         },
-        controller: [function () {
+        controller: ['LOCAL_IMAGEM', function (LOCAL_IMAGEM) {
             var self = this;
-            const INDICE_IMAGEM_CAPA = 0;
-            const IMAGEM_DEFAULT = 'img/icons/ufcg-360x388.png';
 
             /**
              * Verifica se o local possui alguma imagem
@@ -32,8 +30,10 @@
              * @returns {String} Imagem de capa do local ou imagem default.
              */
             this.getImagemDeCapa = function () {
-                if(self.possuiImagens()) return self.local.imagens[INDICE_IMAGEM_CAPA].conteudo;
-                return IMAGEM_DEFAULT;
+                if(self.possuiImagens()){
+                    return self.local.imagens[LOCAL_IMAGEM.INDICE_IMAGEM_CAPA].conteudo;
+                }
+                return LOCAL_IMAGEM.IMAGEM_DEFAULT;
             };
         }],
     });
