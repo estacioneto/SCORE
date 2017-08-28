@@ -81,7 +81,7 @@
         /**
          * Volta para o state anterior ou vai para a listagem de locais.
          */
-        this.voltar = () => $state.goBack() || $state.go(APP_STATES.LOCAL_INFO.nome);
+        this.voltar = () => $state.goBack(APP_STATES.LOCAL_INFO.nome);
 
     }]);
 })();

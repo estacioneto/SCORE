@@ -32,17 +32,25 @@
             /**
              * Executa ação de voltar. Caso haja state para voltar (pode não haver em caso de refresh),
              * volta para o state e retorna true.
+             * Obs.:Caso não haja state para voltar, utiliza os parâmetros passados para executar uma transição padrão.
+             *
+             * @param {String} defaultStateName          Nome do state padrão.
+             * @param {Object} [defaultStateParams = {}] Parâmetros do state padrão.
              *
              * @returns {boolean} true caso tenha sido feita a transição, false caso contrário.
              */
-            $delegate.goBack = function () {
+            $delegate.goBack = function (defaultStateName, defaultStateParams = {}) {
                 if (!_.isEmpty($stateStack)) {
                     const toState = $stateStack.pop();
                     $isGoingBack = true;
                     $delegate.go(toState.name, toState.$params);
                     return true;
+                } else if (defaultStateName) {
+                    $delegate.go(defaultStateName, defaultStateParams);
+                    return true;
+                } else {
+                    return false;
                 }
-                return false;
             };
 
             return $delegate;
