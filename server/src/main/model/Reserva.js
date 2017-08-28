@@ -5,6 +5,17 @@
 
     const Schema = mongoose.Schema;
 
+    /**
+     * Dadas data e horario(inicio/fim) verifica se a data da reserva é válida.
+     * @param {String} data Dia da reserva no formato dd-MM-yyy
+     * @param {String} horario Horario da reserva no formato hh:mm
+     * @returns {Boolean} True caso a data seja válida
+     */
+    function isDataValida(data, horario){
+        let dataReserva = _.getData(data, horario);
+        return dataReserva > Date.now();
+    }
+
     const reservaSchema = new Schema({
         autor : {
             type: String,
@@ -36,7 +47,6 @@
             validate: {
                 validator: function (horaInicio) {
                     return /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(horaInicio);
-
                 },
                 message: "Hora de inicio da reserva deve estar no formato HH:mm."
             }
@@ -84,6 +94,13 @@
             if (err) return callback(err, null);
             return callback(err, results);
         });
+    });
+
+    reservaSchema.pre('validate', function (next) {
+        if(!isDataValida(this.dia, this.inicio) || !isDataValida(this.dia, this.fim)){
+            next(Error("Reservas não podem possuir datas já passadas."));
+        }
+        next();
     });
 
     reservaSchema.pre('save', function (next) {

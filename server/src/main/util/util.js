@@ -2,6 +2,8 @@
  * Sim, adiciona features interessantes do lodash e usa como módulo 'util'.
  */
 let _ = require('lodash');
+const DIA_INDICE = 0, MES_INDICE = 1, ANO_INDICE = 2,
+    HORA_INDICE = 0, MINUTO_INDICE = 1;
 
 _.BAD_REQUEST = 400;
 _.NOT_FOUND = 404;
@@ -167,6 +169,89 @@ _.retornarResponseErro = res =>
     (err => res.status(err.status || _.BAD_REQUEST).json({
         mensagem: err.message || err.mensagem || err
     }));
+
+/**
+ * Retorna o dia da data especificada.
+ *
+ * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
+ * dia retornado.
+ * @return {String} Dia da data especificada, no formato dd.
+ */
+_.getDia = data => {
+    return data.split('-')[DIA_INDICE];
+};
+
+/**
+ * Retorna o mês da data especificada. Sabendo que o construtor de Date utiliza 0
+ * para representar Janeiro, 1 para Fevereiro, e assim por diante, temos que
+ * decrementar uma unidade do valor do mês.
+ *
+ * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
+ * mês retornado.
+ * @return {String} Mês da data especificada, no formato MM.
+ */
+_.getMes = data => {
+    let mesString = data.split('-')[MES_INDICE];
+    let mesInt = parseInt(mesString);
+    mesInt = mesInt - 1;
+    return mesInt.toString();
+};
+
+/**
+ * Retorna o ano da data especificada.
+ *
+ * @param {String} data Data, a qual deve seguir o padrão dd-MM-yyyy, a ter o seu
+ * ano retornado.
+ * @return {String} Ano da data especificada, no formato yyyy.
+ */
+_.getAno = data => {
+    return data.split('-')[ANO_INDICE];
+};
+
+/**
+ * Retorna a hora do horário especificado.
+ *
+ * OBS: Sobre a verificação do isDate: Não remover, pois ao
+ * entrar em modo de edição o modal de reserva transforma
+ * as horas de início e fim em Date quebrando todas as funções
+ * aqui que usavam essa variáveis. Levei só 3 horas pra descobrir. {Lucas}
+ *
+ * @param {String|Date} horario Horário, o qual deve seguir o padrão hh:mm, a ter sua
+ * hora retornada.
+ * @return {String} Hora do horário especificado, no formato hh.
+ */
+_.getHora = horario => {
+    if(_ .isDate(horario)){
+        return horario.getHours();
+    }
+    return horario.split(':')[HORA_INDICE];
+};
+
+/**
+ * Retorna o minuto do horário especificado.
+ *
+ * @param {String|Date} horario Horário, o qual deve seguir o padrão hh:mm, a ter seu
+ * minuto retornado.
+ * @return {String} Minuto do horário especificado, no formato mm.
+ */
+_.getMinuto = horario => {
+    if(_ .isDate(horario)){
+        return horario.getMinutes();
+    }
+    return horario.split(':')[MINUTO_INDICE];
+};
+
+/**
+ * Retorna um objeto Date dadas duas strings contendo data e horario no formato especificado.
+ *
+ * @param {String} data String contendo a data desejada para o objeto Date no formato dd-MM-yyyy
+ * @param {String} horario String contendo o horario desejado para o Date() no formato hh:mm
+ * @returns {Date} Objeto Date() criado com os parâmetros especificados.
+ */
+_.getData = (data, horario) => {
+    return new Date(_.getAno(data), _.getMes(data), _.getDia(data),
+        _.getHora(horario), _.getMinuto(horario));
+};
 
 _.ONE_HOUR = 3600000;
 _.TEN_MINUTES = _.ONE_HOUR / 60;

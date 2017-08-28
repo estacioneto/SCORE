@@ -41,7 +41,7 @@
             </md-button>
             <md-button class="md-primary"
                        ng-if="reservaCtrl.isEdicao"
-                       ng-disabled="!reservaCtrl.reserva.termoAceito && reservaCtrl.isCriacao()"
+                       ng-disabled="!reservaCtrl.reserva.termoAceito && reservaCtrl.isCriacao() || reservaCtrl.isHorarioInvalido()"
                        type="submit">
                 Salvar
             </md-button>
