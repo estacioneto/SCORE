@@ -76,27 +76,33 @@
     </md-input-container>
     <!--end Descrição reserva-->
     <!--Repeticao-->
-    <div layout="row">
-        <md-input-container>
-            <label>Fim repetição</label>
-            <input type="date" ng-model="$ctrl.reserva.fimRepeticao">
+    <div layout="row" layout-align="start start">
+        <md-input-container layout="row">
+            <md-checkbox
+                ng-model="$ctrl.reserva.recorrente"
+                aria-label="Recorrente"
+                id="checkbox-recorrente">
+            </md-checkbox>
+            <span class="md-subhead">
+                Repetir Reserva    
+            </span>
         </md-input-container>
-        <md-input-container>
-            <md-select data-ng-model="$ctrl.reserva.diaSemana" required aria-label="selecao-dia"
-                        placeholder="Dia da Semana">
-                <md-option data-ng-repeat="(dia, propriedades) in ::$ctrl.diasRepeticao" data-ng-value="propriedades.numero">
-                    {{ dia }}
-                </md-option>
-            </md-select>
-        </md-input-container>
-        <md-checkbox
-            ng-model="$ctrl.reserva.recorrente"
-            aria-label="Recorrente"
-            id="checkbox-recorrente">
-        </md-checkbox>
-        <span class="md-subhead">
-            Repetir Reserva    
-        </span>
+        <span flex="10"></span>
+        <div layout="row" ng-if="$ctrl.reserva.recorrente">
+            <md-input-container>
+                <label>Fim repetição</label>
+                <input type="date" ng-model="$ctrl.reserva.fimRepeticao" ng-disabled="!$ctrl.reserva.recorrente">
+            </md-input-container>
+            <md-input-container>
+                <md-select data-ng-model="$ctrl.reserva.diaSemana" required aria-label="selecao-dia"
+                            placeholder="Dia da Semana" ng-disabled="!$ctrl.reserva.recorrente">
+                    <md-option data-ng-repeat="(dia, propriedades) in ::$ctrl.diasRepeticao" data-ng-value="propriedades.numero">
+                        {{ dia }}
+                    </md-option>
+                </md-select>
+                <label>Dia Repetição</label>
+            </md-input-container>
+        </div>
     </div>
     <!--end Repeticao-->
     <!--Autor-->
@@ -113,9 +119,8 @@
                 id="checkbox-termos">
         </md-checkbox>
         <span class="md-subhead">
-                                Li e aceito os <a href="" class="md-primary"
-                                                  ng-click="$ctrl.verTermos($event)">termos</a> para criação da reserva.
-                        </span>
+            Li e aceito os <a href="" class="md-primary" ng-click="$ctrl.verTermos($event)">termos</a> para criação da reserva.
+        </span>
     </md-input-container>
     <!--end Checkbox para aceitação de termos-->
 </div>

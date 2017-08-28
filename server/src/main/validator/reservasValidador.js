@@ -29,7 +29,7 @@ export class ReservasValidador {
     /**
      * Verifica se existe choque de horário entre a reserva e a lista
      * de reservas passadas. Não é checado a reserva com ela mesma nem a reserva
-     * com sua reserva pai.
+     * com sua reserva pai ou reservas com mesmo pai.
      * 
      * @param {Reserva} reserva Reserva a ser checada.
      * @param {[Reserva]} reservas Lista de reservas.
@@ -39,7 +39,10 @@ export class ReservasValidador {
         let diasOcupados = [];
         for (let i in reservas) {
             const r = reservas[i];
-            if (r._id.toString() === reserva._id || r.eventoPai === reserva._id) {
+            const mesmaReserva = r._id.toString() === reserva._id;
+            const reservaFilha = r.eventoPai === reserva._id;
+            const reservaIrma = r.eventoPai === reserva.eventoPai;
+            if (mesmaReserva || reservaFilha || reservaIrma) {
                 continue;
             }
             if (ReservasValidador.hasChoqueHorario(r, reserva)) {
@@ -88,12 +91,11 @@ export class ReservasValidador {
 
         let diasExtras = dataReserva.getDate() + diasAFrente + (repetirEstaSemana ? 0 : INTERVALO_REPETICAO);
         dataReserva.setDate(diasExtras);
-        
         while (dataReserva <= dataFim) {
             let diaStr = dataReserva.toISOString();
             diasRepeticao.push(diaStr);
             
-            diasExtras += INTERVALO_REPETICAO;
+            diasExtras = dataReserva.getDate() + INTERVALO_REPETICAO;
             dataReserva.setDate(diasExtras);
         }
         return diasRepeticao;

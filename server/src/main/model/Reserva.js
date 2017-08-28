@@ -75,6 +75,13 @@
         eventoPai: String
     });
 
+    reservaSchema.static('findByOnlyId', function (id, callback) {
+        return this.find({_id: id}, (err, result) => {
+            if (err) return callback(err, null);
+            return callback(err, _.first(result));
+        });
+    });
+
     reservaSchema.static('findById', function (email, id, callback) {
         return this.find({emailAutor: email, _id: id}, (err, result) => {
             if (err) return callback(err, null);

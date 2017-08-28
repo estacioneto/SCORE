@@ -59,25 +59,31 @@ import {ReservasValidador} from "../validator/reservasValidador";
                     reserva.autor = user.user_metadata.nome_completo;
                     ReservasValidador.validarHorario(reserva, err => {
                         if (err) return callback(err, null);
-                        return persisteReserva(new Reserva(reserva), (err, resp) => {
-                            if (!err) cadastrarRepeticoes(resp);
-                            callback(err, resp);
-                        });
+                        return persisteReservaComRepeticoes(new Reserva(reserva), callback);
                     });
                 })
                 .catch((err) => callback(err, null));
         });
     };
 
+    function persisteReservaComRepeticoes(reserva, callback) {
+        return persisteReserva(reserva, (err, reservaPersistida) => {
+            if (!err) return cadastrarRepeticoes(reservaPersistida, () => callback(null, reservaPersistida));
+            callback(err, reservaPersistida);
+        });
+    }
+
     /**
      * Realiza as operações sobre repetição para atualização de reserva.
      * Exclui as repetições e readiciona, caso se necessário.
      * 
      * @param {Reserva} reserva Reserva a ter as repetições atualizadas.
+     * @param {Function} cb Callback executado ao final da operação.
      */
-    function operacoesComRepeticaoAtualizacao(reserva) {
+    function operacoesComRepeticaoAtualizacao(reserva, cb) {
         excluirRepeticoes(reserva, (err, resp) => {
-            cadastrarRepeticoes(reserva);
+            if (err) return cb(err, null);
+            cadastrarRepeticoes(reserva, cb);
         });
     }
 
@@ -95,10 +101,11 @@ import {ReservasValidador} from "../validator/reservasValidador";
      * Cadastra as repetições para uma reserva.
      * 
      * @param {Reserva} reserva Reserva a ter as repetições cadastradas.
+     * @param {Function} cb Callback a ser executado quando a operação for concluída.
      */
-    function cadastrarRepeticoes(reserva) {
+    function cadastrarRepeticoes(reserva, cb) {
         if (!reserva.recorrente) {
-            return;
+            return cb();
         }
         const dias = ReservasValidador.calcularDiasRepeticao(reserva);
         const reservasRepetidas = [];
@@ -109,9 +116,7 @@ import {ReservasValidador} from "../validator/reservasValidador";
             reservaTemp.dia = new Date(diaRepeticao);
             reservasRepetidas.push(reservaTemp);
         });
-        Reserva.insertMany(reservasRepetidas, (err, docs) => {
-            if (err) console.log("Erro ao inserir", err);
-        });
+        Reserva.insertMany(reservasRepetidas, cb);
     }
 
     /**
@@ -139,13 +144,44 @@ import {ReservasValidador} from "../validator/reservasValidador";
             ReservasValidador.validarHorario(novaReserva, err => {
                 if (err) return callback(err, null);
                 _.updateModel(reservaAntiga, novaReserva);
-                persisteReserva(reservaAntiga, (err, resp) => {
-                    if (!err) operacoesComRepeticaoAtualizacao(resp)
-                    callback(err, resp);
-                });
+                
+                if (novaReserva.eventoPai) {
+                    const idReservaPai = reservaAntiga.eventoPai;
+                    reservaAntiga.eventoPai = null;
+                    reservaAntiga.save((err, res) => {
+                        atualizarReservaPai(idReservaPai, reservaAntiga.dia, (err, res) => {
+                            if (err) return callback(err, null);
+                            operacoesComRepeticaoAtualizacao(reservaAntiga, callback);
+                        });
+                    });
+                } else {
+                    persisteReserva(reservaAntiga, (err, reservaAtualizada) => {
+                        if (!err) return operacoesComRepeticaoAtualizacao(reservaAtualizada, () => callback(err, reservaAtualizada));
+                        callback(err, reservaAtualizada);
+                    });
+                }
             });
         });
     };
+
+    /**
+     * Atualiza a reserva paicom o novo dia de fim da repetição.
+     * 
+     * @param {*} idReservaPai Id da reserva Pai.
+     * @param {*} dia Novo dia de fim da repetição.
+     * @param {*} cb Callback para ser executado ao finalizar a operação.
+     */
+    function atualizarReservaPai(idReservaPai, dia, cb) {
+        Reserva.findByOnlyId(idReservaPai, (err, reservaPai) => {
+            const date = new Date(dia);
+            date.setDate(date.getDate() - 1);
+            reservaPai.fimRepeticao = date;
+            reservaPai.save((err, reservaPaiAtt) => {
+                if (err) return cb(err, null);
+                operacoesComRepeticaoAtualizacao(reservaPaiAtt, cb);
+            });
+        });
+    }
 
     /**
      * Obtém uma reserva dado o seu Id.
