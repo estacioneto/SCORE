@@ -6,7 +6,7 @@
      *
      * @author Estácio Pereira.
      */
-    angular.module('localModulo', []).factory('Local', [function () {
+    angular.module('localModulo').factory('Local', [function () {
 
         const PRIMEIRO_INDICE = 0,
             HORA_INICIO_INDICE = 2,

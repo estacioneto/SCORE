@@ -239,23 +239,8 @@ md-input-container.md-input-invalid > md-icon {
     height: 100%;
 }
 
-.slide {
-    max-height: 50%;
-    margin: 0 auto;
-}
-
-.container-carousel {
-    overflow: hidden;
-}
-
-.imagem-local-card {
-    max-height: 85%;
-    object-fit: cover;
-    height: auto;
-}
-
 .local-listagem-card {
-    max-width: 150px;
+    max-width: 100%;
     object-fit: cover;
     width: auto;
     height: auto;
@@ -265,7 +250,7 @@ md-input-container.md-input-invalid > md-icon {
     max-height: 80%;
     object-fit: cover;
     width: auto;
-    height: auto;
+    height: 100%;
 }
 
 .imagem-modal-full {
@@ -277,6 +262,17 @@ md-input-container.md-input-invalid > md-icon {
     bottom: 10px;
     right: 10px;
     background: white;
+}
+
+.favoritar-imagem-modal-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+}
+
+.material-icons.yellow{
+    color: yellow;
 }
 
 .circulo-legenda {
@@ -294,4 +290,30 @@ md-input-container.md-input-invalid > md-icon {
 .md-avatar-icon {
     max-width: 70px;
     max-height: 70px;
+}
+
+.wrapper-carousel {
+    width: 100%;
+    max-height: inherit;
+}
+
+.container-imagem {
+    max-height: inherit;
+    width: auto;
+}
+
+.container-carousel {
+    overflow: hidden;
+    max-height : 100%;
+    width: 56.25%;
+}
+
+.imagem-local-card {
+    min-width: 100%;
+    max-height: inherit;
+    object-fit: cover;
+}
+
+.local-card {
+    max-width: 250px;
 }
