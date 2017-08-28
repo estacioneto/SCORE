@@ -8,6 +8,7 @@
 * Funcionalidade: Reservas passadas agora tem a cor cinza e não são editáveis.
 * Correção: Agora não é mais possível cadastrar reservas em horários passados.
 * Issue 33: Corrigido cadastro de reserva para caso em que reserva ficava cadastrada no dia anterior.
+* Correção: Adicionado botão de voltar em edição e visualização de local e corrigida toolbar.
 
 ## 0.1.0
 * Funcionalidade: Adicionados tipos "Outro" e "Palestra" para Reserva.
