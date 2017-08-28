@@ -3,11 +3,20 @@
          class="imagem-modal"
          aria-label="Imagem expandida">
 
-    <md-button class="excluir-imagem-modal-button md-warn md-icon-button"
+    <md-button class="excluir-imagem-modal-button md-raised md-warn md-icon-button"
                ng-if="imagemCtrl.editavel"
                aria-label="Excluir imagem"
                ng-click="imagemCtrl.excluirImagem()">
         <md-icon>delete</md-icon>
         <md-tooltip md-direction="top">Excluir imagem</md-tooltip>
+    </md-button>
+
+    <md-button class="favoritar-imagem-modal-button md-icon-button"
+               ng-if="imagemCtrl.editavel"
+               aria-label="Definir capa"
+               ng-click="imagemCtrl.definirComoCapa()">
+        <i class="material-icons yellow" ng-if="!imagemCtrl.isCapa">star_border</i>
+        <i class="material-icons yellow" ng-if="imagemCtrl.isCapa">star</i>
+        <md-tooltip md-direction="top">Definir como capa</md-tooltip>
     </md-button>
 </div>
