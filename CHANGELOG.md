@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## unstable
+
+## 0.2.0
 * Manuteção: Mudado design do modal de reserva.
 * Refatoração: Adicionado state para a agenda dos locais (agora é possível compartilhar o link da agenda de um local).
 * Correção: Corrigido link para termos do local no modal de reserva.
