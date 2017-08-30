@@ -67,10 +67,10 @@
         fimRepeticao: {
             type: Date,
         },
-        diaSemana: {
+        frequencia: {
             type: Number,
-            max: [7, "Identificador de dia da semana inválido."],
-            min: [1, "Identificador de dia da semana inválido."]
+            max:[61, "Intervalo máximo de frequência permitido é 61 dias."],
+            min: [1, "Intervalo mínimo de frequência permitido é 1 dia."]
         },
         eventoPai: String
     });

@@ -82,14 +82,12 @@ export class ReservasValidador {
      * @return {[String]} Lista das datas de repetição, no formato ISO.
      */
     static calcularDiasRepeticao(reserva) {
-        const INTERVALO_REPETICAO = 7;
+        const INTERVALO_REPETICAO = reserva.frequencia;
         const diasRepeticao = [];
         const dataFim = new Date(reserva.fimRepeticao);
         const dataReserva = new Date(reserva.dia);
-        const diasAFrente = reserva.diaSemana - dataReserva.getDay();
-        const repetirEstaSemana = diasAFrente > 0;
 
-        let diasExtras = dataReserva.getDate() + diasAFrente + (repetirEstaSemana ? 0 : INTERVALO_REPETICAO);
+        let diasExtras = dataReserva.getDate() + INTERVALO_REPETICAO;
         dataReserva.setDate(diasExtras);
         while (dataReserva <= dataFim) {
             let diaStr = dataReserva.toISOString();

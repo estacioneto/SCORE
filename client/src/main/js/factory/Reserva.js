@@ -31,7 +31,6 @@ let sequenceReserva = 1;
                           fimRepeticao,
                           frequencia,
                           recorrente,
-                          diaSemana,
                           eventoPai}) {
 
             obterPropriedades(this, {_id,
@@ -46,7 +45,6 @@ let sequenceReserva = 1;
                                  fimRepeticao,
                                  frequencia,
                                  recorrente,
-                                 diaSemana,
                                  eventoPai});
         }
 
@@ -61,7 +59,7 @@ let sequenceReserva = 1;
             Object.assign(instancia, props);
             instancia.dia = new Date(instancia.dia);
             instancia.fimRepeticao = new Date(instancia.fimRepeticao || instancia.dia);
-            instancia.diaSemana = instancia.diaSemana || 1;
+            instancia.frequencia = instancia.frequencia || 7;
         }
 
         /**

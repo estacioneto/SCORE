@@ -93,15 +93,6 @@
                 <label>Fim repetição</label>
                 <input type="date" ng-model="$ctrl.reserva.fimRepeticao" ng-disabled="!$ctrl.reserva.recorrente">
             </md-input-container>
-            <md-input-container>
-                <md-select data-ng-model="$ctrl.reserva.diaSemana" required aria-label="selecao-dia"
-                            placeholder="Dia da Semana" ng-disabled="!$ctrl.reserva.recorrente">
-                    <md-option data-ng-repeat="(dia, propriedades) in ::$ctrl.diasRepeticao" data-ng-value="propriedades.numero">
-                        {{ dia }}
-                    </md-option>
-                </md-select>
-                <label>Dia Repetição</label>
-            </md-input-container>
         </div>
     </div>
     <!--end Repeticao-->
