@@ -2,7 +2,10 @@
     <div class="md-toolbar-tools">
         <div layout flex>
             <div data-ng-if="$ctrl.edicao" flex>
-                <h2 data-editable-text="$ctrl.reserva.titulo" placeholder="Título *" flex></h2>
+                <h2 data-editable-text="$ctrl.reserva.titulo"
+                    data-edit-mode="true"
+                    placeholder="Título *"
+                    flex></h2>
             </div>
             <div data-ng-if="!$ctrl.edicao">
                 <h2 data-ng-bind="$ctrl.reserva.titulo"></h2>
