@@ -317,8 +317,3 @@ md-input-container.md-input-invalid > md-icon {
 .local-card {
     max-width: 250px;
 }
-
-.toolbar-input-container {
-    margin-top: 24px;
-    margin-bottom: 0;
-}
