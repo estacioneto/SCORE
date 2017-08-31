@@ -14,7 +14,7 @@
 * Refatoração: A diretiva utilizada para exibição das imagens do local foi trocada por uma mais robusta.
 * Correção: Adicionado botão de voltar em edição e visualização de local e corrigida toolbar.
 * Refatoração: Adicionada verificação para o botão "Go Home" ser clicável.
-* Refatoração: Traduzido os textos dos botões de entrar e sair da aplicação.
+* Refatoração: Traduzido textos dos botões de entrar e sair da aplicação.
 
 ## 0.1.0
 * Funcionalidade: Adicionados tipos "Outro" e "Palestra" para Reserva.

@@ -75,10 +75,11 @@
                     scope.getNomeState = nomeState => _.last(nomeState.split('.')).replace(/[^a-zA-Z]/g, '\ ');
 
                     /**
-                     * Vai para tela inicial do aplicativo: Agenda.
+                     * Redireciona para tela inicial do aplicativo, caso o usuário não esteja logado, redireciona para
+                     * a tela de login.
                      */
-                    scope.goHome = function () {
-                        $state.go(APP_STATES.AGENDA_INFO.nome);
+                    scope.irParaInicio = function () {
+                        $state.go(scope.auth.isAuthenticated() ? APP_STATES.AGENDA_INFO.nome : APP_STATES.LOGIN.nome);
                     };
 
                     /**
