@@ -12,9 +12,8 @@
 
                     /**
                      * Funcao para alternar a barra de menu lateral
-                     * 
                      */
-                    scope.menuFunction = function () {
+                    scope.toggleBarraLateral = function () {
                         var sidenav = $mdSidenav('main-sidenav');
                         if (sidenav.isOpen()) {
                             sidenav.close();
@@ -30,16 +29,15 @@
                      * (chamadas de estados e servicos).
                      * 
                      */
-                    scope.logout = function () {
+                    scope.sair = function () {
                         scope.auth.logout();
                         $state.go(APP_STATES.LOGIN.nome);
                     };
 
                     /**
                      * Responsavel, basicamente, por mostrar o Auth0 lock modal
-                     * 
                      */
-                    scope.signIn = function () {
+                    scope.entrar = function () {
                         scope.lock.show();
                         AuthLockService.inicializarVerificacoes();
                     };
@@ -65,9 +63,9 @@
                      *
                      * @returns {string} O nome mostrado ao usuario.
                      */
-                    scope.getCurrentStateName = function () {
-                        var currentState = $state.current;
-                        if (currentState.name !== APP_STATES.AGENDA_INFO.nome && currentState.name !== APP_STATES.LOGIN.nome) {
+                    scope.getNomeDoEstadoAtual = function () {
+                        var estadoAtual = $state.current;
+                        if (estadoAtual.name !== APP_STATES.AGENDA_INFO.nome && estadoAtual.name !== APP_STATES.LOGIN.nome) {
                             const nomeState = $state.current.nome || $state.current.name;
                             return scope.getNomeState(nomeState.toUpperCase());
                         }
@@ -77,10 +75,11 @@
                     scope.getNomeState = nomeState => _.last(nomeState.split('.')).replace(/[^a-zA-Z]/g, '\ ');
 
                     /**
-                     * Vai para home.
+                     * Redireciona para tela inicial do aplicativo, caso o usuário não esteja logado, redireciona para
+                     * a tela de login.
                      */
-                    scope.goHome = function () {
-                        $state.go(true || scope.auth.isAuthenticated() ? APP_STATES.AGENDA_INFO.nome : APP_STATES.LOGIN.nome);
+                    scope.irParaInicio = function () {
+                        $state.go(scope.auth.isAuthenticated() ? APP_STATES.AGENDA_INFO.nome : APP_STATES.LOGIN.nome);
                     };
 
                     /**
