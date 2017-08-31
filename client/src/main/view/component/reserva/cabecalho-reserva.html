@@ -1,7 +1,14 @@
 <md-toolbar>
     <div class="md-toolbar-tools">
-        <h2>{{($ctrl.reserva.titulo || "Reserva")}}</h2>
-        <span flex></span>
+        <div layout flex>
+            <div data-ng-if="$ctrl.edicao" flex>
+                <h2 data-editable-text="$ctrl.reserva.titulo" placeholder="Título *" flex></h2>
+            </div>
+            <div data-ng-if="!$ctrl.edicao">
+                <h2 data-ng-bind="$ctrl.reserva.titulo"></h2>
+                <span flex></span>
+            </div>
+        </div>
         <md-button class="md-icon-button" ng-click="$ctrl.fechar()">
             <md-icon aria-label="Fechar Dialog">close</md-icon>
         </md-button>
