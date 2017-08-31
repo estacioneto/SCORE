@@ -37,6 +37,7 @@
                 '../node_modules/angular-ui-mask/dist/mask.min.js',
                 '../node_modules/angular-messages/angular-messages.min.js',
                 'resources/auth0lock.min.js',
+                'vendor/angular-editable-text/angular-editable-text.min.js',
                 '../node_modules/angular-jwt/dist/angular-jwt.min.js',
                 '../node_modules/angular-lock/dist/angular-lock.min.js',
                 '../node_modules/angular-sanitize/angular-sanitize.min.js',
