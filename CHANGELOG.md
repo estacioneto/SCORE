@@ -13,6 +13,8 @@
 * Funcionalidade: Adcionada função de definir a imagem de capa de um local.
 * Refatoração: A diretiva utilizada para exibição das imagens do local foi trocada por uma mais robusta.
 * Correção: Adicionado botão de voltar em edição e visualização de local e corrigida toolbar.
+* Refatoração: Adicionada verificação para o botão "Go Home" ser clicável.
+* Refatoração: Traduzidos textos dos botões de entrar e sair da aplicação.
 * Manutenção: Adicionado limites para horário de início e fim do calendário de acordo com o horário de funcionamento do local.
 
 ## 0.1.0
