@@ -11,7 +11,8 @@
         templateUrl: 'view/component/reserva/cabecalho-reserva.html',
         bindings: {
             formulario: '=',
-            reserva: '='
+            reserva: '=',
+            edicao: '='
         },
         controller: ['$mdDialog', function ($mdDialog) {
 

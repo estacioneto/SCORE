@@ -16,6 +16,7 @@
             'angular-storage',
             'angular-jwt',
             'auth0.lock',
+            'gg.editableText',
 
             // Nossos modulos
             'modalModule',
