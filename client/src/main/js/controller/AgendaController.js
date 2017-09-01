@@ -22,9 +22,13 @@
              * @param reserva Reserva clicado.
              * @return {Promise} Promise do modal de visualização da reserva
              */
-            this.clickReserva = function (reserva) {
+            this.visualizarReserva = function (reserva) {
                 const reservaObj = new Reserva(reserva);
-                return ModalService.verReserva(reservaObj);
+                return ModalService.verReserva(reservaObj, self.local).then(info => {
+                    uiCalendarConfig.calendars.calendario.fullCalendar('removeEvents');
+                    uiCalendarConfig.calendars.calendario.fullCalendar('addEventSource', _.first(self.reservasSource));
+                    return info;
+                });
             };
 
             /**
@@ -41,7 +45,7 @@
 
                 if (calendario.fullCalendar('getView').type === 'agendaDay' ||
                     calendario.fullCalendar('getView').type === 'agendaWeek') {
-                    if(data.isAfter(moment())){
+                    if (data.isAfter(moment())) {
                         self.criarReserva(data.toDate());
                     }
                 } else {
@@ -71,7 +75,7 @@
                             eventLimit: 4
                         }
                     },
-                    eventClick: self.clickReserva,
+                    eventClick: self.visualizarReserva,
                     dayClick: self.clickDia,
                     eventAfterAllRender: transformaBotoesCalendario,
                     buttonText: {
@@ -95,7 +99,7 @@
                         localId: self.local._id
                     });
 
-                    return ModalService.verReserva(reserva, this.local);
+                    return this.visualizarReserva(reserva);
                 }
             };
 
@@ -155,7 +159,7 @@
              *
              * @return {Promise} Promessa contendo as reservas do local selecionado.
              */
-            this.init = function () {
+            this.carregarReservas = function () {
                 return AgendamentoService.carregarReservasDoLocal(local._id).then(data => {
                     self.reservasSource.splice(0, self.reservasSource.length);
                     const reservas = data.data;
@@ -164,6 +168,6 @@
                 });
             };
 
-            this.init();
+            this.carregarReservas();
         }]);
 })();

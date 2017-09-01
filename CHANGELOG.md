@@ -4,6 +4,7 @@
 * Refatoração: Adicionada verificação para o botão "Go Home" ser clicável.
 * Refatoração: Traduzidos textos dos botões de entrar e sair da aplicação.
 * Refatoração: Mudado local para designar título à reserva.
+* Issue 60: Corrigida atualização de reservas na agenda.
 
 ## 0.2.0
 * Manuteção: Mudado design do modal de reserva.
