@@ -5,6 +5,7 @@
 * Refatoração: Traduzidos textos dos botões de entrar e sair da aplicação.
 * Refatoração: Mudado local para designar título à reserva.
 * Manutenção: Adicionado limites para horário de início e fim do calendário de acordo com o horário de funcionamento do local.
+* Manutenção: Horário de fim da reserva agora inicia preenchido no modal de criação da mesma.
 
 ## 0.2.0
 * Manuteção: Mudado design do modal de reserva.
