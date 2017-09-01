@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## unstable
+
+## 0.2.1
 * Refatoração: Adicionada verificação para o botão "Go Home" ser clicável.
 * Refatoração: Traduzidos textos dos botões de entrar e sair da aplicação.
 * Refatoração: Mudado local para designar título à reserva.
