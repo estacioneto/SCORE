@@ -2,7 +2,7 @@
     'use strict';
 
     /**
-     * Controller responsável pela view da listagem de auditórios em agenda.
+     * Controller responsável pela view da listagem de locais em agenda.
      *
      * @author Estácio Pereira.
      */

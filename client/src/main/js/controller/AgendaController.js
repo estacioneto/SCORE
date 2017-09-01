@@ -116,9 +116,9 @@
             this.voltaParaListagem = () => $state.goBack(APP_STATES.AGENDA_INFO.nome);
 
             /**
-             * Redireciona para tela de informações do auditório atual.
+             * Redireciona para tela de informações do local atual.
              */
-            this.visualizarAuditorio = function () {
+            this.visualizarLocal = function () {
                 $state.go(APP_STATES.LOCAL_ID_INFO.nome, {idLocal: self.local._id});
             };
 
