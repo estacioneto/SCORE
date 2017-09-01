@@ -96,7 +96,7 @@
                 controller = createController();
 
                 AuthService.userTemPermissao = sinon.stub().returns(true);
-                $mdDialog.show = sinon.stub();
+                $mdDialog.show = sinon.stub().returns(self.$q.when());
             }));
 
            it('Não permitir criação de reservas em horários passados', function () {
