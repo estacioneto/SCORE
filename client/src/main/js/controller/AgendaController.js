@@ -22,9 +22,13 @@
              * @param reserva Reserva clicado.
              * @return {Promise} Promise do modal de visualização da reserva
              */
-            this.clickReserva = function (reserva) {
+            this.visualizarReserva = function (reserva) {
                 const reservaObj = new Reserva(reserva);
-                return ModalService.verReserva(reservaObj);
+                return ModalService.verReserva(reservaObj, self.local).then(info => {
+                    uiCalendarConfig.calendars.calendario.fullCalendar('removeEvents');
+                    uiCalendarConfig.calendars.calendario.fullCalendar('addEventSource', _.first(self.reservasSource));
+                    return info;
+                });
             };
 
             /**
@@ -82,7 +86,7 @@
                             eventLimit: 4
                         }
                     },
-                    eventClick: self.clickReserva,
+                    eventClick: self.visualizarReserva,
                     dayClick: self.clickDia,
                     eventAfterAllRender: configCalendarioPosRenderizacao,
                     buttonText: {
@@ -108,7 +112,7 @@
                         localId: self.local._id
                     });
 
-                    return ModalService.verReserva(reserva, this.local);
+                    return this.visualizarReserva(reserva);
                 }
             };
 
@@ -141,9 +145,9 @@
             this.voltaParaListagem = () => $state.goBack(APP_STATES.AGENDA_INFO.nome);
 
             /**
-             * Redireciona para tela de informações do auditório atual.
+             * Redireciona para tela de informações do local atual.
              */
-            this.visualizarAuditorio = function () {
+            this.visualizarLocal = function () {
                 $state.go(APP_STATES.LOCAL_ID_INFO.nome, {idLocal: self.local._id});
             };
 
@@ -185,8 +189,10 @@
             }
 
             /**
-             * Ajusta a altura do calendário, pós-renderização, baseado no tipo da
-             * visualização do mesmo.
+             * Ajusta a altura do calendário, após a renderização do mesmo baseado no tipo
+             * da sua visualização. Caso a visualização seja do mês, o calendário terá altura
+             * máxima, caso seja visualização da semana ou dia, o calendário terá a altura
+             * baseada na quantidade de horas exibidas.
              *
              * @param calendarioConfig Objeto que contém informações sobre o calendário
              * renderizado.
@@ -220,7 +226,7 @@
              *
              * @return {Promise} Promessa contendo as reservas do local selecionado.
              */
-            this.init = function () {
+            this.carregarReservas = function () {
                 return AgendamentoService.carregarReservasDoLocal(local._id).then(data => {
                     self.reservasSource.splice(0, self.reservasSource.length);
                     const reservas = data.data;
@@ -229,6 +235,6 @@
                 });
             };
 
-            this.init();
+            this.carregarReservas();
         }]);
 })();

@@ -5,7 +5,7 @@
             <!-- MainContent -->
             <div class="caixa-calendario"
                  layout="column" flex>
-                <!--Nome do auditório selecionado e botão voltar-->
+                <!--Nome do local selecionado e botão voltar-->
                 <div layout="row" layout align="space-between start">
                     <md-button class="md-icon-button"
                                type="button"
@@ -15,18 +15,18 @@
                         <md-tooltip>Voltar</md-tooltip>
                     </md-button>
                     <div layout="column" layout-align="center center" flex>
-                        <span class="md-subhead">Agenda do Auditório</span>
+                        <span class="md-subhead">Agenda do Local</span>
                         <span class="md-headline">{{agendaCtrl.local.nome}}</span>
                     </div>
                     <md-button class="md-icon-button" type="button"
                                ng-disabled="!agendaCtrl.local"
-                               ng-click="agendaCtrl.visualizarAuditorio()">
+                               ng-click="agendaCtrl.visualizarLocal()">
                         <md-icon>info_outline</md-icon>
                         <md-tooltip>Sobre o local</md-tooltip>
                     </md-button>
                     <div flex="3"></div>
                 </div>
-                <!--end Nome do auditório selecionado e botão voltar>
+                <!--end Nome do local selecionado e botão voltar>
                 <!--Barra legenda de cores-->
                 <md-content layout="row"
                     layout-align="center center"
