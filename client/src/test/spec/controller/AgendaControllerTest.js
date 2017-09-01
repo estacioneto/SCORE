@@ -53,7 +53,7 @@
             };
         }));
 
-        describe.only('AgendaController visualizarReserva deve', () => {
+        describe('AgendaController visualizarReserva deve', () => {
             let controller;
             beforeEach(() => {
                 controller = createController();

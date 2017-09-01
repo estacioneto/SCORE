@@ -43,14 +43,8 @@
             this.clickDia = function (data) {
                 const calendario = uiCalendarConfig.calendars.calendario;
 
-<<<<<<< HEAD
-                if (calendario.fullCalendar('getView').type === 'agendaDay' ||
-                    calendario.fullCalendar('getView').type === 'agendaWeek') {
-                    if (data.isAfter(moment())) {
-=======
                 if (isVisualizacaoDiaOuSemana(calendario.fullCalendar('getView'))) {
                     if(data.isAfter(moment())){
->>>>>>> 4a7873e5e7d7930ec38f951d061664188b6913c7
                         self.criarReserva(data.toDate());
                     }
                 } else {
