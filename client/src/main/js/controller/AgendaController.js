@@ -43,9 +43,14 @@
             this.clickDia = function (data) {
                 const calendario = uiCalendarConfig.calendars.calendario;
 
+<<<<<<< HEAD
                 if (calendario.fullCalendar('getView').type === 'agendaDay' ||
                     calendario.fullCalendar('getView').type === 'agendaWeek') {
                     if (data.isAfter(moment())) {
+=======
+                if (isVisualizacaoDiaOuSemana(calendario.fullCalendar('getView'))) {
+                    if(data.isAfter(moment())){
+>>>>>>> 4a7873e5e7d7930ec38f951d061664188b6913c7
                         self.criarReserva(data.toDate());
                     }
                 } else {
@@ -54,15 +59,27 @@
             };
 
             /**
+             * Verifica se o calendário está na visualização da semana ou do dia.
+             *
+             * @param view Tela em que o calendário está renderizado.
+             * @return {boolean} {@code true} se o calendário está na visualização
+             * da semana ou do dia, {@code false} caso contrário.
+             */
+            function isVisualizacaoDiaOuSemana(view) {
+                return view.type === 'agendaDay' || view.type === 'agendaWeek';
+            }
+
+            /**
              * Objeto enviado à diretiva do calendário com todas as configurações desejadas.
              * Consultar: https://fullcalendar.io/docs/
              */
             this.calendarioConfig = {
                 calendario: {
-                    height: "100%",
                     editable: false,
                     ignoreTimezone: false,
                     timezone: 'local',
+                    minTime: self.local.getInicioFuncionamento(),
+                    maxTime: self.local.getFimFuncionamento(),
                     lang: 'pt-br',
                     header: {
                         left: 'month agendaWeek agendaDay',
@@ -77,7 +94,7 @@
                     },
                     eventClick: self.visualizarReserva,
                     dayClick: self.clickDia,
-                    eventAfterAllRender: transformaBotoesCalendario,
+                    eventAfterAllRender: configCalendarioPosRenderizacao,
                     buttonText: {
                         agendaWeek: 'Semana',
                         agendaDay: 'Dia'
@@ -138,6 +155,37 @@
                     });
                 }
                 return [];
+            }
+
+            /**
+             * Executa as configurações que necessitam que o calendário tenha sido
+             * renderizado.
+             *
+             * @param calendarioConfig Objeto que contém informações sobre o calendário
+             * renderizado.
+             */
+            function configCalendarioPosRenderizacao(calendarioConfig) {
+                ajustaAltura(calendarioConfig);
+                transformaBotoesCalendario();
+            }
+
+            /**
+             * Ajusta a altura do calendário, após a renderização do mesmo baseado no tipo
+             * da sua visualização. Caso a visualização seja do mês, o calendário terá altura
+             * máxima, caso seja visualização da semana ou dia, o calendário terá a altura
+             * baseada na quantidade de horas exibidas.
+             *
+             * @param calendarioConfig Objeto que contém informações sobre o calendário
+             * renderizado.
+             */
+            function ajustaAltura(calendarioConfig) {
+                const calendario = uiCalendarConfig.calendars.calendario;
+
+                if (calendario) {
+                    const altura = isVisualizacaoDiaOuSemana(calendarioConfig) ? 'auto' : '100%';
+
+                    calendario.fullCalendar('option', 'height', altura);
+                }
             }
 
             /**

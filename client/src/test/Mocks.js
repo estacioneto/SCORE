@@ -68,7 +68,7 @@
         }
 
         function getLocal(data = {}) {
-            return Object.assign({}, _.first(getLocais), data);
+            return new Local(Object.assign({}, _.first(getLocais), data));
         }
 
         return {getLocais, getLocal};
