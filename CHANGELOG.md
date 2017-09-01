@@ -5,6 +5,7 @@
 * Refatoração: Traduzidos textos dos botões de entrar e sair da aplicação.
 * Refatoração: Mudado local para designar título à reserva.
 * Manutenção: Adicionado limites para horário de início e fim do calendário de acordo com o horário de funcionamento do local.
+* Issue 71: Corrigido nome de "Auditório" para "Local" na visualização da agenda de um local.
 
 ## 0.2.0
 * Manuteção: Mudado design do modal de reserva.
