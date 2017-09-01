@@ -160,8 +160,10 @@
             }
 
             /**
-             * Ajusta a altura do calendário, pós-renderização, baseado no tipo da
-             * visualização do mesmo.
+             * Ajusta a altura do calendário, após a renderização do mesmo baseado no tipo
+             * da sua visualização. Caso a visualização seja do mês, o calendário terá altura
+             * máxima, caso seja visualização da semana ou dia, o calendário terá a altura
+             * baseada na quantidade de horas exibidas.
              *
              * @param calendarioConfig Objeto que contém informações sobre o calendário
              * renderizado.
