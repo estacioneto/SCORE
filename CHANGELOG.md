@@ -7,6 +7,7 @@
 * Manutenção: Adicionado limites para horário de início e fim do calendário de acordo com o horário de funcionamento do local.
 * Issue 71: Corrigido nome de "Auditório" para "Local" na visualização da agenda de um local.
 * Issue 60: Corrigida atualização de reservas na agenda.
+* Manutenção: Horário de fim da reserva agora inicia preenchido no modal de criação da mesma.
 
 ## 0.2.0
 * Manuteção: Mudado design do modal de reserva.

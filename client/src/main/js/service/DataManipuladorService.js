@@ -61,6 +61,30 @@
         };
 
         /**
+         * Incrementa as horas da data especificada de acordo com o incremento
+         * também especificado. Caso o incremento seja um valor negativo, o horário
+         * da data será atrasado.
+         *
+         * @param data Data a ter as horas incrementadas.
+         * @param incremento Quantidade a ser incrementada nas horas da data.
+         */
+        this.incrementaHora = function (data, incremento) {
+            data.setHours(data.getHours() + incremento);
+        };
+
+        /**
+         * Incrementa os minutos da data especificada de acordo com o incremento
+         * também especificado. Caso o incremento seja um valor negativo, o horário
+         * da data será atrasado.
+         *
+         * @param data Data a ter as horas incrementadas.
+         * @param incremento Quantidade a ser incrementada nos minutos da data.
+         */
+        this.incrementaMinuto = function (data, incremento) {
+            data.setMinutes(data.getMinutes() + incremento);
+        };
+
+        /**
          * Retorna se a data especificada é futura em relação a data atual.
          *
          * @param {Date} data

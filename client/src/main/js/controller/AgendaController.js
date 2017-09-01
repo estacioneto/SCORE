@@ -100,6 +100,7 @@
              * Abre o modal para criação de reserva no dia especificado, caso o usuário tenha a
              * permissão necessária para tal.
              *
+             * @param {Date} data Data que contém o horário de início da reserva.
              * @return {Promise} Promise do modal.
              */
             this.criarReserva = (data) => {
@@ -107,12 +108,36 @@
                     const reserva = new Reserva({
                         dia: DataManipuladorService.parseData(data),
                         inicio: DataManipuladorService.getHorarioEmString(data),
+                        fim: getHorarioDeFimReserva(data),
                         localId: self.local._id
                     });
 
                     return this.visualizarReserva(reserva);
                 }
             };
+
+            /**
+             * Retorna o horário de fim da reserva baseado no horario de início da mesma,
+             * pois o fim deve ter 1 hora a mais que o início. Caso o horário de fim, já
+             * acrescido em 1 hora, seja superior ao horário de fim do funcionamento do
+             * local atual, o horário fim do funcionamento será o valor retornado.
+             *
+             * @param dataInicioReserva Objeto data que contem o horário de início da reserva.
+             * @return {string} Horário de fim da reserva, no formato HH:mm.
+             */
+            function getHorarioDeFimReserva(dataInicioReserva) {
+                const dataFimReserva = angular.copy(dataInicioReserva);
+                /*
+                * O horário de fim da reserva deve possuir 1 hora a mais
+                 * do horário de início da mesma.
+                */
+                DataManipuladorService.incrementaHora(dataFimReserva, 1);
+
+                const horarioFimReserva = DataManipuladorService.getHorarioEmString(dataFimReserva),
+                    horarioFimLocal = self.local.getFimFuncionamento();
+
+                return (horarioFimReserva < horarioFimLocal) ? horarioFimReserva : horarioFimLocal;
+            }
 
             /**
              * Retorna a visualização para listagem de calendários.
