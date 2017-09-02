@@ -22,7 +22,7 @@
                         }
                     };
 
-                    scope.user = AuthService.getLoggedUser();
+                    scope.user = AuthService.getUsuarioLogado();
 
                     /**
                      * Responsavel pela logica de logout relacionada ao controller

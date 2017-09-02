@@ -55,9 +55,9 @@
          *
          * @returns {User} O usuário logado.
          */
-        this.getLoggedUser = function () {
-            return (angular.isString(auth.profile)) ?
-                new Usuario(JSON.parse(auth.profile)) : auth.profile;
+        this.getUsuarioLogado = function () {
+            const usuario = angular.isString(auth.profile) ? JSON.parse(auth.profile) : auth.profile;
+            return usuario ? new Usuario(usuario) : null;
         };
 
         /**
@@ -79,7 +79,7 @@
          * seja Admin, {@code false} caso contrário.
          */
         this.userTemPermissao = function (permissao) {
-            const permissoesUser = this.getLoggedUser().permissoes;
+            const permissoesUser = this.getUsuarioLogado().permissoes;
 
             return (_.includes(permissoesUser, PERMISSOES.ADMIN)
                 || _.includes(permissoesUser, permissao));

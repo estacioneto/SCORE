@@ -1,12 +1,11 @@
 (() => {
     'use strict';
 
-    angular.module('localModulo').controller('LocalController', ['$state', '$stateParams', '$q', 'APP_STATES', 'Local', 'local', 'LocaisService', 'ModalService', 'ToastService', function ($state, $stateParams, $q, APP_STATES, Local, local, LocaisService, ModalService, ToastService) {
+    angular.module('localModulo').controller('LocalController', ['$state', '$stateParams', '$q', 'APP_STATES', 'Local', 'local', 'LocaisService', 'ModalService', 'ToastService', 'AuthService', function ($state, $stateParams, $q, APP_STATES, Local, local, LocaisService, ModalService, ToastService, AuthService) {
         const self = this;
 
-        this.isAdmin = () => true;
-
-        this.edicao = this.isAdmin();
+        const usuarioLogado = AuthService.getUsuarioLogado();
+        this.admin = usuarioLogado.isAdmin();
         this.local = local;
 
         /**
@@ -31,8 +30,6 @@
         function podeRedirecionarLocal(local) {
             return !!local && (!self.local || (local._id !== self.local._id));
         }
-
-        this.isModoEdicao = () => this.edicao;
 
         /**
          * Redireciona para tela de criação de local.

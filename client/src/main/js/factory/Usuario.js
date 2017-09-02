@@ -15,8 +15,8 @@
          * @constructor
          */
         function Usuario(user) {
+            this.user_metadata = this.user_metadata || {};
             Object.assign(this, user);
-            this.organizarMetadados();
         }
 
         /**
@@ -24,7 +24,13 @@
          */
         Usuario.prototype.organizarMetadados = function () {
             _.each(METADADOS, prop => {
-                this.__defineGetter__(prop, () => this.user_metadata[prop]);
+                this.__defineGetter__(prop, function () {
+                    return this.user_metadata[prop];
+                });
+
+                this.__defineSetter__(prop, function (valor) {
+                    this.user_metadata[prop] = valor;
+                });
             });
         };
 
@@ -36,6 +42,8 @@
         };
 
         Usuario.prototype.constructor = Usuario;
+
+        Usuario.prototype.organizarMetadados();
 
         return Usuario;
     }]);

@@ -67,6 +67,7 @@
                 'src/main/js/controller/AppController.js',
                 'src/main/js/controller/LoginController.js',
                 'src/main/js/controller/AgendaController.js',
+                'src/main/js/controller/LocalController.js',
                 'src/main/js/controller/DetalhesReservaController.js',
                 'src/main/js/component/reserva/DetalhesReservaEdicao.js',
                 'src/main/view/**/*.html',

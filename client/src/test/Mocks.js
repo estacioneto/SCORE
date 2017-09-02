@@ -3,8 +3,8 @@
 
     var mocksModule = angular.module('Mocks', ['userModule', 'localModulo']);
 
-    mocksModule.factory('UsuarioMock', ['Usuario', function (Usuario) {
-        this.get = function () {
+    mocksModule.factory('UsuarioMock', ['Usuario', "PERMISSOES",function (Usuario, PERMISSOES) {
+        this.getUsuario = function () {
             return new Usuario({
                 clientID: AUTH0_CLIENT_ID,
                 created_at: "2016-11-11T22:07:49.974Z",
@@ -23,14 +23,22 @@
                 updated_at: "2017-01-01T16:01:10.061Z",
                 user_id: "auth0|58264135c8c5c2816298f466",
                 user_metadata: {
-                    given_name: "Piton",
-                    family_name: "Breno"
+                    nome_completo: "Sistema de Controle de Reservas",
+                    numero_telefone: "(99)9999-9999",
+                },
+                app_metadata: {
+                    permissoes: []
                 }
             });
         };
-        return {
-            get: this.get
+
+        this.getUsuarioAdmin = function () {
+            const usuario = this.getUsuario();
+            usuario.app_metadata.permissoes.push(PERMISSOES.ADMIN);
+            return usuario;
         };
+
+        return this;
     }]);
 
     mocksModule.factory('ReservasMock', ['Reserva', function (Reserva) {
