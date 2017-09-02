@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## unstable
+* Issue 82: Corrigida validação da mostragem do botão do menu de Local.
 
 ## 0.2.1
 * Refatoração: Adicionada verificação para o botão "Go Home" ser clicável.

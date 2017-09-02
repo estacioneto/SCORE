@@ -11,7 +11,7 @@
                     const GIT_URL = 'https://github.com/estacioneto/SCORE';
 
                     scope.auth = AuthService;
-                    scope.usuario = new Usuario(scope.auth.getLoggedUser());
+                    scope.usuario = new Usuario(scope.auth.getUsuarioLogado());
 
                     scope.nomeUsuario = _.first(scope.usuario.nome_completo.split(' '));
 
