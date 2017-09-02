@@ -15,7 +15,6 @@
 
             (function () {
                 if (!_.isEmpty(self.user)) {
-                    console.log('qqqqqqqqq');
                     redirect(self.user);
                 }
 
