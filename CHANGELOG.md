@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## unstable
+
+## 0.2.2
 * Issue 82: Corrigida validação da mostragem do botão do menu de Local.
 
 ## 0.2.1
