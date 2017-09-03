@@ -72,24 +72,24 @@
              *
              * @return Promise.
              */
-            this.salvarReserva = async () => {
-                const preChecks = await preSaveChecks();
+            this.salvarReserva = () => {
+                return preSaveChecks().then(() => {
+                    self.isEdicao = false;
+                    preSalvar();
 
-                self.isEdicao = false;
-                preSalvar();
-
-                const callbackReabrirReserva = () => {
-                    self.reserva.autor = undefined;
-                    return ModalService.verReserva(self.reserva);
-                };
-                return self.reserva.salvar().then(data => {
-                    AgendamentoService.salvarReserva(self.reserva);
-                    ToastService.showActionToast("Reserva atualizada.");
-                    eraRecorrente = self.reserva.recorrente;
-                    posSalvar();
-                    return data;
-                }, err => {
-                    return ModalService.error(err.data).then(callbackReabrirReserva);
+                    const callbackReabrirReserva = () => {
+                        self.reserva.autor = undefined;
+                        return ModalService.verReserva(self.reserva);
+                    };
+                    return self.reserva.salvar().then(data => {
+                        AgendamentoService.salvarReserva(self.reserva);
+                        ToastService.showActionToast("Reserva atualizada.");
+                        eraRecorrente = self.reserva.recorrente;
+                        posSalvar();
+                        return data;
+                    }, err => {
+                        return ModalService.error(err.data).then(callbackReabrirReserva);
+                    });
                 });
             };
 
