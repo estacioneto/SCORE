@@ -1,20 +1,6 @@
 import {LocaisService} from "../service/LocaisService";
 import {ReservasValidador} from "../validator/reservasValidador";
 
-/**
- * TODO: refatorar esta parte.
- * 
- * 1- utilizar updates para atualizar as reservas da repeticao de acordo com a reserva
- * pai
- * 2- ao atualizar reserva sozinha, nao remover referencia da reserva pai - para quando
- * atualizar a pai, atualizar todas as filhas
- * 3- ao atualizar uma repeticao junto das proximas, atualizar todas que tem o mesmo idPai
- * e que o dia está a frente do dia da que você está atualizando
- * 4- ao atualizar o intervalo de repetição: apenas remover futuras invalidas
- * ou adicionar futuras inexistentes.
- * 5- ao alterar data de repeticao: readicionar
- */
-
 (function () {
     'use strict';
     let Reserva = require('../model/Reserva'),
@@ -80,6 +66,12 @@ import {ReservasValidador} from "../validator/reservasValidador";
         });
     };
 
+    /**
+     * Realiza a persistência da reserva e em seguida as suas respectivas repetições.
+     * 
+     * @param {Reserva} reserva Reserva a ser persistida.
+     * @param {Function} callback Callback a ser executado no final da operação.
+     */
     function persisteReservaComRepeticoes(reserva, callback) {
         return persisteReserva(reserva).then(reservaPersistida => 
             cadastrarRepeticoes(reservaPersistida, () => callback(null, reservaPersistida))
