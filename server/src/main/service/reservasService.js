@@ -81,10 +81,11 @@ import {ReservasValidador} from "../validator/reservasValidador";
     };
 
     function persisteReservaComRepeticoes(reserva, callback) {
-        return persisteReserva(reserva, (err, reservaPersistida) => {
-            if (!err) return cadastrarRepeticoes(reservaPersistida, () => callback(null, reservaPersistida));
-            callback(err, reservaPersistida);
-        });
+        return persisteReserva(reserva).then(reservaPersistida => 
+            cadastrarRepeticoes(reservaPersistida, () => callback(null, reservaPersistida))
+        ).catch(err => 
+            callback(err, null)
+        );
     }
 
     /**
@@ -143,6 +144,11 @@ import {ReservasValidador} from "../validator/reservasValidador";
      * @param {Function} callback    Função chamada após erro ou sucesso na operação.
      */
     reservasService.atualizaReserva = (token, idReserva, novaReserva, callback) => {
+        const opcoes = {
+            atualizarTodas: false,
+            atualizarFuturas: true,
+            atualizarRepeticao: false
+        };
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) return callback(err,null);
             let reservaAntiga = reserva;
@@ -159,24 +165,37 @@ import {ReservasValidador} from "../validator/reservasValidador";
                 if (err) return callback(err, null);
                 _.updateModel(reservaAntiga, novaReserva);
                 
-                if (novaReserva.eventoPai) {
-                    const idReservaPai = reservaAntiga.eventoPai;
-                    reservaAntiga.eventoPai = null;
-                    reservaAntiga.save((err, res) => {
-                        atualizarReservaPai(idReservaPai, reservaAntiga.dia, (err, res) => {
-                            if (err) return callback(err, null);
-                            operacoesComRepeticaoAtualizacao(reservaAntiga, callback);
-                        });
-                    });
-                } else {
-                    persisteReserva(reservaAntiga, (err, reservaAtualizada) => {
-                        if (!err) return operacoesComRepeticaoAtualizacao(reservaAtualizada, () => callback(err, reservaAtualizada));
-                        callback(err, reservaAtualizada);
-                    });
-                }
+                tratarAtualizacao(reservaAtualizada, opcoes).then(reservaAtualizada => 
+                    callback(null, reservaAtualizada)
+                ).catch(err => 
+                    callback(err, null)
+                );
             });
         });
     };
+
+    /**
+     * Realiza o tratamento da atualização de reserva.
+     * Tratamento sobre repetição:
+     * - Atualizar todas: atualiza todas as reservas da repetição.
+     * - Atualizar futuras: atualiza todas as reservas da repetição futuras à passada.
+     * - Atualizar repetição: readiciona as reservas de acordo com a nova frequência de repetição.
+     * 
+     * @param {*} reserva 
+     * @param {*} opts 
+     */
+    function tratarAtualizacao(reserva, opts) {
+        const promisesAtt = [persisteReserva(reserva)];
+        if (opts.atualizarTodas) {
+
+        } else if (opts.atualizarFuturas) {
+            const promiseAttAll = updateRepsFuturas(reserva);
+            promisesAtt.push(promiseAttAll);
+        } else if (opts.atualizarRepeticao) {
+
+        }
+        return Promise.all(promisesAtt).then(data => reserva);
+    }
 
     /**
      * Atualiza a reserva paicom o novo dia de fim da repetição.
@@ -195,6 +214,18 @@ import {ReservasValidador} from "../validator/reservasValidador";
                 operacoesComRepeticaoAtualizacao(reservaPaiAtt, cb);
             });
         });
+    }
+
+    function updateRepsFuturas(reservaAtt) {
+        const propriedades = ["fimRepeticao", "titulo", "descricao", "inicio", "fim", "tipo", "recorrente", "frequencia"];
+        const updated = {};
+        propriedades.forEach(prop => updated[prop] = reservaAtt[prop]);
+        return new Promise((resolve, reject) => 
+            Reserva.update({ idReservaPai: reservaAtt.idReservaPai || reservaAtt._id }, updated, (err, data) => {
+                if (err) reject(err);
+                else resolve(data);
+            })
+        );
     }
 
     /**
@@ -233,12 +264,13 @@ import {ReservasValidador} from "../validator/reservasValidador";
      * Persiste uma reserva no banco de dados.
      *
      * @param {Object}   reserva  Reserva a ser persistida.
-     * @param {Function} callback Função chamada após erro ou sucesso na operação.
      */
-    function persisteReserva(reserva, callback) {
-        return reserva.save((err, resultado) => {
-            if (err) return callback(err, resultado);
-            return callback(null, resultado.toObject());
+    function persisteReserva(reserva) {
+        return new Promise((resolve, reject) => {
+            reserva.save((err, resultado) => {
+                if (err) return reject(err);
+                return resolve(resultado.toObject());
+            });
         });
     }
 
