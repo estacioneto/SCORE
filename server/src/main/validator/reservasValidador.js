@@ -24,7 +24,7 @@ export class ReservasValidador {
             if (choque) return cb(choque);
             ReservasValidador.checarRepeticoes(reserva, cb);
         });
-    };
+    }
 
     /**
      * Verifica se existe choque de horário entre a reserva e a lista
@@ -72,7 +72,7 @@ export class ReservasValidador {
             const choque = ReservasValidador.verificarChoque(reserva, reservas);
             cb(choque);
         });
-    };
+    }
 
     /**
      * Calcula os dias (em Date, no formato ISO) das repetições
@@ -97,7 +97,7 @@ export class ReservasValidador {
             dataReserva.setDate(diasExtras);
         }
         return diasRepeticao;
-    };
+    }
 
     /**
      * Verifica se as duas reservas têm choque de horários.
@@ -140,5 +140,5 @@ export class ReservasValidador {
         const caso3 = inicio1 >= inicio2 && fim1 <= fim2;
         const caso4 = inicio1 <= inicio2 && fim1 >= fim2;
         return caso1 || caso2 || caso3 || caso4;
-    };
-};
+    }
+}

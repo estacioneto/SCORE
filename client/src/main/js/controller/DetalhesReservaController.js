@@ -199,7 +199,7 @@
             function getNomeUsuarioLogado() {
                 const usuarioLogado = AuthService.getUsuarioLogado();
                 return usuarioLogado.user_metadata.nome_completo;
-            };
+            }
 
             (() => {
                 if (self.isEdicao) {

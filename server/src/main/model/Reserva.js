@@ -65,7 +65,7 @@
             type: Boolean
         },
         fimRepeticao: {
-            type: Date,
+            type: Date
         },
         frequencia: {
             type: Number,
