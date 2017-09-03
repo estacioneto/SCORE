@@ -4,36 +4,36 @@
         <md-input-container layout-padding="none" layout="row">
             <md-button class="md-icon-button" aria-label="Settings"
                        data-ng-if="auth.isAuthenticated()"
-                       data-ng-click="menuFunction()">
+                       data-ng-click="toggleBarraLateral()">
                 <i class="fa fa-bars fa-lg"></i>
             </md-button>
             <md-button class="md-icon-button" aria-label="App logo"
-                       ng-click="goHome()"
+                       data-ng-click="irParaInicio()"
                        layout-align="center center">
-                <img alt="App logo" id="toolbar-app-logo" ng-src="/img/icons/ms-icon-70x70.png"
-                     class="">
+                <img alt="App logo" id="toolbar-app-logo" ng-src="/img/icons/ms-icon-70x70.png">
             </md-button>
         </md-input-container>
         <span class="md-title">SCORE</span>
-        <span class="md-title" hide-xs hide-sm> - Sistema de COntrole de REservas</span>
+        <span class="md-title" hide-xs hide-sm>-</span>
+        <span class="md-title" hide-xs hide-sm>Sistema de Controle de Reservas</span>
         <span flex></span>
 
         <md-input-container layout="row">
             <toolbar-state-handler></toolbar-state-handler>
 
             <div data-ng-if="auth.isAuthenticated()">
-                <md-button hide-xs aria-label="Logout Name" data-ng-click="logout()">
-                    Logout
+                <md-button hide-xs aria-label="Sair" data-ng-click="sair()">
+                    Sair
                 </md-button>
-                <md-button hide-gt-xs aria-label="Logout Icon"
-                           data-ng-click="logout()"
+                <md-button hide-gt-xs aria-label="Ícone sair"
+                           data-ng-click="sair()"
                            class="md-icon-button" layout-align="center center">
                     <md-icon class="md-48">exit_to_app</md-icon>
                 </md-button>
             </div>
             <div data-ng-if="!auth.isAuthenticated()">
-                <md-button aria-label="Login" data-ng-click="signIn()">
-                    Login
+                <md-button hide-xs aria-label="Entrar" data-ng-click="entrar()">
+                    Entrar
                 </md-button>
             </div>
         </md-input-container>

@@ -16,18 +16,32 @@
     </div>
 
     <!--Visualização das imagens-->
-    <div flex="60" class="container-carousel" ng-if="$ctrl.existemImagens()">
-        <ui-carousel slides="$ctrl.local.imagens" slides-to-show="3" slides-to-scroll="1" dots="true" layout="row" layout-align="center center">
-            <carousel-item>
-                <!--FIXME: Foi necessário usar $parent devido a problemas internos no ui-carousel. Mudar isso.-->
-                <!--Ver issue: https://github.com/mihnsen/ui-carousel/issues/34-->
-                <!--Código fonte: https://github.com/mihnsen/ui-carousel/blob/master/src/ui-carousel/directives/carousel.directive.js-->
-                <md-card ng-click="$parent.$parent.$ctrl.mostraModalImagem($event, item, $parent.$parent.$ctrl.editavel)">
-                    <img ng-src="{{item.conteudo}}" class="imagem-local-card"/>
-                </md-card>
-            </carousel-item>
-        </ui-carousel>
+    <div layout="column" layout-align="center center">
+        <div id="myCarousel" class="carousel slide container-carousel" data-ride="carousel" flex="70" ng-if="$ctrl.existemImagens()">
+            <!-- Bolinhas -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" ng-repeat="imagem in $ctrl.local.imagens track by $index" data-slide-to="{{$index}}" ng-class="{'active': !$index}">
+            </ol>
+            <!-- end Bolinhas -->
+
+            <!-- Wrapper -->
+            <div class="carousel-inner wrapper-carousel">
+                <div class="item container-imagem" ng-repeat="imagem in $ctrl.local.imagens track by $index" ng-class="{'active': !$index}" >
+                    <img class="imagem-local-card" src="{{imagem.conteudo}}" ng-click="$ctrl.mostraModalImagem($event, $index, $ctrl.editavel)">
+                </div>
+            </div>
+            <!-- end Wrapper -->
+
+            <!-- Setas -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev" layout="column" layout-align="center center">
+                <i class="material-icons">keyboard_arrow_left</i>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next" layout="column" layout-align="center center">
+                <i class="material-icons">keyboard_arrow_right</i>
+            </a>
+            <!-- end Setas -->
+        </div>
     </div>
-    <br/>
+    <br>
     <!--end Visualização das imagens-->
 </md-content>

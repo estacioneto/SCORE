@@ -1,5 +1,12 @@
 <md-content>
     <md-content class="fill" layout-padding>
+        <md-button class="md-icon-button"
+                   type="button"
+                   ng-click="localCtrl.voltar()"
+                   flex="3">
+            <md-icon>arrow_back</md-icon>
+            <md-tooltip>Voltar</md-tooltip>
+        </md-button>
         <imagens-local local="localCtrl.local"
                        editavel="true"></imagens-local>
         <form name="formularioLocal" data-ng-submit="localCtrl.salvarLocal()">

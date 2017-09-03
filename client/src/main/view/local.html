@@ -15,16 +15,23 @@
         </div>
 
         <md-content ng-if="localCtrl.local">
+            <md-button class="md-icon-button"
+                       type="button"
+                       ng-click="localCtrl.voltar()"
+                       flex="3">
+                <md-icon>arrow_back</md-icon>
+                <md-tooltip>Voltar</md-tooltip>
+            </md-button>
             <imagens-local local="localCtrl.local"
                            editavel="false"></imagens-local>
             <local-visualizacao local="localCtrl.local"></local-visualizacao>
         </md-content>
 
         <!-- Opções local -->
-        <div ng-cloak>
+        <div>
             <md-fab-speed-dial class="md-fab-bottom-right md-fab-fixed md-scale"
                                md-open="localCtrl.menuAberto"
-                               ng-if="localCtrl.edicao"
+                               ng-if="localCtrl.admin"
                                md-direction="up">
                 <md-fab-trigger>
                     <md-button aria-label="menu" class="md-fab md-accent">

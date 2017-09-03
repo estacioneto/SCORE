@@ -1,7 +1,10 @@
 <md-dialog aria-label="reserva-detalhes" flex="60" md-theme="{{reservaCtrl.reserva.tema}}">
     <form name="formReserva"
           data-ng-submit="reservaCtrl.salvarReserva()">
-        <cabecalho-reserva formulario="formReserva" reserva="reservaCtrl.reserva"></cabecalho-reserva>
+        <cabecalho-reserva formulario="formReserva"
+                           edicao="reservaCtrl.isEdicao"
+                           reserva="reservaCtrl.reserva">
+        </cabecalho-reserva>
         <md-dialog-content>
             <div class="md-dialog-content"
                  data-layout="row"

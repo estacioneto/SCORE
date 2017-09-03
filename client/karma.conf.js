@@ -14,7 +14,7 @@
 
             // frameworks to use
             // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-            frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon'],
+            frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon', 'sinon-chai'],
 
             // list of files / patterns to load in the browser
             files: [
@@ -37,15 +37,17 @@
                 '../node_modules/angular-ui-mask/dist/mask.min.js',
                 '../node_modules/angular-messages/angular-messages.min.js',
                 'resources/auth0lock.min.js',
+                'vendor/angular-editable-text/angular-editable-text.min.js',
                 '../node_modules/angular-jwt/dist/angular-jwt.min.js',
                 '../node_modules/angular-lock/dist/angular-lock.min.js',
                 '../node_modules/angular-sanitize/angular-sanitize.min.js',
                 '../node_modules/angular-material-calendar/angular-material-calendar.min.js',
-                '../node_modules/angular-ui-carousel/dist/ui-carousel.min.js',
                 'src/main/config/Auth0Variables.js',
-                'src/main/js/config.js',
+                'src/main/js/config/config.js',
+                'src/main/js/config/StateDecorator.js',
                 'src/main/js/Constants.js',
                 'src/main/js/constants/constantesReserva.js',
+                'src/main/js/constants/constantesLocal.js',
                 'src/main/js/factory/Usuario.js',
                 'src/main/js/factory/Reserva.js',
                 'src/main/js/factory/Local.js',
@@ -65,6 +67,7 @@
                 'src/main/js/controller/AppController.js',
                 'src/main/js/controller/LoginController.js',
                 'src/main/js/controller/AgendaController.js',
+                'src/main/js/controller/LocalController.js',
                 'src/main/js/controller/DetalhesReservaController.js',
                 'src/main/js/component/reserva/DetalhesReservaEdicao.js',
                 'src/main/view/**/*.html',

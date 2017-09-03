@@ -22,9 +22,13 @@
              * @param reserva Reserva clicado.
              * @return {Promise} Promise do modal de visualização da reserva
              */
-            this.clickReserva = function (reserva) {
+            this.visualizarReserva = function (reserva) {
                 const reservaObj = new Reserva(reserva);
-                return ModalService.verReserva(reservaObj);
+                return ModalService.verReserva(reservaObj, self.local).then(info => {
+                    uiCalendarConfig.calendars.calendario.fullCalendar('removeEvents');
+                    uiCalendarConfig.calendars.calendario.fullCalendar('addEventSource', _.first(self.reservasSource));
+                    return info;
+                });
             };
 
             /**
@@ -39,8 +43,7 @@
             this.clickDia = function (data) {
                 const calendario = uiCalendarConfig.calendars.calendario;
 
-                if (calendario.fullCalendar('getView').type === 'agendaDay' ||
-                    calendario.fullCalendar('getView').type === 'agendaWeek') {
+                if (isVisualizacaoDiaOuSemana(calendario.fullCalendar('getView'))) {
                     if(data.isAfter(moment())){
                         self.criarReserva(data.toDate());
                     }
@@ -50,15 +53,27 @@
             };
 
             /**
+             * Verifica se o calendário está na visualização da semana ou do dia.
+             *
+             * @param view Tela em que o calendário está renderizado.
+             * @return {boolean} {@code true} se o calendário está na visualização
+             * da semana ou do dia, {@code false} caso contrário.
+             */
+            function isVisualizacaoDiaOuSemana(view) {
+                return view.type === 'agendaDay' || view.type === 'agendaWeek';
+            }
+
+            /**
              * Objeto enviado à diretiva do calendário com todas as configurações desejadas.
              * Consultar: https://fullcalendar.io/docs/
              */
             this.calendarioConfig = {
                 calendario: {
-                    height: "100%",
                     editable: false,
                     ignoreTimezone: false,
                     timezone: 'local',
+                    minTime: self.local.getInicioFuncionamento(),
+                    maxTime: self.local.getFimFuncionamento(),
                     lang: 'pt-br',
                     header: {
                         left: 'month agendaWeek agendaDay',
@@ -71,9 +86,9 @@
                             eventLimit: 4
                         }
                     },
-                    eventClick: self.clickReserva,
+                    eventClick: self.visualizarReserva,
                     dayClick: self.clickDia,
-                    eventAfterAllRender: transformaBotoesCalendario,
+                    eventAfterAllRender: configCalendarioPosRenderizacao,
                     buttonText: {
                         agendaWeek: 'Semana',
                         agendaDay: 'Dia'
@@ -85,6 +100,7 @@
              * Abre o modal para criação de reserva no dia especificado, caso o usuário tenha a
              * permissão necessária para tal.
              *
+             * @param {Date} data Data que contém o horário de início da reserva.
              * @return {Promise} Promise do modal.
              */
             this.criarReserva = (data) => {
@@ -92,24 +108,46 @@
                     const reserva = new Reserva({
                         dia: data,
                         inicio: DataManipuladorService.getHorarioEmString(data),
+                        fim: getHorarioDeFimReserva(data),
                         localId: self.local._id
                     });
 
-                    return ModalService.verReserva(reserva, this.local);
+                    return this.visualizarReserva(reserva);
                 }
             };
 
             /**
-             * Retorna a visualização para listagem de calendários.
+             * Retorna o horário de fim da reserva baseado no horario de início da mesma,
+             * pois o fim deve ter 1 hora a mais que o início. Caso o horário de fim, já
+             * acrescido em 1 hora, seja superior ao horário de fim do funcionamento do
+             * local atual, o horário fim do funcionamento será o valor retornado.
+             *
+             * @param dataInicioReserva Objeto data que contem o horário de início da reserva.
+             * @return {string} Horário de fim da reserva, no formato HH:mm.
              */
-            this.voltaParaListagem = () => {
-                $state.go(APP_STATES.AGENDA_INFO.nome);
-            };
+            function getHorarioDeFimReserva(dataInicioReserva) {
+                const dataFimReserva = angular.copy(dataInicioReserva);
+                /*
+                * O horário de fim da reserva deve possuir 1 hora a mais
+                 * do horário de início da mesma.
+                */
+                DataManipuladorService.incrementaHora(dataFimReserva, 1);
+
+                const horarioFimReserva = DataManipuladorService.getHorarioEmString(dataFimReserva),
+                    horarioFimLocal = self.local.getFimFuncionamento();
+
+                return (horarioFimReserva < horarioFimLocal) ? horarioFimReserva : horarioFimLocal;
+            }
 
             /**
-             * Redireciona para tela de informações do auditório atual.
+             * Retorna a visualização para listagem de calendários.
              */
-            this.visualizarAuditorio = function () {
+            this.voltaParaListagem = () => $state.goBack(APP_STATES.AGENDA_INFO.nome);
+
+            /**
+             * Redireciona para tela de informações do local atual.
+             */
+            this.visualizarLocal = function () {
                 $state.go(APP_STATES.LOCAL_ID_INFO.nome, {idLocal: self.local._id});
             };
 
@@ -139,6 +177,37 @@
             }
 
             /**
+             * Executa as configurações que necessitam que o calendário tenha sido
+             * renderizado.
+             *
+             * @param calendarioConfig Objeto que contém informações sobre o calendário
+             * renderizado.
+             */
+            function configCalendarioPosRenderizacao(calendarioConfig) {
+                ajustaAltura(calendarioConfig);
+                transformaBotoesCalendario();
+            }
+
+            /**
+             * Ajusta a altura do calendário, após a renderização do mesmo baseado no tipo
+             * da sua visualização. Caso a visualização seja do mês, o calendário terá altura
+             * máxima, caso seja visualização da semana ou dia, o calendário terá a altura
+             * baseada na quantidade de horas exibidas.
+             *
+             * @param calendarioConfig Objeto que contém informações sobre o calendário
+             * renderizado.
+             */
+            function ajustaAltura(calendarioConfig) {
+                const calendario = uiCalendarConfig.calendars.calendario;
+
+                if (calendario) {
+                    const altura = isVisualizacaoDiaOuSemana(calendarioConfig) ? 'auto' : '100%';
+
+                    calendario.fullCalendar('option', 'height', altura);
+                }
+            }
+
+            /**
              * Modifica os botões do calendário para terem os estilos seguindo padrão
              * material, adicionando a classe md-button.
              */
@@ -157,7 +226,7 @@
              *
              * @return {Promise} Promessa contendo as reservas do local selecionado.
              */
-            this.init = function () {
+            this.carregarReservas = function () {
                 return AgendamentoService.carregarReservasDoLocal(local._id).then(data => {
                     self.reservasSource.splice(0, self.reservasSource.length);
                     const reservas = data.data;
@@ -166,6 +235,6 @@
                 });
             };
 
-            this.init();
+            this.carregarReservas();
         }]);
 })();

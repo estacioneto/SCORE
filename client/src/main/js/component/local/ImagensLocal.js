@@ -14,7 +14,7 @@
             local: '=',
             editavel: '<'
         },
-        controller: ['ModalService', 'ToastService', '$scope', '$mdDialog', function (ModalService, ToastService, $scope, $mdDialog) {
+        controller: ['ModalService', 'ToastService', '$scope', '$mdDialog', 'LOCAL_IMAGEM', function (ModalService, ToastService, $scope, $mdDialog, LOCAL_IMAGEM) {
             var self = this;
 
             /**
@@ -23,16 +23,32 @@
              * @param {String} idImagem Id da imagem que será excluída.
              */
             function excluirImagemCallback(idImagem){
-                ModalService.confirmar("Deletar Imagem", "Deseja continuar? Ação não pode ser desfeita.").then(function(){
+                ModalService.confirmar(LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.CONFIRMA_TITULO,
+                    LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.CONFIRMA_TEXTO).then(function(){
                     if(!_.isUndefined(idImagem)) {
                         self.removerImagem(idImagem);
-                        ToastService.showActionToast('Imagem excluída.');
+                        ToastService.showActionToast(LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.SUCESSO);
                     }
-                    else ModalService.error("Salve as suas modificações antes de excluir a imagem", "Imagem ainda não foi salva");
+                    else ModalService.error(LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.ERRO_TITULO,
+                        LOCAL_IMAGEM.MENSAGENS.EXCLUIR_IMAGEM.ERRO_TEXTO);
                     fecharModal();
                 }, function(){
 
                 });
+            }
+
+            /**
+             * Função de callback passada para o controller do modal de imagem 'full size'.
+             * Será chamada ao apertar o botão de favoritar imagem presente no modal.
+             * A imagem selecionada como capa será sempre a primeira da lista.
+             * @param {String} idImagem Id da imagem que será definida como capa.
+             */
+            function definirComoCapaCallback(idImagem) {
+                var indiceImagem = _.findIndex(self.local.imagens, imagem => (imagem._id || imagem.tempId) === idImagem);
+                let imgArray = self.local.imagens;
+                [imgArray[indiceImagem], imgArray[LOCAL_IMAGEM.INDICE_IMAGEM_CAPA]] = [imgArray[LOCAL_IMAGEM.INDICE_IMAGEM_CAPA], imgArray[indiceImagem]];
+                ToastService.showActionToast(LOCAL_IMAGEM.MENSAGENS.ALTERAR_CAPA.SUCESSO);
+                voltaParaPrimeiraImagem();
             }
 
             /**
@@ -43,11 +59,21 @@
             }
 
             /**
+             * Faz com que o carousel volte para a primeira imagem (capa).
+             * Necessário chamar essa função após deletar uma imagem pois caso
+             * essa imagem seja a última a diretiva quebra (???)
+             */
+            function voltaParaPrimeiraImagem(){
+                $('.carousel').carousel(LOCAL_IMAGEM.INDICE_IMAGEM_CAPA);
+            }
+
+            /**
              * Remove uma imagem da lista de imagens do local.
              * @param {String} idImagem Id da imagem que será removida.
              */
             this.removerImagem = function (idImagem) {
                 _.remove(self.local.imagens, imagem => (imagem._id || imagem.tempId) === idImagem);
+                voltaParaPrimeiraImagem();
             };
 
             /**
@@ -61,12 +87,13 @@
             /**
              *
              * @param {Event} $event Evento do clique.
-             * @param {Object} imagem Imagem a ser exibida.
+             * @param {Integer} indiceImagem Indice da imagem a ser exibida.
              * @param {Boolean} editavel Flag que indica se a imagem pode ou não ser excluida.
              * @returns {Promise} Promise do modal.
              */
-            this.mostraModalImagem = function ($event, imagem, editavel) {
-                return ModalService.verImagem(imagem, $event, editavel, excluirImagemCallback);
+            this.mostraModalImagem = function ($event, indiceImagem, editavel) {
+                var isCapa = (indiceImagem === LOCAL_IMAGEM.INDICE_IMAGEM_CAPA);
+                return ModalService.verImagem(self.local.imagens[indiceImagem], $event, editavel, excluirImagemCallback, definirComoCapaCallback, isCapa);
             }
         }]
     });

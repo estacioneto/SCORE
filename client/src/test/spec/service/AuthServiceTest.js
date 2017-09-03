@@ -31,20 +31,20 @@
                 var getProfileStub = sinon.stub(auth, 'getProfile');
 
 
-                assert.equal(AuthService.getLoggedUser(), null);
+                assert.equal(AuthService.getUsuarioLogado(), null);
                 assert.equal(AuthService.getIdToken(), null);
                 AuthService.isAuthenticated().should.equal(false);
 
                 AuthService.authenticate(token, user);
 
-                assert.equal(AuthService.getLoggedUser(), user);
+                assert.equal(AuthService.getUsuarioLogado(), user);
                 assert.equal(AuthService.getIdToken(), token);
                 AuthService.isAuthenticated().should.equal(true);
 
                 AuthService.logout();
 
                 AuthService.isAuthenticated().should.equal(false);
-                assert.equal(AuthService.getLoggedUser(), null);
+                assert.equal(AuthService.getUsuarioLogado(), null);
                 assert.equal(AuthService.getIdToken(), null);
             });
         });
@@ -126,7 +126,7 @@
         });
 
 
-        describe.skip('deve getLoggedUser', function () {
+        describe.skip('deve getUsuarioLogado', function () {
             beforeEach(function () {
                 if (AuthService.isAuthenticated()) {
                     AuthService.logout();
@@ -139,7 +139,7 @@
                 var getProfileStub = sinon.stub(auth, 'getProfile');
 
                 AuthService.authenticate(token, user);
-                assert.equal(AuthService.getLoggedUser(), user);
+                assert.equal(AuthService.getUsuarioLogado(), user);
             });
 
             it('retornar NULL se o usuario nao eh um usuario logado', function () {
@@ -147,7 +147,7 @@
                 var token = 'token';
 
                 // AuthService.authenticate(token, user);
-                assert.equal(AuthService.getLoggedUser(), null);
+                assert.equal(AuthService.getUsuarioLogado(), null);
             });
         });
 

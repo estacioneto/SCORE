@@ -7,7 +7,7 @@
         function ($rootScope, $state, $location, APP_STATES, ToastService, AuthService) {
             var self = this;
 
-            this.user = AuthService.getLoggedUser();
+            this.user = AuthService.getUsuarioLogado();
 
             function redirect() {
                 $state.go(APP_STATES.AGENDA_INFO.nome);
