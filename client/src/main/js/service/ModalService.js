@@ -190,6 +190,23 @@
         };
 
         /**
+         * Confirma a atualização de uma reserva de repetição, mostrando
+         * as opções sobre os tipos de repetições disponíveis.
+         * 
+         * @param {Reserva} reserva Reserva sendo salva.
+         * @return {Promise} Promise do modal.
+         */
+        this.confirmarAtualizacaoRepeticao = function(reserva) {
+            return self.custom({
+                templateUrl: 'view/dialog/repeticao-reserva.html',
+                controller: 'OpcoesRepeticaoController as repeticaoCtrl',
+                resolve: {
+                    reserva: () => reserva
+                }
+            });
+        };
+
+        /**
          * Exibe o modal de informações dos desenvolvedores.
          *
          * @param   {$event}  $event evento no html.
@@ -218,6 +235,27 @@
 
             $scope.ok = function () {
                 $mdDialog.hide("close");
+            };
+        }])
+        
+        .controller('OpcoesRepeticaoController', ['$scope', '$mdDialog', 'reserva', function($scope, $mdDialog, reserva) {
+            
+            this.attTodas = () => {
+                reserva.atualizarTodas = true;
+                $mdDialog.hide();
+            };
+
+            this.attEsta = () => {
+                $mdDialog.hide();
+            };
+
+            this.attFuturas = () => {
+                reserva.atualizarFuturas = true;
+                $mdDialog.hide();
+            };
+
+            $scope.cancelar = function () {
+                $mdDialog.cancel();
             };
         }]);
 }());

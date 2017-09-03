@@ -17,6 +17,8 @@
 
             this.isEdicao = !reserva.autor;
 
+            let eraRecorrente = reserva.recorrente;
+
             /**
              * Ativa o modo de edição de reserva.
              */
@@ -50,14 +52,29 @@
             }
 
             /**
+             * Realiza os pre-checks para se salvar uma reserva.
+             * - Se o termo não foi aceito, a função rejeita
+             * - Se a reserva possui eventoPai, as opções de repetição são mostradas.
+             * 
+             * @return {Promise} Promise dos pre-checks.
+             */
+            function preSaveChecks() {
+                if (!self.reserva.termoAceito && self.isCriacao()) {
+                    return $q.reject("Você deve aceitar os termos de criação da reserva.");
+                }
+                if (self.reserva.eventoPai || self.reserva._id && self.reserva.recorrente && eraRecorrente) {
+                    return ModalService.confirmarAtualizacaoRepeticao(self.reserva);
+                }
+            }
+
+            /**
              * Cria a reserva.
              *
              * @return Promise.
              */
-            this.salvarReserva = () => {
-                if (!self.reserva.termoAceito && this.isCriacao()) {
-                    return $q.reject("Você deve aceitar os termos de criação da reserva.");
-                }
+            this.salvarReserva = async () => {
+                const preChecks = await preSaveChecks();
+
                 self.isEdicao = false;
                 preSalvar();
 
@@ -68,6 +85,7 @@
                 return self.reserva.salvar().then(data => {
                     AgendamentoService.salvarReserva(self.reserva);
                     ToastService.showActionToast("Reserva atualizada.");
+                    eraRecorrente = self.reserva.recorrente;
                     posSalvar();
                     return data;
                 }, err => {

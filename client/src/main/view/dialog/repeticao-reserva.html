@@ -1,0 +1,40 @@
+<md-dialog aria-label="Repeticao Reserva">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Confirmar Atualização</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancelar()">
+                    <md-icon aria-label="Fechar Dialog">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column" layout-align="center center">
+                <div layout="row">
+                    <md-button ng-click="repeticaoCtrl.attFuturas()">
+                        Atualizar apenas reservas futuras
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-button ng-click="repeticaoCtrl.attTodas()">
+                        Atualizar todas reservas
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-button ng-click="repeticaoCtrl.attEsta()">
+                        Atualizar apenas esta
+                    </md-button>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancelar()">
+                Cancelar
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

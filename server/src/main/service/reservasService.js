@@ -89,16 +89,23 @@ import {ReservasValidador} from "../validator/reservasValidador";
     }
 
     /**
-     * Realiza as operações sobre repetição para atualização de reserva.
-     * Exclui as repetições e readiciona, caso se necessário.
+     * Excluir e readiciona as repetições para uma reserva.
      * 
      * @param {Reserva} reserva Reserva a ter as repetições atualizadas.
      * @param {Function} cb Callback executado ao final da operação.
      */
-    function operacoesComRepeticaoAtualizacao(reserva, cb) {
-        excluirRepeticoes(reserva, (err, resp) => {
-            if (err) return cb(err, null);
-            cadastrarRepeticoes(reserva, cb);
+    function readicionarRepeticoes(reserva, cb) {
+        return new Promise((resolve, reject) => {
+            if (reserva.eventoPai) 
+                return reject("Atualização frequência de reserva repetida não implementada.");
+
+            excluirRepeticoes(reserva, (err, resp) => {
+                if (err) return reject(err);
+                cadastrarRepeticoes(reserva, (err, resp) => {
+                    if (err) reject(err);
+                    else resolve(resp);
+                });
+            });
         });
     }
 
@@ -145,12 +152,17 @@ import {ReservasValidador} from "../validator/reservasValidador";
      */
     reservasService.atualizaReserva = (token, idReserva, novaReserva, callback) => {
         const opcoes = {
-            atualizarTodas: true,
-            atualizarFuturas: false,
+            atualizarTodas: novaReserva.atualizarTodas,
+            atualizarFuturas: novaReserva.atualizarFuturas,
             atualizarRepeticao: false
         };
+
         getReservaById(token, idReserva, (err,reserva) => {
            if(err) return callback(err,null);
+            opcoes.atualizarRepeticao = !reserva.recorrente && novaReserva.recorrente
+                    || reserva.recorrente && !novaReserva.recorrente
+                    || reserva.frequencia !== novaReserva.frequencia;
+            
             let reservaAntiga = reserva;
             // FIXME: Desfazer isso quando passarmos a utilizar
             // patch corretamente. Necessário por a atualização
@@ -186,15 +198,18 @@ import {ReservasValidador} from "../validator/reservasValidador";
      */
     function tratarAtualizacao(reserva, opts) {
         const promisesAtt = [persisteReserva(reserva)];
-        if (opts.atualizarTodas) {
+        
+        if (opts.atualizarRepeticao) {
+            const promiseAttRepeticao = readicionarRepeticoes(reserva);
+            promisesAtt.push(promiseAttRepeticao);
+        } else if (opts.atualizarTodas) {
             const promiseAttAll = updateRepeticoes(reserva, true);
             promisesAtt.push(promiseAttAll);
         } else if (opts.atualizarFuturas) {
             const promiseAttFuturas = updateRepeticoes(reserva);
             promisesAtt.push(promiseAttFuturas);
-        } else if (opts.atualizarRepeticao) {
-
         }
+
         return Promise.all(promisesAtt).then(data => reserva);
     }
 
