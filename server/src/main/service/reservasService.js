@@ -145,8 +145,8 @@ import {ReservasValidador} from "../validator/reservasValidador";
      */
     reservasService.atualizaReserva = (token, idReserva, novaReserva, callback) => {
         const opcoes = {
-            atualizarTodas: false,
-            atualizarFuturas: true,
+            atualizarTodas: true,
+            atualizarFuturas: false,
             atualizarRepeticao: false
         };
         getReservaById(token, idReserva, (err,reserva) => {
@@ -165,7 +165,7 @@ import {ReservasValidador} from "../validator/reservasValidador";
                 if (err) return callback(err, null);
                 _.updateModel(reservaAntiga, novaReserva);
                 
-                tratarAtualizacao(reservaAtualizada, opcoes).then(reservaAtualizada => 
+                tratarAtualizacao(reservaAntiga, opcoes).then(reservaAtualizada => 
                     callback(null, reservaAtualizada)
                 ).catch(err => 
                     callback(err, null)
@@ -181,16 +181,17 @@ import {ReservasValidador} from "../validator/reservasValidador";
      * - Atualizar futuras: atualiza todas as reservas da repetição futuras à passada.
      * - Atualizar repetição: readiciona as reservas de acordo com a nova frequência de repetição.
      * 
-     * @param {*} reserva 
-     * @param {*} opts 
+     * @param {Reserva} reserva Reserva a ser atualizada.
+     * @param {Object} opts Opções para a atualização da reserva.
      */
     function tratarAtualizacao(reserva, opts) {
         const promisesAtt = [persisteReserva(reserva)];
         if (opts.atualizarTodas) {
-
-        } else if (opts.atualizarFuturas) {
-            const promiseAttAll = updateRepsFuturas(reserva);
+            const promiseAttAll = updateRepeticoes(reserva, true);
             promisesAtt.push(promiseAttAll);
+        } else if (opts.atualizarFuturas) {
+            const promiseAttFuturas = updateRepeticoes(reserva);
+            promisesAtt.push(promiseAttFuturas);
         } else if (opts.atualizarRepeticao) {
 
         }
@@ -198,34 +199,42 @@ import {ReservasValidador} from "../validator/reservasValidador";
     }
 
     /**
-     * Atualiza a reserva paicom o novo dia de fim da repetição.
+     * Realiza a atualização nas repetições, onde apenas as repetições futuras
+     * a esta são atualizadas se a flag allAll não for passada.
      * 
-     * @param {*} idReservaPai Id da reserva Pai.
-     * @param {*} dia Novo dia de fim da repetição.
-     * @param {*} cb Callback para ser executado ao finalizar a operação.
+     * @param {Reserva} reservaAtt Reserva a ter as repetições atualizadas.
+     * @param {Boolean} attAll Identificador sobre se deve atualizar todas as reservas da repetição.
      */
-    function atualizarReservaPai(idReservaPai, dia, cb) {
-        Reserva.findByOnlyId(idReservaPai, (err, reservaPai) => {
-            const date = new Date(dia);
-            date.setDate(date.getDate() - 1);
-            reservaPai.fimRepeticao = date;
-            reservaPai.save((err, reservaPaiAtt) => {
-                if (err) return cb(err, null);
-                operacoesComRepeticaoAtualizacao(reservaPaiAtt, cb);
-            });
-        });
-    }
+    function updateRepeticoes(reservaAtt, attAll = false) {
+        const updated = getPropriedadesUpdate(reservaAtt);
+        let query = { eventoPai: reservaAtt.eventoPai || reservaAtt._id };
 
-    function updateRepsFuturas(reservaAtt) {
-        const propriedades = ["fimRepeticao", "titulo", "descricao", "inicio", "fim", "tipo", "recorrente", "frequencia"];
-        const updated = {};
-        propriedades.forEach(prop => updated[prop] = reservaAtt[prop]);
+        if (attAll) {
+            query = { $or: [query, { _id: reservaAtt.eventoPai }] };
+        } else {
+            query.dia = { $gt: reservaAtt.dia };
+        }
+
         return new Promise((resolve, reject) => 
-            Reserva.update({ idReservaPai: reservaAtt.idReservaPai || reservaAtt._id }, updated, (err, data) => {
+            Reserva.update(query, updated, { multi: true }, (err, data) => {
                 if (err) reject(err);
                 else resolve(data);
             })
         );
+    }
+
+    /**
+     * Recupera um objeto com apenas as propriedades atualizaveis da reserva
+     * referentes a uma reserva, utilizado para o update.
+     * 
+     * @param {Reserva} reserva Reserva a se retirar as propriedades.
+     * @return {Object} Objeto com as propriedades da reserva.
+     */
+    function getPropriedadesUpdate(reserva) {
+        const propriedades = ["fimRepeticao", "titulo", "descricao", "inicio", "fim", "tipo", "recorrente", "frequencia"];
+        const updated = {};
+        propriedades.forEach(prop => updated[prop] = reserva[prop]);
+        return updated;
     }
 
     /**
