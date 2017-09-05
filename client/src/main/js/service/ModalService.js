@@ -74,7 +74,7 @@
                     reserva,
                     local
                 }
-            });
+            }).catch(() => {/*ayy lmao*/});
         };
 
 

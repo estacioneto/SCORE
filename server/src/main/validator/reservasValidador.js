@@ -22,6 +22,7 @@ export class ReservasValidador {
             if (err) return cb(err);
             const choque = ReservasValidador.verificarChoque(reserva, reservas);
             if (choque) return cb(choque);
+            if (!reserva.recorrente) cb(null);
             ReservasValidador.checarRepeticoes(reserva, cb);
         });
     }
@@ -42,7 +43,8 @@ export class ReservasValidador {
             const mesmaReserva = r._id.toString() === reserva._id;
             const reservaFilha = r.eventoPai === reserva._id;
             const reservaIrma = r.eventoPai === reserva.eventoPai;
-            if (mesmaReserva || reservaFilha || reservaIrma) {
+            const semPais = !r.eventoPai && !reserva.eventoPai;
+            if (mesmaReserva || reservaFilha || reservaIrma && !semPais) {
                 continue;
             }
             if (ReservasValidador.hasChoqueHorario(r, reserva)) {
