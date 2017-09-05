@@ -62,9 +62,10 @@
                 if (!self.reserva.termoAceito && self.isCriacao()) {
                     return $q.reject("Você deve aceitar os termos de criação da reserva.");
                 }
-                if (self.reserva.eventoPai || self.reserva._id && self.reserva.recorrente && eraRecorrente) {
+                if (self.reserva.eventoPai || (self.reserva._id && self.reserva.recorrente && eraRecorrente)) {
                     return ModalService.confirmarAtualizacaoRepeticao(self.reserva);
                 }
+                return $q.when();
             }
 
             /**
