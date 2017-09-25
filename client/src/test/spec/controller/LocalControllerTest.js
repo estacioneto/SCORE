@@ -3,7 +3,7 @@
 
     describe('LocalControllerTest', function () {
 
-        beforeEach(module('scoreApp', 'stateMock', 'Mocks'));
+        beforeEach(module('stateMock', 'Mocks', 'scoreApp'));
 
         let createController, $scope, AuthService, ToastService, LocaisMock, UsuarioMock;
         const self = this;

@@ -3,7 +3,7 @@
 
     describe('AgendaControllerTest', function () {
 
-        beforeEach(module('scoreApp', 'Mocks', 'stateMock'));
+        beforeEach(module('Mocks', 'stateMock', 'scoreApp'));
         var self = this;
         const ID_LOCAL_TEST = 1;
 

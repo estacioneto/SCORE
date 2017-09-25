@@ -3,7 +3,7 @@
 
     describe('FuncionamentoLocalValidatorTest', () => {
 
-        beforeEach(module('scoreApp', 'stateMock'));
+        beforeEach(module('stateMock', 'scoreApp'));
 
         const self = this;
         beforeEach(inject(defaultInjections(self)));

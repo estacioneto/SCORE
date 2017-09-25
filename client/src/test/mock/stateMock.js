@@ -1,38 +1,55 @@
 (function () {
     'use strict';
     // http://gist.github.com/wilsonwc/8358542/
-    angular.module('stateMock', []);
-    angular.module('stateMock').service("$state", function ($q) {
-        this.expectedTransitions = [];
-        this.error;
-        this.transitionTo = function (stateName) {
-            if (this.expectedTransitions.length > 0) {
-                var expectedState = this.expectedTransitions.shift();
-                if (expectedState !== stateName) {
-                    this.error = ("Transicao esperada para o estado: " + expectedState + " mas aconteceu para " + stateName);
+    angular.module('stateMock', ['ui.router']);
+    angular.module('stateMock').config(['$provide', function ($provide) {
+
+        $provide.decorator('$state', ['$q', function ($q) {
+            const stateMock = {};
+
+            stateMock.expectedTransitions = [];
+            stateMock.error;
+            stateMock.current = 'app.teste';
+            stateMock.transitionTo = function (stateName) {
+                if (stateMock.expectedTransitions.length > 0) {
+                    var expectedState = stateMock.expectedTransitions.shift();
+                    if (expectedState !== stateName) {
+                        stateMock.error = ("Expected transition to state: " + expectedState + " but transitioned to " + stateName );
+                        return;
+                    }
+                } else {
+                    stateMock.error = ("No more transitions were expected! Tried to transition to " + stateName );
                     return;
                 }
-            } else {
-                this.error = ("Nao eram esperadas mais transicoes! Tentativa de transicao para " + stateName);
-                return;
-            }
-            console.log("Transicao mock para: " + stateName);
-            var deferred = $q.defer();
-            var promise = deferred.promise;
-            deferred.resolve();
-            return promise;
-        };
-        this.go = this.transitionTo;
-        this.expectTransitionTo = function (stateName) {
-            this.expectedTransitions.push(stateName);
-        };
-        this.getError = function () {
-            return this.error;
-        };
-        this.ensureAllTransitionsHappened = function () {
-            if (this.expectedTransitions.length > 0) {
-                throw Error("Nem todas as transicoes aconteceram! Transicoes esperadas nao cumpridas : " + this.expectedTransitions);
-            }
-        }
-    });
+                console.log("Mock transition to: " + stateName);
+                return $q.when();
+            };
+
+            stateMock.href = function () {
+                return '/teste';
+            };
+
+            stateMock.reload = function () {
+            };
+
+            stateMock.go = stateMock.transitionTo;
+
+            stateMock.expectTransitionTo = function (stateName) {
+                stateMock.expectedTransitions.push(stateName);
+            };
+
+            stateMock.getError = function () {
+                return stateMock.error;
+            };
+
+            stateMock.ensureAllTransitionsHappened = function () {
+                if (stateMock.expectedTransitions.length > 0) {
+                    throw Error("Not all transitions happened! Unfulfilled expected transitions : " + stateMock.expectedTransitions);
+                }
+            };
+
+            return stateMock;
+        }]);
+    }]);
+
 })();
