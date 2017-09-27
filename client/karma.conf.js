@@ -105,7 +105,7 @@
 
             preprocessors: {
                 // Arquivos que serão analisados pela cobertura de testes.
-                'src/main/js/**/*.js': ['coverage'],
+                'src/main/js/**/!(*lib)/*.js': ['coverage'],
                 'src/main/view/**/*.html': 'ng-html2js'
             },
 
