@@ -6,18 +6,18 @@
 class Auth0Lock {
 
     constructor() {
-        this._constructorArgs = Object.values(arguments);
+        this.constructorArgs = Object.values(arguments);
     }
 
     on() {
-        this._onArgs = Object.values(arguments);
+        this.onArgs = Object.values(arguments);
     }
 
     show() {
     }
 
     getProfile(idToken, callback) {
-        this._getProfileArgs = Object.values(arguments);
+        this.getProfileArgs = Object.values(arguments);
         return callback;
     }
 }

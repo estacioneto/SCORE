@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('toolbarModulo', []).directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', '$mdSidenav', 'Usuario', 'APP_STATES',
-        function ($state, $rootScope, AuthService, AuthLockService, ToastService, $mdSidenav, Usuario, APP_STATES) {
+    angular.module('toolbarModulo', []).directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', 'Usuario', 'APP_STATES', 'SidebarService',
+        function ($state, $rootScope, AuthService, AuthLockService, ToastService, Usuario, APP_STATES, SidebarService) {
             return {
                 restrict: 'AE',
                 templateUrl: './view/mainToolbar.html',
@@ -13,14 +13,7 @@
                     /**
                      * Funcao para alternar a barra de menu lateral
                      */
-                    scope.toggleBarraLateral = function () {
-                        const sidenav = $mdSidenav('main-sidenav');
-                        if (sidenav.isOpen()) {
-                            sidenav.close();
-                        } else {
-                            sidenav.toggle();
-                        }
-                    };
+                    scope.toggleBarraLateral = () => SidebarService.toggle();
 
                     scope.usuario = AuthService.getUsuarioLogado();
 
