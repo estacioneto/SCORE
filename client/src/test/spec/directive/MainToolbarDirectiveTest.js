@@ -8,24 +8,15 @@
         const self = this;
         const sandbox = sinon.createSandbox();
 
-        beforeEach(module(function ($provide) {
-            $provide.service('$mdSidenav', function () {
-                this.isOpen = sandbox.stub();
-                this.close = sandbox.stub();
-                this.toggle = sandbox.stub();
-                return sandbox.stub().returns(this);
-            });
-        }));
-
         beforeEach(inject(defaultInjections(self)));
         afterEach(defaultAfterEach(self));
 
-        let $scope, compile, element, $mdSidenav, APP_STATES, AuthLockService, AuthService;
+        let $scope, compile, element, APP_STATES, AuthLockService, AuthService, SidebarService;
         const MAIN_SIDENAV = 'main-sidenav';
-        beforeEach(inject(function ($compile, $templateCache, _$mdSidenav_, _APP_STATES_, _AuthLockService_, _AuthService_) {
+        beforeEach(inject(function ($compile, $templateCache, _APP_STATES_, _AuthLockService_, _AuthService_, _SidebarService_) {
             $scope = self.$rootScope.$new();
             compile = $compile;
-            $mdSidenav = _$mdSidenav_;
+            SidebarService = _SidebarService_;
             APP_STATES = _APP_STATES_;
             AuthLockService = _AuthLockService_;
             AuthService = _AuthService_;
@@ -46,26 +37,12 @@
         });
 
         describe('MainToolbarDirective toggleBarraLateral deve', () => {
-            it('fechar a barra se ela estiver aberta', () => {
+            it('chamar função toggle de SidebarService', () => {
                 const diretiva = element.isolateScope();
-                $mdSidenav().isOpen.returns(true);
+                SidebarService.toggle = sandbox.stub();
+
                 diretiva.toggleBarraLateral();
-
-                sandbox.assert.calledWith($mdSidenav, MAIN_SIDENAV);
-                sandbox.assert.calledOnce($mdSidenav().isOpen);
-                sandbox.assert.calledOnce($mdSidenav().close);
-                sandbox.assert.notCalled($mdSidenav().toggle);
-            });
-
-            it('chamar função toggle se ela não estiver aberta', () => {
-                const diretiva = element.isolateScope();
-                $mdSidenav().isOpen.returns(false);
-                diretiva.toggleBarraLateral();
-
-                sandbox.assert.calledWith($mdSidenav, MAIN_SIDENAV);
-                sandbox.assert.calledOnce($mdSidenav().isOpen);
-                sandbox.assert.notCalled($mdSidenav().close);
-                sandbox.assert.calledOnce($mdSidenav().toggle);
+                sandbox.assert.calledOnce(SidebarService.toggle);
             });
         });
 
@@ -101,14 +78,14 @@
                 const diretiva = element.isolateScope();
 
                 diretiva.autenticar({idToken});
-                expect(diretiva.lock._getProfileArgs).to.contain(idToken);
+                expect(diretiva.lock.getProfileArgs).to.contain(idToken);
             });
 
             it('realizar log do erro caso haja e não autenticar', () => {
                 const diretiva = element.isolateScope();
 
                 const callback = diretiva.autenticar({idToken});
-                expect(diretiva.lock._getProfileArgs).to.contain(idToken);
+                expect(diretiva.lock.getProfileArgs).to.contain(idToken);
 
                 sandbox.stub(console, 'log');
                 sandbox.stub(AuthService, 'authenticate');
@@ -122,7 +99,7 @@
                 const diretiva = element.isolateScope();
 
                 const callback = diretiva.autenticar({idToken, accessToken});
-                expect(diretiva.lock._getProfileArgs).to.contain(idToken, accessToken);
+                expect(diretiva.lock.getProfileArgs).to.contain(idToken, accessToken);
                 expect(diretiva.usuario).to.be.not.ok;
 
                 sandbox.stub(console, 'log');
@@ -198,8 +175,8 @@
                 const diretiva = element.isolateScope();
 
                 expect(diretiva.lock instanceof Auth0Lock).to.be.true;
-                expect(diretiva.lock._constructorArgs).to.be.eql([AUTH0_CLIENT_ID, AUTH0_DOMAIN, LOCK_CONFIG]);
-                expect(diretiva.lock._onArgs).to.be.contain('authenticated');
+                expect(diretiva.lock.constructorArgs).to.be.eql([AUTH0_CLIENT_ID, AUTH0_DOMAIN, LOCK_CONFIG]);
+                expect(diretiva.lock.onArgs).to.be.contain('authenticated');
             });
         });
     });

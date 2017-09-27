@@ -1,8 +1,8 @@
 (() => {
     'use strict';
 
-    angular.module('sidebarModulo', []).directive('sidebar', ['$state', '$window', '$rootScope', '$mdSidenav', 'AuthService', 'ModalService', 'Usuario',
-        function ($state, $window, $rootScope, $mdSidenav, AuthService, ModalService, Usuario) {
+    angular.module('sidebarModulo').directive('sidebar', ['$state', '$window', '$rootScope', 'AuthService', 'ModalService', 'Usuario',
+        function ($state, $window, $rootScope, AuthService, ModalService, Usuario) {
             return {
                 restrict: 'AE',
                 templateUrl: './view/sidebar.html',
@@ -23,18 +23,6 @@
                     scope.getDominioEmail = function () {
                         const indiceQuebra = scope.usuario.email.indexOf('@');
                         return scope.usuario.email.substring(indiceQuebra);
-                    };
-
-                    /**
-                     * Alterna a barra lateral.
-                     */
-                    scope.toggleSidebar = function () {
-                        const sidenav = $mdSidenav('main-sidenav');
-                        if (sidenav.isOpen()) {
-                            sidenav.close();
-                        } else {
-                            sidenav.toggle();
-                        }
                     };
 
                     /**
