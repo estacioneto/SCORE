@@ -1,30 +1,30 @@
-/******************************************************
+/*******************************************************************
+ * Setup para testes. Evita vários imports nos arquivos de teste.
+ * Ao invés disso, basta importar o arquivo no início do teste.
+ * Adiciona variáveis de teste importantes ao escopo global.
  *
- * Variáveis globais para testes.
- * Basta colocar {@code require('../testSetup');}
- * na primeira linha do teste
+ * @example
+ * import '../testSetup';
  *
- ******************************************************/
+ * @author Estácio Pereira
+ *******************************************************************/
 
-const assert = require('assert'),
-    chai = require('chai').use(require('chai-as-promised')),
-    sinon = require('sinon'),
-    clone = require('clone'),
-    request = require('supertest'),
-    mockery = require('mockery');
-const expect = chai.expect;
-const _ = require('../main/util/util');
+import assert from 'assert';
+import Chai from 'chai';
+import chai_as_promised from 'chai-as-promised';
+import sinon from 'sinon';
+import clone from 'clone';
+import request from 'supertest';
+import _ from 'lodash';
 
-const TEST_DB = 'SCORE-TESTDB';
-
+const expect = Chai.expect;
+const chai = Chai.use(chai_as_promised);
 Object.assign(global, {
     assert,
     chai,
     sinon,
     clone,
     request,
-    mockery,
     expect,
-    _,
-    TEST_DB
+    _
 });
