@@ -90,7 +90,8 @@
 
                 usuarioRetornado = UserMock.getValidUser();
                 usuarioRetornado.username = 'POST-STUB';
-                getProfileStub = sinon.stub(authStub, 'getProfile', (options, callback) => callback(null, usuarioRetornado));
+                getProfileStub = sinon.stub();
+                authStub.getProfile = getProfileStub.callsFake((options, callback) => callback(null, usuarioRetornado));
                 UserService = require('../../main/service/usersService');
             });
 

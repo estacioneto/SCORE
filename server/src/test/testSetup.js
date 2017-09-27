@@ -9,7 +9,6 @@
 const assert = require('assert'),
     chai = require('chai').use(require('chai-as-promised')),
     sinon = require('sinon'),
-    should = require('should'),
     clone = require('clone'),
     request = require('supertest'),
     mockery = require('mockery');
@@ -22,7 +21,6 @@ Object.assign(global, {
     assert,
     chai,
     sinon,
-    should,
     clone,
     request,
     mockery,
