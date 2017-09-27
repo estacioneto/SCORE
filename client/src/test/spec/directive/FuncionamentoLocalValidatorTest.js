@@ -7,6 +7,7 @@
 
         const self = this;
         beforeEach(inject(defaultInjections(self)));
+        afterEach(defaultAfterEach(self));
 
         let $scope, compile, element, valor, form;
         beforeEach(inject(function ($compile) {

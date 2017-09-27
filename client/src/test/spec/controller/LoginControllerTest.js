@@ -9,6 +9,7 @@
         var self = this;
 
         beforeEach(inject(defaultInjections(self)));
+        afterEach(defaultAfterEach(self));
 
         beforeEach(inject(function (_$rootScope_, $controller, _AuthService_, _ToastService_, _UsuarioMock_) {
             AuthService = _AuthService_;

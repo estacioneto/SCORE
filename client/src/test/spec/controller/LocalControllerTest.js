@@ -10,6 +10,7 @@
         let local, usuario;
 
         beforeEach(inject(defaultInjections(self)));
+        afterEach(defaultAfterEach(self));
 
         beforeEach(inject(function ($controller, _AuthService_, _ToastService_, _LocaisMock_, _UsuarioMock_) {
             $scope = self.$rootScope.$new();

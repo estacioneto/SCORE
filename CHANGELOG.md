@@ -2,6 +2,7 @@
 
 ## unstable
 * Manutenção: Adicionada licença sobre código.
+* Testes: Criados testes para Toolbar.
 
 ## 0.2.2
 * Issue 82: Corrigida validação da mostragem do botão do menu de Local.

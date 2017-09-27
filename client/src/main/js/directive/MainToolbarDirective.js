@@ -64,7 +64,7 @@
                      * @returns {string} O nome mostrado ao usuario.
                      */
                     scope.getNomeDoEstadoAtual = function () {
-                        var estadoAtual = $state.current;
+                        const estadoAtual = $state.current;
                         if (estadoAtual.name !== APP_STATES.AGENDA_INFO.nome && estadoAtual.name !== APP_STATES.LOGIN.nome) {
                             const nomeState = $state.current.nome || $state.current.name;
                             return scope.getNomeState(nomeState.toUpperCase());
@@ -72,7 +72,7 @@
                         return 'SCORE';
                     };
 
-                    scope.getNomeState = nomeState => _.last(nomeState.split('.')).replace(/[^a-zA-Z]/g, '\ ');
+                    scope.getNomeState = nomeState => _.last(nomeState.split('.')).replace(/[^a-zA-Z]/g, '');
 
                     /**
                      * Redireciona para tela inicial do aplicativo, caso o usuário não esteja logado, redireciona para
@@ -85,10 +85,12 @@
                     /**
                      * Função principal.
                      */
-                    (() => {
+                    scope.init = function () {
                         scope.lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, LOCK_CONFIG);
                         scope.lock.on('authenticated', authenticate);
-                    })();
+                    };
+
+                    scope.init();
                 }
             };
         }]);
