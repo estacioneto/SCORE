@@ -27,7 +27,6 @@
             'toastModule',
             'sidebarModulo',
             'buscaModulo',
-            'footerModule',
             'materialCalendar',
             'agendaModulo',
             'agendamentoModulo',

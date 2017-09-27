@@ -62,7 +62,6 @@
                 'src/main/js/service/SidebarService.js',
                 'src/main/js/directive/MainToolbarDirective.js',
                 'src/main/js/directive/SidebarDirective.js',
-                'src/main/js/directive/MainFooterDirective.js',
                 'src/main/js/directive/FuncionamentoLocalValidator.js',
                 'src/main/js/controller/AppController.js',
                 'src/main/js/controller/LoginController.js',
