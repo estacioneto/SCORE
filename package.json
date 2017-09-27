@@ -18,6 +18,7 @@
     "node": "~8.6.0",
     "npm": "~5.4.3"
   },
+  "private": true,
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {

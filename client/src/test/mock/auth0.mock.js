@@ -15,4 +15,9 @@ class Auth0Lock {
 
     show() {
     }
+
+    getProfile(idToken, callback) {
+        this._getProfileArgs = Object.values(arguments);
+        return callback;
+    }
 }

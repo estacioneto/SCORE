@@ -20,14 +20,15 @@
         beforeEach(inject(defaultInjections(self)));
         afterEach(defaultAfterEach(self));
 
-        let $scope, compile, element, $mdSidenav, APP_STATES, AuthLockService;
+        let $scope, compile, element, $mdSidenav, APP_STATES, AuthLockService, AuthService;
         const MAIN_SIDENAV = 'main-sidenav';
-        beforeEach(inject(function ($compile, $templateCache, _$mdSidenav_, _APP_STATES_, _AuthLockService_) {
+        beforeEach(inject(function ($compile, $templateCache, _$mdSidenav_, _APP_STATES_, _AuthLockService_, _AuthService_) {
             $scope = self.$rootScope.$new();
             compile = $compile;
             $mdSidenav = _$mdSidenav_;
             APP_STATES = _APP_STATES_;
             AuthLockService = _AuthLockService_;
+            AuthService = _AuthService_;
 
             const toolbarHtml = $templateCache.get("src/main/view/mainToolbar.html");
             $templateCache.put("./view/mainToolbar.html", toolbarHtml);
@@ -91,6 +92,47 @@
 
                 sandbox.assert.calledOnce(diretiva.lock.show);
                 sandbox.assert.calledOnce(AuthLockService.inicializarVerificacoes);
+            });
+        });
+
+        describe('MainToolbarDirective autenticar deve', () => {
+            const idToken = 'idToken', accessToken = 'accessToken';
+            it('chamar função para recuperar perfil do lock passando o token de parâmetro', () => {
+                const diretiva = element.isolateScope();
+
+                diretiva.autenticar({idToken});
+                expect(diretiva.lock._getProfileArgs).to.contain(idToken);
+            });
+
+            it('realizar log do erro caso haja e não autenticar', () => {
+                const diretiva = element.isolateScope();
+
+                const callback = diretiva.autenticar({idToken});
+                expect(diretiva.lock._getProfileArgs).to.contain(idToken);
+
+                sandbox.stub(console, 'log');
+                sandbox.stub(AuthService, 'authenticate');
+
+                callback('NewPointerException');
+                sandbox.assert.calledWith(console.log, `Erro em autenticação: NewPointerException`);
+                sandbox.assert.notCalled(AuthService.authenticate);
+            });
+
+            it('autenticar e redirecionar caso haja sucesso', () => {
+                const diretiva = element.isolateScope();
+
+                const callback = diretiva.autenticar({idToken, accessToken});
+                expect(diretiva.lock._getProfileArgs).to.contain(idToken, accessToken);
+                expect(diretiva.usuario).to.be.not.ok;
+
+                sandbox.stub(console, 'log');
+                sandbox.stub(AuthService, 'authenticate');
+
+                self.$state.expectTransitionTo(APP_STATES.AGENDA_INFO.nome);
+                callback(null, {});
+
+                sandbox.assert.calledWith(AuthService.authenticate, accessToken, idToken, diretiva.usuario);
+                expect(diretiva.usuario).to.be.ok;
             });
         });
 

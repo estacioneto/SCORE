@@ -22,12 +22,12 @@
                         }
                     };
 
-                    scope.user = AuthService.getUsuarioLogado();
+                    scope.usuario = AuthService.getUsuarioLogado();
 
                     /**
                      * Responsavel pela logica de logout relacionada ao controller
                      * (chamadas de estados e servicos).
-                     * 
+                     *
                      */
                     scope.sair = function () {
                         scope.auth.logout();
@@ -47,16 +47,16 @@
                      *
                      * @param authResult O resultado retornado pelo lock.
                      */
-                    function authenticate(authResult) {
-                        return scope.lock.getProfile(authResult.idToken, function (err, user) {
+                    scope.autenticar = function (authResult) {
+                        return scope.lock.getProfile(authResult.idToken, function (err, usuario) {
                             if (err) {
-                                return console.log('Auth error: ' + error);
+                                return console.log(`Erro em autenticação: ${err}`);
                             }
-                            scope.user = new Usuario(user);
-                            AuthService.authenticate(authResult.accessToken, authResult.idToken, scope.user);
+                            scope.usuario = new Usuario(usuario);
+                            AuthService.authenticate(authResult.accessToken, authResult.idToken, scope.usuario);
                             $state.go(APP_STATES.AGENDA_INFO.nome);
                         });
-                    }
+                    };
 
                     /**
                      * Resgata o nome do estado atual e mostra ao usuario.
@@ -87,7 +87,7 @@
                      */
                     scope.init = function () {
                         scope.lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, LOCK_CONFIG);
-                        scope.lock.on('authenticated', authenticate);
+                        scope.lock.on('authenticated', scope.autenticar);
                     };
 
                     scope.init();
