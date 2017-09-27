@@ -23,7 +23,7 @@
          */
         toggle() {
             const sidebar = this.$mdSidenav(this.SIDEBAR_PRINCIPAL);
-            sidebar.isOpen() ? sidebar.close() : sidebar.toggle();
+            return sidebar.isOpen() ? sidebar.close() : sidebar.toggle();
         }
     }
 
