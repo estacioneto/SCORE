@@ -14,8 +14,12 @@
     "merge-lcov": "./node_modules/.bin/lcov-result-merger './coverage/lcov*.info' 'lcov.info'",
     "coveralls": "cat lcov.info | coveralls"
   },
+  "engines": {
+    "node": "~8.6.0",
+    "npm": "~5.4.3"
+  },
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
