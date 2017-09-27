@@ -11,23 +11,30 @@
      * @author Estácio Pereira.
      */
     app.config(['$provide', function ($provide) {
-        $provide.decorator('$state', ['$transitions', '$delegate', function ($transitions, $delegate) {
+        $provide.decorator('$state', ['$delegate', '$rootScope', function ($delegate, $rootScope) {
 
-            const $stateStack = [];
             let $isGoingBack = false;
+
+            $delegate.$stateStack = [];
 
             /**
              * Ao ocorrer uma transição, se não for o primeiro state e se não estiver em uma
              * transição para retorno, o state de origem será guardado.
+             *
+             * @param {Object} event      Evento da mudança de estado
+             * @param {Object} toState    Estado de destino
+             * @param {Object} toParams   Parâmetros da rota destino
+             * @param {Object} fromState  Estado de origem
+             * @param {Object} fromParams Parâmetros da rota origem
              */
-            $transitions.onSuccess({}, function ($transition) {
-                const fromState = $transition.$from();
-                fromState.$params = $transition.params('from');
+            $delegate.$$onStateChangeSuccess = function(event, toState, toParams, fromState, fromParams) {
                 if (fromState.name && !$isGoingBack) {
-                    $stateStack.push(fromState);
+                    $delegate.$stateStack.push(fromState);
                 }
                 $isGoingBack = false;
-            });
+            };
+
+            $rootScope.$on('$stateChangeSuccess', $delegate.$$onStateChangeSuccess);
 
             /**
              * Executa ação de voltar. Caso haja state para voltar (pode não haver em caso de refresh),
@@ -40,10 +47,10 @@
              * @returns {boolean} true caso tenha sido feita a transição, false caso contrário.
              */
             $delegate.goBack = function (defaultStateName, defaultStateParams = {}) {
-                if (!_.isEmpty($stateStack)) {
-                    const toState = $stateStack.pop();
+                if (!_.isEmpty($delegate.$stateStack)) {
+                    const toState = $delegate.$stateStack.pop();
                     $isGoingBack = true;
-                    $delegate.go(toState.name, toState.$params);
+                    $delegate.go(toState.name, toState.params);
                     return true;
                 } else if (defaultStateName) {
                     $delegate.go(defaultStateName, defaultStateParams);

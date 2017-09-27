@@ -45,7 +45,7 @@
                 'src/main/js/util.js',
                 'src/main/js/lib/FileReader.js',
                 'src/main/js/config/config.js',
-                'src/main/js/config/StateDecorator.js',
+                'src/main/js/decorator/StateDecorator.js',
                 'src/main/js/Constants.js',
                 'src/main/js/constants/constantesReserva.js',
                 'src/main/js/constants/constantesLocal.js',
@@ -105,7 +105,7 @@
 
             preprocessors: {
                 // Arquivos que serão analisados pela cobertura de testes.
-                'src/main/js/**/!(*lib)/*.js': ['coverage'],
+                'src/main/js/**/!(*lib|*config)/*.js': ['coverage'],
                 'src/main/view/**/*.html': 'ng-html2js'
             },
 
