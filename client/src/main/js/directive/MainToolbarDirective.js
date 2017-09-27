@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('toolbarModulo', []).directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', 'SearchService', '$mdSidenav', 'Usuario', 'APP_STATES',
-        function ($state, $rootScope, AuthService, AuthLockService, ToastService, SearchService, $mdSidenav, Usuario, APP_STATES) {
+    angular.module('toolbarModulo', []).directive('mainToolbar', ['$state', '$rootScope', 'AuthService', 'AuthLockService', 'ToastService', '$mdSidenav', 'Usuario', 'APP_STATES',
+        function ($state, $rootScope, AuthService, AuthLockService, ToastService, $mdSidenav, Usuario, APP_STATES) {
             return {
                 restrict: 'AE',
                 templateUrl: './view/mainToolbar.html',
@@ -14,7 +14,7 @@
                      * Funcao para alternar a barra de menu lateral
                      */
                     scope.toggleBarraLateral = function () {
-                        var sidenav = $mdSidenav('main-sidenav');
+                        const sidenav = $mdSidenav('main-sidenav');
                         if (sidenav.isOpen()) {
                             sidenav.close();
                         } else {
@@ -22,12 +22,12 @@
                         }
                     };
 
-                    scope.user = AuthService.getUsuarioLogado();
+                    scope.usuario = AuthService.getUsuarioLogado();
 
                     /**
                      * Responsavel pela logica de logout relacionada ao controller
                      * (chamadas de estados e servicos).
-                     * 
+                     *
                      */
                     scope.sair = function () {
                         scope.auth.logout();
@@ -47,16 +47,16 @@
                      *
                      * @param authResult O resultado retornado pelo lock.
                      */
-                    function authenticate(authResult) {
-                        return scope.lock.getProfile(authResult.idToken, function (err, user) {
+                    scope.autenticar = function (authResult) {
+                        return scope.lock.getProfile(authResult.idToken, function (err, usuario) {
                             if (err) {
-                                return console.log('Auth error: ' + error);
+                                return console.log(`Erro em autenticação: ${err}`);
                             }
-                            scope.user = new Usuario(user);
-                            AuthService.authenticate(authResult.accessToken, authResult.idToken, scope.user);
+                            scope.usuario = new Usuario(usuario);
+                            AuthService.authenticate(authResult.accessToken, authResult.idToken, scope.usuario);
                             $state.go(APP_STATES.AGENDA_INFO.nome);
                         });
-                    }
+                    };
 
                     /**
                      * Resgata o nome do estado atual e mostra ao usuario.
@@ -64,7 +64,7 @@
                      * @returns {string} O nome mostrado ao usuario.
                      */
                     scope.getNomeDoEstadoAtual = function () {
-                        var estadoAtual = $state.current;
+                        const estadoAtual = $state.current;
                         if (estadoAtual.name !== APP_STATES.AGENDA_INFO.nome && estadoAtual.name !== APP_STATES.LOGIN.nome) {
                             const nomeState = $state.current.nome || $state.current.name;
                             return scope.getNomeState(nomeState.toUpperCase());
@@ -72,7 +72,7 @@
                         return 'SCORE';
                     };
 
-                    scope.getNomeState = nomeState => _.last(nomeState.split('.')).replace(/[^a-zA-Z]/g, '\ ');
+                    scope.getNomeState = nomeState => _.last(nomeState.split('.')).replace(/[^a-zA-Z]/g, '');
 
                     /**
                      * Redireciona para tela inicial do aplicativo, caso o usuário não esteja logado, redireciona para
@@ -85,10 +85,12 @@
                     /**
                      * Função principal.
                      */
-                    (() => {
+                    scope.init = function () {
                         scope.lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, LOCK_CONFIG);
-                        scope.lock.on('authenticated', authenticate);
-                    })();
+                        scope.lock.on('authenticated', scope.autenticar);
+                    };
+
+                    scope.init();
                 }
             };
         }]);

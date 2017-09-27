@@ -3,7 +3,7 @@
 
     describe('DetalhesReservaEdicaoTest', () => {
 
-        beforeEach(module('scoreApp', 'Mocks', 'stateMock'));
+        beforeEach(module('Mocks', 'stateMock', 'scoreApp'));
 
         const NOME_COMPONENTE = 'detalhesReservaEdicao';
 

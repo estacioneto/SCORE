@@ -3,13 +3,14 @@
 
     describe('LocalControllerTest', function () {
 
-        beforeEach(module('scoreApp', 'stateMock', 'Mocks'));
+        beforeEach(module('stateMock', 'Mocks', 'scoreApp'));
 
         let createController, $scope, AuthService, ToastService, LocaisMock, UsuarioMock;
         const self = this;
         let local, usuario;
 
         beforeEach(inject(defaultInjections(self)));
+        afterEach(defaultAfterEach(self));
 
         beforeEach(inject(function ($controller, _AuthService_, _ToastService_, _LocaisMock_, _UsuarioMock_) {
             $scope = self.$rootScope.$new();

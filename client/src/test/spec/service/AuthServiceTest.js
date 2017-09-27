@@ -8,7 +8,7 @@
      */
     describe('AuthServiceTest', function () {
 
-        beforeEach(module('scoreApp', 'stateMock', 'Mocks'));
+        beforeEach(module('stateMock', 'Mocks', 'scoreApp'));
 
         var store, auth, AuthService, ToastService, UsuarioMock;
         var self = this;

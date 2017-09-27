@@ -16,7 +16,7 @@ Além disso, o serviço do mongo deve estar de pé. Para isso, execute `sudo ser
 
 # Tecnologias utilizadas
 * Front-end: [AngularJS](https://angularjs.org/) v1.6.2
-* Back-end: [NodeJS](https://nodejs.org/) v7.10.1
+* Back-end: [NodeJS](https://nodejs.org/) v8.6.0
 * Banco de Dados: [MongoDB](https://www.mongodb.com/) v2.4.9
 * Microserviço de autenticação: [Auth0](https://auth0.com/)
 * Task-runner: [Gulp](http://gulpjs.com/)

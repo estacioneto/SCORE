@@ -8,7 +8,7 @@
      *
      * @author Estácio Pereira.
      */
-    angular.module('buscaModulo').component('selectSearchLocal', {
+    angular.module('buscaModulo', []).component('selectSearchLocal', {
         templateUrl: 'view/component/local/select-search-local.html',
         controller: ['LocaisService', selectSearchLocalController],
         bindings: {
