@@ -4,7 +4,8 @@ var gulp = require('gulp'),
     cleanCSS = require('gulp-clean-css'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
-    usemin = require('gulp-usemin');
+    usemin = require('gulp-usemin'),
+    babel = require('gulp-babel');
 
 var jshint = require('gulp-jshint'),
     git = require('gulp-git'),
@@ -37,7 +38,10 @@ gulp.task('usemin', function () {
         .pipe(usemin({
             css: [rev(), 'concat'],
             html: [minifyHtml({ collapseWhitespace: true }), 'concat'],
-            js: [uglify(), rev(), 'concat']
+            js: ['concat', babel({
+                plugins: ['transform-es2015-arrow-functions', "remove-comments"],
+                presets: ['minify']
+            })]
         }))
         .pipe(gulp.dest('dist/'));
 });
