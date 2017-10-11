@@ -12,7 +12,8 @@
     "coverage-client": "gulp --gulpfile client/gulpfile.js test",
     "coverage-server": "./node_modules/.bin/babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --reporter nyan --recursive \"./server/src/test/**/*.test.js\"",
     "merge-lcov": "./node_modules/.bin/lcov-result-merger './coverage/lcov*.info' 'lcov.info'",
-    "coveralls": "cat lcov.info | coveralls"
+    "coveralls": "cat lcov.info | coveralls",
+    "minify": "gulp copy && gulp usemin"
   },
   "engines": {
     "node": "~8.6.0",
@@ -89,6 +90,7 @@
     "font-awesome": "^4.7.0",
     "fs": "0.0.2",
     "fullcalendar": "^3.4.0",
+    "gulp-babel": "^7.0.0",
     "gulp-git": "^2.4.1",
     "gulp-gitignore": "^0.1.0",
     "gulp-istanbul": "^1.1.1",
