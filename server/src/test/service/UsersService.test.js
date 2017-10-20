@@ -13,25 +13,25 @@ describe('usersServiceTest', () => {
     describe('isCached should', () => {
         it('return true if the user is in the cache', () => {
             let user = UserMock.getValidUser();
-            UserService.cacheUser('token', user);
+            UserService.cachePut('token', user);
             expect(UserService.isCached(user)).to.be.true;
         });
 
         it('return false if the user is not in the cache', () => {
             let user = UserMock.getValidUser();
-            UserService.cacheUser('token', user);
+            UserService.cachePut('token', user);
             expect(UserService.isCached(user)).to.be.true;
             user.username = 'piton';
             expect(UserService.isCached(user)).to.be.false;
         });
     });
 
-    describe('cacheUser should', () => {
+    describe('cachePut should', () => {
         it('add the user correctly and as a string', () => {
             let user = UserMock.getValidUser();
             let token = UserMock.getToken();
             UserService.cache = {};
-            UserService.cacheUser(token, user);
+            UserService.cachePut(token, user);
             expect(UserService.cache[token]).to.be.ok;
             expect(UserService.cache[token].value).to.be.equal(JSON.stringify(user));
         });
@@ -39,9 +39,9 @@ describe('usersServiceTest', () => {
         it('not add something to the cache with the key falsy', () => {
             let user = UserMock.getValidUser();
             UserService.cache = {};
-            UserService.cacheUser(null, user);
+            UserService.cachePut(null, user);
             expect(UserService.cache).to.be.empty;
-            UserService.cacheUser('', user);
+            UserService.cachePut('', user);
             expect(UserService.cache).to.be.empty;
         });
 
@@ -49,10 +49,10 @@ describe('usersServiceTest', () => {
             let user = UserMock.getValidUser();
             let token = UserMock.getToken();
             UserService.cache = {};
-            UserService.cacheUser(token, user);
+            UserService.cachePut(token, user);
             expect(UserService.cache[token]).to.be.ok;
             expect(UserService.cache[token].value).to.be.equal(JSON.stringify(user));
-            UserService.cacheUser(token + token, user);
+            UserService.cachePut(token + token, user);
             expect(UserService.cache[token]).to.not.be.ok;
             expect(UserService.cache[token + token].value).to.be.equal(JSON.stringify(user));
         });
@@ -89,7 +89,7 @@ describe('usersServiceTest', () => {
             let user = UserMock.getValidUser();
             let token = UserMock.getToken();
             UserService.cache = {};
-            UserService.cacheUser(token, user);
+            UserService.cachePut(token, user);
             UserService.getUser(token, (err, result) => {
                 expect(err).to.not.be.ok;
                 expect(result).to.be.deep.equal(user);
