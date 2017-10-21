@@ -1,5 +1,5 @@
 import _ from '../../util/util';
-import UsersService from '../../service/usersService';
+import {UsersService} from '../../service/usersService';
 
 /**
  * Classe responsável por criar middlewares de permissões.
@@ -31,21 +31,19 @@ export class PermissoesMiddleware {
      * @returns {function(*, *, *)} Retorna função middleware com implementação padrão de verificação.
      */
     static construirMiddleware(permissao = '') {
-        return (req, res, next) => {
+        return async (req, res, next) => {
             const token = req.header(_.ACCESS_TOKEN);
 
-            return new Promise((resolve, reject) =>
-                UsersService.getUser(token, (err, usuario) => {
-                    if (err)
-                        return reject(res.status(_.FORBIDDEN).json({mensagem: `Falha ao acessar recurso. ${(err || '')}.`}));
-
-                    const permissoes = usuario.app_metadata.permissoes || [];
-                    // Como o Admin pode tudo, se incluir Admin, pode passar.
-                    if (!_.includes(permissoes, _.ADMIN) && !_.includes(permissoes, permissao))
-                        return reject(res.status(_.FORBIDDEN).json({mensagem: _.ERRO_USUARIO_SEM_PERMISSAO}));
-                    return resolve(next());
-                })
-            );
+            try {
+                const usuario = await UsersService.getUser(token);
+                const permissoes = usuario.app_metadata.permissoes || [];
+                // Como o Admin pode tudo, se incluir Admin, pode passar.
+                if (!_.includes(permissoes, _.ADMIN) && !_.includes(permissoes, permissao))
+                    return res.status(_.FORBIDDEN).json({mensagem: _.ERRO_USUARIO_SEM_PERMISSAO});
+                return next();
+            } catch (err) {
+                return res.status(_.FORBIDDEN).json({mensagem: `Falha ao acessar recurso. ${(err || '')}.`});
+            }
         };
     }
 }

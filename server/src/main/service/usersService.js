@@ -1,8 +1,8 @@
 import _ from '../util/util';
 import {AuthService} from './authService';
 
-const cache = {};
-const idCache = {};
+let _cache = {};
+const _idCache = {};
 
 /**
  * Recupera um elemento do cache. Requerido para controlar o elemento mais acessado.
@@ -49,7 +49,7 @@ function _limparCache(cache) {
  * @class
  * @author Estácio Pereira.
  */
-export class UserService {
+export class UsersService {
 
     /**
      * Verifica se o usuário está em cache.
@@ -58,7 +58,7 @@ export class UserService {
      * @returns {boolean} true se o usuário está em cache, false caso contrário.
      */
     static isCached(usuario) {
-        return _.some(cache, {value: JSON.stringify(usuario)});
+        return _.some(_cache, {value: JSON.stringify(usuario)});
     }
 
     /**
@@ -70,23 +70,23 @@ export class UserService {
     static cachePut(token, usuario) {
         if (!_.isEmpty(token) && !_.isEmpty(usuario)) {
             const usuarioString = JSON.stringify(usuario);
-            const tokenAntigo = _.findKey(cache, {value: usuarioString});
+            const tokenAntigo = _.findKey(_cache, {value: usuarioString});
 
             if (tokenAntigo) {
-                delete cache[tokenAntigo];
+                delete _cache[tokenAntigo];
             }
-            _cachePut(cache, token, usuarioString);
-            _cachePut(idCache, usuario.user_id, usuario);
+            _cachePut(_cache, token, usuarioString);
+            _cachePut(_idCache, usuario.user_id, usuario);
         }
     }
 
     static async getUserById(idUsuario) {
-        if (!_.isEmpty(idCache[idUsuario])) {
-            return _getFromCache(idCache, idUsuario);
+        if (!_.isEmpty(_idCache[idUsuario])) {
+            return _getFromCache(_idCache, idUsuario);
         }
 
         const usuario = await AuthService.getUser(idUsuario);
-        _cachePut(idCache, idUsuario, usuario);
+        _cachePut(_idCache, idUsuario, usuario);
         return usuario;
     }
 
@@ -97,13 +97,21 @@ export class UserService {
      * @param {String}   accessToken Token de acesso.
      */
     static async getUser(accessToken) {
-        if (cache[accessToken]) {
-            return JSON.parse(_getFromCache(cache, accessToken));
+        if (_cache[accessToken]) {
+            return JSON.parse(_getFromCache(_cache, accessToken));
         }
         const usuario = await AuthService.getProfile(accessToken);
         UserService.cachePut(accessToken, usuario);
 
         return usuario;
+    }
+
+    static get _cache() {
+        return _cache;
+    }
+
+    static set _cache(newCache) {
+        _cache = newCache;
     }
 }
 
@@ -112,7 +120,7 @@ export class UserService {
  */
 (() => {
     setInterval(() => {
-        _limparCache('cache');
-        _limparCache('idCache');
+        _limparCache(_cache);
+        _limparCache(__idCache);
     }, _.TEN_MINUTES);
 })();

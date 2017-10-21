@@ -1,62 +1,69 @@
-import {PermissoesMiddleware} from '../middleware/permissoes/PermissoesMiddleware';
+import express from 'express';
 
-(function(){
-    'use strict';
+import {
+    PermissoesMiddleware
+} from '../middleware/permissoes/PermissoesMiddleware';
 
-    let express = require('express');
+import {
+    ReservasService
+} from '../service/reservasService';
 
-    let reservasService = require('../service/reservasService')(),
-        _ = require('../util/util');
+import _ from '../util/util';
 
-    /**
-     * Router utilizado para acessar as reservas.
-     *
-     * Endpoint: /reservas
-     * @author Lucas Diniz
-     */
-    let reservasRouter = express.Router();
+/**
+ * Router utilizado para acessar as reservas.
+ *
+ * Endpoint: /reservas
+ * @author Lucas Diniz
+ */
+const reservasRouter = express.Router();
 
-    /**
-     * Salva uma nova reserva
-     */
-    reservasRouter.post('/', [PermissoesMiddleware.getReservasMiddleware()], (req, res) => {
-        reservasService.salvaReserva(_.getToken(req), req.body, (err, result) => {
-            if (err) {
-                return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
-            }
-            return res.status(_.CREATED).json(result);
-        })
-    });
+/**
+ * Salva uma nova reserva
+ */
+reservasRouter.post('/', [PermissoesMiddleware.getReservasMiddleware()], async(req, res) => {
+    try {
+        const reserva = await ReservasService.salvarReserva(_.getToken(req), req.body);
+        return res.status(_.CREATED).json(reserva);
+    } catch (err) {
+        return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
+    }
+});
 
-    /**
-     * Atualiza a reserva com o id passado
-     */
-    reservasRouter.patch('/:id', [PermissoesMiddleware.getReservasMiddleware()], (req,res) => {
-        reservasService.atualizaReserva(_.getToken(req), req.params.id, req.body, (err,result) => {
-            if (err) return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
-            return res.status(_.OK).json(result);
-        });
-    });
+/**
+ * Atualiza a reserva com o id passado
+ */
+reservasRouter.patch('/:id', [PermissoesMiddleware.getReservasMiddleware()], async(req, res) => {
+    try {
+        const reserva = await ReservasService.atualizarReserva(_.getToken(req), req.params.id, req.body);
+        return res.status(_.OK).json(reserva);
+    } catch (err) {
+        return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
+    }
+});
 
-    /**
-     * Obtém a reserva com o id passado
-     */
-    reservasRouter.get('/:id', (req,res) => {
-        reservasService.getReservaById(_.getToken(req), req.params.id, (err,result) => {
-            if (err) return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
-            return res.status(_.OK).json(result);
-        });
-    });
+/**
+ * Obtém a reserva com o id passado
+ */
+reservasRouter.get('/:id', async(req, res) => {
+    try {
+        const reserva = await ReservasService.getReservaById(_.getToken(req), req.params.id);
+        return res.status(_.OK).json(reserva);
+    } catch (err) {
+        return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
+    }
+});
 
-    /**
-     * Deleta a reserva com o id passado
-     */
-    reservasRouter.delete('/:id', [PermissoesMiddleware.getReservasMiddleware()], (req, res) =>
-        reservasService.deletaReserva(_.getToken(req), req.params.id, (err, result) => {
-            if (err) return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
-            return res.status(_.OK).json(result);
-        })
-    );
+/**
+ * Deleta a reserva com o id passado
+ */
+reservasRouter.delete('/:id', [PermissoesMiddleware.getReservasMiddleware()], async(req, res) => {
+    try {
+        const reserva = await ReservasService.deletaReserva(_.getToken(req), req.params.id);
+        return res.status(_.OK).json(reserva);
+    } catch (err) {
+        return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
+    }
+});
 
-    module.exports = reservasRouter;
-})();
+module.exports = reservasRouter;

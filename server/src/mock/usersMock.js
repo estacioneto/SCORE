@@ -153,7 +153,7 @@
      */
     function cacheUsuario(usersService, usuario) {
         const token = UsersMock.getToken();
-        usersService.cacheUser(token, usuario);
+        usersService.cachePut(token, usuario);
     }
 
     module.exports = UsersMock;
