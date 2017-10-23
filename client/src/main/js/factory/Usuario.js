@@ -16,6 +16,7 @@
          */
         function Usuario(user) {
             this.user_metadata = this.user_metadata || {};
+            this.app_metadata = this.app_metadata || {};
             Object.assign(this, user);
         }
 
@@ -38,7 +39,7 @@
          * @return {Boolean} True caso o usuário seja administrador.
          */
         Usuario.prototype.isAdmin = function() { 
-            return _.some(this.app_metadata.permissoes, permissao => permissao === PERMISSOES.ADMIN);
+            return this.app_metadata && _.some(this.app_metadata.permissoes, permissao => permissao === PERMISSOES.ADMIN);
         };
 
         Usuario.prototype.constructor = Usuario;
