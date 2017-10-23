@@ -16,7 +16,7 @@ const LOCK_CONFIG = {
     },
     languageDictionary: {
         title: "SCORE - UASC",
-        emailInputPlaceholder: 'seu@email.com',
+        emailInputPlaceholder: 'email@ccc|copin|computacao',
         passwordInputPlaceholder: 'Sua senha',
         welcome: 'Bem vindo, %s!'
     },
