@@ -128,13 +128,13 @@
              * @return Promise.
              */
             this.excluirReserva = () => {
-                ModalService.confirmar("Excluir reserva", "Ação não pode ser desfeita. Confirma?").then(() => {
+                return ModalService.confirmar("Excluir reserva", "Ação não pode ser desfeita. Confirma?").then(() => {
                     return self.reserva.excluir().then(data => {
                         AgendamentoService.excluir(self.reserva);
                         self.fecharModal();
                         ToastService.showActionToast("Reserva excluída.");
                         return data;
-                    });
+                    }, err => ModalService.notificarErro(`Falha ao deletar reserva. ${(err && err.data) || ''}`));
                 });
             };
 

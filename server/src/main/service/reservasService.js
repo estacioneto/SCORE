@@ -8,6 +8,8 @@ import {
 import Reserva from '../model/Reserva';
 import _ from '../util/util';
 
+require('../config/db_config')();
+
 const _consultarReservas = (params = {}) => new Promise(
     (resolve, reject) => Reserva.find({},
         (err, result) => (err) ? reject(err) : resolve(result)
@@ -18,9 +20,8 @@ const _consultarReservas = (params = {}) => new Promise(
  * Persiste uma reserva no banco de dados.
  *
  * @param {Object}   reserva  Reserva a ser persistida.
- * @param {Function} callback Função chamada após erro ou sucesso na operação.
  */
-const _persistirReserva = (reserva, callback) => new Promise(
+const _persistirReserva = (reserva) => new Promise(
     (resolve, reject) => reserva.save(
         (err, resultado) => (err) ? reject(err) : resolve(resultado.toObject())
     )
@@ -41,11 +42,8 @@ const _removerReserva = async reserva => new Promise(
  * TODO: Se esse método crescer, criar um validador. @author Eric Breno
  * 
  * @param {Reserva} reserva Reserva a ser validada.
- * @param {Function} cb Callback a ser invocado com resultado. Se algum
- *                      dado estiver incorreto, o callback é invocado com
- *                      a mensagem de erro.
  */
-const _validarHorario = (reserva, cb) => new Promise((resolve, reject) => {
+const _validarHorario = reserva => new Promise((resolve, reject) => {
     const intervaloNegativo = reserva.inicio >= reserva.fim;
     if (intervaloNegativo) return reject("Intervalo de horários inválido.");
 
@@ -142,7 +140,6 @@ const ReservasService = {
      *
      * @param {String}   token    Token de identificação do usuário logado.
      * @param {Object}   reserva  Nova reserva a ser persistida.
-     * @param {Function} callback Função chamada após erro ou sucesso na operação.
      */
     async salvarReserva(token, reserva) {
         const usuario = await UsersService.getUser(token);
@@ -153,7 +150,7 @@ const ReservasService = {
         reserva.autor = usuario.user_metadata.nome_completo;
 
         await _validarHorario(reserva);
-        return _persistirReserva(new Reserva(reserva), callback);
+        return _persistirReserva(new Reserva(reserva));
     },
 
     /**
@@ -197,9 +194,8 @@ const ReservasService = {
      *
      * @param {String}   token     Token de identificação do usuário logado.
      * @param {String}   idReserva Id da reserva a ser deletada.
-     * @param {Function} callback  Função chamada após erro ou sucesso na operação.
      */
-    async deletarReserva(token, idReserva, callback) {
+    async deletarReserva(token, idReserva) {
         //TODO: Validar deleção
         const reserva = await _getReservaById(token, idReserva);
         return _removerReserva(reserva);

@@ -101,7 +101,7 @@ export class UsersService {
             return JSON.parse(_getFromCache(_cache, accessToken));
         }
         const usuario = await AuthService.getProfile(accessToken);
-        UserService.cachePut(accessToken, usuario);
+        UsersService.cachePut(accessToken, usuario);
 
         return usuario;
     }
@@ -121,6 +121,6 @@ export class UsersService {
 (() => {
     setInterval(() => {
         _limparCache(_cache);
-        _limparCache(__idCache);
+        _limparCache(_idCache);
     }, _.TEN_MINUTES);
 })();

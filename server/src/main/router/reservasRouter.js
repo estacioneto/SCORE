@@ -59,7 +59,7 @@ reservasRouter.get('/:id', async(req, res) => {
  */
 reservasRouter.delete('/:id', [PermissoesMiddleware.getReservasMiddleware()], async(req, res) => {
     try {
-        const reserva = await ReservasService.deletaReserva(_.getToken(req), req.params.id);
+        const reserva = await ReservasService.deletarReserva(_.getToken(req), req.params.id);
         return res.status(_.OK).json(reserva);
     } catch (err) {
         return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
