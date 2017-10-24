@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## unstable
+
+## 0.2.3
 * Manutenção: Adicionada licença sobre código.
 * Testes: Criados testes para Toolbar.
 * Refatoração: Refatorado acesso à barra lateral e testes.
