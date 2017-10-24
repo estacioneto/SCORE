@@ -2,6 +2,9 @@
 
 ## unstable
 
+## 0.2.6
+* Correção: Corrigida imagem padrão para locais sem imagem principal.
+
 ## 0.2.5
 * Correção: Otimizada consulta de listagem de locais ao retornar apenas a imagem principal de cada local.
 

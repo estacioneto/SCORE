@@ -52,7 +52,7 @@ export class LocaisService {
                 if (err) return reject(err);
                 const locais = results.map(local => _.mongooseToObject(local))
                     .map(local => {
-                        local.imagens && (local.imagens = [_.first(local.imagens)]);
+                        local.imagens && _.first(local.imagens) && (local.imagens = [_.first(local.imagens)]);
                         return local;
                     });
                 return resolve(locais);
