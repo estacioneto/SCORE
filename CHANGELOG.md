@@ -2,6 +2,10 @@
 
 ## unstable
 
+## 0.2.4
+* Correção: Corrigido botão de 'voltar' da aplicação.
+* Correção: Corrigida exibição de número de telefone do usuário.
+
 ## 0.2.3
 * Manutenção: Adicionada licença sobre código.
 * Testes: Criados testes para Toolbar.
