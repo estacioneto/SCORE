@@ -15,7 +15,7 @@
         beforeEach(inject(defaultInjections(self)));
         afterEach(defaultAfterEach(self));
 
-        let event, toState, toParams, fromState, fromParams;
+        let event, toState, toParams, fromState, fromParams, $transition;
 
         beforeEach(() => {
             self.$state.$stateStack = [];
@@ -29,12 +29,17 @@
                 name: 'stateOrigem'
             };
             fromParams = {};
+
+            $transition = {
+                $from: sinon.stub().returns(fromState),
+                params: sinon.stub().withArgs('from').returns(fromParams)
+            }
         });
 
-        describe('stateDecorator $$onStateChangeSuccess deve', () => {
+        describe('stateDecorator $$onTransitionSuccess deve', () => {
             it('adicionar o state anterior caso o mesmo seja válido', () => {
                 expect(self.$state.$stateStack).to.be.empty;
-                self.$state.$$onStateChangeSuccess(event, toState, toParams, fromState, fromParams);
+                self.$state.$$onTransitionSuccess($transition);
                 expect(self.$state.$stateStack).to.not.be.empty;
                 expect(_.first(self.$state.$stateStack)).to.be.eql(fromState);
             });
@@ -42,7 +47,7 @@
             it('não adicionar o state anterior caso o mesmo seja o primeiro, ou seja, nome vazio', () => {
                 expect(self.$state.$stateStack).to.be.empty;
                 fromState.name = '';
-                self.$state.$$onStateChangeSuccess(event, toState, toParams, fromState, fromParams);
+                self.$state.$$onTransitionSuccess($transition);
                 expect(self.$state.$stateStack).to.be.empty;
             });
 
@@ -53,7 +58,7 @@
                 expect(self.$state.goBack()).to.be.true;
                 expect(self.$state.$stateStack).to.be.empty;
 
-                self.$state.$$onStateChangeSuccess(event, toState, toParams, fromState, fromParams);
+                self.$state.$$onTransitionSuccess($transition);
                 expect(self.$state.$stateStack).to.be.empty;
 
             });

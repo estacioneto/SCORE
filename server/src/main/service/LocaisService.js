@@ -50,7 +50,12 @@ export class LocaisService {
         return new Promise((resolve, reject) => {
             Local.find({}, (err, results) => {
                 if (err) return reject(err);
-                return resolve(results.map(local => _.mongooseToObject(local)));
+                const locais = results.map(local => _.mongooseToObject(local))
+                    .map(local => {
+                        local.imagens && _.first(local.imagens) && (local.imagens = [_.first(local.imagens)]);
+                        return local;
+                    });
+                return resolve(locais);
             });
         });
     }
@@ -120,7 +125,8 @@ export class LocaisService {
     static validarImagens(imagens) {
         let mensagemErro = '';
         const TIPOS = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/bitmap'];
-        const inicioTipo = 5, fimTipo = 30;
+        const inicioTipo = 5,
+            fimTipo = 30;
         const TAM_MAX = 16 * 1000 * 1000;
         const getTipoArquivo = arquivo => {
             const inicioArquivo = arquivo.conteudo.substring(inicioTipo, fimTipo);
@@ -143,4 +149,3 @@ export class LocaisService {
         return mensagemErro;
     }
 }
-

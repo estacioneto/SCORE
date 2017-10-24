@@ -1,10 +1,23 @@
 # CHANGELOG
 
 ## unstable
+
+## 0.2.6
+* Correção: Corrigida imagem padrão para locais sem imagem principal.
+
+## 0.2.5
+* Correção: Otimizada consulta de listagem de locais ao retornar apenas a imagem principal de cada local.
+
+## 0.2.4
+* Correção: Corrigido botão de 'voltar' da aplicação.
+* Correção: Corrigida exibição de número de telefone do usuário.
+
+## 0.2.3
 * Manutenção: Adicionada licença sobre código.
 * Testes: Criados testes para Toolbar.
 * Refatoração: Refatorado acesso à barra lateral e testes.
 * Testes: Testes e mudanças em Decorator de $state.
+* Issue 91: Corrigido erro no console após login do usuário.
 
 ## 0.2.2
 * Issue 82: Corrigida validação da mostragem do botão do menu de Local.

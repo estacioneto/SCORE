@@ -6,29 +6,16 @@
      *
      * @author Estácio Pereira.
      */
-    class SidebarService {
-
-        /**
-         * Construtor do Service.
-         *
-         * @param {angular.service} $mdSidenav Service responsável pelas sidenavs do Angular Material.
-         */
-        constructor($mdSidenav) {
-            this.$mdSidenav = $mdSidenav;
-            this.SIDEBAR_PRINCIPAL = 'main-sidenav';
-        }
+    angular.module('sidebarModulo', []).service('SidebarService', ['$mdSidenav', function ($mdSidenav) {
+        this.SIDEBAR_PRINCIPAL = 'main-sidenav';
 
         /**
          * Função responsável por abrir e fechar a sidebar.
          */
-        toggle() {
-            const sidebar = this.$mdSidenav(this.SIDEBAR_PRINCIPAL);
+        this.toggle = function () {
+            const sidebar = $mdSidenav(this.SIDEBAR_PRINCIPAL);
             return sidebar.isOpen() ? sidebar.close() : sidebar.toggle();
-        }
-    }
+        };
 
-    /**
-     * Definição do Service no Angular.
-     */
-    angular.module('sidebarModulo', []).service('SidebarService', ['$mdSidenav', SidebarService]);
+    }]);
 })();

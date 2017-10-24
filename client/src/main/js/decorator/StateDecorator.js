@@ -11,7 +11,7 @@
      * @author Estácio Pereira.
      */
     app.config(['$provide', function ($provide) {
-        $provide.decorator('$state', ['$delegate', '$rootScope', function ($delegate, $rootScope) {
+        $provide.decorator('$state', ['$delegate', '$transitions', function ($delegate, $transitions) {
 
             let $isGoingBack = false;
 
@@ -21,20 +21,19 @@
              * Ao ocorrer uma transição, se não for o primeiro state e se não estiver em uma
              * transição para retorno, o state de origem será guardado.
              *
-             * @param {Object} event      Evento da mudança de estado
-             * @param {Object} toState    Estado de destino
-             * @param {Object} toParams   Parâmetros da rota destino
-             * @param {Object} fromState  Estado de origem
-             * @param {Object} fromParams Parâmetros da rota origem
+             * @param {Object} $transition Objeto encapsulador da transição.
              */
-            $delegate.$$onStateChangeSuccess = function(event, toState, toParams, fromState, fromParams) {
+            $delegate.$$onTransitionSuccess = function ($transition) {
+                const fromState = $transition.$from();
+                fromState.$params = $transition.params('from');
+
                 if (fromState.name && !$isGoingBack) {
                     $delegate.$stateStack.push(fromState);
                 }
                 $isGoingBack = false;
             };
 
-            $rootScope.$on('$stateChangeSuccess', $delegate.$$onStateChangeSuccess);
+            $transitions.onSuccess({}, $delegate.$$onTransitionSuccess);
 
             /**
              * Executa ação de voltar. Caso haja state para voltar (pode não haver em caso de refresh),
@@ -50,7 +49,7 @@
                 if (!_.isEmpty($delegate.$stateStack)) {
                     const toState = $delegate.$stateStack.pop();
                     $isGoingBack = true;
-                    $delegate.go(toState.name, toState.params);
+                    $delegate.go(toState.name, toState.$params);
                     return true;
                 } else if (defaultStateName) {
                     $delegate.go(defaultStateName, defaultStateParams);
