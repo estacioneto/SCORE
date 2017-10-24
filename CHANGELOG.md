@@ -2,6 +2,9 @@
 
 ## unstable
 
+## 0.2.5
+* Correção: Otimizada consulta de listagem de locais ao retornar apenas a imagem principal de cada local.
+
 ## 0.2.4
 * Correção: Corrigido botão de 'voltar' da aplicação.
 * Correção: Corrigida exibição de número de telefone do usuário.
