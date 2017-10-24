@@ -10,6 +10,13 @@ import _ from '../util/util';
 
 require('../config/db_config')();
 
+/**
+ * Consulta uma reserva dados os parâmetros de busca.
+ * 
+ * @param   {Object}           [params = {}] Parâmetros da consulta de reservas.
+ * @returns {Promise.<Object>} Promise resolvida com reserva consultada diretamente pelo Mongoose.
+ * @private
+ */
 const _consultarReservas = (params = {}) => new Promise(
     (resolve, reject) => Reserva.find({},
         (err, result) => (err) ? reject(err) : resolve(result)
@@ -19,17 +26,26 @@ const _consultarReservas = (params = {}) => new Promise(
 /**
  * Persiste uma reserva no banco de dados.
  *
- * @param {Object}   reserva  Reserva a ser persistida.
+ * @param   {Reserva}          reserva  Reserva a ser persistida (Schema).
+ * @returns {Promise.<Object>} Promise resolvida com reserva persistida (objeto extraído do mongoose).
+ * @private
  */
-const _persistirReserva = (reserva) => new Promise(
+const _persistirReserva = reserva => new Promise(
     (resolve, reject) => reserva.save(
         (err, resultado) => (err) ? reject(err) : resolve(resultado.toObject())
     )
 );
 
-const _removerReserva = async reserva => new Promise(
+/**
+ * Remove uma reserva do banco de dados.
+ *
+ * @param   {Reserva}           reserva  Reserva a ser removida (Schema).
+ * @returns {Promise.<Object>} Promise resolvida com mensagem de remoção com sucesso.
+ * @private
+ */
+const _removerReserva = reserva => new Promise(
     (resolve, reject) => reserva.remove(
-        err => err ? reject(err) : resolve("Deleção efetuada com sucesso.")
+        err => err ? reject(err) : resolve("Remoção efetuada com sucesso.")
     )
 );
 
@@ -41,7 +57,9 @@ const _removerReserva = async reserva => new Promise(
  * 
  * TODO: Se esse método crescer, criar um validador. @author Eric Breno
  * 
- * @param {Reserva} reserva Reserva a ser validada.
+ * @param   {Reserva}                 reserva Reserva a ser validada.
+ * @returns {Promise.<String | null>} Promise resolvida com null ou rejeitada com mensagem de erro.
+ * @private
  */
 const _validarHorario = reserva => new Promise((resolve, reject) => {
     const intervaloNegativo = reserva.inicio >= reserva.fim;
@@ -62,9 +80,12 @@ const _validarHorario = reserva => new Promise((resolve, reject) => {
     });
 });
 
+// TODO: Atualizar JSDoc daqui pra baixo
 const _getReservaById = (token, idReserva) => new Promise(async(resolve, reject) => {
     const usuario = await UsersService.getUser(token);
-    return Reserva.findById(usuario.email, idReserva, (err, result) => (err) ? reject(err) : resolve(result));
+    return Reserva.findById(usuario.email, idReserva,
+        (err, result) => err ? reject(err) : resolve(result)
+    );
 });
 
 /**
@@ -110,7 +131,7 @@ function hasChoqueHorario(reserva1, reserva2) {
     return caso1 || caso2 || caso3 || caso4;
 }
 
-const ReservasService = {
+export const ReservasService = {
 
     /**
      * Obtém todas as reservas.
@@ -200,8 +221,4 @@ const ReservasService = {
         const reserva = await _getReservaById(token, idReserva);
         return _removerReserva(reserva);
     }
-};
-
-export {
-    ReservasService
 };
