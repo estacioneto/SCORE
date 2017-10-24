@@ -16,7 +16,6 @@ import sinon from 'sinon';
 import clone from 'clone';
 import request from 'supertest';
 import _ from 'lodash';
-import 'babel-polyfill';
 
 const expect = Chai.expect;
 const chai = Chai.use(chai_as_promised);
