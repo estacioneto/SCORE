@@ -1,21 +1,19 @@
-(function(){
-    'use strict';
+import express from 'express';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
 
-    var express = require('express');
-    const morgan = require('morgan');
-    var bodyParser = require('body-parser');
+import {routesMiddleware} from './server/src/main/middleware/routesMiddleware';
+import bootstrapMiddleware from './server/src/main/middleware/bootstrapMiddleware';
 
-    var routesMiddlware = require('./server/src/main/middleware/routesMiddleware');
-    var bootstrapMiddleware = require('./server/src/main/middleware/bootstrapMiddleware'); 
+// Cria um objeto Application do Express
+const app = express();
 
-    // Cria um objeto Application do Express
-    var app = express();
+app.use(bodyParser.json({
+    limit: '30mb'
+}));
 
-    app.use(bodyParser.json({limit: '30mb'}));
-    app.use(morgan('combined'));
+app.use(morgan('combined'));
 
-    routesMiddlware.set(app);
+routesMiddleware.set(app);
 
-    bootstrapMiddleware.set(app);
-
-})();
+bootstrapMiddleware.set(app);

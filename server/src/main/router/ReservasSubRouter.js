@@ -13,7 +13,7 @@ import {
 function getReservasPorLocal(router) {
     router.get('', async (req, res) => {
         try {
-            const reservas = await ReservasService.getReservasDoLocal(_.getToken(req), req.params.id);
+            const reservas = await ReservasService.getReservasDoLocal(req.params.id);
             return res.status(_.OK).json(reservas);
         } catch (err) {
             return res.status(err.status || _.BAD_REQUEST).json(err.message || err);

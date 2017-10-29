@@ -1,12 +1,8 @@
 import express from 'express';
 
-import {
-    PermissoesMiddleware
-} from '../middleware/permissoes/PermissoesMiddleware';
+import { PermissoesMiddleware } from '../middleware/permissoes/PermissoesMiddleware';
 
-import {
-    ReservasService
-} from '../service/reservasService';
+import { ReservasService } from '../service/reservasService';
 
 import _ from '../util/util';
 
@@ -47,7 +43,7 @@ reservasRouter.patch('/:id', [PermissoesMiddleware.getReservasMiddleware()], asy
  */
 reservasRouter.get('/:id', async(req, res) => {
     try {
-        const reserva = await ReservasService.getReservaById(_.getToken(req), req.params.id);
+        const reserva = await ReservasService.getReserva(_.getToken(req), req.params.id);
         return res.status(_.OK).json(reserva);
     } catch (err) {
         return res.status(err.status || _.BAD_REQUEST).json(err.message || err);

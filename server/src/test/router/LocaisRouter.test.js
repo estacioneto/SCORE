@@ -4,7 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import _ from '../../main/util/util';
-import routesMiddleware from '../../main/middleware/routesMiddleware';
+import {routesMiddleware} from '../../main/middleware/routesMiddleware';
 import {LocaisMock} from '../../mock/LocaisMock';
 
 import {UsersService} from '../../main/service/usersService';

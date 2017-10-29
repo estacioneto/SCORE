@@ -1,9 +1,5 @@
-import {
-    LocaisService
-} from "./LocaisService";
-import {
-    UsersService
-} from "./usersService";
+import { LocaisService } from "./LocaisService";
+import { UsersService } from "./usersService";
 
 import Reserva from '../model/Reserva';
 import _ from '../util/util';
@@ -18,7 +14,7 @@ require('../config/db_config')();
  * @private
  */
 const _consultarReservas = (params = {}) => new Promise(
-    (resolve, reject) => Reserva.find({},
+    (resolve, reject) => Reserva.find(params,
         (err, result) => (err) ? reject(err) : resolve(result)
     )
 );
@@ -40,12 +36,14 @@ const _persistirReserva = reserva => new Promise(
  * Remove uma reserva do banco de dados.
  *
  * @param   {Reserva}           reserva  Reserva a ser removida (Schema).
- * @returns {Promise.<Object>} Promise resolvida com mensagem de remoção com sucesso.
+ * @returns {Promise.<Object>} Promise resolvida o objeto de mensagem de remoção com sucesso.
  * @private
  */
 const _removerReserva = reserva => new Promise(
     (resolve, reject) => reserva.remove(
-        err => err ? reject(err) : resolve("Remoção efetuada com sucesso.")
+        err => err ? reject(err) : resolve({
+            mensagem: "Remoção efetuada com sucesso."
+        })
     )
 );
 
@@ -72,7 +70,7 @@ const _validarHorario = reserva => new Promise((resolve, reject) => {
             if (r._id.toString() === reserva._id) {
                 continue;
             }
-            if (hasChoqueHorario(r, reserva)) {
+            if (_hasChoqueHorario(r, reserva)) {
                 return reject("Horário ocupado.");
             }
         }
@@ -80,10 +78,18 @@ const _validarHorario = reserva => new Promise((resolve, reject) => {
     });
 });
 
-// TODO: Atualizar JSDoc daqui pra baixo
-const _getReservaById = (token, idReserva) => new Promise(async(resolve, reject) => {
-    const usuario = await UsersService.getUser(token);
-    return Reserva.findById(usuario.email, idReserva,
+/**
+ * Retorna uma reserva dado o id da mesma e o email do usuário. Mesmo sendo por id,
+ * o email do usuário serve apenas como condição para a reserva ser retornada, ou seja, só retornar
+ * reservas cujo autor foi o usuário.
+ * 
+ * @param   {String}            email     Email do usuário.
+ * @param   {String}            idReserva Id da reserva a ser retornada.
+ * @returns {Promise.<Reserva>} Promise resolvida com objeto Reserva do mongo.
+ * @private
+ */
+const _consultarReserva = (email, idReserva) => new Promise(async(resolve, reject) => {
+    return Reserva.findById(email, idReserva,
         (err, result) => err ? reject(err) : resolve(result)
     );
 });
@@ -114,11 +120,12 @@ const _getReservaById = (token, idReserva) => new Promise(async(resolve, reject)
  *  * 01:00-02:00 <> 01:00-02:30
  *  * 01:00-02:00 <> 00:30-02:00
  * 
- * @param {Reserva} reserva1
- * @param {Reserva} reserva2 
+ * @param  {Reserva} reserva1
+ * @param  {Reserva} reserva2 
  * @return {Boolean} True caso haja choque de horário entre as reservas.
+ * @private
  */
-function hasChoqueHorario(reserva1, reserva2) {
+function _hasChoqueHorario(reserva1, reserva2) {
     const inicio1 = reserva1.inicio;
     const fim1 = reserva1.fim;
     const inicio2 = reserva2.inicio;
@@ -131,26 +138,18 @@ function hasChoqueHorario(reserva1, reserva2) {
     return caso1 || caso2 || caso3 || caso4;
 }
 
+/**
+ * Objeto representando o Service de Reservas. Responsável pela lógica de negócio das Resevas da aplicação.
+ */
 export const ReservasService = {
-
-    /**
-     * Obtém todas as reservas.
-     *
-     * @param {String}   token    Token de identificação do usuário logado.
-     */
-    async getReservas(token) {
-        await UsersService.getUser(token);
-        return _consultarReservas();
-    },
 
     /**
      * Obtém todas as reservas do local que teve o id especificado.
      *
-     * @param {String}   token    Token de identificação do usuário logado.
-     * @param {String}   localId  Id do local a ter suas reservas retornadas.
+     * @param   {String}                   localId Id do local a ter suas reservas retornadas.
+     * @returns {Promise.<Array.<Object>>} Promise resolvida com a lista de reservas do dado local.
      */
-    async getReservasDoLocal(token, localId) {
-        await UsersService.getUser(token);
+    async getReservasDoLocal(localId) {
         return _consultarReservas({
             localId: localId
         });
@@ -159,8 +158,9 @@ export const ReservasService = {
     /**
      * Cria uma nova reserva em nosso banco de dados.
      *
-     * @param {String}   token    Token de identificação do usuário logado.
-     * @param {Object}   reserva  Nova reserva a ser persistida.
+     * @param   {String}           token    Token de identificação do usuário logado.
+     * @param   {Object}           reserva  Nova reserva a ser persistida.
+     * @returns {Promise.<Object>} Promise resolvida com objeto da reserva persistida.
      */
     async salvarReserva(token, reserva) {
         const usuario = await UsersService.getUser(token);
@@ -178,12 +178,14 @@ export const ReservasService = {
      * Atualiza as propriedades de uma reserva já
      * existente em nosso banco de dados.
      *
-     * @param {String}   token       Token de identificação do usuário logado.
-     * @param {String}   idReserva   Id da reserva original.
-     * @param {Object}   novaReserva Reserva atualizada a ser persistida.
+     * @param   {String}           token       Token de identificação do usuário logado.
+     * @param   {String}           idReserva   Id da reserva original.
+     * @param   {Object}           novaReserva Reserva atualizada a ser persistida.
+     * @returns {Promise.<Object>} Promise resolvida com objeto da reserva atualizada.
      */
     async atualizarReserva(token, idReserva, novaReserva) {
-        const reserva = await _getReservaById(token, idReserva);
+        const usuario = await UsersService.getUser(token);
+        const reserva = await _consultarReserva(usuario.email, idReserva);
         let reservaAntiga = reserva;
         // FIXME: Desfazer isso quando passarmos a utilizar
         // patch corretamente. Necessário por a atualização
@@ -202,23 +204,27 @@ export const ReservasService = {
     /**
      * Obtém uma reserva dado o seu Id.
      *
-     * @param {String}   token      Token de identificação do usuário logado.
-     * @param {String}   idReserva  Id da reserva desejada.
+     * @param   {String}           token      Token de identificação do usuário logado.
+     * @param   {String}           idReserva  Id da reserva desejada.
+     * @returns {Promise.<Object>} Promise resolvida com a reserva consultada.
      */
-    async getReservaById(token, idReserva) {
-        const reserva = await _getReservaById(token, idReserva);
+    async getReserva(token, idReserva) {
+        const usuario = await UsersService.getUser(token);
+        const reserva = await _consultarReserva(usuario.email, idReserva);
         return (reserva || {}).toObject();
     },
 
     /**
      * Deleta uma reserva dado o seu Id.
      *
-     * @param {String}   token     Token de identificação do usuário logado.
-     * @param {String}   idReserva Id da reserva a ser deletada.
+     * @param   {String}           token     Token de identificação do usuário logado.
+     * @param   {String}           idReserva Id da reserva a ser deletada.
+     * @returns {Promise.<Object>} Promise resolvida com o objeto de sucesso.
      */
     async deletarReserva(token, idReserva) {
         //TODO: Validar deleção
-        const reserva = await _getReservaById(token, idReserva);
+        const usuario = await UsersService.getUser(token);
+        const reserva = await _consultarReserva(usuario.email, idReserva);
         return _removerReserva(reserva);
     }
 };
