@@ -2,6 +2,9 @@
 
 ## unstable
 
+## 0.2.7
+* Refatoração: Refatorados serviços do servidor para um código com melhor design.
+
 ## 0.2.6
 * Correção: Corrigida imagem padrão para locais sem imagem principal.
 
