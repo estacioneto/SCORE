@@ -1,7 +1,9 @@
 import express from 'express';
 import _ from '../util/util';
 
-let reservasService = require('../service/reservasService')();
+import {
+    ReservasService
+} from '../service/reservasService';
 
 /**
  * Configura o GET em /api/locais/:id/reservas. Retorna as reservas do local dado o id.
@@ -9,13 +11,13 @@ let reservasService = require('../service/reservasService')();
  * @param {Router} router Express Router.
  */
 function getReservasPorLocal(router) {
-    router.get('', (req, res) => {
-        reservasService.getReservasDoLocal(_.getToken(req), req.params.id, (err, result) => {
-            if (err) {
-                return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
-            }
-            return res.status(_.OK).json(result);
-        });
+    router.get('', async (req, res) => {
+        try {
+            const reservas = await ReservasService.getReservasDoLocal(req.params.id);
+            return res.status(_.OK).json(reservas);
+        } catch (err) {
+            return res.status(err.status || _.BAD_REQUEST).json(err.message || err);
+        }
     });
 }
 

@@ -34,20 +34,6 @@ function iniciarAuth0Management() {
 }
 
 /**
- * Cuida das requisições de usuário feitas ao Auth0, pois o usuário pode ser retornado
- * como String.
- * 
- * @param {Function}        callback Callback a ser executado.
- * @param {*}               err      Erro da requisição.
- * @param {String | Object} result   Resultado da requisição ao Auth0.
- */
-function handleCallbackUsuario(callback, err, result) {
-    if (err) return callback(err);
-    result = (!_.isObject(result)) ? JSON.parse(result) : result;
-    return callback(err, result);
-}
-
-/**
  * Classe responsável por cuidar de detalhes relacionados à autenticação.
  *
  * @class
@@ -57,21 +43,33 @@ export class AuthService {
     /**
      * Retorna um usuário dado o token de acesso do mesmo.
      *
-     * @param {String}   accessToken Token de acesso do usuário.
-     * @param {Function} callback    Função de callback chamada após a requisição do perfil do usuário.
+     * @param   {String}           accessToken Token de acesso do usuário.
+     * @returns {Promise.<Object>} Promise resolvida com o perfil do usuário no Auth0.
      */
-    static getProfile(accessToken, callback) {
-        return auth0Authentication.getProfile(accessToken, (err, result) => handleCallbackUsuario(callback, err, result));
+    static getProfile(accessToken) {
+        return new Promise((resolve, reject) =>
+            auth0Authentication.getProfile(accessToken, (err, result) => {
+                if (err) return reject(err);
+                result = (!_.isObject(result)) ? JSON.parse(result) : result;
+                return resolve(result);
+            })
+        );
     }
 
     /**
      * Consulta um usuário no Auth0 dado o id do mesmo.
      *
-     * @param {String}   idUsuario   Id do usuário.
-     * @param {Function} callback Função de callback executada após a consulta do usuário.
+     * @param   {String}           idUsuario Id do usuário.
+     * @returns {Promise.<Object>} Promise resolvida com o usuário no Auth0.
      */
-    static getUserById(idUsuario, callback) {
-        return auth0Management.getUser({id: idUsuario}, (err, result) => handleCallbackUsuario(callback, err, result));
+    static async getUser(idUsuario) {
+        return new Promise((resolve, reject) =>
+            auth0Management.getUser({id: idUsuario}, (err, result) => {
+                if (err) return reject(err);
+                result = (!_.isObject(result)) ? JSON.parse(result) : result;
+                return resolve(result);
+            })
+        );
     }
 }
 

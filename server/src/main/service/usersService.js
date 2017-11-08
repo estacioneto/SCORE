@@ -1,129 +1,126 @@
 import _ from '../util/util';
 import {AuthService} from './authService';
 
-/**
- * O usersService lida com detalhes/lógica de usuário mais complexas. É responsável 
- * por tudo relacionado a caching de usuários e é extremamente útil 
- * para identificar o usuário logado.
- *
- * @author Estácio Pereira.
- */
-let usersService = {
-    cache: {},
-    idCache: {}
-};
+let _cache = {};
+const _idCache = {};
 
 /**
  * Recupera um elemento do cache. Requerido para controlar o elemento mais acessado.
  *
- * @param   {string} cache Nome do cache.
- * @param   {string} key   Chave para o elemento requerido.
+ * @param   {Object} cache Cache a ter elemento recuperado.
+ * @param   {string} chave Chave para o elemento requerido.
  * @returns {String} Valor em cache.
  */
-function getFromCache(cache, key) {
-    usersService[cache][key].touched = Date.now();
-    return usersService[cache][key].value;
+function _getFromCache(cache, chave) {
+    cache[chave].touched = Date.now();
+    return cache[chave].value;
 }
 
 /**
  * Insere um elemento no cache.
  *
- * @param   {string} cache Nome do cache.
- * @param   {string} key   Chave do elemento requerido.
- * @param   {Object} value Valor para inserir no cache.
+ * @param   {Object} cache Cache.
+ * @param   {string} chave Chave do elemento requerido.
+ * @param   {Object} valor Valor para inserir no cache.
  */
-function putOnCache(cache, key, value) {
-    usersService[cache][key] = {
-        value: value,
+function _cachePut(cache, chave, valor) {
+    cache[chave] = {
+        value: valor,
         touched: Date.now()
-    };
+    }
 }
 
 /**
  * Limpa do cache os elementos que não foram acessados recentemente (60 minutos atrás).
  *
- * @param {string} cache Nome do cache.
+ * @param {Object} cache Cache.
  */
-function clearCache(cache) {
-    _.each(usersService[cache], function (element, key) {
-        if (element.touched + _.TEN_MINUTES < Date.now()) delete usersService[cache][key];
+function _limparCache(cache) {
+    _.each(cache, function (element, key) {
+        if (element.touched + _.TEN_MINUTES < Date.now()) delete cache[key];
     });
 }
 
 /**
- * Verifica se o usuário está em cache.
+ * O usersService lida com detalhes/lógica de usuário mais complexas. É responsável
+ * por tudo relacionado a caching de usuários e é extremamente útil
+ * para identificar o usuário logado.
  *
- * @param   {Object}  user O usuário para verificar.
- * @returns {boolean} true se o usuário está em cache, false caso contrário.
+ * @class
+ * @author Estácio Pereira.
  */
-usersService.isCached = user => _.some(usersService.cache, {value: JSON.stringify(user)});
+export class UsersService {
 
-/**
- * Adiciona um usuário no cache.
- *
- * @param {String} token O token do usuário.
- * @param {Object} user  O usuário para adicionar em cache.
- */
-usersService.cacheUser = (token, user) => {
-    if (!_.isEmpty(token) && !_.isEmpty(user)) {
-        user = JSON.stringify(user);
+    /**
+     * Verifica se o usuário está em cache.
+     *
+     * @param   {Object}  usuario O usuário para verificar.
+     * @returns {boolean} true se o usuário está em cache, false caso contrário.
+     */
+    static isCached(usuario) {
+        return _.some(_cache, {value: JSON.stringify(usuario)});
+    }
 
-        const tokenAntigo = _.findKey(usersService.cache, {value: user});
-        if (tokenAntigo) {
-            delete usersService.cache[tokenAntigo];
+    /**
+     * Adiciona um usuário no cache.
+     *
+     * @param {String} token   O token do usuário.
+     * @param {Object} usuario O usuário para adicionar em cache.
+     */
+    static cachePut(token, usuario) {
+        if (!_.isEmpty(token) && !_.isEmpty(usuario)) {
+            const usuarioString = JSON.stringify(usuario);
+            const tokenAntigo = _.findKey(_cache, {value: usuarioString});
+
+            if (tokenAntigo) {
+                delete _cache[tokenAntigo];
+            }
+            _cachePut(_cache, token, usuarioString);
+            _cachePut(_idCache, usuario.user_id, usuario);
         }
-        putOnCache('cache', token, user);
-        putOnCache('idCache', user.user_id, JSON.parse(user));
     }
-};
 
-usersService.getUserById = (userId, callback) => {
-    if (!_.isEmpty(usersService.idCache[userId])) {
-        return callback(null, getFromCache('idCache', userId));
-    }
-    return AuthService.getUserById(userId, (err, result) => {
-        if (err) return callback(err, null);
-        putOnCache('idCache', userId, result);
-        return callback(null, result);
-    });
-};
-
-/**
- * Recupera o usuário com o token dado, se este existir (erro, caso contrário).
- * Se o usuário está em cache, não precisa requisitar Auth0.
- *
- * @param {String}   accessToken Token de acesso.
- * @param {Function} callback    Função callback chamada após a query.
- */
-usersService.getUser = (accessToken, callback) => {
-    if (usersService.cache[accessToken]) {
-        return callback(null, JSON.parse(getFromCache('cache', accessToken)));
-    }
-    return AuthService.getProfile(accessToken, (err, result) => {
-        if (!err) {
-            usersService.cacheUser(accessToken, result);
+    static async getUserById(idUsuario) {
+        if (!_.isEmpty(_idCache[idUsuario])) {
+            return _getFromCache(_idCache, idUsuario);
         }
-        return callback(err, result);
-    });
-};
 
-usersService.getLoggedUserTokenByEmail = email => {
-    let index = 0;
-    let tokens = Object.keys(usersService.cache);
-    while (index < tokens.length) {
-        let user = JSON.parse(usersService.cache[tokens[index]].value);
-        if (user.email === email) return tokens[index];
+        const usuario = await AuthService.getUser(idUsuario);
+        _cachePut(_idCache, idUsuario, usuario);
+        return usuario;
     }
-};
+
+    /**
+     * Recupera o usuário com o token dado, se este existir (erro, caso contrário).
+     * Se o usuário está em cache, não precisa requisitar Auth0.
+     *
+     * @param {String}   accessToken Token de acesso.
+     */
+    static async getUser(accessToken) {
+        if (_cache[accessToken]) {
+            return JSON.parse(_getFromCache(_cache, accessToken));
+        }
+        const usuario = await AuthService.getProfile(accessToken);
+        UsersService.cachePut(accessToken, usuario);
+
+        return usuario;
+    }
+
+    static get _cache() {
+        return _cache;
+    }
+
+    static set _cache(newCache) {
+        _cache = newCache;
+    }
+}
 
 /**
  * Ativa o limpador do cache.
  */
 (() => {
     setInterval(() => {
-        clearCache('cache');
-        clearCache('idCache');
+        _limparCache(_cache);
+        _limparCache(_idCache);
     }, _.TEN_MINUTES);
 })();
-
-module.exports = usersService;

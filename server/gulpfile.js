@@ -193,6 +193,7 @@ function runTests() {
     return gulp.src('./src/test/**/*.test.js', {read: false})
         .pipe(mocha({
             compilers: 'js:babel-core/register',
+            require: 'babel-polyfill',
             reporter: 'nyan',
             timeout: 15000,
             bail: true

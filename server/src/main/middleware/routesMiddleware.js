@@ -10,7 +10,7 @@ const usersRouter = require('../router/usersRouter');
 const reservasRouter = require('../router/reservasRouter');
 const routesMiddleware = {};
 
-const authCheck = jwt({
+export const authCheck = jwt({
     secret: _.AUTH0.SCORE_CLIENT_SECRET,
     audience: _.AUTH0.SCORE_CLIENT_ID
 });
@@ -33,4 +33,4 @@ routesMiddleware.set = app => {
     app.use('/api/locais', app.authMiddleware, LocaisRouter);
 };
 
-module.exports = routesMiddleware;
+export {routesMiddleware};
