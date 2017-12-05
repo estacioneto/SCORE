@@ -2,20 +2,27 @@
 
 ## unstable
 
+* Issue 97: Corrigidos botões de autenticação da aplicação em telas pequenas.
+
 ## 0.2.7
+
 * Refatoração: Refatorados serviços do servidor para um código com melhor design.
 
 ## 0.2.6
+
 * Correção: Corrigida imagem padrão para locais sem imagem principal.
 
 ## 0.2.5
+
 * Correção: Otimizada consulta de listagem de locais ao retornar apenas a imagem principal de cada local.
 
 ## 0.2.4
+
 * Correção: Corrigido botão de 'voltar' da aplicação.
 * Correção: Corrigida exibição de número de telefone do usuário.
 
 ## 0.2.3
+
 * Manutenção: Adicionada licença sobre código.
 * Testes: Criados testes para Toolbar.
 * Refatoração: Refatorado acesso à barra lateral e testes.
@@ -23,9 +30,11 @@
 * Issue 91: Corrigido erro no console após login do usuário.
 
 ## 0.2.2
+
 * Issue 82: Corrigida validação da mostragem do botão do menu de Local.
 
 ## 0.2.1
+
 * Refatoração: Adicionada verificação para o botão "Go Home" ser clicável.
 * Refatoração: Traduzidos textos dos botões de entrar e sair da aplicação.
 * Refatoração: Mudado local para designar título à reserva.
@@ -35,6 +44,7 @@
 * Manutenção: Horário de fim da reserva agora inicia preenchido no modal de criação da mesma.
 
 ## 0.2.0
+
 * Manuteção: Mudado design do modal de reserva.
 * Refatoração: Adicionado state para a agenda dos locais (agora é possível compartilhar o link da agenda de um local).
 * Correção: Corrigido link para termos do local no modal de reserva.
@@ -47,6 +57,7 @@
 * Correção: Adicionado botão de voltar em edição e visualização de local e corrigida toolbar.
 
 ## 0.1.0
+
 * Funcionalidade: Adicionados tipos "Outro" e "Palestra" para Reserva.
 * Correção: Corrigido tipo de Reserva "Assembleia".
 * Funcionalidade: Adicionada exibição de reservas de acordo com o auditório selecionado.
@@ -67,4 +78,5 @@
 * Funcionalidade: Adicionada deleção de imagem antes de seu salvamento.
 
 ## 0.0.2
+
 * Início versionamento.

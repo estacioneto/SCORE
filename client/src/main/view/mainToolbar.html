@@ -22,7 +22,7 @@
             <toolbar-state-handler></toolbar-state-handler>
 
             <div data-ng-if="auth.isAuthenticated()">
-                <md-button hide-xs aria-label="Sair" data-ng-click="sair()">
+                <md-button aria-label="Sair" data-ng-click="sair()">
                     Sair
                 </md-button>
                 <md-button hide-gt-xs aria-label="Ícone sair"
@@ -32,7 +32,7 @@
                 </md-button>
             </div>
             <div data-ng-if="!auth.isAuthenticated()">
-                <md-button hide-xs aria-label="Entrar" data-ng-click="entrar()">
+                <md-button aria-label="Entrar" data-ng-click="entrar()">
                     Entrar
                 </md-button>
             </div>
