@@ -1,5 +1,5 @@
 {
-  "name": "SCORE",
+  "name": "score-uasc",
   "version": "0.2.7",
   "description": "Sistema web de alocação de horário para os auditórios da UFCG.",
   "main": "app.js",
@@ -16,8 +16,8 @@
     "minify": "gulp --gulpfile client/gulpfile.js copy && gulp --gulpfile client/gulpfile.js usemin"
   },
   "engines": {
-    "node": "~8.6.0",
-    "npm": "~5.4.3"
+    "node": "^8.9.0",
+    "npm": "^5.4.3"
   },
   "private": true,
   "author": "",
