@@ -2,8 +2,11 @@
 
 ## unstable
 
+## 0.2.8
+
 * Issue 97: Corrigidos botões de autenticação da aplicação em telas pequenas.
 * Issue 98: Corrigida forma de mostrar imagens do Local.
+* Manutenção: Atualizadas dependências do projeto.
 
 ## 0.2.7
 

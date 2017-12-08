@@ -1,6 +1,6 @@
 {
   "name": "score-uasc",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Sistema web de alocação de horário para os auditórios da UFCG.",
   "main": "app.js",
   "scripts": {
@@ -97,7 +97,7 @@
     "gulp-istanbul": "^1.1.1",
     "gulp-jshint": "^2.0.4",
     "gulp-minify-html": "^1.0.6",
-    "gulp-prompt": "^0.2.0",
+    "gulp-prompt": "^1.0.0",
     "gulp-rev": "^8.0.0",
     "gulp-run": "^1.7.1",
     "isparta": "^4.0.0",
@@ -105,7 +105,7 @@
     "jquery-mask-plugin": "^1.14.11",
     "jshint": "^2.9.4",
     "lodash": "^4.17.4",
-    "moment": "^2.18.1",
+    "moment": "^2.19.3",
     "mongoose": "^4.7.5",
     "morgan": "^1.8.2",
     "ngstorage": "^0.3.11",
