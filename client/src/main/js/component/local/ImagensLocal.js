@@ -94,7 +94,7 @@
             this.mostraModalImagem = function ($event, indiceImagem, editavel) {
                 var isCapa = (indiceImagem === LOCAL_IMAGEM.INDICE_IMAGEM_CAPA);
                 return ModalService.verImagem(self.local.imagens[indiceImagem], $event, editavel, excluirImagemCallback, definirComoCapaCallback, isCapa);
-            }
+            };
         }]
     });
 })();

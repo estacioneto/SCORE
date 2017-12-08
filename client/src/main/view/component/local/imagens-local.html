@@ -17,7 +17,7 @@
 
     <!--Visualização das imagens-->
     <div layout="column" layout-align="center center">
-        <div id="myCarousel" class="carousel slide container-carousel" data-ride="carousel" flex="70" ng-if="$ctrl.existemImagens()">
+        <div id="myCarousel" class="carousel slide container-carousel" data-interval=false ng-if="$ctrl.existemImagens()">
             <!-- Bolinhas -->
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" ng-repeat="imagem in $ctrl.local.imagens track by $index" data-slide-to="{{$index}}" ng-class="{'active': !$index}">

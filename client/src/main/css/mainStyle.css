@@ -317,3 +317,7 @@ md-input-container.md-input-invalid > md-icon {
 .local-card {
     max-width: 250px;
 }
+
+#myCarousel {
+    max-height: 350px;
+}
