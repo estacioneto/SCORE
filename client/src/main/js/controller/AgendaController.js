@@ -72,8 +72,8 @@
                     editable: false,
                     ignoreTimezone: false,
                     timezone: 'local',
-                    minTime: self.local.getInicioFuncionamento(),
-                    maxTime: self.local.getFimFuncionamento(),
+                    minTime: self.local.inicio_funcionamento,
+                    maxTime: self.local.fim_funcionamento,
                     lang: 'pt-br',
                     header: {
                         left: 'month agendaWeek agendaDay',
@@ -134,7 +134,7 @@
                 DataManipuladorService.incrementaHora(dataFimReserva, 1);
 
                 const horarioFimReserva = DataManipuladorService.getHorarioEmString(dataFimReserva),
-                    horarioFimLocal = self.local.getFimFuncionamento();
+                    horarioFimLocal = self.local.fim_funcionamento;
 
                 return (horarioFimReserva < horarioFimLocal) ? horarioFimReserva : horarioFimLocal;
             }

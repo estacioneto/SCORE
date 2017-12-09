@@ -59,7 +59,7 @@ const _removerReserva = reserva => new Promise(
  * @returns {Promise.<String | null>} Promise resolvida com null ou rejeitada com mensagem de erro.
  * @private
  */
-const _validarHorario = reserva => new Promise((resolve, reject) => {
+const _validarHorario = reserva => new Promise(async (resolve, reject) => {
     const intervaloNegativo = reserva.inicio >= reserva.fim;
     if (intervaloNegativo) return reject("Intervalo de horários inválido.");
 

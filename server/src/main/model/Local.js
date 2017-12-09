@@ -41,7 +41,11 @@
             type: Number,
             required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_CAPACIDADE]
         },
-        funcionamento: {
+        inicio_funcionamento: {
+            type: String,
+            required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_FUNCIONAMENTO]
+        },
+        fim_funcionamento: {
             type: String,
             required: [true, _.CONSTANTES_LOCAL.ERRO_VALIDACAO_FUNCIONAMENTO]
         },
