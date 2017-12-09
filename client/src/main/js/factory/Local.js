@@ -19,7 +19,7 @@
          * @param {Object} local Objeto contendo informações do local.
          * @constructor
          */
-        function Local(local) {
+        function Local(local = {}) {
             const self = this;
             Object.defineProperty(this, 'funcionamento', {
                 get() {
@@ -42,9 +42,11 @@
 
             this.equipamentos = [];
             this.imagens = [];
-            this.funcionamento = parseInt(
-                local.inicio_funcionamento.split(':').join('') + local.fim_funcionamento.split(':').join('')
-            );
+            if (local.inicio_funcionamento && local.fim_funcionamento) {
+                this.funcionamento = parseInt(
+                    local.inicio_funcionamento.split(':').join('') + local.fim_funcionamento.split(':').join('')
+                );
+            }
 
             Object.assign(this, local);
         }

@@ -63,6 +63,15 @@ const _validarHorario = reserva => new Promise(async (resolve, reject) => {
     const intervaloNegativo = reserva.inicio >= reserva.fim;
     if (intervaloNegativo) return reject("Intervalo de horários inválido.");
 
+    const local = await LocaisService.consultarLocalPorId(reserva.localId);
+    if (reserva.inicio < local.inicio_funcionamento || reserva.fim > local.fim_funcionamento)
+        return reject('Reserva fora de intervalo de funcionamento do Local.');
+
+    const horarioAtual = new Date();
+    const horarioAtualFormatado = `${horarioAtual.getHours()}:${horarioAtual.getMinutes()}`;
+    if (reserva.inicio < horarioAtualFormatado)
+        return reject('Reserva não pode ser cadastrada em horário passado.');
+
     return Reserva.findByDayAndLocalId(reserva.dia, reserva.localId, (err, reservas) => {
         if (err) return reject(err);
         for (let i in reservas) {

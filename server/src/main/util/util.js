@@ -52,7 +52,7 @@ _.ERRO_USUARIO_SEM_PERMISSAO = 'Usuário não tem permissão ao recurso.';
 _.updateModel = (toObject, fromObject) => {
     _.each(fromObject, (value, key) => {
         // _id, __v...
-        if (_.contains(key, '_')) return;
+        if (_.startsWith(key, '_')) return;
 
         // http://stackoverflow.com/questions/15092912/dynamically-updating-a-javascript-object-from-a-string-path
         let keys = key.split('.');

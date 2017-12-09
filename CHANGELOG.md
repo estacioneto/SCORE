@@ -2,6 +2,8 @@
 
 ## unstable
 
+* Issue 70: Corrigida validação de cadastro e atualização de reservas fora do horário de funcionamento do Local.
+
 ## 0.2.8
 
 * Issue 97: Corrigidos botões de autenticação da aplicação em telas pequenas.
