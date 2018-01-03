@@ -185,7 +185,6 @@
              */
             function configCalendarioPosRenderizacao(calendarioConfig) {
                 ajustaAltura(calendarioConfig);
-                transformaBotoesCalendario();
             }
 
             /**
