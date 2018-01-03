@@ -55,7 +55,8 @@ describe('LocaisServiceTest', () => {
             expect(mockLocal.nome).to.not.be.undefined;
             expect(mockLocal.bloco).to.not.be.undefined;
             expect(mockLocal.capacidade).to.not.be.undefined;
-            expect(mockLocal.funcionamento).to.not.be.undefined;
+            expect(mockLocal.inicio_funcionamento).to.not.be.undefined;
+            expect(mockLocal.fim_funcionamento).to.not.be.undefined;
             expect(mockLocal.observacoes).to.be.undefined;
             expect(mockLocal.termoDeCondicoes).to.be.undefined;
 
@@ -66,7 +67,8 @@ describe('LocaisServiceTest', () => {
                     expect(local.nome).to.be.eql(mockLocal.nome);
                     expect(local.bloco).to.be.eql(mockLocal.bloco);
                     expect(local.capacidade).to.be.eql(mockLocal.capacidade);
-                    expect(local.funcionamento).to.be.eql(mockLocal.funcionamento);
+                    expect(local.inicio_funcionamento).to.be.eql(mockLocal.inicio_funcionamento);
+                    expect(local.fim_funcionamento).to.be.eql(mockLocal.fim_funcionamento);
                 });
         });
 

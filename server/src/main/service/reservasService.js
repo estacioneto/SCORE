@@ -59,9 +59,19 @@ const _removerReserva = reserva => new Promise(
  * @returns {Promise.<String | null>} Promise resolvida com null ou rejeitada com mensagem de erro.
  * @private
  */
-const _validarHorario = reserva => new Promise((resolve, reject) => {
+const _validarHorario = reserva => new Promise(async (resolve, reject) => {
     const intervaloNegativo = reserva.inicio >= reserva.fim;
     if (intervaloNegativo) return reject("Intervalo de horários inválido.");
+
+    const local = await LocaisService.consultarLocalPorId(reserva.localId);
+    if (reserva.inicio < local.inicio_funcionamento || reserva.fim > local.fim_funcionamento)
+        return reject('Reserva fora de intervalo de funcionamento do Local.');
+
+    const horarioAtual = new Date();
+    const horarioAtualFormatado = `${horarioAtual.getHours()}:${horarioAtual.getMinutes()}`;
+    const diaAtualFormatado = _parseData(horarioAtual);
+    if (reserva.dia === diaAtualFormatado && reserva.inicio < horarioAtualFormatado)
+        return reject('Reserva não pode ser cadastrada em horário passado.');
 
     return Reserva.findByDayAndLocalId(reserva.dia, reserva.localId, (err, reservas) => {
         if (err) return reject(err);
@@ -77,6 +87,27 @@ const _validarHorario = reserva => new Promise((resolve, reject) => {
         return resolve(null);
     });
 });
+
+/**
+ * Transforma uma data para o formato dd-MM-yyyy, onde o mês terá uma unidade
+ * incrementada, devido a objetos do tipo Date utilizarem um intervalor de
+ * índices de 0 a 11.
+ *
+ * @param {Date} data Data a ser transformada para {String}.
+ * @return {String} Data formatada.
+ * @private
+ */
+const _parseData = data => {
+    let dataFormatada, diaFormatado, mesFormatado, anoFormatado;
+
+    diaFormatado = (data.getDate() < 10) ? `0${data.getDate()}` : `${data.getDate()}`;
+    mesFormatado = (data.getMonth() < 9) ? `0${data.getMonth()+1}` : `${data.getMonth()+1}`;
+    anoFormatado = `${data.getFullYear()}`;
+
+    dataFormatada = `${diaFormatado}-${mesFormatado}-${anoFormatado}`;
+
+    return dataFormatada;
+};
 
 /**
  * Retorna uma reserva dado o id da mesma e o email do usuário. Mesmo sendo por id,

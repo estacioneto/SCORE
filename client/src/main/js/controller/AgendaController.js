@@ -72,8 +72,8 @@
                     editable: false,
                     ignoreTimezone: false,
                     timezone: 'local',
-                    minTime: self.local.getInicioFuncionamento(),
-                    maxTime: self.local.getFimFuncionamento(),
+                    minTime: self.local.inicio_funcionamento,
+                    maxTime: self.local.fim_funcionamento,
                     lang: 'pt-br',
                     header: {
                         left: 'month agendaWeek agendaDay',
@@ -134,7 +134,7 @@
                 DataManipuladorService.incrementaHora(dataFimReserva, 1);
 
                 const horarioFimReserva = DataManipuladorService.getHorarioEmString(dataFimReserva),
-                    horarioFimLocal = self.local.getFimFuncionamento();
+                    horarioFimLocal = self.local.fim_funcionamento;
 
                 return (horarioFimReserva < horarioFimLocal) ? horarioFimReserva : horarioFimLocal;
             }
@@ -205,19 +205,6 @@
 
                     calendario.fullCalendar('option', 'height', altura);
                 }
-            }
-
-            /**
-             * Modifica os botões do calendário para terem os estilos seguindo padrão
-             * material, adicionando a classe md-button.
-             */
-            function transformaBotoesCalendario() {
-                const listaBotoes = $('button[class*="fc-button"]');
-                const mdButton = "md-button";
-                listaBotoes.each(function (i) {
-                    if (!$(this).hasClass(mdButton))
-                        $(this).addClass(mdButton);
-                });
             }
 
             /**

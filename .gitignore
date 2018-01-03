@@ -8,3 +8,5 @@ yarn-error.log
 /**/*.js.html
 **/coverage/
 package-lock.json
+**/*.info
+**/'lcov.info'

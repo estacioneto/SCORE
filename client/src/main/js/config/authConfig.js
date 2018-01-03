@@ -41,7 +41,7 @@
                     request: function (config) {
                         const accessToken = store.get('accessToken');
                         if (accessToken) {
-                            config.headers.access_token = accessToken;
+                            config.headers['Access-Token'] = accessToken;
                         }
                         return config;
                     }
