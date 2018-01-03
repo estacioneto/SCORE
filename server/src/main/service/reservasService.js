@@ -69,7 +69,8 @@ const _validarHorario = reserva => new Promise(async (resolve, reject) => {
 
     const horarioAtual = new Date();
     const horarioAtualFormatado = `${horarioAtual.getHours()}:${horarioAtual.getMinutes()}`;
-    if (reserva.inicio < horarioAtualFormatado)
+    const diaAtualFormatado = _parseData(horarioAtual);
+    if (reserva.dia === diaAtualFormatado && reserva.inicio < horarioAtualFormatado)
         return reject('Reserva não pode ser cadastrada em horário passado.');
 
     return Reserva.findByDayAndLocalId(reserva.dia, reserva.localId, (err, reservas) => {
@@ -86,6 +87,27 @@ const _validarHorario = reserva => new Promise(async (resolve, reject) => {
         return resolve(null);
     });
 });
+
+/**
+ * Transforma uma data para o formato dd-MM-yyyy, onde o mês terá uma unidade
+ * incrementada, devido a objetos do tipo Date utilizarem um intervalor de
+ * índices de 0 a 11.
+ *
+ * @param {Date} data Data a ser transformada para {String}.
+ * @return {String} Data formatada.
+ * @private
+ */
+const _parseData = data => {
+    let dataFormatada, diaFormatado, mesFormatado, anoFormatado;
+
+    diaFormatado = (data.getDate() < 10) ? `0${data.getDate()}` : `${data.getDate()}`;
+    mesFormatado = (data.getMonth() < 9) ? `0${data.getMonth()+1}` : `${data.getMonth()+1}`;
+    anoFormatado = `${data.getFullYear()}`;
+
+    dataFormatada = `${diaFormatado}-${mesFormatado}-${anoFormatado}`;
+
+    return dataFormatada;
+};
 
 /**
  * Retorna uma reserva dado o id da mesma e o email do usuário. Mesmo sendo por id,

@@ -208,19 +208,6 @@
             }
 
             /**
-             * Modifica os botões do calendário para terem os estilos seguindo padrão
-             * material, adicionando a classe md-button.
-             */
-            function transformaBotoesCalendario() {
-                const listaBotoes = $('button[class*="fc-button"]');
-                const mdButton = "md-button";
-                listaBotoes.each(function (i) {
-                    if (!$(this).hasClass(mdButton))
-                        $(this).addClass(mdButton);
-                });
-            }
-
-            /**
              * Inicializa as reservas exibidas quando um local é selecionado, exibindo apenas as
              * reservas pertencentes ao mesmo.
              *
