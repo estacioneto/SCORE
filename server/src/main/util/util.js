@@ -92,7 +92,7 @@ _.contains = (arr, object) => arr.indexOf(object) !== _.INVALID_INDEX;
  * @param   {Object} req A requisição.
  * @returns {string} O token dos headers.
  */
-_.getToken = req => req.header('access_token') || _.getAuthorizationToken(req);
+_.getToken = req => req.header(_.ACCESS_TOKEN) || _.getAuthorizationToken(req);
 
 /**
  * Retorna o token presente na propriedade de autorização do header.

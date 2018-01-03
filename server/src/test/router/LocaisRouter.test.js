@@ -26,7 +26,7 @@ describe('LocaisRouterTest', () => {
     function requisicaoLocais(metodoHttp, idLocal = '') {
         return request(app)[_.toLower(metodoHttp)](`${_.CONSTANTES_LOCAL.URI}/${idLocal}`)
             .set('Authorization', `Bearer ${token}`)
-            .set('access_token', token);
+            .set(_.ACCESS_TOKEN, token);
     }
 
     /**
@@ -42,7 +42,7 @@ describe('LocaisRouterTest', () => {
         UsersMock.cacheUsuarioComum(UsersService);
         request(app)[_.toLower(metodoHttp)](uri)
             .set('Authorization', `Bearer ${token}`)
-            .set('access_token', token)
+            .set(_.ACCESS_TOKEN, token)
             .send(reqBody)
             .expect(_.FORBIDDEN).end((err, res) => {
 
