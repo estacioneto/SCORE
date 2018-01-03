@@ -2,6 +2,8 @@
 
 ## unstable
 
+## 0.3.0
+
 * Issue 70: Corrigida validação de cadastro e atualização de reservas fora do horário de funcionamento do Local.
 
 ## 0.2.8

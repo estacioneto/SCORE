@@ -1,6 +1,6 @@
 {
   "name": "score-uasc",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "description": "Sistema web de alocação de horário para os auditórios da UFCG.",
   "main": "app.js",
   "scripts": {
