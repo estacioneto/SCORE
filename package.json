@@ -1,19 +1,24 @@
 {
   "name": "score-uasc",
   "version": "0.3.0",
-  "description": "Sistema web de alocação de horário para os auditórios da UFCG.",
+  "description":
+    "Sistema web de alocação de horário para os auditórios da UFCG.",
   "main": "app.js",
   "scripts": {
     "prestart": "yarn install",
     "start": "babel-node app.js",
     "pretest": "yarn install",
     "test": "npm run coverage || exit 1",
-    "coverage": "npm run coverage-server && npm run coverage-client && npm run merge-lcov",
+    "coverage":
+      "npm run coverage-server && npm run coverage-client && npm run merge-lcov",
     "coverage-client": "gulp --gulpfile client/gulpfile.js test",
-    "coverage-server": "./node_modules/.bin/babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --reporter nyan --recursive \"./server/src/test/**/*.test.js\"",
-    "merge-lcov": "./node_modules/.bin/lcov-result-merger './coverage/lcov*.info' 'lcov.info'",
+    "coverage-server":
+      "./node_modules/.bin/babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --reporter nyan --recursive \"./server/src/test/**/*.test.js\"",
+    "merge-lcov":
+      "./node_modules/.bin/lcov-result-merger './coverage/lcov*.info' 'lcov.info'",
     "coveralls": "cat lcov.info | coveralls",
-    "minify": "gulp --gulpfile client/gulpfile.js copy && gulp --gulpfile client/gulpfile.js usemin"
+    "minify":
+      "gulp --gulpfile client/gulpfile.js copy && gulp --gulpfile client/gulpfile.js usemin"
   },
   "engines": {
     "node": "^8.9.0",
@@ -75,7 +80,7 @@
     "angular-ui-router": "^1.0.3",
     "auth0": "^2.7.0",
     "auth0-angular": "^4.2.7",
-    "auth0-js": "^8.8.0",
+    "auth0-js": "^9.3.0",
     "auth0-lock": "^10.7.3",
     "babel-core": "^6.25.0",
     "babel-istanbul": "^0.12.2",
