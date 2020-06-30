@@ -92,7 +92,7 @@
     "bootstrap-material-design": "^0.5.10",
     "cors": "^2.8.1",
     "express": "^4.14.0",
-    "express-jwt": "^5.1.0",
+    "express-jwt": "^6.0.0",
     "font-awesome": "^4.7.0",
     "fs": "0.0.2",
     "fullcalendar": "^3.4.0",
