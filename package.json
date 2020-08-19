@@ -81,7 +81,7 @@
     "auth0": "^2.7.0",
     "auth0-angular": "^4.2.7",
     "auth0-js": "^9.3.0",
-    "auth0-lock": "^10.7.3",
+    "auth0-lock": "^11.26.0",
     "babel-core": "^6.25.0",
     "babel-istanbul": "^0.12.2",
     "babel-polyfill": "^6.26.0",
