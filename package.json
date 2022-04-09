@@ -110,7 +110,7 @@
     "jquery-mask-plugin": "^1.14.11",
     "jshint": "^2.9.4",
     "lodash": "^4.17.13",
-    "moment": "^2.19.3",
+    "moment": "^2.29.2",
     "mongoose": "^5.7.5",
     "morgan": "^1.8.2",
     "ngstorage": "^0.3.11",
