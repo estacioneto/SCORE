@@ -62,7 +62,7 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
-    "angular": "^1.7.9",
+    "angular": "^1.8.3",
     "angular-animate": "^1.6.2",
     "angular-aria": "^1.6.2",
     "angular-elastic-input": "^2.4.0",
