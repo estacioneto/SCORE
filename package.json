@@ -88,7 +88,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "body-parser": "*",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "bootstrap-material-design": "^0.5.10",
     "cors": "^2.8.1",
     "express": "^4.14.0",
